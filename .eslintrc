@@ -1,15 +1,17 @@
 {
-    "extends":[
-        "react-app",
-        "plugin:prettier/recommended"
-    ],"rules": {
-        
-        "prettier/prettier": [
-            "error",
-            {
-                "endOfLine": "auto"
-            },
-        ],
-    }
-
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
+  "parserOptions": {
+    "project": ["./tsconfig.json"] // Specify it only for TypeScript files
+  },
+  "extends": [
+    "plugin:@typescript-eslint/recommended",
+    "airbnb",
+    "airbnb/hooks",
+    "airbnb-typescript",
+    "prettier"
+  ],
+  "rules": {
+    "react/react-in-jsx-scope": "off"
+  }
 }
