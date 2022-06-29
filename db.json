@@ -1,0 +1,31 @@
+{
+    "user": 
+        { "id":1,
+          "email": "aaa@aaa.aa",
+          "password": "1111",
+          "username":"user1",
+          "phoneNumber":"010-1111-1111",
+          "socialName":"none"
+        },
+    "recruitPost":[{
+      "id":1,
+      "title" : "프로젝트 모집합니다.",
+      "body" : "프로젝트 모집합니다. 함께해요!",
+      "projectStartTime" : "2022/07/02",
+      "projectEndTime" : "2022/07/30",
+      "recruitDueTime" : "2022/07/01",
+      "recruitCount" : 5,
+      "tagList" : ["프론트 엔드", "자바스크립트","리액트","백엔드"]
+    },
+    {
+      "id":2,
+      "title" : "프로젝트2 모집합니다.",
+      "body" : "프로젝트2 모집합니다. 함께해요!",
+      "projectStartTime" : "2022/07/02",
+      "projectEndTime" : "2022/07/30",
+      "recruitDueTime" : "2022/07/01",
+      "recruitCount" : 6,
+      "tagList" : ["프론트 엔드", "자바스크립트","리액트","백엔드"]
+    }
+  ]
+}
