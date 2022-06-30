@@ -49,7 +49,7 @@ export default function Header() {
               </button> */}
 
               {/* Profile dropdown */}
-              {isLogin
+              {!isLogin
                 ? (
                   <div className="flex  space-x-1 text-sm">
                     <div className="sm:block  hover:bg-gray-700 text-gray-800 hover:text-white text-sm px-5 py-2 rounded-2xl">
