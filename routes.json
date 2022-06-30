@@ -1,0 +1,6 @@
+{
+    "/api/login":"/user", 
+    "/api/user": "/user",
+    "/api/recruitPost": "/recruitPost",
+    "/api/main":"/recruitPost"
+}
