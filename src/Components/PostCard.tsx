@@ -13,8 +13,6 @@ export default function PostCard({ data }: { data: IRecruitPost }) {
         return 'border bg-red-300 p-1.5 text-xs font-semibold';
     }
   };
-  const date1 = new Date(data.recruitDueTime);
-  console.log(date1);
   return (
     <div className="min-w-full sm:min-w-min w-1/3 h-min min-h-min p-2 my-3 box-border  cursor-pointer">
       <div className="p-3 hover:p-1 box-border">
