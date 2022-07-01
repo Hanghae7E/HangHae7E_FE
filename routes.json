@@ -2,6 +2,7 @@
     "/api/login":"/user", 
     "/api/user": "/user",
     "/api/recruitPost": "/recruitPost",
-    "/api/main?_sort=id&_order=ASC":"/recruitPost?_sort=id&_order=ASC",
+    "/api/main":"/recruitPost",
+    "/api/main?_limit=3&_sort=recruitDueTime&_order=ASC":"/recruitPost?_limit=3&_sort=recruitDueTime&_order=ASC",
     "/api/main?_sort=id&_order=DESC":"/recruitPost?_sort=id&_order=DESC"
 }

@@ -2,15 +2,23 @@ import PostCard from '../../../Components/PostCard';
 import RecentPostCard from '../../../Components/RecentPostCard';
 import { IRecruitPost } from '../../../TypeInterface/postType';
 
-export default function MainBody({ rcruitPost }: { rcruitPost: Array<IRecruitPost>}) {
+export default function MainBody(
+  {
+    rcruitPost,
+    recommendPosts,
+  }: {
+      rcruitPost: Array<IRecruitPost>,
+      recommendPosts: Array<IRecruitPost>
+  },
+) {
   return (
     <div className="max-w-5xl mx-auto px-2 sm:px-6 lg:px-8 py-10 ">
       <div className="pt-1 pb-5 bg-white">
-        <p className="font-bold text-2xl my-5">최근 등록한 프로젝트</p>
+        <p className="font-bold text-2xl my-5">마감 임박 프로젝트</p>
         <div className="mx-auto items-center sm:justify-center overflow-hidden flex overflow-x-auto sm:overflow ">
-          <RecentPostCard />
-          <RecentPostCard />
-          <RecentPostCard />
+          {recommendPosts && recommendPosts.map(
+            (data) => <RecentPostCard key={data.id} data={data} />,
+          )}
         </div>
       </div>
       <div className="flex pt-5 pb-5 items-center sticky top-0 bg-white py-3">
