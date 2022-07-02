@@ -1,13 +1,13 @@
 import PostCard from '../../../Components/PostCard';
 import RecentPostCard from '../../../Components/RecentPostCard';
-import { IRecruitPost } from '../../../TypeInterface/postType';
+import { IRecruitPages, IRecruitPost } from '../../../TypeInterface/postType';
 
 export default function MainBody(
   {
-    rcruitPost,
+    recruitPost,
     recommendPosts,
   }: {
-      rcruitPost: Array<IRecruitPost>,
+      recruitPost: Array<IRecruitPages> | undefined,
       recommendPosts: Array<IRecruitPost>
   },
 ) {
@@ -37,7 +37,12 @@ export default function MainBody(
 
       </div>
       <div className="mx-auto items-center overflow-hidden flex flex-wrap mb-5 bg-white">
-        {rcruitPost && rcruitPost.map((data) => <PostCard key={data.id} data={data} />)}
+        {recruitPost && recruitPost.map((pages) => pages.postPage.map((data) => (
+          <PostCard
+            key={data.id}
+            data={data}
+          />
+        )))}
 
       </div>
     </div>

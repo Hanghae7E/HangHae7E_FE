@@ -5,7 +5,7 @@ import {
 } from 'axios';
 
 const onRequest = (config: AxiosRequestConfig): AxiosRequestConfig =>
-  // console.info(`[request] [${JSON.stringify(config)}] test`);
+  // console.info(`[request] [${JSON.stringify(config)}]`);
   config;
 const onRequestError = (error: AxiosError): Promise<AxiosError> =>
 // console.error(`[request error] [${JSON.stringify(error)}]`);
