@@ -10,7 +10,8 @@ import MainHeader from './Presentaion/MainHeader';
 export default function MainPageContainer() {
   const recommendPosts = useQuery('recommend_post', () => postApi.getRecommendPosts());
   const {
-    getBoard, getNextPage, getBoardIsSuccess, getNextPageIsPossible,
+    getBoard, getNextPage,
+    getBoardIsSuccess, getNextPageIsPossible,
   } = useInfiniteScrollQuery();
   const [ref, isView] = useInView();
   useEffect(() => {

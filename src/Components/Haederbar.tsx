@@ -1,13 +1,17 @@
 import { Fragment } from 'react';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
 }
 
 export default function Header() {
+  const nav = useNavigate();
   const isLogin = true;
+  const goCreateProject = () => {
+    nav('/projectcreate');
+  };
   return (
     <Disclosure as="nav" className="bg-gray-100">
       {() => (
@@ -28,12 +32,13 @@ export default function Header() {
               </div>
               <div className="hidden sm:block  hover:bg-gray-700 text-gray-800 hover:text-white text-sm px-5 py-2 rounded-2xl">
                 <div className="flex justify-center items-center">
-                  <a
-                    href="/"
+                  <button
+                    type="button"
+                    onClick={goCreateProject}
                     className="no-underline bg-white-900 font-bold"
                   >
                     프로젝트 생성
-                  </a>
+                  </button>
                 </div>
               </div>
             </div>
