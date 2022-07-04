@@ -37,7 +37,13 @@ export default function MainBody(
 
       </div>
       <div className="mx-auto items-center overflow-hidden flex flex-wrap mb-5 bg-white">
-        {rcruitPost && rcruitPost.map((data) => <PostCard key={data.id} data={data} />)}
+        {rcruitPost && rcruitPost.map((data, index) => (
+          <PostCard
+            key={data.id}
+            data={data}
+            index={index}
+          />
+        ))}
 
       </div>
     </div>
