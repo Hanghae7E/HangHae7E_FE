@@ -103,7 +103,6 @@ function registerValidSW(swUrl: string, config?: Config) {
       };
       return registration.pushManager.getSubscription()
         .then(async function(subscription) {
-          console.log(subscription)
           if (!subscription) {
             const subscribeOptions = {
               userVisibleOnly: true,
