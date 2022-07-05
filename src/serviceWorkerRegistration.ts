@@ -63,7 +63,7 @@ export function register(config?: Config) {
 }
 
 function registerValidSW(swUrl: string, config?: Config) {
-  console.log(swUrl)
+ 
   navigator.serviceWorker
     .register(swUrl)
     .then((registration) => {
@@ -102,7 +102,8 @@ function registerValidSW(swUrl: string, config?: Config) {
         };
       };
       return registration.pushManager.getSubscription()
-        .then(async function(subscription) {
+        .then(async function (subscription) {
+          console.log("test")
           if (!subscription) {
             const subscribeOptions = {
               userVisibleOnly: true,
