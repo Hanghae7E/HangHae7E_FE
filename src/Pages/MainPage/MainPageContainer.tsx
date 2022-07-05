@@ -11,7 +11,7 @@ export default function MainPageContainer() {
   const recruitPosts = useQuery('recruit_post', () => postApi.getRecruitPosts());
   const recommendPosts = useQuery('recommend_post', () => postApi.getRecommendPosts());
   const [isLoading, setLoding] = useState<boolean>(false);
- 
+
   useEffect(() => {
     if (recommendPosts.isSuccess && recruitPosts.isSuccess) {
       setLoding(true);
