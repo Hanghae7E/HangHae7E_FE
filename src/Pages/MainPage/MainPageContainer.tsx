@@ -12,7 +12,6 @@ export default function MainPageContainer() {
   const recommendPosts = useQuery('recommend_post', () => postApi.getRecommendPosts());
   const [isLoading, setLoding] = useState<boolean>(false);
   const testPostNotify = () => {
-    console.log('test');
     Notification.requestPermission().then((status) => {
       if (status === 'denied') {
         alert('Notification 거부됨');
