@@ -1,6 +1,7 @@
 // This optional code is used to register a service worker.
 // register() is not called by default.
 
+
 // This lets the app load faster on subsequent visits in production, and gives
 // it offline capabilities. However, it also means that developers (and users)
 // will only see deployed updates on subsequent visits to a page, after all the
@@ -26,7 +27,7 @@ type Config = {
 export function register(config?: Config) {
   if (process.env.NODE_ENV === 'production' || 'serviceWorker' in navigator) {
     // The URL constructor is available in all browsers that support SW.
-    const publicUrl = new URL(process.env.PUBLIC_URL, window.location.href);
+    const publicUrl = new URL(process.env.PUBLIC_URL || "", window.location.href);
 
     if (publicUrl.origin !== window.location.origin) {
       
@@ -100,6 +101,21 @@ function registerValidSW(swUrl: string, config?: Config) {
           }
         };
       };
+      return registration.pushManager.getSubscription()
+        .then(async function(subscription) {
+          console.log(subscription)
+          if (!subscription) {
+            const subscribeOptions = {
+              userVisibleOnly: true,
+              // push subscription이 유저에게 항상 보이는지 여부.
+              // 알림을 숨기는 등 작업이 들어가지는에 대한 여부인데, 크롬에서는 true 밖에 지원안한다.
+              // https://developers.google.com/web/fundamentals/push-notifications/subscribing-a-user
+              applicationServerKey: process.env.REACT_APP_PUSH_PUB_KEY, // 발급받은 vapid public key
+            };
+
+            return registration.pushManager.subscribe(subscribeOptions);
+          }
+        });
     })
     .catch((error) => {
       console.error('Error during service worker registration:', error);
