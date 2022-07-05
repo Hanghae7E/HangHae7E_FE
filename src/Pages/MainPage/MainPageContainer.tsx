@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 import { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 import postApi from '../../Api/postApi';
