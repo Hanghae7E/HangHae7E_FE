@@ -1,4 +1,3 @@
-/* eslint-disable implicit-arrow-linebreak */
 import { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 import postApi from '../../Api/postApi';
@@ -17,18 +16,9 @@ export default function MainPageContainer() {
       } else if (navigator.serviceWorker) {
         navigator.serviceWorker
           .register('/worker.js') // serviceworker 등록
-          .then((registration) =>
-          // const subscribeOptions = {
-          //   userVisibleOnly: true,
-          //   // push subscription이 유저에게 항상 보이는지 여부.
-          //   // 알림을 숨기는 등 작업이 들어가지는에 대한 여부인데, 크롬에서는 true 밖에 지원안한다.
-          //   // https://developers.google.com/web/fundamentals/push-notifications/subscribing-a-user
-          //   applicationServerKey: process.env.REACT_APP_PUSH_PUB_KEY, // 발급받은 vapid public key
-          // };
-
-            registration.showNotification('test', {
-              body: 'test입니다.',
-            }));
+          .then((registration) => registration.showNotification('test', {
+            body: 'test입니다.',
+          }));
       }
     });
   };
