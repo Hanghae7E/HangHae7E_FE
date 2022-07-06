@@ -12,7 +12,7 @@ export default function MainBody(
   },
 ) {
   return (
-    <div className="max-w-5xl mx-auto px-2 sm:px-6 lg:px-8 py-10 ">
+    <div className="max-w-6xl mx-auto px-2 sm:px-6 lg:px-8 py-10 ">
       <div className="pt-1 pb-5 bg-white">
         <p className="font-bold text-2xl my-5">마감 임박 프로젝트</p>
         <div className="mx-auto items-center sm:justify-center overflow-hidden flex overflow-x-auto sm:overflow ">
