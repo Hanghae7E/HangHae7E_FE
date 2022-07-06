@@ -32,10 +32,22 @@ module.exports = {
     },
     ignorePatterns: ['.eslintrc.js'],
     rules: {
+       "quotes": ['off', 'single'],
         "react/react-in-jsx-scope": "off",
         "react/jsx-filename-extension": "off",
         "import/no-unresolved": "off",
         "import/extensions": "off",
-        "linebreak-style": "off"
-    }
+        "linebreak-style": "off",
+        "space-in-brackets": "off",
+        "@typescript-eslint/explicit-module-boundary-types": "off",
+        "@typescript-eslint/no-empty-interface" : "off",
+        "@typescript-eslint/no-empty-function" : "off",
+        "@typescript-eslint/no-explicit-any" : "off",
+        "@typescript-eslint/no-this-alias" : "off",
+        "@typescript-eslint/no-unused-vars" : "off",
+        "react/jsx-uses-react": "off",
+        "react/prop-types": "off",
+        "react/require-default-props": "off",
+        "react/no-unsafe-optional-chaining": "off"
+  }
 }
