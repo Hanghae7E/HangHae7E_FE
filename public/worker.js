@@ -1,3 +1,11 @@
+importScripts('https://www.gstatic.com/firebasejs/4.6.1/firebase-app.js');
+importScripts('https://www.gstatic.com/firebasejs/4.6.1/firebase-messaging.js');
+
+firebase.initializeApp({
+    'messagingSenderId': '348760925983'
+});
+const messaging = firebase.messaging();
+
 const CACHE_NAME = 'pwa-task-manager';
 const urlsToCache = [
   '/',

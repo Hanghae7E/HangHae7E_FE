@@ -2,6 +2,8 @@
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
+import { initializeApp } from 'firebase/app';
+import { getMessaging, getToken } from 'firebase/messaging';
 import DetailPage from './Pages/DetailPage';
 import MainPage from './Pages/MainPage';
 import MyPage from './Pages/MyPage';
@@ -9,6 +11,7 @@ import ProjectCreate from './Pages/ProjectCreate';
 
 const queryClient = new QueryClient();
 function App() {
+  // Initialize Firebase Cloud Messaging and get a reference to the service
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>

@@ -4,3 +4,4 @@ postcss.config.js
 tailwind.config.js
 serviceWorkerRegistration.ts
 worker.js
+firebase-messaging-sw.js
