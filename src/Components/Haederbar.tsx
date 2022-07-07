@@ -21,13 +21,13 @@ export default function Header() {
               <div className="flex-1 flex-shrink-0 flex items-center">
                 <img
                   className="block lg:hidden h-8 w-auto"
-                  src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg"
-                  alt="Workflow"
+                  src="/logo.svg"
+                  alt="huddleup"
                 />
                 <img
                   className="hidden lg:block h-8 w-auto"
-                  src="https://tailwindui.com/img/logos/workflow-logo-indigo-500-mark-white-text.svg"
-                  alt="Workflow"
+                  src="/logo.svg"
+                  alt="huddleup"
                 />
               </div>
               <div className="hidden sm:block  hover:bg-gray-700 text-gray-800 hover:text-white text-sm px-5 py-2 rounded-2xl">
