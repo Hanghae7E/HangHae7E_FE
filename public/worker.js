@@ -1,10 +1,4 @@
-importScripts('https://www.gstatic.com/firebasejs/4.6.1/firebase-app.js');
-importScripts('https://www.gstatic.com/firebasejs/4.6.1/firebase-messaging.js');
 
-firebase.initializeApp({
-    'messagingSenderId': '348760925983'
-});
-const messaging = firebase.messaging();
 
 const CACHE_NAME = 'pwa-task-manager';
 const urlsToCache = [
@@ -55,19 +49,17 @@ self.addEventListener('activate', event => {
   );
 });
 
-self.addEventListener('push', function (event) {
-    //const data = JSON.parse(event.data.text());
-    const data = event.data.text()
-      
-    event.waitUntil( async function() {
-        for (const client of await self.clients.matchAll({includeUncontrolled: true})) {
-            client.postMessage(data);
-        }
-        self.registration.showNotification( "알람", {
-            body: data
-        })
-    }());
+self.addEventListener('push', function(event) {
+    const payload = event.data.json();
+    const title = payload.notification.title;
+    const options = {
+      body: payload.notification.body,
+      icon: payload.notification.icon,
+      data: payload.notification.click_action
+    };
+    event.waitUntil(self.registration.showNotification(title, options));
 });
+
 
 self.addEventListener('notificationclose', function (e) {
   var notification = e.notification;
