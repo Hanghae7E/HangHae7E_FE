@@ -10,6 +10,12 @@ export interface IRecruitPost{
 	projectStartTime : string;
 	projectEndTime: string;
 	recruitDueTime: string;
-	tagList : Array<string>;
+	tagList: Array<string>;
+	last:boolean
 
+}
+
+export interface IRecruitPages{
+	postPage: Array<IRecruitPost>;
+	currentPage: number;
 }

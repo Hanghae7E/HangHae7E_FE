@@ -9,37 +9,39 @@ function classNames(...classes: string[]) {
 }
 
 export default function Header() {
-  const isLogin = true;
   const nav = useNavigate();
-  const moveProjectPage = () => {
+  const isLogin = true;
+  const goCreateProject = () => {
     nav('/projectcreate');
   };
   return (
     <Disclosure as="nav" className="bg-gray-100">
       {() => (
-        <div className="max-w-8xl mx-auto px-2 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
           <div className="relative flex items-center justify-between h-16">
             <div className="flex-1 flex items-center justify-center ">
               <div className="flex-1 flex-shrink-0 flex items-center">
                 <img
                   className="block lg:hidden h-8 w-auto"
-                  src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg"
-                  alt="Workflow"
+                  src="/logo.svg"
+                  alt="huddleup"
                 />
                 <img
                   className="hidden lg:block h-8 w-auto"
-                  src="https://tailwindui.com/img/logos/workflow-logo-indigo-500-mark-white-text.svg"
-                  alt="Workflow"
+                  src="/logo.svg"
+                  alt="huddleup"
                 />
               </div>
-              <div className="hidden sm:block  hover:bg-gray-700 text-gray-800 hover:text-white text-sm px-5 py-2 rounded-2xl">
+              <div className="hidden sm:block  hover:bg-developer text-gray-800 hover:text-white text-sm px-5 py-2 rounded-2xl">
                 <div className="flex justify-center items-center">
+
                   <div
                     onClick={moveProjectPage}
                     className="no-underline bg-white-900 font-bold cursor-pointer"
                   >
                     프로젝트 생성
                   </div>
+
                 </div>
               </div>
             </div>

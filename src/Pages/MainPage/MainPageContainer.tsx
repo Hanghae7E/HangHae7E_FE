@@ -1,28 +1,37 @@
-import { useEffect, useState } from 'react';
+
+import { useEffect } from 'react';
+import { useInView } from 'react-intersection-observer';
+
 import { useQuery } from 'react-query';
 import postApi from '../../Api/postApi';
+import useInfiniteScrollQuery from '../../Hooks/useInfiniteScrollQuery';
 import MainBody from './Presentaion/MainBody';
 import MainFooter from './Presentaion/MainFooter';
 import MainHeader from './Presentaion/MainHeader';
 
 export default function MainPageContainer() {
-  const recruitPosts = useQuery('recruit_post', () => postApi.getRecruitPosts());
   const recommendPosts = useQuery('recommend_post', () => postApi.getRecommendPosts());
-  const [isLoading, setLoding] = useState<boolean>(false);
-
+  const {
+    getBoard, getNextPage,
+    getBoardIsSuccess, getNextPageIsPossible,
+  } = useInfiniteScrollQuery();
+  const [ref, isView] = useInView();
   useEffect(() => {
-    if (recommendPosts.isSuccess && recruitPosts.isSuccess) {
-      setLoding(true);
+    if (isView && getNextPageIsPossible) {
+      getNextPage();
     }
-  }, [isLoading]);
+  }, [isView, getBoard]);
   return (
     <>
       <MainHeader />
-      {recommendPosts.isSuccess && recruitPosts.isSuccess && (
-      <MainBody
-        rcruitPost={recruitPosts.data.data}
-        recommendPosts={recommendPosts.data.data}
-      />
+      {recommendPosts.isSuccess && getBoardIsSuccess && (
+        <div>
+          <MainBody
+            recruitPost={getBoard?.pages}
+            recommendPosts={recommendPosts.data.data}
+          />
+          <div ref={ref} />
+        </div>
       )}
       <MainFooter />
     </>
