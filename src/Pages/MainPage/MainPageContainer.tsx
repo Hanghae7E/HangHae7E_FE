@@ -1,5 +1,7 @@
+
 import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
+
 import { useQuery } from 'react-query';
 import postApi from '../../Api/postApi';
 import useInfiniteScrollQuery from '../../Hooks/useInfiniteScrollQuery';
