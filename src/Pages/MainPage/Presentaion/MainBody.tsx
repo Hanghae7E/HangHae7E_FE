@@ -71,6 +71,7 @@ export default function MainBody(
 
       </div>
       <div className="mx-auto items-center overflow-hidden flex flex-wrap mb-5 bg-white">
+
         {recruitPost && recruitPost.map((pages) => pages.postPage.map((data) => (
           <PostCard
             key={data.id}
