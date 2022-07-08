@@ -4,20 +4,13 @@ import { IRecruitPost } from '../TypeInterface/postType';
 import PositionTag from './PositionTag';
 import SearchTag from './SearchTag';
 
-
 export default function PostCard({ data }: { data: IRecruitPost }) {
   const nav = useNavigate();
 
   const goCardDetail = () => {
     nav('/detail');
+  };
 
-  };
-  const background = (i: number) => {
-    if (i === 3) {
-      return 'min-w-full sm:min-w-min w-1/3 h-min min-h-min p-2 my-3 box-border bg-blue-100';
-    }
-    return 'min-w-full sm:min-w-min w-1/3 h-min min-h-min p-2 my-3 box-border';
-  };
   return (
 
     <div className=" min-w-full lg:min-w-min w-1/3 h-min min-h-min my-3 text box-border cursor-pointer" onClick={goCardDetail} onKeyPress={goCardDetail}>
@@ -41,7 +34,6 @@ export default function PostCard({ data }: { data: IRecruitPost }) {
               <div className="ml-3">
                 <div className="justify-start">
                   <p className="font-black text-base">{data.username}</p>
-
                 </div>
                 <div>
                   <p className="font-black text-[10px] text-black">{data.introduce}</p>
@@ -58,7 +50,7 @@ export default function PostCard({ data }: { data: IRecruitPost }) {
           </div>
         </div>
 
-      )}
+      </div>
     </div>
   );
 }

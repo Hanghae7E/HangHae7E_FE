@@ -36,7 +36,7 @@ export default function Header() {
                 <div className="flex justify-center items-center">
 
                   <div
-                    onClick={moveProjectPage}
+                    onClick={goCreateProject}
                     className="no-underline bg-white-900 font-bold cursor-pointer"
                   >
                     프로젝트 생성
