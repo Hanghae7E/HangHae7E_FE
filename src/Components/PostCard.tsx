@@ -2,6 +2,7 @@
 import { useNavigate } from 'react-router-dom';
 import { IRecruitPost } from '../TypeInterface/postType';
 import PositionTag from './PositionTag';
+import SearchTag from './SearchTag';
 
 export default function PostCard({ data }: { data: IRecruitPost }) {
   const nav = useNavigate();
@@ -10,7 +11,7 @@ export default function PostCard({ data }: { data: IRecruitPost }) {
     nav('/detail');
   };
   return (
-    <div className=" min-w-full md:min-w-min w-1/3 h-min min-h-min my-3 text box-border cursor-pointer" onClick={goCardDetail} onKeyPress={goCardDetail}>
+    <div className=" min-w-full lg:min-w-min w-1/3 h-min min-h-min my-3 text box-border cursor-pointer" onClick={goCardDetail} onKeyPress={goCardDetail}>
       <div className="p-3 hover:p-1 box-border ">
         <div className="flex items-center">
           {/* <span className="text-xs text-gray-400">
@@ -27,23 +28,23 @@ export default function PostCard({ data }: { data: IRecruitPost }) {
           <img className="w-full h-4/6 object-fill m-0" src="/defaulimg.svg" alt="project" />
           <div className="flex py-3">
             <div className="flex items-center mb-1 py-2">
-              <img className="ml-5 w-20 h-20 rounded-full object-fill" src="/profiledefault.svg" alt="project" />
-              <div className="ml-5">
-                <div className="justify-start mb-2">
-                  <p className="font-extrabold text-lg">{data.username}</p>
+              <img className="ml-5 w-16 h-26 rounded-full object-fill" src="/profiledefault.svg" alt="project" />
+              <div className="ml-3">
+                <div className="justify-start">
+                  <p className="font-black text-base">{data.username}</p>
 
                 </div>
                 <div>
-                  <p className="font-semibold text-xs text-black">{data.introduce}</p>
+                  <p className="font-black text-[10px] text-black">{data.introduce}</p>
                 </div>
               </div>
             </div>
           </div>
           <hr className="border-gray mx-8" />
           <div className=" m-0 p-2">
-            <h4 className="mt-4 mb-3 ml-4 text-2xl md:text-base font-extrabold">{data.title}</h4>
-            <div className="mx-3 md:mr-7 flex flex-wrap box-border my-1 mb-3">
-              {data.tagList.map((pos, i) => <div key={pos + String(i)} className="px-2 py-1 box-border bg-tag-bg text-xl md:text-xs font-semibold rounded-full mx-2 md:mx-1 my-1">{pos}</div>)}
+            <h4 className="mt-4 mb-3 ml-4 text-2xl md:text-sm font-extrabold">{data.title}</h4>
+            <div className="mx-3 md:mr-7 flex flex-nowrap box-border my-1 mb-3">
+              {data.tagList.map((pos, i) => <SearchTag key={`${pos + i}`} tag={pos} />)}
             </div>
           </div>
         </div>

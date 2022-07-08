@@ -26,7 +26,10 @@ module.exports = {
       'tag-bg': '#E8EDF4',
       'white': '#ffffff',
       'black': '#000000',
-      'gray': '#cccccc'
+      'gray': '#cccccc',
+      'refGray': '#676767',
+      'inputGray':'#DFE1E5'
+
     }
   },
   plugins: [],

@@ -15,7 +15,7 @@ export default function Header() {
   return (
     <Disclosure as="nav" className="bg-gray-100">
       {() => (
-        <div className="max-w-8xl mx-auto px-2 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
           <div className="relative flex items-center justify-between h-16">
             <div className="flex-1 flex items-center justify-center ">
               <div className="flex-1 flex-shrink-0 flex items-center">
@@ -30,12 +30,12 @@ export default function Header() {
                   alt="huddleup"
                 />
               </div>
-              <div className="hidden sm:block  hover:bg-gray-700 text-gray-800 hover:text-white text-sm px-5 py-2 rounded-2xl">
+              <div className="hidden sm:block  hover:bg-developer text-gray-800 hover:text-white text-sm px-5 py-2 rounded-2xl">
                 <div className="flex justify-center items-center">
                   <button
                     type="button"
                     onClick={goCreateProject}
-                    className="no-underline bg-white-900 font-bold"
+                    className="no-underline  font-bold"
                   >
                     프로젝트 생성
                   </button>
