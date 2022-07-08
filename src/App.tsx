@@ -1,3 +1,4 @@
+/* eslint-disable implicit-arrow-linebreak */
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
