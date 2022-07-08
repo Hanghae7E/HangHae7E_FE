@@ -26,7 +26,7 @@ export default function MainPageContainer() {
         },
 
       };
-      axios.post('https://fcm.googleapis.com/v1/projects/huddleup-7eaba/messages:send', data, {
+      axios.post('https://fcm.googleapis.com/v1/projects/<project_id>/messages:send', data, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: 'Bearer <Server Toekn>',
