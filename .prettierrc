@@ -7,6 +7,5 @@
   "trailingComma": "es5",
   "printWidth": 100,
   "singleQuote": true,
-  // "jsxBracketSameLine": true,
   "preserve": "always"
 }

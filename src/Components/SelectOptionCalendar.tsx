@@ -22,7 +22,6 @@ export default function Calendar({ start, end, isRange = false }: Iprops) {
     setStartDate(selectStart);
     setEndDate(selectEnd);
   };
-  // DatePicker 옵션: inline 달력만 표시
   return (
     <div className="custom-react-datePicker_wrapper">
       {isRange && (

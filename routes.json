@@ -1,6 +1,7 @@
 {
     "/api/login":"/user", 
     "/api/user/:email": "/user?email=:email",
+    "/api/tag": "/tag",
     "/api/recruitPost": "/recruitPost",
     "/api/main":"/recruitPost"
 }

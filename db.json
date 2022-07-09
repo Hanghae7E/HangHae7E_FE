@@ -1,20 +1,89 @@
 {
-    "user": 
-        { "id":1,
-          "email": "aaa@aaa.aa",
-          "password": "1111",
-          "username":"user1",
-          "phoneNumber":"010-1111-1111",
-          "socialName":"none",
-          "residence":"서울",
-          "availbility":["All","주4일","주말 포함","2022-07-01","2022-07-04"],
-          "jobGroup":"개발자",
-          "jobPosition":"프론트 엔드",
-          "workExperience":"0",
-          "url":["https://github.com/Hanghae7E/HangHae7E_FE"],
-          "instagramId":"user1",
-          "skil":["javascript","html","css","phython"]
-        },
+    "user": [
+    {
+      "id":1,
+      "username": "장원영",
+      "email": "aaa@aaa.aa",
+      "phone_number": "010-1111-1111",
+      "profile_image_url": "https://img.hankyung.com/photo/201908/2019081413382674123-540x811.jpg",
+      "residence": "서울",
+      "available_period": "주1일,주말 포함",
+      "available_time": "2022-07-01,2022-07-30",
+      "position": "개발자",  
+      "fields": [ "프론트","백"
+      ],
+      "face_to_face": false, 
+      "skills": [
+        "java","javaScript","spring"
+      
+      ],
+      "career_period": "1년 미만", 
+      "portfolio_url": "https://github.com/Hanghae7E/HangHae7E_FE"
+    },
+    {
+      "id":2,
+      "username": "이영지",
+      "email": "bbb@bbb.bb",
+      "phone_number": "010-1111-1111",
+      "profile_image_url": "https://img.etoday.co.kr/pto_db/2020/08/20200802183850_1492742_578_703.jpg",
+      "residence": "서울",
+      "available_period": "주2일,주말 제외",
+      "available_time": "2022-07-02,2022-07-31",
+      "position": "디자이너",  
+      "fields": [ "UX/UI 디자인","웹 디자인"
+      ],
+      "face_to_face": true, 
+      "skills": [
+        "adobe","figma"
+      
+      ],
+      "career_period": "1년 미만", 
+      "portfolio_url": "https://github.com/Hanghae7E/HangHae7E_FE"
+    },
+    {
+      "id":3,
+      "username": "코쿤",
+      "email": "ccc@ccc.cc",
+      "phone_number": "010-1111-1111",
+      "profile_image_url": "http://file3.instiz.net/data/file3/2021/12/11/1/a/4/1a491213dadb1f297a1c5cfe8646ca72.jpg",
+      "residence": "서울",
+      "available_period": "주3일,주말 포함",
+      "available_time": "2022-07-10,2022-08-30",
+      "position": "개발자",  
+      "fields": [ "프론트엔드"
+      ],
+      "face_to_face": false, 
+      "skills": [
+        "html","javaScript","css"
+      
+      ],
+      "career_period": "1년 미만", 
+      "portfolio_url": "https://github.com/Hanghae7E/HangHae7E_FE"
+    }
+    ],
+    "tag" :
+    [
+    {"id":1 ,"tagId":1, "body":"adobe"},
+    {"id":2 ,"tagId":2, "body":"aws"},
+    {"id":3 ,"tagId":3, "body":"asp.net"},
+    {"id":4 ,"tagId":4, "body":"android"},
+    {"id":5 ,"tagId":5, "body":"spring"},
+    {"id":6 ,"tagId":6, "body":"babel"},
+    {"id":7 ,"tagId":7, "body":"bulma"},
+    {"id":8 ,"tagId":8, "body":"c"},
+    {"id":9 ,"tagId":9, "body":"c#"},
+    {"id":10 ,"tagId":10,"body":"c++"},
+    {"id":11 ,"tagId":11, "body":"css"},
+    {"id":12 ,"tagId":12, "body":"dJango"},
+    {"id":13 ,"tagId":13, "body":"css"},
+    {"id":14 ,"tagId":14, "body":"figma"},
+    {"id":15 ,"tagId":15, "body":"firebase"},
+    {"id":16 ,"tagId":16, "body":"html"},
+    {"id":17 ,"tagId":17, "body":"intelliJ"},
+    {"id":18 ,"tagId":18, "body":"java"},
+    {"id":19 ,"tagId":19, "body":"javaScript"},
+    {"id":20 ,"tagId":20, "body":"node"}
+    ],
     "recruitPost":[{
       "id":1,
       "title" : "프로젝트 모집합니다.",

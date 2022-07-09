@@ -10,14 +10,14 @@ export default function TagInput({
   placeholder: string;
 }) {
   const [tagList, setTagList] = useState(tagData);
-  const [recommends, setRecommends] = useState(['']);
+  const [recommends, setRecommends] = useState<string[]>([]);
   const [myTags, setMyTags] = useState([...selected]);
   const [input, setInput] = useState('');
 
   const recommendsTag = (e: React.ChangeEvent<HTMLInputElement>) => {
     const userInput = e.target.value.toLowerCase();
     setInput(userInput);
-    let filterData = tagList.filter((tag) => tag.toLowerCase().includes(userInput));
+    let filterData = tagList.filter((tag) => tag.toString().toLowerCase().includes(userInput));
     if (e.target.value.length === 0) {
       filterData = [];
     }
@@ -47,8 +47,9 @@ export default function TagInput({
     tagListCopy.push(clickedValue);
     setTagList(tagListCopy);
   };
+
   return (
-    <div className="search w-full">
+    <div className="search w-full ">
       <div className="selectSkils">
         <span className="selectSkils text-sm font-bold text-slate-300 ">선택</span>
         {myTags.map((tag) => (
@@ -65,46 +66,24 @@ export default function TagInput({
       </div>
       <input
         type="text"
-        className="seacrh-bar w-full mt-1 border  border-slate-200"
+        className="seacrh-bar w-full mt-1 border-[2px]  border-[#CCCCCC] rounded-2xl"
         placeholder={placeholder}
         onChange={recommendsTag}
         value={input}
       />
-      <div className="SkilList">
-        <ul>
-          {recommends.map((tag, i) => (
-            <li key={tag}>
-              <button
-                className="bg-slate-400 rounded-md mt-1"
-                type="button"
-                value={tag}
-                onClick={selectedTag}
-              >
-                {tag}
-              </button>
-            </li>
-          ))}
-        </ul>
+      <div className="SkilList flex flex-wrap">
+        {recommends.map((tag, i) => (
+          <button
+            className="bg-[#E8EDF4] rounded-[24px] px-[12px] py-[12px] text-[14px] mr-[8px] mt-[8px]"
+            type="button"
+            value={tag}
+            key={tag}
+            onClick={selectedTag}
+          >
+            {tag}
+          </button>
+        ))}
       </div>
     </div>
   );
 }
-
-//   <div className="warpper">
-//     <div className="tagArea">
-//       <img>아이콘</img>
-//       <span>기술명</span>
-//       <button className="delete">x</button>
-//     </div>
-//     <div className="inputArea"></div>
-
-//     <input type="text" placeholder="ex) javascript" autoComplete="off" value=""></input>
-//     <button type="button"></button>
-//     <ul>
-//       <li>
-//         <img className="teq"></img>
-//         <span className="teqName"></span>
-//         <button className="warpper"></button>
-//       </li>
-//     </ul>
-//   </div>;

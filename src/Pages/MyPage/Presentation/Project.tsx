@@ -1,4 +1,4 @@
-import Calendar from '../../../Components/Calendar';
+import Calendar from '../../../Components/SelectOptionCalendar';
 import wy from './Wy.jpg';
 import user from './User.jpg';
 import { Iprofile } from '../../../TypeInterface/profileType';
