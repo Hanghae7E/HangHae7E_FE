@@ -11,7 +11,7 @@ function App() {
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="/mypage" element={<MyPage />} />
-        <Route path="/detail" element={<DetailPage />} />
+        <Route path="/detail/:postId" element={<DetailPage />} />
         <Route path="/projectcreate" element={<ProjectCreate />} />
       </Routes>
     </BrowserRouter>
