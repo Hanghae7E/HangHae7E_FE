@@ -1,10 +1,22 @@
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useQuery } from 'react-query';
 
 import DetailProjectInfo from './presentations/DetailProjectInfo';
 import DetailUserInfo from './presentations/DetailUserInfo';
+import {
+  getRecruitPostDetails,
+  postRecriutDetailPosts,
+  postRecruitDetailAccept,
+} from '../../Api/postApi';
 
+export type Applicant = {
+  userId: number
+  email: string
+  username: string
+  position: string
+  status: number
+}
 export interface DetailProjectData {
   userId: number,
   title: string
@@ -15,15 +27,10 @@ export interface DetailProjectData {
   totalHeadCount: number
   tags: string[]
   // (작성자의 경우에만)
-  applicants: {
-      userId: number
-      email: string
-      username: string
-      position: string
-      status:boolean
-  }[]
+  applicants: Applicant[]
 }
 
+// 임시 데이터
 const data = {
   userId: 123123123,
   title: '항해 프로젝트 같이 하실분 구합니다',
@@ -40,44 +47,57 @@ const data = {
       email: 'aa',
       username: '김일이',
       position: '개발자',
-      status: true,
+      status: 0,
     },
     {
       userId: 24,
       email: 'bb',
       username: '김일삼',
       position: '기획자',
-      status: true,
+      status: 1,
     },
     {
       userId: 24,
       email: 'bb',
       username: '김일사',
       position: '디자이너',
-      status: false,
+      status: 2,
     },
   ],
 };
 
 export default function DetailPageContainer() {
   const { pathname } = useLocation();
-  console.log(pathname.split('/')[2]);
+  const postId = pathname.split('/')[2];
+
+  const recruitPostDetails = useQuery(
+    ['recruit_post_details', postId],
+    getRecruitPostDetails({ postId }),
+  );
+
   const handleApplyProject = useCallback(() => {
-    console.log('apply');
-  }, []);
+    postRecriutDetailPosts({ postId });
+  }, [postId]);
 
   const handleAcceptApplicant = useCallback(() => {
-    console.log('accpet');
-  }, []);
+    postRecruitDetailAccept({ postId });
+  }, [postId]);
 
-  const handleAcceptReject = useCallback(() => {
+  const handleRejectApplicant = useCallback(() => {
     console.log('reject');
   }, []);
 
   return (
     <div className="flex flex-row h-screen w-[1260px] mx-auto">
-      <DetailUserInfo data={data} />
-      <DetailProjectInfo data={data} />
+      <DetailUserInfo
+        data={data}
+        handleAcceptApplicant={handleAcceptApplicant}
+        handleRejectApplicant={handleRejectApplicant}
+      />
+      <DetailProjectInfo
+        data={data}
+        onClickApply={handleApplyProject}
+      />
     </div>
   );
 }

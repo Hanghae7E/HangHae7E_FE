@@ -6,12 +6,26 @@ interface Props {
 }
 const DetailIcon = {
   Check: ({ onClick }: Props) => (
-    <svg width="18" height="14" viewBox="0 0 18 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg
+      onClick={onClick}
+      width="18"
+      height="14"
+      viewBox="0 0 18 14"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
       <path d="M6.00039 11.1996L1.80039 6.99961L0.400391 8.39961L6.00039 13.9996L18.0004 1.99961L16.6004 0.599609L6.00039 11.1996Z" fill="#323232" />
     </svg>
   ),
   Cancel: ({ onClick }: Props) => (
-    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg
+      onClick={onClick}
+      width="14"
+      height="14"
+      viewBox="0 0 14 14"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
       <path d="M12.2426 13.6569L7 8.41429L1.75736 13.6569L0.343145 12.2427L5.58579 7.00008L0.343146 1.75744L1.75736 0.343226L7 5.58587L12.2426 0.343226L13.6569 1.75744L8.41421 7.00008L13.6569 12.2427L12.2426 13.6569Z" fill="#323232" />
     </svg>
   ),

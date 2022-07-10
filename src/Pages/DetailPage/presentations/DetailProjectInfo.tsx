@@ -5,8 +5,9 @@ import DetailIcon from './DetailIcon';
 
 interface Props {
   data: DetailProjectData
+  onClickApply: () => void
 }
-function DetailProjectInfo({ data }: Props) {
+function DetailProjectInfo({ data, onClickApply }: Props) {
   const {
     title,
     body,
@@ -73,7 +74,11 @@ function DetailProjectInfo({ data }: Props) {
         </div>
       </div>
       <div className="w-full flex justify-center mt-[60px]">
-        <button className="w-[290px] font-bold bg-[#6457FA] mx-auto text-white h-[72px] rounded-2xl" type="button">
+        <button
+          type="button"
+          onClick={onClickApply}
+          className="w-[290px] font-bold bg-[#6457FA] mx-auto text-white h-[72px] rounded-2xl"
+        >
           참여신청하기
         </button>
       </div>
