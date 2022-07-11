@@ -2,12 +2,12 @@ import baseUrl from './baseUrl';
 
 // 유저 추가
 const postUser = async () => {
-  const res = await baseUrl.put(`/user`);
+  const res = await baseUrl.put('/user');
   return res;
 };
 // 모든 유저 조회
 const getAllUser = async () => {
-  const res = await baseUrl.get(`/user`);
+  const res = await baseUrl.get('/user');
   return res;
 };
 

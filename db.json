@@ -7,7 +7,7 @@
       "phone_number": "010-1111-1111",
       "profile_image_url": "https://img.hankyung.com/photo/201908/2019081413382674123-540x811.jpg",
       "residence": "서울",
-      "available_period": "주1일,주말 포함",
+      "available_period": "주 1일,주말 포함",
       "available_time": "2022-07-01,2022-07-30",
       "position": "개발자",  
       "fields": [ "프론트","백"
@@ -27,7 +27,7 @@
       "phone_number": "010-1111-1111",
       "profile_image_url": "https://img.etoday.co.kr/pto_db/2020/08/20200802183850_1492742_578_703.jpg",
       "residence": "서울",
-      "available_period": "주2일,주말 제외",
+      "available_period": "주 2일,주말 제외",
       "available_time": "2022-07-02,2022-07-31",
       "position": "디자이너",  
       "fields": [ "UX/UI 디자인","웹 디자인"
@@ -47,7 +47,7 @@
       "phone_number": "010-1111-1111",
       "profile_image_url": "http://file3.instiz.net/data/file3/2021/12/11/1/a/4/1a491213dadb1f297a1c5cfe8646ca72.jpg",
       "residence": "서울",
-      "available_period": "주3일,주말 포함",
+      "available_period": "주 3일,주말 포함",
       "available_time": "2022-07-10,2022-08-30",
       "position": "개발자",  
       "fields": [ "프론트엔드"
