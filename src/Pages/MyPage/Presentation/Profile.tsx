@@ -14,123 +14,149 @@ export default function Profile({
   tagList: Array<string>;
 }) {
   const selected = profileData.skills;
-  const urltitle = profileData.position === '개발자' ? 'Github URL' : 'portfolio URL';
+  const urltitle = profileData.position === '개발자' ? 'Git' : '링크';
   const placeholderTag = '스킬을 입력 하세요.';
   const [startDate, endDate] = profileData.available_time.split(',');
+  const [workDay, IncludWeekend] = profileData.available_period.split(',');
+
   return (
     <fieldset>
-      <div className="profileComponent flex flex-col  bg-white ">
-        <div className="profileTitle flex">
-          <h2 className="w-full mt-[7px] text-2xl font-extrabold">
-            안녕하세요
-            <br />
-            {`${profileData.fields[0]} ${profileData.position}, ${profileData.username}입니다.`}
+      <div className="profile max-w-[736px] pl-[10px] pb-[63px] border-2 border-[#EEEEEE] rounded-2xl">
+        <h2 className="prorileTitle pt-[40px] font-pre font-bold text-[28px] leading-[33px] ">
+          안녕하세요
+          <br />
+          {`${profileData.fields[0]} ${profileData.position}, ${profileData.username}입니다.`}
+        </h2>
+        <hr className="mt-[40px] mr-[64px]  border-1 border-[#CCCCCC]" />
+        <div className="flex pt-[40px]">
+          <h2 className="min-w-fit pr-[22px] font-pre font-bold text-[18px] leading-[21px]">
+            직군
+          </h2>
+          <input className="" type="text" placeholder="직군" value={profileData.position} />
+        </div>
+        <div className="flex pt-[28px]">
+          <h2 className="min-w-fit pr-[22px] font-pre font-bold text-[18px] leading-[21px]">
+            직무
+          </h2>
+          <input className="" type="text" placeholder="직무" value={profileData.fields} />
+        </div>
+        <div className="flex pt-[28px]">
+          <h2 className="min-w-fit pr-[22px] font-pre font-bold text-[18px] leading-[21px]">
+            경력
+          </h2>
+          <input className="" type="text" placeholder="경력" value={profileData.career_period} />
+        </div>
+        <div className="flex pt-[28px] mr-[64px]">
+          <h2 className="min-w-fit pr-[22px] font-pre font-bold text-[18px] leading-[50px]">
+            스킬
+          </h2>
+          <TagInput tagData={tagList} selected={selected} placeholder={placeholderTag} />
+          {/* <input
+            className="h-[50px] w-full  mr-[64px] border-2
+            border-[#EEEEEE] rounded-2xl font-pre font-normal text-[18px] 
+            leading-[21px] text-[#CCCCCC]"
+            type="text"
+            placeholder="보유 스킬을 검색해 주세요"
+            value={profileData.fields}
+          /> */}
+        </div>
+        <div className="flex pt-[28px]">
+          <h2 className="min-w-fit pr-[22px] font-pre font-bold text-[18px] leading-[50px]">
+            {urltitle}
+          </h2>
+          <input
+            className="h-[50px] w-full mr-[64px] pl-[10px] border-2 border-[#EEEEEE] rounded-2xl font-pre font-normal text-[18px] leading-[21px] text-[#CCCCCC]"
+            type="text"
+            placeholder="https://.."
+            value={profileData.portfolio_url}
+          />
+        </div>
+        <div className="flex pl-[60px] pt-[12px]">
+          <text className="w-full font-pre font-normal text-[12px] leading-[14.32px]">
+            깃헙, 노션으로 작성한 포트폴리오, 구글 드라이브 파일 등 본인을 보여줄 수 있는 링크를
+            추가해주세요.
+          </text>
+        </div>
+        <hr className="mt-[40px] mr-[64px]  border-1 border-[#CCCCCC]" />
+        <div className="flex flex-col pt-[40px] mr-[64px]">
+          <h2 className="font-pre font-bold text-[24px] leading-[29px]">연락처</h2>
+          <input
+            className="w-full h-[50px] mt-[20px] pl-[20px] border-2 border-[#EEEEEE] rounded-2xl font-pre font-normal text-[18px] leading-[21px] text-[#CCCCCC]"
+            type="text"
+            placeholder="이메일"
+            value={profileData.email}
+          />
+          <input
+            className="w-full h-[50px] mt-[20px] pl-[20px] border-2 border-[#EEEEEE] rounded-2xl font-pre font-normal text-[18px] leading-[21px] text-[#CCCCCC]"
+            type="text"
+            placeholder="연락처"
+            value={profileData.phone_number}
+          />
+        </div>
+        <hr className="mt-[40px] mr-[64px]  border-1 border-[#CCCCCC]" />
+        <div className="flex pt-[40px]">
+          <h2 className="flex-none w-full font-pre font-bold text-[24px] leading-[29px]">
+            협업 사항
           </h2>
         </div>
-        <div className="profileSkil w-full mt-4">
-          <div className="profile-inner Info flex mt-2">
-            <h2 className="font-bold w-1/2">직군</h2>
-            <input className="w-1/2" type="text" placeholder="직군" value={profileData.position} />
-          </div>
-          <div className="profile-inner info flex mt-2">
-            <h2 className="font-bold w-1/2">직무</h2>
-            <input className="w-1/2 " type="text" placeholder="직무" value={profileData.fields} />
-          </div>
-          <div className="profile-inner info Infoflex mt-2">
-            <h2 className="font-bold w-1/2">경력</h2>
-            <input
-              className="w-1/2 "
-              type="text"
-              placeholder="경력"
-              value={profileData.career_period}
-            />
-          </div>
-          <div className="profile-inner info flex flex-col w-full mt-2">
-            <TagInput tagData={tagList} selected={selected} placeholder={placeholderTag} />
-          </div>
-          <div className="profile-inner info flex mt-2 ">
-            <h2 className="font-bold w-1/2">스킬</h2>
-            <input className="w-1/2 " type="text" placeholder="스킬" value={profileData.skills} />
-          </div>
-          <div className="profile-inner info flex-col mt-2">
-            <h2 className="font-bold w-full">{urltitle}</h2>
-            <input
-              className="w-full "
-              type="url"
-              placeholder="url"
-              value={profileData.portfolio_url}
-            />
-          </div>
+        <div className="flex pt-[40px]">
+          <h2 className="min-w-[122px] pr-[20px] font-pre font-bold text-[18px] leading-[21px]">
+            거주지역
+          </h2>
+          <input className="" type="text" placeholder="거주지" value={profileData.residence} />
         </div>
-        <div className="profileContact w-full mt-4">
-          <div className="profile-inner info flex-col mt-2">
-            <h2 className="font-bold w-full">연락처</h2>
-            <input
-              className="w-full text-left"
-              type="text"
-              placeholder="이메일"
-              value={profileData.email}
-            />
-            <input
-              className="w-full text-left"
-              type="text"
-              placeholder="핸드폰"
-              value={profileData.phone_number}
-            />
-          </div>
+        <div className="flex pt-[40px]">
+          <h2 className="min-w-[122px] pr-[20px] font-pre font-bold text-[18px] leading-[21px]">
+            미팅방식
+          </h2>
+          <label htmlFor="meeting"></label>
+          <select id="meeting" className="border-2 border-[#EEEEEE] rounded-md">
+            <option value=""> 선호하는 미팅 방식 </option>
+            <option selected={profileData.face_to_face} value="true">
+              대면
+            </option>
+            <option selected={profileData.face_to_face} value="false">
+              비대면
+            </option>
+          </select>
         </div>
-        <div className="profileCo">
-          <div className="profile-inner infoCo flex mt-4">
-            <h2 className="w-full text-xl font-extrabold">협업사항</h2>
-          </div>
-          <div className="profile-inner infoCo flex mt-2">
-            <h2 className="font-bold w-1/4 ">거주지역</h2>
-            <input
-              className="w-1/4 text-center"
-              type="text"
-              placeholder="서울"
-              value={profileData.residence}
-            />
-            <h2 className="font-bold w-1/4 ">미팅 방식</h2>
-            <div className="flex items-center mr-4">
-              <input
-                id="inline-radio"
-                type="radio"
-                value="대면"
-                name="inline-radio-group"
-                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-              />
-              <label
-                htmlFor="inline-radio"
-                className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-              >
-                대면
-              </label>
-            </div>
-            <div className="flex items-center mr-4">
-              <input
-                id="inline-2-radio"
-                type="radio"
-                value=""
-                name="inline-radio-group"
-                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-              />
-              <label
-                htmlFor="inline-2-radio"
-                className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-              >
-                비대면
-              </label>
-            </div>
-          </div>
-          <div className="profile-inner infoCo flex flex-col mt-2">
-            <h2 className="font-bold w-full ">작업가능 기간</h2>
-            <CustomCalinder start={startDate} end={endDate} isRange />
-          </div>
-          <div className="profile-inner infoCo flex  mt-2">
-            <h2 className="font-bold w-full ">작업가능 시간</h2>
-            <input className="w-full text-center" type="text" placeholder="주 4일 /퇴근후" />
-          </div>
+        <div className="flex pt-[40px]">
+          <h2 className="min-w-[102px] pr-[20px] font-pre font-bold text-[18px] leading-[21px]">
+            작업 가능 기간
+          </h2>
+          <CustomCalinder start={startDate} end={endDate} isRange />
+        </div>
+        <div className="flex pt-[40px]">
+          <h2 className="min-w-[102px] pr-[20px] font-pre font-bold text-[18px] leading-[21px]">
+            작업 가능 시간
+          </h2>
+          <select id="workDay" className="border-2 border-[#EEEEEE] rounded-md  ">
+            <option value="">작업 가능 시간</option>
+            <option selected={workDay === '주 1일'} value="주 1일">
+              주 1일
+            </option>
+            <option selected={workDay === '주 2일'} value="주 2일">
+              주 2일
+            </option>
+            <option selected={workDay === '주 3일'} value="주 3일">
+              주 3일
+            </option>
+            <option selected={workDay === '주 4일'} value="주 4일">
+              주 4일
+            </option>
+            <option selected={workDay === '주 5일'} value="주 5일">
+              주 5일
+            </option>
+          </select>
+          <select id="workforWeek" className="border-2 border-[#EEEEEE] rounded-md  ">
+            <option value="">주말 작업 여부</option>
+            <option selected={IncludWeekend === '주말 포함'} value="주말 포함">
+              주말 포함
+            </option>
+            <option selected={IncludWeekend === '주말 제외'} value="주말 제외">
+              주말 제외
+            </option>
+          </select>
         </div>
       </div>
     </fieldset>

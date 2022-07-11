@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import wy from '../Wy.jpg';
+import EditIcon from '../EditIcon.png';
 import Profile from './Profile';
 import { Iprofile } from '../../../TypeInterface/profileType';
 import { Itag } from '../../../TypeInterface/tagType';
@@ -12,69 +13,78 @@ export default function MyPageBody({
   profileData: Iprofile;
   skillTags: Array<string>;
 }) {
-  const profileClick = () => {};
-  const reqProjectClick = () => {};
-  const appProjectClick = () => {};
+  const [innerContents, setInnerContents] = useState('project');
+  const tabClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const val = e.currentTarget.value;
+    setInnerContents(val);
+  };
+  // const reqProjectClick = () => {};
+  // const appProjectClick = () => {};
   const modifyUserInfo = () => {};
+
   return (
-    <div className="myPage w-full h-full">
+    <div className="max-w-full mx-auto">
       <div className="myPageBanner  bg-cover bg-center">
         <img className="w-full h-[255px] object-cover" src={wy} alt="backgroundImage" />
       </div>
-      <div className="myPageContents flex w-full h-full  bg-white">
-        <div className="sideProfile p-20 w-20 relative">
-          <div className="side absolute -top-[88px] w-48 bg-white border-2  rounded-sm ">
-            <div className="sideInner p-5  rounded-xl text-center">
-              <div className="userImg relative  ">
-                <img
-                  className="h-20 w-20 m-auto rounded-full"
-                  src={profileData.profile_image_url}
-                  alt="userImage"
-                />
-                <div className="absolute w-6 h4 right-1/4 -bottom-1 rounded-full  bg-slate-800 text-slate-800">
-                  ED
-                </div>
-              </div>
-              <div className="userName p-2 font-bold">{profileData.username}</div>
-              <div className="userEmail pb-2 text-sm text-slate-700">{profileData.email}</div>
-              <button
-                type="button"
-                onClick={modifyUserInfo}
-                className="w-32 h-6  bg-slate-700 rounded-lg text-center text-xs font-medium text-white"
-              >
-                내 정보 수정하기
+      <div className="myPageContents flex max-w-[1062px] mx-auto ">
+        <div className="side relative flex-none -top-[88px] w-[300px] h-[332px] px-[20px] pb-20px max-w-[300px] bg-white border-2 border-[#EEEEEE]  rounded-2xl ">
+          <div className="sideInner text-center mb-[20px]">
+            <div className="userImg pt-[40px] pb-[18px]">
+              <img
+                className="w-[80px]  h-[80px] mx-auto rounded-full"
+                src={profileData.profile_image_url}
+                alt="userImage"
+              />
+            </div>
+            <div className="userName font-pre font-semibold text-[22px] leading-[22px] pb-[18px]">
+              {profileData.username}
+              <button type="button">
+                <img className="w-8 h-8 inline-block" src={EditIcon} alt="userImage" />
               </button>
             </div>
+            <div className="userEmail font-pre font-normal  text-[16px] leading-[19px] pb-[18px]  ">
+              {profileData.email}
+            </div>
+            <button
+              type="button"
+              onClick={modifyUserInfo}
+              className="w-full h-[67px] rounded-[15px] font-pre font-normal text-[16px] leading-[19px] bg-[#6457FA] text-white hover:bg-white hover:text-[#6457FA]  hover:border-2 hover:border-[#6457FA]"
+            >
+              내 정보 수정하기
+            </button>
           </div>
         </div>
-        <div className="constens w-full  flex flex-col pl-32  bg-white ">
-          <div className="constensTab flex m-3 pl-4 ">
+
+        <div className="contentsArea max-w-[736px] basis-full  pl-[32px] ">
+          <div className="tab w-full flex-none pt-[87px] pb-8 font-pre font-bold text-[28px] leading-[33px]   ">
             <button
-              className="profileTap flex p-2 font-extrabold text-slate-700"
-              type="button"
-              onClick={profileClick}
+              onClick={tabClick}
+              value="profile"
+              className="pr-8 hover:underline hover:decoration-4"
             >
               프로필
             </button>
             <button
-              className="reqProjectTap flex p-2 font-extrabold text-slate-400 hover:text-slate-700"
-              type="button"
-              onClick={reqProjectClick}
+              value="appProject"
+              onClick={tabClick}
+              className="pr-8 hover:underline hover:decoration-4"
             >
-              진행중인 프로젝트
+              등록한 프로젝트
             </button>
             <button
-              className="appProjectTap flex p-2 font-extrabold text-slate-400 hover:text-slate-700"
-              type="button"
-              onClick={appProjectClick}
+              value="reqProject"
+              onClick={tabClick}
+              className="pr-8 hover:underline hover:decoration-4"
             >
-              참여 신청 한 프로젝트
+              신청한 프로젝트
             </button>
           </div>
-          <div className="profileComponent flex flex-col m-2 p-[27px] border-2 ">
+          {innerContents === 'profile' ? (
             <Profile profileData={profileData} tagList={skillTags} />
-            {/* <Project /> */}
-          </div>
+          ) : (
+            <Project />
+          )}
         </div>
       </div>
     </div>

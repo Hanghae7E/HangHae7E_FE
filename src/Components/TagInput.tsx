@@ -31,7 +31,8 @@ export default function TagInput({
     tagCopy.filter((tag) => tag !== clickedValue);
     setMyTags(tagCopy);
 
-    setRecommends(['']);
+    setRecommends([]);
+    setInput('');
 
     const newTagList = tagList.filter((tag) => tag !== clickedValue);
     setTagList(newTagList);
@@ -50,11 +51,10 @@ export default function TagInput({
 
   return (
     <div className="search w-full ">
-      <div className="selectSkils">
-        <span className="selectSkils text-sm font-bold text-slate-300 ">선택</span>
+      <div className="selectSkils mb-3">
         {myTags.map((tag) => (
           <button
-            className="ml-1 bg-slate-300 rounded-md text-sm"
+            className="bg-[#6457FA] rounded-[24px] text-white px-[12px] py-[6px] mr-[8px] mt-[8px] font-pre text-[14px] leading-[16.9x]"
             type="button"
             key={tag}
             value={tag}
@@ -66,7 +66,7 @@ export default function TagInput({
       </div>
       <input
         type="text"
-        className="seacrh-bar w-full mt-1 border-[2px]  border-[#CCCCCC] rounded-2xl"
+        className="h-[50px] w-full pl-[10px] border-2 border-[#EEEEEE] rounded-2xl font-pre font-normal text-[18px] leading-[21px] text-[#CCCCCC]"
         placeholder={placeholder}
         onChange={recommendsTag}
         value={input}
@@ -74,7 +74,7 @@ export default function TagInput({
       <div className="SkilList flex flex-wrap">
         {recommends.map((tag, i) => (
           <button
-            className="bg-[#E8EDF4] rounded-[24px] px-[12px] py-[12px] text-[14px] mr-[8px] mt-[8px]"
+            className="bg-[#EEEEEE] rounded-[24px] px-[12px] py-[6px] mr-[8px] mt-[8px] font-pre text-[14px] leading-[16.9x]"
             type="button"
             value={tag}
             key={tag}

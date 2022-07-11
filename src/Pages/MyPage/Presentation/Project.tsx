@@ -1,4 +1,3 @@
-import Calendar from '../../../Components/SelectOptionCalendar';
 import wy from './Wy.jpg';
 import user from './User.jpg';
 import { Iprofile } from '../../../TypeInterface/profileType';
@@ -14,24 +13,24 @@ export default function Project() {
     2: 'bg-slate-700 rounded-md leading-relaxed align-middle',
   };
   return (
-    <div className="projectComponent flex flex-col pl-2 bg-white ">
-      <div className="title flex pl-2 bg-slate-300 rounded-md">
-        <span className="w-1/4 font-bold text-slate-800 ">진행 상황</span>
-        <span className="w-1/4 font-bold text-slate-800 ">프로젝트 제목</span>
-        <span className="w-1/4 font-bold text-slate-800 ">모집 인원</span>
-        <span className="w-1/4 font-bold text-slate-800 ">프로젝트 기간</span>
+    <div className="projectComponent flex flex-col  bg-white">
+      <div className="title flex max-w-[736px] h-[50px] pl-2 items-center border-2 border-[#EEEEEE] rounded-md">
+        <span className="w-auto mx-auto font-pre font-bold text-[16px] leading-[19px] ">
+          진행 상황
+        </span>
+        <span className="w-1/4  font-pre font-bold text-[16px] leading-[19px]">프로젝트 제목</span>
+        <span className="w-1/4  font-pre font-bold text-[16px] leading-[19px] ">모집 인원</span>
+        <span className="w-1/4  font-pre font-bold text-[16px] leading-[19px]">프로젝트 기간</span>
       </div>
-      <div className="projects flex flex-col mt-2 pl-2 bg-slate-400 ">
-        <div className="project flex">
-          <div className="w-1/4 text-sm ">
-            <span className="bg-slate-700 text-white rounded-md leading-relaxed align-middle">
-              모집중
-            </span>
-          </div>
-          <span className="w-1/4 text-sm leading-relaxed align-middle">모집합니다.</span>
-          <span className="w-1/4 text-smleading-relaxed align-middle">0/8</span>
-          <span className="w-1/4 text-sm leading-relaxed align-middle">2022/07/03-2022/07/05</span>
-        </div>
+      <div className="projectsInner flex max-w-[736px] flex-1 h-[50px] pl-2 mt-4 items-center border-2 border-[#EEEEEE] rounded-md">
+        <span className="w-auto mx-auto rounded-[24px] font-pre font-bold text-[16px] leading-[19px]  bg-[#EEEEEE] px-4 py-1">
+          모집중
+        </span>
+        <span className="w-1/4 font-pre font-bold text-[16px] leading-[19px]">모집합니다.</span>
+        <span className="w-1/4 font-pre font-bold text-[16px] leading-[19px] ">0/8</span>
+        <span className="w-1/4 font-pre font-bold text-[16px] leading-[19px] ">
+          2022/07/03-2022/07/05
+        </span>
       </div>
     </div>
   );
