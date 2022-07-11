@@ -3,6 +3,7 @@
 import { Fragment } from 'react';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { Link, useNavigate } from 'react-router-dom';
+import GlobalIcon from './GlobalIcon';
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
@@ -21,16 +22,8 @@ export default function Header() {
           <div className="relative flex items-center justify-between h-16">
             <div className="flex-1 flex items-center justify-center ">
               <div className="flex-1 flex-shrink-0 flex items-center">
-                <img
-                  className="block lg:hidden h-8 w-auto"
-                  src="/logo.svg"
-                  alt="huddleup"
-                />
-                <img
-                  className="hidden lg:block h-8 w-auto"
-                  src="/logo.svg"
-                  alt="huddleup"
-                />
+
+                <GlobalIcon.Logo />
               </div>
               <div className="hidden sm:block  hover:bg-developer text-gray-800 hover:text-white text-sm px-5 py-2 rounded-2xl">
                 <div className="flex justify-center items-center">

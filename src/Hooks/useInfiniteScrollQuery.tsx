@@ -21,6 +21,7 @@ export default function useInfiniteScrollQuery() {
     getNextPageParam: (lastPage) => {
       // lastPage와 pages는 콜백함수에서 리턴한 값을 의미한다!!
       // lastPage: 직전에 반환된 리턴값, pages: 여태 받아온 전체 페이지
+      console.log(lastPage);
       if (!lastPage.postPage[lastPage.postPage.length - 1].last) {
         return lastPage.currentPage + 1;
       }

@@ -46,7 +46,7 @@
       "projectStartTime" : "2022/07/02",
       "projectEndTime" : "2022/07/30",
       "recruitDueTime" : "2022/06/30",
-      "tagList" : ["프론트 엔드", "자바스크립트","리액트","백엔드"],
+      "tagList" : ["프론트엔드", "자바스크립트","프론트엔드","백엔드"],
       "last": false
     },
     {

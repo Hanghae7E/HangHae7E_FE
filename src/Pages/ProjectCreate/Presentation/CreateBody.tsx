@@ -1,7 +1,7 @@
 import { Menu, Transition } from '@headlessui/react';
 import React, { Fragment, SetStateAction } from 'react';
-import PositionCreateTag from '../../../Components/PositionCreateTag';
-import SearchCreateTag from '../../../Components/SearchCreateTag';
+import GlobalIcon from '../../../Components/GlobalIcon';
+import TagBox from '../../../Components/TagBox';
 import DropDownItem from './DropDownItem';
 
 export default function CreateBody({
@@ -22,10 +22,21 @@ export default function CreateBody({
   }) {
   const fileGetChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const filename = e.target.files;
-
     if (filename) {
       const abc = filename[0];
       setImageName(abc);
+    }
+  };
+  const onRemove = (removeTag:string) => {
+    // user.id 가 파라미터로 일치하지 않는 원소만 추출해서 새로운 배열을 만듬
+    // = user.id 가 id 인 것을 제거함
+    setHashTag(hashTag.filter((tags:string) => tags !== removeTag));
+  };
+  const addHash = (tag:string) => {
+    if (hashTag.length < 4) {
+      if (!hashTag.includes(tag)) {
+        setHashTag([...hashTag, tag]);
+      }
     }
   };
   return (
@@ -52,7 +63,7 @@ export default function CreateBody({
             <p className="font-extrabold text-xs sm:text-lg py-3 w-32 sm:w-56 self-center ">프로젝트 기간</p>
             <div className="flex px-2 flex-1 w-full max-w-[281px] h-[60px] items-center min-w-max text-xs sm:text-base py-3 my-2 cursor-pointer font-semibold border-[3px] rounded-lg border-inputGray">
               <p className="whitespace-nowrap flex items-center ">
-                <img className="pr-1" src="/calendarIcon.svg" alt="calendar" />
+                <GlobalIcon.Calendar />
                 <span className="m-0 p-0 font-inter text-[18px]">2022-07-03 ~ 2022-07-16</span>
               </p>
             </div>
@@ -61,7 +72,7 @@ export default function CreateBody({
             <p className=" font-extrabold text-xs sm:text-lg py-3 w-32 sm:w-56 self-center">모집 마감일</p>
             <div className="flex px-2 flex-1 w-full items-center h-[60px]  max-w-[281px] min-w-max text-xs sm:text-base py-3 my-2 cursor-pointer font-semibold border-[3px] rounded-lg border-inputGray">
               <p className="sm:whitespace-nowrap flex items-center">
-                <img className="pr-1" src="/calendarIcon.svg" alt="calendar" />
+                <GlobalIcon.Calendar />
                 <span className="m-0 p-0 font-inter text-[18px]">2022-07-03</span>
               </p>
             </div>
@@ -70,29 +81,29 @@ export default function CreateBody({
             <p className=" font-extrabold text-xs sm:text-lg py-3 w-32 sm:w-56">필요한 포지션 </p>
             <div className="flex-1 w-full py-2 my-2">
               <div className="flex items-start">
-                <div className="text-xs sm:text-[18px] pt-7 font-bold mr-[21px]">
+                <div className="text-xs sm:text-[18px] pt-7 font-bold mr-[22px]">
                   <p className="whitespace-nowrap">직군</p>
                 </div>
                 <div className="flex flex-col">
-                  <div className="flex items-center justify-between box-border min-w-max">
-                    <PositionCreateTag userPosition="개발자" />
-                    <div className="flex items-center ml-5">
+                  <div className="flex w-full justify-between box-border min-w-max items-center font-bold">
+                    <TagBox tag="개발자" px={12} py={6} text={18} />
+                    <div className="flex items-center ml-[40px]">
                       <input type="text" className="text-right sm:text-[18px] w-[85px] h-[60px] pr-2 py-2 my-2 border-[3px] rounded-xl border-inputGray box-border text-xs " />
-                      <span className="text-xs ml-1 sm:text-[18px] font-bold">명</span>
+                      <span className="text-xs ml-1 sm:text-[18px]">명</span>
                     </div>
                   </div>
-                  <div className="flex w-full box-border justify-between min-w-max">
-                    <PositionCreateTag userPosition="디자이너" />
+                  <div className="flex w-full box-border justify-between min-w-max items-center font-bold">
+                    <TagBox tag="디자이너" px={12} py={6} text={18} />
                     <div className="flex items-center">
                       <input type="text" className="text-right sm:text-[18px] w-[85px] h-[60px] pr-2 py-2 my-2 border-[3px] rounded-xl border-inputGray box-border text-xs " />
-                      <span className="text-xs ml-1 sm:text-[18px] font-bold">명</span>
+                      <span className="text-xs ml-1 sm:text-[18px]">명</span>
                     </div>
                   </div>
-                  <div className="flex w-full box-border justify-between min-w-max">
-                    <PositionCreateTag userPosition="기획자" />
+                  <div className="flex w-full box-border justify-between min-w-max items-center font-bold">
+                    <TagBox tag="기획자" px={12} py={6} text={18} />
                     <div className="flex items-center">
                       <input type="number" className="text-right sm:text-[18px]  w-[85px] h-[60px] pr-2 py-2 my-2 border-[3px] rounded-xl border-inputGray box-border text-xs " />
-                      <span className="text-xs ml-1 sm:text-[18px] font-bold">명</span>
+                      <span className="text-xs ml-1 sm:text-[18px]">명</span>
                     </div>
                   </div>
                 </div>
@@ -142,7 +153,7 @@ export default function CreateBody({
             <p className=" font-extrabold text-xs sm:text-lg py-3 w-32 sm:w-56 self-center">참고이미지</p>
             <div className="flex px-3 flex-1 w-full items-center max-w-[235px] min-w-max text-xs sm:text-base py-2 my-2  border-[3px] rounded-2xl border-developer">
               <label className="sm:whitespace-nowrap flex items-center cursor-pointer" htmlFor="imageFile">
-                <img className="pr-2" src="/fileIcon.svg" alt="calendar" />
+                <GlobalIcon.FileIcon />
                 <span className="font-inter text-developer text-[18px]">
                   {imgName ? imgName.name : '파일첨부(최대 2MB)'}
                   {' '}
@@ -173,17 +184,20 @@ export default function CreateBody({
               ? <p className="font-inter text-inputGray text-[20px] pl-[24px]">해시태그를 선택해주세요 최대 4개</p>
               : (
                 <div className="flex flex-wrap px-5">
-                  {hashTag.map((text, i) => <SearchCreateTag add={false} setHashTag={setHashTag} hashTag={hashTag} key={`${text + i}`} tag={text} />)}
+                  {hashTag.map((text, i) => <TagBox key={`${text + i}`} onClick={() => onRemove(text)} tag={text} text={14} py={8} px={12} mx={4} mb={16} />)}
                 </div>
               )}
           </div>
           <div className="flex flex-wrap mt-5">
-            <SearchCreateTag add setHashTag={setHashTag} hashTag={hashTag} tag="Spring" />
-            <SearchCreateTag add setHashTag={setHashTag} hashTag={hashTag} tag="React" />
-            <SearchCreateTag add setHashTag={setHashTag} hashTag={hashTag} tag="프론트엔드" />
-            <SearchCreateTag add setHashTag={setHashTag} hashTag={hashTag} tag="백엔드" />
-            <SearchCreateTag add setHashTag={setHashTag} hashTag={hashTag} tag="개발자" />
-            <SearchCreateTag add setHashTag={setHashTag} hashTag={hashTag} tag="디자이너" />
+            <TagBox onClick={() => addHash('ALL')} tag="ALL" text={14} py={8} px={12} mx={4} mb={16} />
+            <TagBox onClick={() => addHash('Spring')} tag="Spring" text={14} py={8} px={12} mx={4} mb={16} />
+            <TagBox onClick={() => addHash('1')} tag="1" text={14} py={8} px={12} mx={4} mb={16} />
+            <TagBox onClick={() => addHash('2')} tag="2" text={14} py={8} px={12} mx={4} mb={16} />
+            <TagBox onClick={() => addHash('백엔드')} tag="백엔드" text={14} py={8} px={12} mx={4} mb={16} />
+            <TagBox onClick={() => addHash('1')} tag="1" text={14} py={8} px={12} mx={4} mb={16} />
+            <TagBox onClick={() => addHash('2')} tag="2" text={14} py={8} px={12} mx={4} mb={16} />
+            <TagBox onClick={() => addHash('백엔드')} tag="백엔드" text={14} py={8} px={12} mx={4} mb={16} />
+            <TagBox onClick={() => addHash('1')} tag="1" text={14} py={8} px={12} mx={4} mb={16} />
           </div>
         </div>
 

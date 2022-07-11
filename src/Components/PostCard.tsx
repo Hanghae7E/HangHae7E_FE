@@ -1,8 +1,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import { useNavigate } from 'react-router-dom';
 import { IRecruitPost } from '../TypeInterface/postType';
-import PositionTag from './PositionTag';
-import SearchTag from './SearchTag';
+import TagBox from './TagBox';
 
 export default function PostCard({ data }: { data: IRecruitPost }) {
   const nav = useNavigate();
@@ -13,17 +12,17 @@ export default function PostCard({ data }: { data: IRecruitPost }) {
 
   return (
 
-    <div className=" min-w-full lg:min-w-min w-1/3 h-min min-h-min my-3 text box-border cursor-pointer" onClick={goCardDetail} onKeyPress={goCardDetail}>
+    <div className=" min-w-full md:min-w-min min-h-min w-[410px] text box-border cursor-pointer" onClick={goCardDetail} onKeyPress={goCardDetail}>
       <div className="p-3 hover:p-1 box-border ">
-        <div className="flex items-center">
+        <div className="flex items-center font-bold">
           {/* <span className="text-xs text-gray-400">
             {`${data.projectStartTime} `}
             ~
             {` ${data.projectEndTime}`}
           </span> */}
-          <PositionTag userPosition={data.userPosition} />
-          <PositionTag userPosition={data.userPosition} />
-          <PositionTag userPosition={data.userPosition} />
+          <TagBox tag={data.userPosition} text={12} py={6} px={12} mb={16} mx={4} />
+          <TagBox tag={data.userPosition} text={12} py={6} px={12} mb={16} mx={4} />
+          <TagBox tag={data.userPosition} text={12} py={6} px={12} mb={16} mx={4} />
         </div>
 
         <div className="bg-card-bg rounded-3xl overflow-hidden">
@@ -44,8 +43,8 @@ export default function PostCard({ data }: { data: IRecruitPost }) {
           <hr className="border-gray mx-8" />
           <div className=" m-0 p-2">
             <h4 className="mt-4 mb-3 ml-4 text-2xl md:text-sm font-extrabold">{data.title}</h4>
-            <div className="mx-3 md:mr-7 flex flex-nowrap box-border my-1 mb-3">
-              {data.tagList.map((pos, i) => <SearchTag key={`${pos + i}`} tag={pos} />)}
+            <div className="mx-3 md:mr-7 flex flex-nowrap box-border my-[20px] font-medium">
+              {data.tagList.map((pos, i) => i < 3 && <TagBox key={`${pos + i}`} tag={pos} text={14} py={8} px={12} mx={4} />)}
             </div>
           </div>
         </div>
