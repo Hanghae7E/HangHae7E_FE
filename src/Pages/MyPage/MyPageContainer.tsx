@@ -8,7 +8,7 @@ import MyPageBody from './Presentation/MyPageBody';
 
 export default function MyPageContainer() {
   const [isLoading, setLoding] = useState<boolean>(false);
-  const userProfile = useQuery('user_profile', () => userAPi.getUserProfile('aaa@aaa.aa'));
+  const userProfile = useQuery('user_profile', () => userAPi.getUserProfile('ddd@ddd.ddd'));
   const skillTags = useQuery('tag', () => tagApi.getAllTag());
 
   useEffect(() => {

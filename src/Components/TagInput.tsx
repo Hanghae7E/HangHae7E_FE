@@ -1,27 +1,62 @@
 import React, { ChangeEvent, useState } from 'react';
 
-export default function TagInput({
-  tagData,
-  selected,
-  placeholder,
-}: {
-  selected: Array<string>;
+interface tagOptionI {
   tagData: Array<string>;
+  selected: Array<string>;
   placeholder: string;
-}) {
-  const newTagData = tagData
-    .concat(selected)
-    .filter((item) => !tagData.includes(item) || !selected.includes(item));
+  style?: {
+    tag?: {
+      width?: number;
+      height?: number;
+      px?: number;
+      py?: number;
+      pl?: number;
+      mr?: number;
+      mt?: number;
+      backgroundColor?: string;
+      borderPx?: number;
+      borderColor?: string;
+      rounded?: number;
+      textColor?: string;
+      textSize?: number;
+      lineHeight?: number;
+    };
+    recommendsTag?: {
+      backgroundColor?: string;
+      textColor?: string;
+    };
+  };
+}
 
-  const [tagList, setTagList] = useState(newTagData);
+export default function TagInput(tagOption: tagOptionI) {
+  const { tagData, selected, placeholder, style } = tagOption;
+  const [tagList, setTagList] = useState(['']);
+  const [myTags, setMyTags] = useState(selected);
   const [recommends, setRecommends] = useState<string[]>([]);
-  const [myTags, setMyTags] = useState([...selected]);
   const [input, setInput] = useState('');
+
+  if (selected.length === 0) {
+    setTagList(tagData);
+  }
+
+  // const filterTagData = (all: string[], select: string[]) => {
+  //   const newData = all
+  //     .concat(selected)
+  //     .filter((item) => !tagData.includes(item) || !selected.includes(item));
+  //   return newData;
+  // };
+
+  const tagRec =
+    'bg-[#6457FA] rounded-[24px] text-white px-[12px] py-[6px] mr-[8px] mt-[8px] font-pre text-[14px] leading-[16.9x]';
+  const tagSelct =
+    'h-[50px] w-full pl-[10px] border-2 border-[#EEEEEE] rounded-2xl font-pre font-normal text-[18px] leading-[21px] text-[#CCCCCC]';
 
   const recommendsTag = (e: React.ChangeEvent<HTMLInputElement>) => {
     const userInput = e.target.value.toLowerCase();
     setInput(userInput);
-    let filterData = tagList.filter((tag) => tag.toString().toLowerCase().includes(userInput));
+    let filterData = tagList.filter((tag: string) =>
+      tag.toString().toLowerCase().includes(userInput)
+    );
     if (e.target.value.length === 0) {
       filterData = [];
     }
@@ -34,11 +69,10 @@ export default function TagInput({
     tagCopy.push(clickedValue);
     tagCopy.filter((tag) => tag !== clickedValue);
 
-    const newTagList = tagList.filter((tag) => tag !== clickedValue);
+    const newTagList = tagList.filter((tag: string) => tag !== clickedValue);
     setTagList(newTagList);
 
     setMyTags(tagCopy);
-
     setRecommends([]);
     setInput('');
   };
@@ -57,9 +91,9 @@ export default function TagInput({
   return (
     <div className="search w-full ">
       <div className="selectSkils mb-3">
-        {myTags.map((tag) => (
+        {myTags.map((tag, i) => (
           <button
-            className="bg-[#6457FA] rounded-[24px] text-white px-[12px] py-[6px] mr-[8px] mt-[8px] font-pre text-[14px] leading-[16.9x]"
+            className={tagSelct}
             type="button"
             key={tag}
             value={tag}
@@ -78,13 +112,7 @@ export default function TagInput({
       />
       <div className="SkilList flex flex-wrap">
         {recommends.map((tag, i) => (
-          <button
-            className="bg-[#EEEEEE] rounded-[24px] px-[12px] py-[6px] mr-[8px] mt-[8px] font-pre text-[14px] leading-[16.9x]"
-            type="button"
-            value={tag}
-            key={tag}
-            onClick={selectedTag}
-          >
+          <button className={tagRec} type="button" value={tag} key={tag} onClick={selectedTag}>
             {tag}
           </button>
         ))}

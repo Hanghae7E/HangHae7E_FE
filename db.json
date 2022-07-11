@@ -59,6 +59,26 @@
       ],
       "career_period": "1년 미만", 
       "portfolio_url": "https://github.com/Hanghae7E/HangHae7E_FE"
+    },
+        {
+      "id":4,
+      "username": "코쿤",
+      "email": "ddd@ddd.ddd",
+      "phone_number": "",
+      "profile_image_url": "",
+      "residence": "",
+      "available_period": "",
+      "available_time": "",
+      "position": "",  
+      "fields": [ ""
+      ],
+      "face_to_face": false, 
+      "skills": [
+        
+      
+      ],
+      "career_period": "", 
+      "portfolio_url": ""
     }
     ],
     "tag" :

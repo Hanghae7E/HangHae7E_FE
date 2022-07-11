@@ -13,14 +13,18 @@ export default function MyPageBody({
   profileData: Iprofile;
   skillTags: Array<string>;
 }) {
-  const [innerContents, setInnerContents] = useState('project');
+  const [innerContents, setInnerContents] = useState('profile');
   const tabClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     const val = e.currentTarget.value;
     setInnerContents(val);
   };
 
-  const modifyUserInfo = () => {};
-
+  const modifyUserInfo = () => {
+    setInnerContents('profile');
+  };
+  const editUserProfile = () => {
+    const url = profileData.profile_image_url;
+  };
   return (
     <div className="max-w-full mx-auto">
       <div className="myPageBanner  bg-cover bg-center">
@@ -38,7 +42,7 @@ export default function MyPageBody({
             </div>
             <div className="userName font-pre font-semibold text-[22px] leading-[22px] pb-[18px]">
               {profileData.username}
-              <button type="button">
+              <button type="button" onClick={editUserProfile} value="modifyUserInfo">
                 <img className="w-8 h-8 inline-block" src={EditIcon} alt="userImage" />
               </button>
             </div>
@@ -47,6 +51,7 @@ export default function MyPageBody({
             </div>
             <button
               type="button"
+              value="modifyUserInfo"
               onClick={modifyUserInfo}
               className="w-full h-[67px] rounded-[15px] font-pre font-normal text-[16px] leading-[19px] bg-[#6457FA] text-white hover:bg-white hover:text-[#6457FA]  hover:border-2 hover:border-[#6457FA]"
             >
@@ -58,6 +63,7 @@ export default function MyPageBody({
         <div className="contentsArea max-w-[736px] basis-full  pl-[32px] ">
           <div className="tab w-full flex-none pt-[87px] pb-8 font-pre font-bold text-[28px] leading-[33px]   ">
             <button
+              type="button"
               onClick={tabClick}
               value="profile"
               className="pr-8 hover:underline hover:decoration-4"
@@ -65,6 +71,7 @@ export default function MyPageBody({
               프로필
             </button>
             <button
+              type="button"
               value="appProject"
               onClick={tabClick}
               className="pr-8 hover:underline hover:decoration-4"
@@ -72,7 +79,8 @@ export default function MyPageBody({
               등록한 프로젝트
             </button>
             <button
-              value="reqProject"
+              type="button"
+              defaultValue="reqProject"
               onClick={tabClick}
               className="pr-8 hover:underline hover:decoration-4"
             >
