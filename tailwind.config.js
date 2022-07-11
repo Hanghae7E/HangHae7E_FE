@@ -28,8 +28,12 @@ module.exports = {
       'black': '#000000',
       'gray': '#cccccc',
       'refGray': '#676767',
-      'inputGray':'#DFE1E5'
+      'inputGray': '#DFE1E5',
+      'input-bg':'#F9F9F9'
 
+    },
+    fontFamily: {
+      'inter': ['Inter', 'sans-serif']
     }
   },
   plugins: [],

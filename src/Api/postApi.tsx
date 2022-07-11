@@ -1,7 +1,12 @@
 import baseUrl from './baseUrl';
 
 const getRecruitPosts = async (pageParam: number) => {
-  const res = await baseUrl.get(`/recruitPost?_page=${pageParam}&_limit=3`);
+  let pass = pageParam;
+  if (pass === 0) {
+    pass = 1;
+  }
+
+  const res = await baseUrl.get(`/recruitPost?_limit=3&_page=${pageParam}`);
 
   return res;
 };
@@ -29,5 +34,5 @@ export const postRecruitDetailAccept = async ({ postId }: {postId: string}) => {
 
 export default {
   getRecruitPosts: (pageParam:number) => getRecruitPosts(pageParam),
-  getRecommendPosts: () => getRecommendPosts(),
+  getRecommendPosts,
 };
