@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import Calendar from '../../../Components/SelectOptionCalendar';
 import wy from './Wy.jpg';
 import user from './User.jpg';
@@ -18,6 +19,25 @@ export default function Profile({
   const placeholderTag = '스킬을 입력 하세요.';
   const [startDate, endDate] = profileData.available_time.split(',');
   const [workDay, IncludWeekend] = profileData.available_period.split(',');
+
+  const careerOptions = ['1년 미만', '1-2년', '2-3년', '3-4년', '4-5년', '5년 이상', '10년 이상'];
+  const meetingoptions = [
+    { value: 'true', label: '대면' },
+    { value: 'flase', label: '비대면' },
+  ];
+  const workdayOptions = ['주 1일', '주 2일', '주 3일', '주 4일', '주 5일'];
+  const weekoptions = ['주말 제외', '주말 포함'];
+  const [corporationData, setCorporationData] = useState({
+    career: profileData ? profileData.career_period : '',
+    meeting: profileData ? profileData.face_to_face.toString() : '',
+    workDayoption: profileData ? workDay : '',
+    weekendOption: profileData ? IncludWeekend : '',
+  });
+
+  const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const { value, name } = e.target;
+    setCorporationData({ ...corporationData, [name]: value });
+  };
 
   return (
     <fieldset>
@@ -44,21 +64,24 @@ export default function Profile({
           <h2 className="min-w-fit pr-[22px] font-pre font-bold text-[18px] leading-[21px]">
             경력
           </h2>
-          <input className="" type="text" placeholder="경력" value={profileData.career_period} />
+          <select
+            className="border-2 border-[#EEEEEE] rounded-md "
+            onChange={handleSelect}
+            name="career"
+            value={corporationData.career}
+          >
+            {careerOptions.map((item) => (
+              <option value={item} key={item}>
+                {item}
+              </option>
+            ))}
+          </select>
         </div>
         <div className="flex pt-[28px] mr-[64px]">
           <h2 className="min-w-fit pr-[22px] font-pre font-bold text-[18px] leading-[50px]">
             스킬
           </h2>
           <TagInput tagData={tagList} selected={selected} placeholder={placeholderTag} />
-          {/* <input
-            className="h-[50px] w-full  mr-[64px] border-2
-            border-[#EEEEEE] rounded-2xl font-pre font-normal text-[18px] 
-            leading-[21px] text-[#CCCCCC]"
-            type="text"
-            placeholder="보유 스킬을 검색해 주세요"
-            value={profileData.fields}
-          /> */}
         </div>
         <div className="flex pt-[28px]">
           <h2 className="min-w-fit pr-[22px] font-pre font-bold text-[18px] leading-[50px]">
@@ -109,15 +132,17 @@ export default function Profile({
           <h2 className="min-w-[122px] pr-[20px] font-pre font-bold text-[18px] leading-[21px]">
             미팅방식
           </h2>
-          <label htmlFor="meeting"></label>
-          <select id="meeting" className="border-2 border-[#EEEEEE] rounded-md">
-            <option value=""> 선호하는 미팅 방식 </option>
-            <option selected={profileData.face_to_face} value="true">
-              대면
-            </option>
-            <option selected={profileData.face_to_face} value="false">
-              비대면
-            </option>
+          <select
+            className="border-2 border-[#EEEEEE] rounded-md "
+            onChange={handleSelect}
+            name="meeting"
+            value={corporationData.meeting}
+          >
+            {meetingoptions.map((item) => (
+              <option value={item.value} key={item.value}>
+                {item.label}
+              </option>
+            ))}
           </select>
         </div>
         <div className="flex pt-[40px]">
@@ -130,32 +155,29 @@ export default function Profile({
           <h2 className="min-w-[102px] pr-[20px] font-pre font-bold text-[18px] leading-[21px]">
             작업 가능 시간
           </h2>
-          <select id="workDay" className="border-2 border-[#EEEEEE] rounded-md  ">
-            <option value="">작업 가능 시간</option>
-            <option selected={workDay === '주 1일'} value="주 1일">
-              주 1일
-            </option>
-            <option selected={workDay === '주 2일'} value="주 2일">
-              주 2일
-            </option>
-            <option selected={workDay === '주 3일'} value="주 3일">
-              주 3일
-            </option>
-            <option selected={workDay === '주 4일'} value="주 4일">
-              주 4일
-            </option>
-            <option selected={workDay === '주 5일'} value="주 5일">
-              주 5일
-            </option>
+          <select
+            className="border-2 border-[#EEEEEE] rounded-md "
+            onChange={handleSelect}
+            name="workDayoption"
+            value={corporationData.workDayoption}
+          >
+            {workdayOptions.map((item) => (
+              <option value={item} key={item}>
+                {item}
+              </option>
+            ))}
           </select>
-          <select id="workforWeek" className="border-2 border-[#EEEEEE] rounded-md  ">
-            <option value="">주말 작업 여부</option>
-            <option selected={IncludWeekend === '주말 포함'} value="주말 포함">
-              주말 포함
-            </option>
-            <option selected={IncludWeekend === '주말 제외'} value="주말 제외">
-              주말 제외
-            </option>
+          <select
+            className="border-2 border-[#EEEEEE] rounded-md "
+            onChange={handleSelect}
+            name="weekendOption"
+            value={corporationData.weekendOption}
+          >
+            {weekoptions.map((item) => (
+              <option value={item} key={item}>
+                {item}
+              </option>
+            ))}
           </select>
         </div>
       </div>
