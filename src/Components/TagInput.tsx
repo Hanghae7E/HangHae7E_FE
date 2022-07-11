@@ -9,7 +9,11 @@ export default function TagInput({
   tagData: Array<string>;
   placeholder: string;
 }) {
-  const [tagList, setTagList] = useState(tagData);
+  const newTagData = tagData
+    .concat(selected)
+    .filter((item) => !tagData.includes(item) || !selected.includes(item));
+
+  const [tagList, setTagList] = useState(newTagData);
   const [recommends, setRecommends] = useState<string[]>([]);
   const [myTags, setMyTags] = useState([...selected]);
   const [input, setInput] = useState('');
@@ -29,13 +33,14 @@ export default function TagInput({
     const tagCopy = [...myTags];
     tagCopy.push(clickedValue);
     tagCopy.filter((tag) => tag !== clickedValue);
+
+    const newTagList = tagList.filter((tag) => tag !== clickedValue);
+    setTagList(newTagList);
+
     setMyTags(tagCopy);
 
     setRecommends([]);
     setInput('');
-
-    const newTagList = tagList.filter((tag) => tag !== clickedValue);
-    setTagList(newTagList);
   };
 
   const selectedTagRemove = (e: React.MouseEvent<HTMLButtonElement>) => {

@@ -18,8 +18,7 @@ export default function MyPageBody({
     const val = e.currentTarget.value;
     setInnerContents(val);
   };
-  // const reqProjectClick = () => {};
-  // const appProjectClick = () => {};
+
   const modifyUserInfo = () => {};
 
   return (
