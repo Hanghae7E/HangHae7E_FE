@@ -1,3 +1,5 @@
+const { off } = require("process");
+
 module.exports = {
     env: {
         browser: true,
@@ -36,6 +38,6 @@ module.exports = {
         "react/jsx-filename-extension": "off",
         "import/no-unresolved": "off",
         "import/extensions": "off",
-        "linebreak-style": "off"
+        "linebreak-style": "off",
     }
 }

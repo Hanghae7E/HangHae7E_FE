@@ -6,8 +6,14 @@ import DetailIcon from './DetailIcon';
 interface Props {
   data: DetailProjectData
   onClickApply: () => void
+  goBack: () => void
+  goToEditPage: () => void
+  handleDeleteProject: () => void
+
 }
-function DetailProjectInfo({ data, onClickApply }: Props) {
+function DetailProjectInfo({
+  data, onClickApply, goBack, goToEditPage, handleDeleteProject,
+}: Props) {
   const {
     title,
     body,
@@ -19,15 +25,37 @@ function DetailProjectInfo({ data, onClickApply }: Props) {
 
   return (
     <section className="w-full mt-[80px] ml-[63px]">
-      <div className="flex items-center mb-[32px]">
-        <div className="bg-[#EEEEEE] w-[44px] h-[44px] rounded-full grid place-items-center">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M20 11H7.83L13.42 5.41L12 4L4 12L12 20L13.41 18.59L7.83 13H20V11Z" fill="#323232" />
-          </svg>
+      <div className="flex justify-between mb-[32px]">
+        <div>
+          <button
+            type="button"
+            onClick={goBack}
+            className="bg-[#EEEEEE] w-[44px] h-[44px] mr-4 rounded-full grid place-items-center"
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M20 11H7.83L13.42 5.41L12 4L4 12L12 20L13.41 18.59L7.83 13H20V11Z" fill="#323232" />
+            </svg>
+          </button>
+          <span>돌아가기</span>
         </div>
-        <span>돌아가기</span>
+        <div>
+          <button
+            onClick={goToEditPage}
+            className="underline mr-4"
+            type="button"
+          >
+            수정하기
+          </button>
+          <button
+            onClick={handleDeleteProject}
+            className="underline text-red-500"
+            type="button"
+          >
+            삭제하기
+          </button>
+        </div>
       </div>
-      <h1 className="text-[36px] font-[600]">프로젝트 팀원 구합니다</h1>
+      <h1 className="text-[36px] font-[600]">{title}</h1>
       <ul className="flex flex-row mt-3">
         {tags.map((item) => (
           <li

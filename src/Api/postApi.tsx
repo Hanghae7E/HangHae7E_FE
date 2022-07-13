@@ -26,6 +26,11 @@ export const postRecruitDetailAccept = async ({ postId }: {postId: string}) => {
   return res;
 };
 
+export const deleteRecruitDetail = async ({ postId }: {postId: string}) => {
+  const res = await baseUrl.delete(`/recruitAccept/${postId}`);
+  return res;
+};
+
 export default {
   getRecruitPosts: () => getRecruitPosts(),
   getRecommendPosts: () => getRecommendPosts(),

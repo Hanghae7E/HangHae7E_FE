@@ -8,6 +8,7 @@ import {
   getRecruitPostDetails,
   postRecriutDetailPosts,
   postRecruitDetailAccept,
+  deleteRecruitDetail,
 } from '../../Api/postApi';
 
 export type Applicant = {
@@ -68,6 +69,7 @@ const data = {
 
 export default function DetailPageContainer() {
   const { pathname } = useLocation();
+  const navigate = useNavigate();
   const postId = pathname.split('/')[2];
 
   const recruitPostDetails = useQuery(
@@ -87,6 +89,18 @@ export default function DetailPageContainer() {
     console.log('reject');
   }, []);
 
+  const goBack = useCallback(() => {
+    navigate(-1);
+  }, []);
+
+  const goToEditPage = useCallback(() => {
+    navigate('');
+  }, []);
+
+  const handleDeleteProject = useCallback(() => {
+    deleteRecruitDetail({ postId });
+  }, []);
+
   return (
     <div className="flex flex-row h-screen w-[1260px] mx-auto">
       <DetailUserInfo
@@ -97,6 +111,9 @@ export default function DetailPageContainer() {
       <DetailProjectInfo
         data={data}
         onClickApply={handleApplyProject}
+        goBack={goBack}
+        goToEditPage={goToEditPage}
+        handleDeleteProject={handleDeleteProject}
       />
     </div>
   );
