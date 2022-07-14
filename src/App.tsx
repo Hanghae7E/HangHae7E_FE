@@ -7,6 +7,7 @@ import DetailPage from './Pages/DetailPage';
 import MainPage from './Pages/MainPage';
 import MyPage from './Pages/MyPage';
 import ProjectCreate from './Pages/ProjectCreate';
+import ChattingPage from './Pages/ChattingPage';
 
 const GlobalStyle = createGlobalStyle`
   *{
@@ -30,7 +31,10 @@ function App() {
           <Route path="/" element={<MainPage />} />
           <Route path="/mypage" element={<MyPage />} />
           <Route path="/detail/:postId" element={<DetailPage />} />
-          <Route path="/projectcreate" element={<ProjectCreate />} />
+          <Route path="/projectcreate" element={<ProjectCreate />}>
+            <Route path="/projectcreate:postId" element={<ProjectCreate />} />
+          </Route>
+          <Route path="/chatt" element={<ChattingPage />} />
         </Routes>
       </BrowserRouter>
     </QueryClientProvider>

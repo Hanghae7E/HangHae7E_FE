@@ -48,10 +48,10 @@ export function register(config?: Config) {
         // Add some additional logging to localhost, pointing developers to the
         // service worker/PWA documentation.
         navigator.serviceWorker.ready.then(() => {
-          console.log(
-            'This web app is being served cache-first by a service '
-              + 'worker. To learn more, visit https://cra.link/PWA',
-          );
+          // console.log(
+          //   'This web app is being served cache-first by a service '
+          //     + 'worker. To learn more, visit https://cra.link/PWA',
+          // );
         });
       } else {
         
@@ -124,14 +124,14 @@ function registerValidSW(swUrl: string, config?: Config) {
 
 function checkValidServiceWorker(swUrl: string, config?: Config) {
   // Check if the service worker can be found. If it can't reload the page.
-  console.log(swUrl)
+  // console.log(swUrl)
   fetch(swUrl, {
     headers: { 'Service-Worker': 'script' },
   })
     .then((response) => {
       // Ensure service worker exists, and that we really are getting a JS file.
       const contentType = response.headers.get('content-type');
-      console.log(contentType);
+      // console.log(contentType);
       if (
         response.status === 404
         || (contentType != null && contentType.indexOf('javascript') === -1)
