@@ -1,6 +1,4 @@
 /* eslint-disable react/require-default-props */
-import React from 'react';
-
 interface Props {
   onClick?: () => void
 }
