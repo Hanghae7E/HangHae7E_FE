@@ -4,6 +4,9 @@
 import React from 'react';
 import { Applicant } from '../DetailPageContainer';
 import DetailIcon from './DetailIcon';
+import PositionTag from './PositionTag';
+import useModalState from '../hooks/useModalState';
+import ConfirmApplyModal from './ConfirmApplyModal';
 
 interface Props {
   applicantsStanby: Applicant[];
@@ -12,39 +15,47 @@ interface Props {
 }
 
 function ApplicantsInfo({ onClickAccept, onClickReject, applicantsStanby }: Props) {
+  const {
+    open: openModal,
+    close: closeModal,
+    text: propsUsername,
+    isOpen: isOpenedModal,
+  } = useModalState();
+
   return (
     <div className="w-[300px] border-2 border-solid border-[#EEEEEE] py-[32px] rounded-xl mb-6">
       <h2 className="pl-6 font-bold text-[26px]">
         신청자 리스트
       </h2>
       <ul className="w-[300px]">
-        {applicantsStanby.map(({ username, userId }) => (
+        {applicantsStanby.map(({ username, userId, position }) => (
           <li
             key={userId}
-            className="flex w-[255px] border-b-[1px] border-b-solid border-b-[#EEEEEE] mx-auto pb-[10px]"
+            className="flex items-center w-[255px] border-b-[1px] border-b-solid border-b-[#EEEEEE] mx-auto pb-[10px]"
           >
             <img alt="신청자이미지" className="bg-black w-[51px] h-[51px] rounded-full" src="" />
-            <h5>{username}</h5>
-            <div>
-              개발자
-            </div>
+            <h5 className="ml-[10px] text-xl font-bold">{username}</h5>
+            <PositionTag
+              position={position}
+              propsClassname="ml-2 mr-10"
+            />
             <button
+              className="grid place-items-center rounded-full w-[36px] h-[36px] bg-[#EEEEEE]"
               type="button"
+              onClick={openModal({ text: username })}
             >
-              <DetailIcon.Check
-                onClick={onClickAccept}
-              />
-            </button>
-            <button
-              type="button"
-            >
-              <DetailIcon.Cancel
-                onClick={onClickReject}
-              />
+              <DetailIcon.AngleRight />
             </button>
           </li>
         ))}
       </ul>
+      <ConfirmApplyModal
+        close={closeModal}
+        onClickAccept={onClickAccept}
+        onClickReject={onClickReject}
+        isOpen={isOpenedModal}
+        text={propsUsername}
+      />
     </div>
   );
 }
