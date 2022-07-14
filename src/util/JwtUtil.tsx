@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import jwtDecode from 'jwt-decode';
 import { ITokenDecode } from '../TypeInterface/tokenType';
 
