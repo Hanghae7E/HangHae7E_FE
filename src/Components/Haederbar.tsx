@@ -1,20 +1,26 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import { Fragment } from 'react';
+import { Fragment, useState } from 'react';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { Link, useNavigate } from 'react-router-dom';
 import GlobalIcon from './GlobalIcon';
+import Login from './Login';
+
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
 }
 
 export default function Header() {
+  const [modalOpen, setModalOpen] = useState<boolean>(true);
   const nav = useNavigate();
   const isLogin = false;
   const goCreateProject = () => {
     nav('/projectcreate');
   };
+  const modalClose = () => {
+    setModalOpen(!modalOpen)
+  }
   return (
     <Disclosure as="nav" className="bg-gray-100">
       {() => (
@@ -54,6 +60,7 @@ export default function Header() {
                 ? (
                   <div className="flex text-sm">
                     <div className="border border-developer text-developer text-[16px] h-[35px] w-[74px] rounded-[12px] justify-center flex items-center">
+
                       <div className="flex ">
                         <a
                           href="/"

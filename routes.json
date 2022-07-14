@@ -1,6 +1,7 @@
 {
     "/api/login":"/user", 
     "/api/user": "/user",
+    "/api/user/:id": "/user?id",
     "/api/recruitPost": "/recruitPost",
     "/api/main":"/recruitPost",
     "/api/main?_limit=3&_sort=recruitDueTime&_order=ASC":"/recruitPost?_limit=3&_sort=recruitDueTime&_order=ASC",
