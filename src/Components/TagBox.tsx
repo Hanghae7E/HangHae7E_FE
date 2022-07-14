@@ -1,35 +1,22 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable react/jsx-no-useless-fragment */
 /* eslint-disable react/require-default-props */
 export default function TagBox({
   tag,
-  px,
-  py,
-  mb,
-  mx,
+  padding,
+  margin,
   onClick,
-  text,
+  hover,
+  selected,
 }: {
     tag: string,
-    px: number,
-    py: number,
-    text: number,
-    mb?: number,
-    mx?: number,
-    onClick?: () => void
+    padding?:string,
+    margin?:string,
+    onClick?: () => void,
+    hover?: string,
+    selected?:boolean
   }) {
-  const position = (pos: string) => {
-    switch (pos) {
-      case '디자이너':
-        return `bg-designer whitespace-nowrap text-[${text}px] px-[${px}px] py-[${py}px] rounded-full`;
-      case '개발자':
-        return `bg-developer whitespace-nowrap text-white text-[${text}px] px-[${px}px] py-[${py}px] rounded-full`;
-      case '기획자':
-        return `bg-pmaster whitespace-nowrap text-[${text}px] px-[${px}px] py-[${py}px] rounded-full`;
-      default:
-        return `bg-tag-bg whitespace-nowrap text-[${text}px] px-[${px}px] py-[${py}px] rounded-full`;
-    }
-  };
   const tags = (name:string) => {
     switch (name) {
       case '1':
@@ -42,21 +29,38 @@ export default function TagBox({
         return name;
     }
   };
+  const tagBg = (name:string) => {
+    switch (name) {
+      case '1':
+        return 'bg-designer border-designer';
+      case '2':
+        return 'bg-developer text-white border-developer';
+      case '3':
+        return 'bg-pmaster border-pmaster';
+      default:
+        return 'bg-tag-bg border-tag-bg';
+    }
+  };
   return (
-    <div>
-      {
-    onClick
-      ? (
-        <div
-          onClick={onClick}
-          className={`${position(tag)} mx-[${mx}px] my-auto cursor-pointer`}
-        >
-          {' '}
-          { tags(tag) }
-        </div>
-      )
-      : <div className={`${position(tag)} mx-[${mx}px] mb-[${mb}px]`}>{tags(tag)}</div>
-      }
-    </div>
+    <>
+      {onClick
+        ? (
+          <div
+            onClick={onClick}
+            className={`${selected ? 'bg-white border-developer text-developer' : tagBg(tag)}  
+            border box-border
+            ${selected ? 'bg-white' : tagBg(tag)}
+            whitespace-nowrap
+            ${padding}
+            rounded-full
+            ${margin}
+            ${hover || ''}
+            cursor-pointer`}
+          >
+            { tags(tag) }
+          </div>
+        )
+        : <div className={`${tagBg(tag)} whitespace-nowrap  ${padding} rounded-full ${margin}`}>{tags(tag)}</div>}
+    </>
   );
 }
