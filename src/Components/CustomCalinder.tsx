@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 /* eslint-disable no-mixed-spaces-and-tabs */
 /* eslint-disable no-tabs */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
@@ -13,16 +14,17 @@ import { ko } from 'date-fns/locale';
 import 'react-datepicker/dist/react-datepicker.css';
 import './datePicker.css';
 import GlobalIcon from './GlobalIcon';
+import { dateFormat } from '../util/util';
 
 interface Iprops {
 start: string;
-end: string;
+end?: string;
 setStart:React.Dispatch<SetStateAction<string>>
-setEnd:React.Dispatch<SetStateAction<string>>
-isRange: boolean;
+setEnd?:React.Dispatch<SetStateAction<string>>
+isRange?: boolean;
 }
 interface IData{
-value: string,
+  value:string,
 onClick: () => void,
 }
 export default function CustomCalinder({
@@ -34,45 +36,46 @@ export default function CustomCalinder({
   const nextSpanClass = 'react-datepicker__navigation-icon react-datepicker__navigation-icon--next';
 
   const [startDate, setStartDate] = useState(new Date(start));
-  const [endDate, setEndDate] = useState(new Date(end));
-  const [isFocus, setIsFocus] = useState(false);
+  const [endDate, setEndDate] = useState(end ? new Date(end) : new Date());
+  const [isOpen, setIsOpen] = useState(false);
 
-  const handleClick = (dates: any) => {
+  const handleClick = (dates: [Date, Date]) => {
     const [selectStart, selectEnd] = dates;
-    setStart(selectStart);
-    setEnd(selectEnd);
     setStartDate(selectStart);
+    setStart(dateFormat(selectStart));
     setEndDate(selectEnd);
-    if (selectEnd) {
-      setIsFocus(false);
-    }
+    if (setEnd) { setEnd(dateFormat(selectEnd !== null ? selectEnd : new Date())); }
   };
 
-  const ExampleCustomInput = forwardRef<HTMLDivElement, IData>((props, ref) => (
+  const ExampleCustomInput = forwardRef<HTMLInputElement, IData>((props, ref) => (
     <div
-      onClick={props.onClick}
-      ref={ref}
-      className={`flex px-2  
-      flex-1 max-w-[281px]
-      w-[281px] h-[60px]
-      items-center min-w-max
-      py-3 my-2 cursor-pointer
-      font-semibold border-[4px]
-      rounded-lg
-      border-inputGray
-      focus-within:border-developer`}
-      onFocus={() => {
-			  setIsFocus(true);
-      }}
-      onBlur={() => {
-			  setIsFocus(false);
-      }}
+      className={
+        `flex 
+        flex-1 max-w-[281px]
+        w-[281px] h-[60px]
+        min-w-max
+        my-2 
+        font-semibold border-[4px]
+        rounded-lg
+        border-inputGray
+        items-center
+        ${isOpen && 'border-developer'}
+        pl-[8px]`
+
+      }
     >
-      <GlobalIcon.Calendar color={`${isFocus ? '#6457FA' : 'black'}`} />
-      <input type="button" className="text-[18px] text-black focus-within:text-developer" value={props.value} />
+      {isOpen ? <GlobalIcon.ActCalendar /> : <GlobalIcon.Calendar />}
+      <input
+        type="button"
+        className={`ml-[8px] text-[18px] font-inter text-black ${isOpen && 'text-developer'}  cursor-pointer`}
+        onClick={props.onClick}
+        value={props.value}
+        ref={ref}
+      />
     </div>
   ));
   ExampleCustomInput.displayName = 'ExampleCustomInput';
+
   return (
     <div
       className="datePickerWrapper"
@@ -81,6 +84,8 @@ export default function CustomCalinder({
         <DatePicker
           id="calendar"
           className="bg-white"
+          onCalendarClose={() => setIsOpen(false)}
+          onCalendarOpen={() => setIsOpen(true)}
           renderCustomHeader={({
             monthDate, customHeaderCount, decreaseMonth, increaseMonth,
           }) => (
@@ -120,6 +125,8 @@ export default function CustomCalinder({
         />
       ) : (
         <DatePicker
+          onCalendarClose={() => setIsOpen(false)}
+          onCalendarOpen={() => setIsOpen(true)}
           renderCustomHeader={({
             monthDate, decreaseMonth, increaseMonth,
           }) => (
@@ -141,7 +148,6 @@ export default function CustomCalinder({
           dateFormat="yyyy-MM-dd"
           selected={startDate}
           onChange={(date: Date) => setStartDate(date)}
-          isClearable
           minDate={new Date()}
           showDisabledMonthNavigation
           disabledKeyboardNavigation

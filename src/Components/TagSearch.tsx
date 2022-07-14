@@ -77,7 +77,7 @@ function TagSearch(tagOption: tagOptionI) {
 
     setMyTags(tagCopy);
     setHashTag(tagCopy);
-    setHashTagId(tagCopy.map((v) => v.body).join(','));
+    setHashTagId(tagCopy.map((v) => v.tagId).join(','));
     setRecommends([]);
     setInput('');
   };

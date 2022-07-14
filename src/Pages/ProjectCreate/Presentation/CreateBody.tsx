@@ -12,6 +12,7 @@ import GlobalIcon from '../../../Components/GlobalIcon';
 import TagBox from '../../../Components/TagBox';
 import TagSearch from '../../../Components/TagSearch';
 import { ITag } from '../../../TypeInterface/postType';
+import { dateFormat } from '../../../util/util';
 
 export default function CreateBody() {
   const {
@@ -33,15 +34,7 @@ export default function CreateBody() {
       setImageName(abc);
     }
   };
-  function dateFormat(date: Date) {
-    let month = date.getMonth() + 1;
-    let day = date.getDate();
 
-    month = Number(month >= 10 ? month : `0${month}`);
-    day = Number(day >= 10 ? day : `0${day}`);
-
-    return `${date.getFullYear()}-${month}-${day}`;
-  }
   const Today = dateFormat(new Date());
   const [startDate, setStartDate] = useState<string>(Today);
   const [endDate, setEndDate] = useState<string>(Today);
@@ -59,6 +52,7 @@ export default function CreateBody() {
     },
   });
   const onSubmit = (datas: FieldValues) => {
+    console.log(hashTagId);
     postRecruit.mutate(datas);
   };
 
@@ -98,12 +92,11 @@ export default function CreateBody() {
           </div>
           <div className="flex min-w-min sm:w-3/4">
             <p className=" font-extrabold text-xs sm:text-lg py-3 w-32 sm:w-56 self-center">모집 마감일</p>
-            <div className="flex px-2 flex-1 w-full items-center h-[60px]  max-w-[281px] min-w-max text-xs sm:text-base py-3 my-2 cursor-pointer font-semibold border-[3px] rounded-lg border-inputGray">
-              <p className="sm:whitespace-nowrap flex items-center">
-                <GlobalIcon.Calendar />
-                <span className="m-0 p-0 font-inter text-[18px]">2022-07-03</span>
-              </p>
-            </div>
+
+            <CustomCalinder
+              start={startDate}
+              setStart={setStartDate}
+            />
           </div>
           <div className="flex min-w-min sm:w-2/3">
             <p className=" font-extrabold text-xs sm:text-lg py-3 w-32 sm:w-56">필요한 포지션 </p>
@@ -134,7 +127,7 @@ export default function CreateBody() {
                     </div>
                   </div>
                   <div className="flex w-full box-border justify-between min-w-max items-center font-bold">
-                    <TagBox tag="1" padding="text-[14px] px-[12px] py-[6px]" />
+                    <TagBox tag="1" padding="text-[18px] px-[12px] py-[6px]" />
                     <div className="flex items-center ml-[40px]">
                       <Controller
                         control={control}

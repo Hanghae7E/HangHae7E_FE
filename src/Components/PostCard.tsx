@@ -5,7 +5,6 @@ import TagBox from './TagBox';
 
 export default function PostCard({ data }: { data: IRecruitPost }) {
   const nav = useNavigate();
-
   const goCardDetail = () => {
     nav(`/detail/${data.postId}`);
   };
