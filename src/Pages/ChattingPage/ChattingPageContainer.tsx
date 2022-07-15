@@ -1,67 +1,68 @@
 /* eslint-disable react/no-array-index-key */
 import { useEffect, useRef, useState } from 'react';
 import SockJS from 'sockjs-client';
-import * as StompJs from '@stomp/stompjs';
+import { Client } from '@stomp/stompjs';
 
+interface IChat {
+  sender: string;
+  content?: string;
+  type:string
+}
+let client: Client | null = null;
 export default function ChattingPageContainer() {
   const [chatMessages, setChatMessages] = useState<Array<string>>([]);
-  const [message, setMessage] = useState<string>('');
-  const client = new StompJs.Client({
-    // brokerURL: 'ws://15.164.171.58/websocket', // 웹소켓 서버로 직접 접속
-    webSocketFactory: () => new SockJS('http://3.35.49.255/websocket'), // proxy를 통한 접속
-    debug(str) {
-      console.log(str);
-    },
-    reconnectDelay: 5000,
-    heartbeatIncoming: 4000,
-    heartbeatOutgoing: 4000,
-    onConnect: () => {
-      client.subscribe('/topic/public', ({ body }) => {
-        console.log(body);
-        // setChatMessages((_chatMessages) => [..._chatMessages, JSON.parse(body)]);
-      });
-      const chatMessage = {
-        sender: '장경태',
-        type: 'JOIN',
-      };
-      client.publish({
-        destination: '/app/chat.register',
-        body: JSON.stringify(chatMessage),
-      });
-    },
-    onStompError: (frame) => {
-      console.error(frame);
-    },
-  });
+  const [messageq, setMessageq] = useState<string>('');
 
-  const disconnect = () => {
-    client.deactivate();
-  };
-
-  const publish = (m: string) => {
-    console.log(client.connected);
-    if (!client.connected) {
-      return;
+  const subscribe = () => {
+    if (client != null) {
+      client.subscribe('/topic/public', (data: any) => {
+        const newMessage: string = JSON.parse(data.body).content as string;
+        console.log(newMessage);
+        setChatMessages((chat) => [...chat, newMessage]);
+      });
     }
-
-    const chatMessage = {
-      sender: '장경태',
-      content: m,
-      type: 'CHAT',
-    };
-    client.publish({
-      destination: '/app/chat.send',
-      body: JSON.stringify(chatMessage),
+  };
+  const connect = () => {
+    client = new Client({
+      // brokerURL: 'ws://localhost:8080/moyobar/websocket',
+      webSocketFactory() {
+        return new SockJS('http://3.35.49.255/websocket');
+      },
+      debug(str) {
+        console.log(str);
+      },
+      onConnect: () => {
+        subscribe();
+      },
     });
 
-    setMessage('');
+    client.activate();
+  };
+  const disConnect = () => {
+    if (client != null) {
+      if (client.connected) client.deactivate();
+    }
+  };
+
+  const handler = (message: string) => {
+    if (client != null) {
+      if (!client.connected) return;
+      const chatMessage = {
+        sender: '장경태',
+        content: message,
+        type: 'CHAT',
+      };
+      client.publish({
+        destination: '/app/chat.send',
+        body: JSON.stringify(chatMessage),
+      });
+      setMessageq('');
+    }
   };
   useEffect(() => {
-    if (!client.connected) {
-      client.activate();
-    }
-    return () => disconnect();
-  }, [message]);
+    connect();
+    return () => disConnect();
+  }, []);
 
   return (
     <div>
@@ -76,11 +77,11 @@ export default function ChattingPageContainer() {
         <input
           type="text"
           placeholder="message"
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          onKeyPress={(e) => e.which === 13 && publish(message)}
+          value={messageq}
+          onChange={(e) => setMessageq(e.target.value)}
+          onKeyPress={(e) => e.which === 13 && handler(messageq)}
         />
-        <button type="button" onClick={() => publish(message)}>send</button>
+        <button type="button" onClick={() => handler(messageq)}>send</button>
       </div>
     </div>
   );
