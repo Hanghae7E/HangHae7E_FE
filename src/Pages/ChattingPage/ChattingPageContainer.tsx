@@ -1,11 +1,12 @@
+/* eslint-disable no-console */
 /* eslint-disable react/no-array-index-key */
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import SockJS from 'sockjs-client';
 import { Client } from '@stomp/stompjs';
 
 interface IChat {
   sender: string;
-  content?: string;
+  content: string | '';
   type:string
 }
 let client: Client | null = null;
@@ -15,10 +16,10 @@ export default function ChattingPageContainer() {
 
   const subscribe = () => {
     if (client != null) {
-      client.subscribe('/topic/public', (data: any) => {
-        const newMessage: string = JSON.parse(data.body).content as string;
+      client.subscribe('/topic/public', ({ body }:{body:string}) => {
+        const newMessage: IChat = JSON.parse(body) as IChat;
         console.log(newMessage);
-        setChatMessages((chat) => [...chat, newMessage]);
+        setChatMessages((chat) => [...chat, newMessage.content]);
       });
     }
   };
