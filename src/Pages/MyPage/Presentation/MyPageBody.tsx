@@ -1,29 +1,46 @@
 import { useState } from 'react';
+import { SubmitHandler } from 'react-hook-form';
+import { useQuery } from 'react-query';
+import { Iprofile, IProfileFormData, auth } from '../../../TypeInterface/userType';
 import wy from '../Wy.jpg';
+import user from '../User.jpg';
 import EditIcon from '../EditIcon.png';
 import Profile from './Profile';
-import { Iprofile } from '../../../TypeInterface/profileType';
-import { Itag } from '../../../TypeInterface/tagType';
 import Project from './Project';
+import userAPi from '../../../Api/userAPi';
 
-export default function MyPageBody({
-  profileData,
-  skillTags,
-}: {
+export default function MyPageBody({ profileData, tagList, Auth }:
+{
   profileData: Iprofile;
-  skillTags: Array<string>;
+  tagList: Array<string>;
+  Auth:auth;
 }) {
+  const [imgBase64, setImgBase64] = useState<string>();
   const [innerContents, setInnerContents] = useState('profile');
+  const [modify, setModify] = useState(true);
   const tabClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     const val = e.currentTarget.value;
     setInnerContents(val);
   };
-
   const modifyUserInfo = () => {
-    setInnerContents('profile');
+    console.log('클릭');
   };
   const editUserProfile = () => {
-    const url = profileData.profile_image_url;
+    // 프로필 활성화
+  };
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files === null) return;
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const base64 = reader.result;
+      if (base64) {
+        setImgBase64(base64.toString());
+      }
+    };
+    const files = e.target.files[0];
+    if (files) {
+      reader.readAsDataURL(files);
+    }
   };
   return (
     <div className="max-w-full mx-auto">
@@ -36,9 +53,13 @@ export default function MyPageBody({
             <div className="userImg pt-[40px] pb-[18px]">
               <img
                 className="w-[80px]  h-[80px] mx-auto rounded-full"
-                src={profileData.profile_image_url}
+                src={user}
                 alt="userImage"
               />
+              <form encType="multipart/form-data">
+                <input type="file" id="file" accept="image/jpg, image/jpeg, image/png" />
+              </form>
+
             </div>
             <div className="userName font-pre font-semibold text-[22px] leading-[22px] pb-[18px]">
               {profileData.username}
@@ -59,9 +80,8 @@ export default function MyPageBody({
             </button>
           </div>
         </div>
-
         <div className="contentsArea max-w-[736px] basis-full  pl-[32px] ">
-          <div className="tab w-full flex-none pt-[87px] pb-8 font-pre font-bold text-[28px] leading-[33px]   ">
+          <div className="tab w-full flex-none pt-[87px] pb-8 font-pre font-bold text-[28px] leading-[33px]">
             <button
               type="button"
               onClick={tabClick}
@@ -88,7 +108,7 @@ export default function MyPageBody({
             </button>
           </div>
           {innerContents === 'profile' ? (
-            <Profile profileData={profileData} tagList={skillTags} />
+            <Profile profileData={profileData} tagList={tagList} Auth={Auth} />
           ) : (
             <Project />
           )}

@@ -1,6 +1,5 @@
 import wy from './Wy.jpg';
 import user from './User.jpg';
-import { Iprofile } from '../../../TypeInterface/profileType';
 
 export default function Project() {
   //   대기중:0,수락:1,거절:2
