@@ -1,4 +1,4 @@
-import { IRecruitPost } from '../TypeInterface/postType';
+import { IRecruitPost, ITag } from '../TypeInterface/postType';
 import TagBox from './TagBox';
 
 export default function RecentPostCard({ data }: { data: IRecruitPost }) {
@@ -7,16 +7,15 @@ export default function RecentPostCard({ data }: { data: IRecruitPost }) {
     return `${result[1]}/${result[2]}마감`;
   };
   return (
-    <div className="min-w-min sm:w-[411px] sm:h-[333px] min-h-min my-auto mx-auto box-border cursor-pointer">
-
-      <img className="w-full h-[228px] object-fill m-0 rounded-3xl" src="/defaulimg.svg" alt="project" />
-      <p className="my-[19px] font-semibold text-[20px] ">{data.title}</p>
+    <div className="min-w-min sm:w-[411px] sm:h-[367px] rounded-[24px]  overflow-hidden min-h-min my-auto mx-auto box-border relative cursor-pointer">
+      <div className="flex w-[100px] h-[44px] text-white bg-black font-medium text-[14px] absolute justify-center items-center">
+        <p className="justify-center items-center">{data.recruitDueTime && recruitDueDate()}</p>
+      </div>
+      <img className="w-[410px] h-[240px] rounded-[24px] object-fit m-0" src={data.projectImage ? data.projectImage : '/defaulimg.svg'} alt="project" />
+      <p className="my-[16px] font-bold text-[24px]">{data.title}</p>
       <div className="flex justify-between">
         <div className="flex flex-nowrap box-border my-1 overflow-hidden  font-medium">
-          {data.tags.length >= 1 && data.tags.map((tag, i) => i < 3 && <TagBox key={`${tag + i}`} tag={tag} padding="text-[14px] px-[12px] py-[8px]" margin="mx-[4px]" />)}
-        </div>
-        <div className="flex items-end self-end text-refGray font-semibold text-[16px] justify-end pb-3">
-          <p>{data.recruitDueTime && recruitDueDate()}</p>
+          {data.tags.length >= 1 && data.tags.map((pos:ITag, i:number) => i < 3 && <TagBox key={pos.tagId} tag={pos.body} padding="text-[14px] px-[12px] py-[8px]" margin="mx-[4px]" />)}
         </div>
       </div>
     </div>

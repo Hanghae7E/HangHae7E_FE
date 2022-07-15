@@ -7,12 +7,14 @@ export default function TagBox({
   padding,
   margin,
   onClick,
+  isCancled,
   hover,
   selected,
 }: {
     tag: string,
     padding?:string,
-    margin?:string,
+    margin?: string,
+    isCancled?: boolean,
     onClick?: () => void,
     hover?: string,
     selected?:boolean
@@ -47,7 +49,7 @@ export default function TagBox({
         ? (
           <div
             onClick={onClick}
-            className={`${selected ? 'bg-white border-developer text-developer' : tagBg(tag)}  
+            className={`flex ${selected ? 'bg-white border-developer text-developer' : tagBg(tag)}  
             border box-border
             ${selected ? 'bg-white' : tagBg(tag)}
             whitespace-nowrap
@@ -57,10 +59,16 @@ export default function TagBox({
             ${hover || ''}
             cursor-pointer`}
           >
-            { tags(tag) }
+            {tags(tag)}
+            {isCancled && <p className="pl-[11px]">X</p>}
           </div>
         )
-        : <div className={`${tagBg(tag)} whitespace-nowrap  ${padding} rounded-full ${margin}`}>{tags(tag)}</div>}
+        : (
+          <div className={`${tagBg(tag)} whitespace-nowrap  ${padding} rounded-full ${margin}`}>
+            {tags(tag)}
+            {isCancled && <p className="pl-[11px]">X</p>}
+          </div>
+        )}
     </>
   );
 }

@@ -1,29 +1,38 @@
 import { FieldValues } from 'react-hook-form';
 import baseUrl from './baseUrl';
 
-const getRecruitPosts = async (pageParam: number, tag:number) => {
-  const res = await baseUrl.get(`/main?limit=3&sort=0&page=${pageParam}&tags=${tag}`);
+const getRecruitPosts = async (pageParam: number) => {
+  const res = await baseUrl.get(`/main?size=3&sort=new&page=${pageParam}`);
   return res;
 };
 
 const getRecommendPosts = async () => {
-  const res = await baseUrl.get('/main?limit=3&sort=0&page=1&tags=0');
+  const res = await baseUrl.get('/main?size=3&sort=due&page=0');
   return res;
 };
 
-const postRecruitPost = async (datas: FieldValues, hashTagId?: string, imgName?: File) => {
+const postRecruitPost = async (
+  datas: FieldValues,
+  hashTagId?: string,
+  startDate?: string,
+  endDate?: string,
+  dueDate?: string,
+  imgName?: File,
+) => {
   const forms = new FormData();
 
   if (datas.title) forms.append('title', datas.title);
   if (datas.designer)forms.append('requiredDesigners', datas.designer);
   if (datas.developer)forms.append('requiredDevelopers', datas.developer);
-  if (datas.pmaster)forms.append('requiredProjectManagers', datas.pmaster);
+  if (datas.pmaster) forms.append('requiredProjectManagers', datas.pmaster);
+  if (startDate)forms.append('projectStartTime', startDate);
+  if (endDate) forms.append('projectEndTime', endDate);
+  if (dueDate)forms.append('recruitDueTime', dueDate);
   if (hashTagId)forms.append('tags', hashTagId);
   if (imgName) forms.append('img', imgName);
   if (datas.body) forms.append('body', datas.body);
   const res = await baseUrl.post('/recruitPost', forms, {
     headers: {
-      Authorization: 'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOiI3Iiwic29jaWFsLXR5cGUiOiJrYWthbyIsImlhdCI6MTY1Nzg2NTY3NiwiZXhwIjoxNjU3OTUyMDc2fQ.gUUrjo4CnrS9KqOvLumKkH7emQk3wBwihm-7upPBGdU',
       'Content-Type': 'multipart/form-data',
     },
   });
@@ -58,10 +67,20 @@ export const deleteRecruitDetail = async ({ postId }: {postId: string}) => {
 };
 
 export default {
-  getRecruitPosts: (pageParam: number, tag:number) => getRecruitPosts(pageParam, tag),
-  postRecruitPost: (form: FieldValues, hashTagId?: string, imgName?: File) => postRecruitPost(
+  getRecruitPosts: (pageParam: number) => getRecruitPosts(pageParam),
+  postRecruitPost: (
+    form: FieldValues,
+    hashTagId?: string,
+    startDate?: string,
+    endDate?: string,
+    dueDate?: string,
+    imgName?: File,
+  ) => postRecruitPost(
     form,
     hashTagId,
+    startDate,
+    endDate,
+    dueDate,
     imgName,
   ),
   getTag,

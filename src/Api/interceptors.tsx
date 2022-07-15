@@ -5,7 +5,17 @@ import {
   AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse,
 } from 'axios';
 
-const onRequest = (config: AxiosRequestConfig): AxiosRequestConfig => config;
+const onRequest = (config: AxiosRequestConfig): AxiosRequestConfig => {
+  console.info(`[request] [${JSON.stringify(config)}]`);
+  const token = localStorage.getItem('token');
+  if (token) {
+    config.headers = {
+      Authorization: token,
+    };
+  }
+
+  return config;
+};
 const onRequestError = (error: AxiosError): Promise<AxiosError> =>
 // console.error(`[request error] [${JSON.stringify(error)}]`);
   Promise.reject(error);

@@ -1,9 +1,9 @@
 import { useInfiniteQuery } from 'react-query';
 import postApi from '../Api/postApi';
 
-export default function useInfiniteScrollQuery(tag:number) {
-  const getPageBoard = async ({ pageParam = 1 }) => {
-    const res = await postApi.getRecruitPosts(pageParam, tag);
+export default function useInfiniteScrollQuery() {
+  const getPageBoard = async ({ pageParam = 0 }) => {
+    const res = await postApi.getRecruitPosts(pageParam);
     return {
       // 실제 데이터
       postPage: res.data.posts,

@@ -22,7 +22,7 @@ module.exports = {
       'developer': '#6457FA',
       'designer': '#74EC8B',
       'pmaster': '#FFC700',
-      'card-bg': '#F1F5FB',
+      'card-bg': '#F9FBFF',
       'tag-bg': '#E8EDF4',
       'white': '#ffffff',
       'black': '#000000',

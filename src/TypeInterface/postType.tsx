@@ -1,4 +1,8 @@
 /* eslint-disable no-tabs */
+export interface ITag {
+	body: string;
+	tagId: number
+}
 export interface IRecruitPost{
 	postId: number;
 	username : string;
@@ -13,7 +17,7 @@ export interface IRecruitPost{
 	requiredDevelopers:number,
 	requiredDesigners:number,
 	requiredProjectManagers:number,
-	tags: Array<string>;
+	tags: Array<ITag>;
 	last:boolean
 
 }
@@ -21,9 +25,4 @@ export interface IRecruitPost{
 export interface IRecruitPages{
 	postPage: Array<IRecruitPost>;
 	currentPage: number;
-}
-
-export interface ITag {
-	body: string;
-	tagId: number
 }

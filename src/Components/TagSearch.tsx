@@ -1,6 +1,7 @@
 /* eslint-disable no-tabs */
 import React, { SetStateAction, useState } from 'react';
 import { ITag } from '../TypeInterface/postType';
+import GlobalIcon from './GlobalIcon';
 
 import TagBox from './TagBox';
 
@@ -52,7 +53,7 @@ function TagSearch(tagOption: tagOptionI) {
   //     .filter((item) => !tagData.includes(item) || !selected.includes(item));
   //   return newData;
   // };
-  const tagSelct = 'h-[50px] text-start  w-full pl-[20px] border-2 border-[#EEEEEE] bg-white float-left  rounded-xl font-pre font-normal text-[18px] leading-[21px] text-black';
+  const tagSelct = 'h-[50px] text-start  w-full pl-[20px] border-2 border-[#EEEEEE] bg-white float-left  rounded-full font-pre font-normal text-[18px] leading-[21px] text-black';
 
   const recommendsTag = (e: React.ChangeEvent<HTMLInputElement>) => {
     const userInput = e.target.value.toLowerCase();
@@ -95,9 +96,12 @@ function TagSearch(tagOption: tagOptionI) {
   };
   return (
     <div className="relative h-[45px] w-full border-none">
+      <div className="absolute right-[20px] top-[13px]">
+        <GlobalIcon.Search />
+      </div>
       <input
         type="search"
-        className="h-[50px] w-full pl-[10px] border-2 border-[#EEEEEE] rounded-2xl font-pre font-normal text-[18px] leading-[21px] text-[#CCCCCC]"
+        className="h-[50px] w-full pl-[24px] border-2 border-inputGray rounded-full font-pre font-normal text-[18px] leading-[21px] text-[#CCCCCC]"
         placeholder={placeholder}
         onChange={recommendsTag}
         value={input}
@@ -115,7 +119,8 @@ function TagSearch(tagOption: tagOptionI) {
       <div className="flex flex-wrap gap-2">
         {myTags.map((tag, i) => (
           <TagBox
-            tag={tag.body}
+            tag={`${tag.body}`}
+            isCancled
             padding="text-[12px] py-[8px] px-[12px]"
             margin="ml-[5px] mt-[10px]"
             onClick={() => selectedTagRemove(tag)}

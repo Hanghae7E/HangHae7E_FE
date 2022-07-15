@@ -9,6 +9,7 @@ import {
   createElement,
   forwardRef, SetStateAction, useState,
 } from 'react';
+
 import DatePicker from 'react-datepicker';
 import { ko } from 'date-fns/locale';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -51,23 +52,23 @@ export default function CustomCalinder({
     <div
       className={
         `flex 
-        flex-1 max-w-[281px]
-        w-[281px] h-[60px]
+        flex-1 max-w-[282px]
+        w-[282px] h-[60px]
         min-w-max
         my-2 
-        font-semibold border-[4px]
+        border-[2px]
         rounded-lg
         border-inputGray
         items-center
         ${isOpen && 'border-developer'}
-        pl-[8px]`
+        pl-[16px]`
 
       }
     >
       {isOpen ? <GlobalIcon.ActCalendar /> : <GlobalIcon.Calendar />}
       <input
         type="button"
-        className={`ml-[8px] text-[18px] font-inter text-black ${isOpen && 'text-developer'}  cursor-pointer`}
+        className={`ml-[8px] text-[18px] text-black ${isOpen && 'text-developer'}  cursor-pointer`}
         onClick={props.onClick}
         value={props.value}
         ref={ref}
@@ -147,7 +148,10 @@ export default function CustomCalinder({
           locale={ko}
           dateFormat="yyyy-MM-dd"
           selected={startDate}
-          onChange={(date: Date) => setStartDate(date)}
+          onChange={(date: Date) => {
+            setStart(dateFormat(date));
+            setStartDate(date);
+          }}
           minDate={new Date()}
           showDisabledMonthNavigation
           disabledKeyboardNavigation

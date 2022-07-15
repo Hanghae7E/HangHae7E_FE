@@ -7,9 +7,7 @@ export default class jwtUtils {
     if (!token) {
       return false;
     }
-    console.log('test', token);
     const decoded: ITokenDecode = jwtDecode(token);
-    console.log('test2', decoded);
     if (decoded.exp > new Date().getTime() / 1000) {
       return true;
     }
@@ -17,6 +15,9 @@ export default class jwtUtils {
   }
 
   static getId(token: string) {
+    if (!token) {
+      return false;
+    }
     const decoded: ITokenDecode = jwtDecode(token.substring(6));
     return decoded.userId;
   }

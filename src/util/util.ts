@@ -1,11 +1,10 @@
 export const dateFormat = (date: Date) => {
-  let month = date.getMonth() + 1;
-  let day = date.getDate();
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
 
-  month = Number(month >= 10 ? month : `0${month}`);
-  day = Number(day >= 10 ? day : `0${day}`);
-
-  return `${date.getFullYear()}-${month}-${day}`;
+  const months = Number(month >= 10) ? month : `0${month}`;
+  const days = Number(date.getDate() >= 10) ? day : `0${day}`;
+  return `${date.getFullYear()}-${months}-${days}`;
 };
 
 export default {
