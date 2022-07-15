@@ -1,11 +1,12 @@
 import Haederbar from '../../../Components/Haederbar';
+import { Iprofile } from '../../../TypeInterface/userType';
 
-export default function MainHeader() {
+export default function MainHeader({ userInfo }:{ userInfo: Iprofile }) {
   return (
     <>
-      <Haederbar />
-      <div className="bg-sky-300 box-border">
-        <img className="w-full object-fill max-h-96" src="https://cdn.pixabay.com/photo/2016/05/03/09/40/thunder-1368797__340.jpg" alt="default이미지" />
+      <Haederbar userInfo={userInfo} />
+      <div className="box-border bg-[#fbf2d3]">
+        <img className="w-full object- max-h-96" src="/mainHeaderImg.svg" alt="default이미지" />
       </div>
     </>
   );
