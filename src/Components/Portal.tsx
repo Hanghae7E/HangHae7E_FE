@@ -6,7 +6,7 @@ interface IportalProps {
 }
 function Portal(props: IportalProps) {
   const modalRoot = document.getElementById('portal') as HTMLElement;
-  return createPortal(props.children,modalRoot);
+  return createPortal(props.children, modalRoot);
 }
 
 export default Portal;

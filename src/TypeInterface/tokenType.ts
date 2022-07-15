@@ -4,6 +4,6 @@ export interface IToken {
 	userId: number | null;
 }
 export interface ITokenDecode {
-	EXPIRED_DATE: number;
-	USER_ID: number;
+	exp: number;
+	userId: string;
 }

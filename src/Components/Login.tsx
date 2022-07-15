@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import google from '../img/google.png';
 import close from '../img/close.png';
@@ -7,11 +6,11 @@ import logo from '../img/logo.png';
 export default function Login({ closeModal }: any) {
   const nav = useNavigate();
   const kakaoClick = () => {
-    const KAKAO_AUTH_URL = '';
+    const KAKAO_AUTH_URL = 'http://huddledown.link/oauth2/authorization/kakao';
     window.location.replace(KAKAO_AUTH_URL);
   };
   const googleClick = () => {
-    const GOOGLE_AUTH_URL = '';
+    const GOOGLE_AUTH_URL = 'http://huddledown.link/oauth2/authorization/google';
     window.location.replace(GOOGLE_AUTH_URL);
   };
   return (

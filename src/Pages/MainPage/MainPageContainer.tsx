@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
-import jwtDecode from 'jwt-decode';
 import { useQuery } from 'react-query';
 import postApi from '../../Api/postApi';
 import userAPi from '../../Api/userAPi';
@@ -8,9 +7,10 @@ import useInfiniteScrollQuery from '../../Hooks/useInfiniteScrollQuery';
 import MainBody from './Presentaion/MainBody';
 import MainFooter from './Presentaion/MainFooter';
 import MainHeader from './Presentaion/MainHeader';
-import { jwtType } from '../../TypeInterface/jwtType';
 import Portal from '../../Components/Portal';
 import NickNameModal from '../../Components/NicknameModal';
+import { Iprofile } from '../../TypeInterface/userType';
+import jwtUtils from '../../util/JwtUtil';
 
 export default function MainPageContainer() {
   const recommendPosts = useQuery('recommend_post', postApi.getRecommendPosts);
@@ -28,20 +28,26 @@ export default function MainPageContainer() {
       getNextPage();
     }
   }, [isView, getBoard]);
-  const [token, setToken] = useState(() => localStorage.getItem('token'));
-  const [userid, setId] = useState('');
+  const token = 'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOiIzIiwiZW1haWwiOiJoYXJwZXI5ODA4QGdtYWlsLmNvbSIsInNvY2lhbC10eXBlIjoiZ29vZ2xlIiwiaWF0IjoxNjU3ODYxMDIzLCJleHAiOjE2NTc5NDc0MjN9.cFY6nqu9vkYQaPNEi1xoP8RP2Ai_F0qT4gUl1m08daE';
+  const [userid, setId] = useState<string>('');
   const [modalOpen, setModalOpen] = useState<boolean>(true);
+  const [userInfo, setUserInfo] = useState<Iprofile>();
   const modalClose = () => { setModalOpen(!modalOpen); };
-  const userProfile = useQuery(['get_userInfo', userid], () => userAPi.getMyInfo(userid, token), { enabled: !!userid });
+  const userProfile = useQuery(['get_userInfo', userid], () => userAPi.getMyInfo('3', token), {
+    onSuccess: (data) => {
+      setUserInfo(data.data);
+    },
+    enabled: !!3,
+  });
   if (token) {
-    const { id }: jwtType = jwtDecode(token);
-    setId(id)
+    const id = jwtUtils.getId(token);
+    console.log(id);
   }
   return (
     <>
-      {userProfile.isSuccess && userProfile.data.data.phone_number === null && (
+      {modalOpen && userProfile.isSuccess && userInfo && (
         <Portal>
-          <NickNameModal modalClose={modalClose} user={userProfile.data.data} />
+          <NickNameModal modalClose={modalClose} userInfo={userInfo} setUserInfo={setUserInfo} />
         </Portal>
       )}
       <MainHeader />
@@ -59,7 +65,7 @@ export default function MainPageContainer() {
           </div>
         )
       }
-      < MainFooter />
+      <MainFooter />
     </>
   );
 }

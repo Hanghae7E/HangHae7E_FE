@@ -1,19 +1,25 @@
-import { useQuery } from 'react-query';
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Iprofile } from '../TypeInterface/userType';
 import baseUrl from './baseUrl';
 
 export const getMyInfo = (id: string, token: any) => {
-  const res = baseUrl.get(`/api/user/${id}`, {
+  const res = baseUrl.get(`/user/${id}`, {
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `${token}`,
     },
   });
   return res;
 };
 export const setMyInfo = (userInfo: Iprofile, token: any) => {
-  const res = baseUrl.put(`/api/user/${userInfo.id}`, { data: userInfo }, {
+  const form = new FormData();
+
+  form.append('username', userInfo.username);
+  form.append('phone_number', userInfo.phone_number);
+  form.append('email', userInfo.email);
+  const res = baseUrl.put('/user/3', form, {
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `${token}`,
+      'Content-Type': 'multipart/form-data',
     },
   });
   return res;

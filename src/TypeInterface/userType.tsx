@@ -7,7 +7,6 @@ export interface userType {
   socialName: string,
 }
 export interface Iprofile {
-  id: number;
   username: string;
   email: string;
   phone_number: string;

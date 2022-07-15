@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useQuery } from 'react-query';

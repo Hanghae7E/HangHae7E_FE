@@ -10,7 +10,7 @@ export default class jwtUtils {
     console.log('test', token);
     const decoded: ITokenDecode = jwtDecode(token);
     console.log('test2', decoded);
-    if (decoded.EXPIRED_DATE > new Date().getTime() / 1000) {
+    if (decoded.exp > new Date().getTime() / 1000) {
       return true;
     }
     return false;
@@ -18,6 +18,6 @@ export default class jwtUtils {
 
   static getId(token: string) {
     const decoded: ITokenDecode = jwtDecode(token.substring(6));
-    return decoded.USER_ID;
+    return decoded.userId;
   }
 }
