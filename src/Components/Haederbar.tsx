@@ -37,7 +37,7 @@ export default function Header({ userInfo }:{ userInfo: Iprofile }) {
             <div className="relative flex items-center justify-between h-16">
               <div className="flex-1 flex items-center justify-center ">
                 <div className="flex-1 flex-shrink-0 flex items-center">
-                  <img src="/Logo.svg" alt="로고" />
+                  <img src="/logo.svg" alt="로고" />
                 </div>
                 <div className="hidden sm:block   text-[18px] px-5 py-2 rounded-2xl">
                   <div className="flex justify-center items-center">
