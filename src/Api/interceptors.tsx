@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 /* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable no-console */
 import {
@@ -5,7 +6,9 @@ import {
 } from 'axios';
 
 const onRequest = (config: AxiosRequestConfig): AxiosRequestConfig =>
-  // console.info(`[request] [${JSON.stringify(config)}]`);
+// console.info(`[request] [${JSON.stringify(config)}]`);
+// console.log(config.url);
+
   config;
 const onRequestError = (error: AxiosError): Promise<AxiosError> =>
 // console.error(`[request error] [${JSON.stringify(error)}]`);

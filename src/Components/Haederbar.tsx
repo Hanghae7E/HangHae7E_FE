@@ -14,7 +14,7 @@ function classNames(...classes: string[]) {
 export default function Header() {
   const [modalOpen, setModalOpen] = useState<boolean>(true);
   const nav = useNavigate();
-  const isLogin = true;
+  const isLogin = false;
   const goCreateProject = () => {
     nav('/projectcreate');
   };
@@ -31,12 +31,12 @@ export default function Header() {
 
                 <GlobalIcon.Logo />
               </div>
-              <div className="hidden sm:block  hover:bg-developer text-gray-800 hover:text-white text-sm px-5 py-2 rounded-2xl">
+              <div className="hidden sm:block   text-[18px] px-5 py-2 rounded-2xl">
                 <div className="flex justify-center items-center">
 
                   <div
                     onClick={goCreateProject}
-                    className="no-underline bg-white-900 font-bold cursor-pointer"
+                    className="no-underline font-bold cursor-pointer"
                   >
                     프로젝트 생성
                   </div>
@@ -58,33 +58,24 @@ export default function Header() {
               {/* Profile dropdown */}
               {!isLogin
                 ? (
+                  <div className="flex text-sm">
+                    <div className="border border-developer text-developer text-[16px] h-[35px] w-[74px] rounded-[12px] justify-center flex items-center">
 
-                  <div className="flex  space-x-1 text-sm">
-                    <div className="sm:block  hover:bg-gray-700 text-gray-800 hover:text-white text-sm px-5 py-2 rounded-2xl">
                       <div className="flex ">
                         <a
                           href="/"
-                          className="no-underline bg-white-900 font-bold"
+                          className="font-medium"
                         >
                           로그인
                         </a>
                       </div>
                     </div>
-                    <div className="sm:block  hover:bg-gray-700 text-gray-800 hover:text-white text-sm px-5 py-2 rounded-2xl">
-                      <div className="flex">
-                        <a
-                          href="/"
-                          className="no-underline bg-white-900 font-bold"
-                        >
-                          회원가입
-                        </a>
-                      </div>
-                    </div>
+
                   </div>
                 )
                 : (
                   <>
-                    <div>test</div>
+
                     <Menu as="div" className="ml-3 relative">
                       <div>
                         <Menu.Button className="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
@@ -113,17 +104,7 @@ export default function Header() {
                                 to="/"
                                 className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                               >
-                                Your Profile
-                              </Link>
-                            )}
-                          </Menu.Item>
-                          <Menu.Item>
-                            {({ active }) => (
-                              <Link
-                                to="/"
-                                className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
-                              >
-                                Settings
+                                마이페이지
                               </Link>
                             )}
                           </Menu.Item>
@@ -140,6 +121,7 @@ export default function Header() {
                         </Menu.Items>
                       </Transition>
                     </Menu>
+                    <div className="text-[16px] ml-[8px]">test</div>
                   </>
                 )}
             </div>

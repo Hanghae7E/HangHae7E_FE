@@ -1,25 +1,32 @@
-import { Menu, Transition } from '@headlessui/react';
-import React, { Fragment, SetStateAction } from 'react';
+/* eslint-disable no-console */
+/* eslint-disable react/jsx-props-no-spreading */
+import React, {
+  useState,
+} from 'react';
+import { Controller, FieldValues, useForm } from 'react-hook-form';
+import { useMutation, useQuery } from 'react-query';
+import { useNavigate } from 'react-router-dom';
+import postApi from '../../../Api/postApi';
+import CustomCalinder from '../../../Components/CustomCalinder';
 import GlobalIcon from '../../../Components/GlobalIcon';
 import TagBox from '../../../Components/TagBox';
-import DropDownItem from './DropDownItem';
+import TagSearch from '../../../Components/TagSearch';
+import { ITag } from '../../../TypeInterface/postType';
+import { dateFormat } from '../../../util/util';
 
-export default function CreateBody({
-  career,
-  setCarrer,
-  hashTag,
-  setHashTag,
-  imgName,
-  setImageName,
-}:
-  {
-    career: string,
-    setCarrer: React.Dispatch<SetStateAction<string>>
-    hashTag:Array<string>,
-    setHashTag: React.Dispatch<SetStateAction<Array<string>>>,
-    imgName: File | undefined,
-    setImageName:React.Dispatch<SetStateAction<File | undefined>>
-  }) {
+export default function CreateBody() {
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm();
+  const [hashTag, setHashTag] = useState<Array<ITag>>([]);
+  const [hashTagId, setHashTagId] = useState<string>();
+  const [imgName, setImageName] = useState<File>();
+
+  const { isSuccess, data } = useQuery('tagList', postApi.getTag);
+  const nav = useNavigate();
   const fileGetChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const filename = e.target.files;
     if (filename) {
@@ -27,22 +34,32 @@ export default function CreateBody({
       setImageName(abc);
     }
   };
-  const onRemove = (removeTag:string) => {
-    // user.id 가 파라미터로 일치하지 않는 원소만 추출해서 새로운 배열을 만듬
-    // = user.id 가 id 인 것을 제거함
-    setHashTag(hashTag.filter((tags:string) => tags !== removeTag));
+
+  const Today = dateFormat(new Date());
+  const [startDate, setStartDate] = useState<string>(Today);
+  const [endDate, setEndDate] = useState<string>(Today);
+
+  const hadleCancle = () => {
+    window.history.back();
   };
-  const addHash = (tag:string) => {
-    if (hashTag.length < 4) {
-      if (!hashTag.includes(tag)) {
-        setHashTag([...hashTag, tag]);
-      }
-    }
+  const postRecruit = useMutation((form: FieldValues) => postApi.postRecruitPost(
+    form,
+    hashTagId,
+    imgName,
+  ), {
+    onSuccess: () => {
+      nav('/');
+    },
+  });
+  const onSubmit = (datas: FieldValues) => {
+    console.log(hashTagId);
+    postRecruit.mutate(datas);
   };
+
   return (
     <div className="max-w-6xl mx-auto px-3 sm:px-6 lg:px-8 pt-10 bg-white sm:mt-10 mb-8">
       {/* 프로젝트만들기 상단 */}
-      <div className="mt-5 sm:mt-15">
+      <form className="mt-5 sm:mt-15" onSubmit={handleSubmit(onSubmit)}>
         <p className="ml-16 font-extrabold text-xl sm:text-[36px] text-developer">
           프로젝트 만들기
         </p>
@@ -56,26 +73,30 @@ export default function CreateBody({
               outline-inputGray bg-white font-inter
               box-border resize-none"
                 placeholder="000 프로젝트에 함께할 팀원을 모집합니다."
+                {...register('title', { required: true })}
               />
             </div>
+            {errors.title && <span className="text-[#ff0000]">필수 입력 값 입니다.</span>}
           </div>
+
           <div className="flex min-w-min sm:w-3/4">
             <p className="font-extrabold text-xs sm:text-lg py-3 w-32 sm:w-56 self-center ">프로젝트 기간</p>
-            <div className="flex px-2 flex-1 w-full max-w-[281px] h-[60px] items-center min-w-max text-xs sm:text-base py-3 my-2 cursor-pointer font-semibold border-[3px] rounded-lg border-inputGray">
-              <p className="whitespace-nowrap flex items-center ">
-                <GlobalIcon.Calendar />
-                <span className="m-0 p-0 font-inter text-[18px]">2022-07-03 ~ 2022-07-16</span>
-              </p>
-            </div>
+            <CustomCalinder
+              start={startDate}
+              end={endDate}
+              setStart={setStartDate}
+              setEnd={setEndDate}
+              isRange
+            />
+
           </div>
           <div className="flex min-w-min sm:w-3/4">
             <p className=" font-extrabold text-xs sm:text-lg py-3 w-32 sm:w-56 self-center">모집 마감일</p>
-            <div className="flex px-2 flex-1 w-full items-center h-[60px]  max-w-[281px] min-w-max text-xs sm:text-base py-3 my-2 cursor-pointer font-semibold border-[3px] rounded-lg border-inputGray">
-              <p className="sm:whitespace-nowrap flex items-center">
-                <GlobalIcon.Calendar />
-                <span className="m-0 p-0 font-inter text-[18px]">2022-07-03</span>
-              </p>
-            </div>
+
+            <CustomCalinder
+              start={startDate}
+              setStart={setStartDate}
+            />
           </div>
           <div className="flex min-w-min sm:w-2/3">
             <p className=" font-extrabold text-xs sm:text-lg py-3 w-32 sm:w-56">필요한 포지션 </p>
@@ -86,122 +107,125 @@ export default function CreateBody({
                 </div>
                 <div className="flex flex-col">
                   <div className="flex w-full justify-between box-border min-w-max items-center font-bold">
-                    <TagBox tag="개발자" px={12} py={6} text={18} />
+                    <TagBox tag="2" padding="text-[18px] px-[12px] py-[6px]" />
+                    <div className="flex items-center ">
+                      <Controller
+                        control={control}
+                        name="developer"
+                        rules={{ maxLength: 2 }}
+                        defaultValue=""
+                        render={({ field }) => (
+                          <input
+                            {...field}
+                            type="number"
+                            className="text-right sm:text-[18px] w-[85px] h-[60px] pr-2 py-2 my-2 border-[3px] rounded-xl border-inputGray box-border text-xs"
+                            onChange={(e) => field.onChange(e.target.value.substring(0, 2))}
+                          />
+                        )}
+                      />
+                      <span className="text-xs ml-1 sm:text-[18px]">명</span>
+                    </div>
+                  </div>
+                  <div className="flex w-full box-border justify-between min-w-max items-center font-bold">
+                    <TagBox tag="1" padding="text-[18px] px-[12px] py-[6px]" />
                     <div className="flex items-center ml-[40px]">
-                      <input type="text" className="text-right sm:text-[18px] w-[85px] h-[60px] pr-2 py-2 my-2 border-[3px] rounded-xl border-inputGray box-border text-xs " />
+                      <Controller
+                        control={control}
+                        name="designer"
+                        rules={{ maxLength: 2 }}
+                        defaultValue=""
+                        render={({ field }) => (
+                          <input
+                            {...field}
+                            type="number"
+                            className="text-right sm:text-[18px] text w-[85px] h-[60px] pr-2 py-2 my-2 border-[3px] rounded-xl border-inputGray box-border text-xs "
+                            onChange={(e) => field.onChange(e.target.value.substring(0, 2))}
+                          />
+                        )}
+                      />
                       <span className="text-xs ml-1 sm:text-[18px]">명</span>
                     </div>
                   </div>
                   <div className="flex w-full box-border justify-between min-w-max items-center font-bold">
-                    <TagBox tag="디자이너" px={12} py={6} text={18} />
+                    <TagBox tag="3" padding="text-[18px] px-[12px] py-[6px]" />
                     <div className="flex items-center">
-                      <input type="text" className="text-right sm:text-[18px] w-[85px] h-[60px] pr-2 py-2 my-2 border-[3px] rounded-xl border-inputGray box-border text-xs " />
-                      <span className="text-xs ml-1 sm:text-[18px]">명</span>
-                    </div>
-                  </div>
-                  <div className="flex w-full box-border justify-between min-w-max items-center font-bold">
-                    <TagBox tag="기획자" px={12} py={6} text={18} />
-                    <div className="flex items-center">
-                      <input type="number" className="text-right sm:text-[18px]  w-[85px] h-[60px] pr-2 py-2 my-2 border-[3px] rounded-xl border-inputGray box-border text-xs " />
+                      <Controller
+                        control={control}
+                        name="pmaster"
+                        rules={{ maxLength: 2 }}
+                        defaultValue=""
+                        render={({ field }) => (
+                          <input
+                            {...field}
+                            type="number"
+                            className="text-right sm:text-[18px] w-[85px] h-[60px] pr-2 py-2 my-2 border-[3px] rounded-xl border-inputGray box-border text-xs "
+                            onChange={(e) => field.onChange(e.target.value.substring(0, 2))}
+                          />
+                        )}
+                      />
                       <span className="text-xs ml-1 sm:text-[18px]">명</span>
                     </div>
                   </div>
                 </div>
               </div>
               {/* 경력 */}
-              <div className="flex ">
-                <div className="min-w-max mr-[20px] text-xs sm:text-[18px] pt-6 font-bold">
-                  <p>경력</p>
-                </div>
-                <div className="w-full ">
-                  <div className="flex box-border items-center ">
-                    <Menu as="div" className="relative w-full justify-start ">
-                      <Menu.Button className="flex w-full max-w-[198px] h-[40px] justify-between px-2 items-center min-w-max py-1 mt-3  box-border text-xs sm:text-base border-[3px] border-inputGray rounded-lg">
-                        <span>{career}</span>
-                        <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M5.77951 8L0.487136 0.5L11.0719 0.500001L5.77951 8Z" fill="#9AA0A6" />
-                        </svg>
-
-                      </Menu.Button>
-
-                      <Transition
-                        as={Fragment}
-                        enter="transition ease-out duration-100"
-                        enterFrom="transform opacity-0 scale-95"
-                        enterTo="transform opacity-100 scale-100"
-                        leave="transition ease-in duration-75"
-                        leaveFrom="transform opacity-100 scale-100"
-                        leaveTo="transform opacity-0 scale-95"
-                      >
-                        <Menu.Items className="origin-top-right absolute right-0 font-inter  w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
-                          <DropDownItem setCarrer={setCarrer}><p>신입</p></DropDownItem>
-                          <DropDownItem setCarrer={setCarrer}><p>경력 1년</p></DropDownItem>
-                          <DropDownItem setCarrer={setCarrer}><p>경력 2년</p></DropDownItem>
-                          <DropDownItem setCarrer={setCarrer}><p>경력 3년</p></DropDownItem>
-                          <DropDownItem setCarrer={setCarrer}><p>경력 4년 이상</p></DropDownItem>
-                        </Menu.Items>
-                      </Transition>
-                    </Menu>
-                  </div>
-
-                </div>
-              </div>
 
             </div>
           </div>
           <div className="flex min-w-min sm:w-3/4">
             <p className=" font-extrabold text-xs sm:text-lg py-3 w-32 sm:w-56 self-center">참고이미지</p>
-            <div className="flex px-3 flex-1 w-full items-center max-w-[235px] min-w-max text-xs sm:text-base py-2 my-2  border-[3px] rounded-2xl border-developer">
+            {imgName?.name && (
+            <div className="flex px-[21.5px] items-center max-w-min text-xs sm:text-base py-[13px] my-2  border-[3px] rounded-2xl border-inputGray bg-[#F2F2F2] font-normal mr-3">
+              <div className="text-[18px] whitespace-nowrap">{imgName?.name.length > 20 ? `${imgName?.name.substring(0, 20)}...${imgName?.name.substring(Number(imgName?.name.length) - 3, imgName?.name.length)}` : imgName?.name}</div>
+            </div>
+            )}
+            <div className="flex pl-[21.5px] pr-[20px] flex-1 w-full items-center max-w-[235px] min-w-max text-xs sm:text-base py-[13px] my-2  border-[3px] rounded-2xl border-developer">
               <label className="sm:whitespace-nowrap flex items-center cursor-pointer" htmlFor="imageFile">
                 <GlobalIcon.FileIcon />
-                <span className="font-inter text-developer text-[18px]">
-                  {imgName ? imgName.name : '파일첨부(최대 2MB)'}
-                  {' '}
+                <span className="flex font-inter text-developer text-[18px] ml-[8.5px] ">
+
+                  {imgName ? '파일변경(최대 2MB)' : '파일첨부(최대 2MB)'}
                 </span>
               </label>
-              <input className="hidden" id="imageFile" type="file" accept="image/png, image/jpeg" onChange={fileGetChange} />
+              <input
+                className="hidden"
+                id="imageFile"
+                type="file"
+                accept="image/png, image/jpeg"
+                {...register('image')}
+                onChange={fileGetChange}
+              />
             </div>
 
           </div>
         </div>
-        <div className="mx-auto w-1/2  overflow-hidden pb-5 sm:pb-20">
-          {imgName && (
+        <div className="mx-auto w-1/2  overflow-hidden pb-5 sm:pb-20" />
 
-          <img className="rounded-3xl" src={URL.createObjectURL(imgName)} alt="" />
-
-          )}
-        </div>
-      </div>
-      {/* 프로젝트 상세내용 */}
-      <div>
-        <p className="font-bold text-sm sm:text-[20px] ml-16">프로젝트 상세내용</p>
-        <div className="pl-16 pt-5 ">
-          <textarea className="w-full h-52 text-[18px] sm:h-96 p-4 border-[3px] bg-input-bg border-inputGray bg-slate-100 resize-none rounded-lg" />
-        </div>
-        <div className="pl-16 pt-5">
-          <div className="w-full self-center flex items-center min-h-[50px] border-[3px] border-inputGray bordre-in resize-none rounded-full">
-            {hashTag.length < 1
-              ? <p className="font-inter text-inputGray text-[20px] pl-[24px]">해시태그를 선택해주세요 최대 4개</p>
-              : (
-                <div className="flex flex-wrap px-5">
-                  {hashTag.map((text, i) => <TagBox key={`${text + i}`} onClick={() => onRemove(text)} tag={text} text={14} py={8} px={12} mx={4} mb={16} />)}
-                </div>
+        {/* 프로젝트 상세내용 */}
+        <div>
+          <p className="font-bold text-sm sm:text-[20px] ml-16">프로젝트 상세내용</p>
+          <div className="pl-16 pt-5 ">
+            <Controller
+              control={control}
+              name="body"
+              render={({ field }) => (
+                <textarea {...field} className="w-full h-52 text-[18px] sm:h-96 p-4 border-[3px] bg-input-bg border-inputGray bg-slate-100 resize-none rounded-lg" />
               )}
-          </div>
-          <div className="flex flex-wrap mt-5">
-            <TagBox onClick={() => addHash('ALL')} tag="ALL" text={14} py={8} px={12} mx={4} mb={16} />
-            <TagBox onClick={() => addHash('Spring')} tag="Spring" text={14} py={8} px={12} mx={4} mb={16} />
-            <TagBox onClick={() => addHash('1')} tag="1" text={14} py={8} px={12} mx={4} mb={16} />
-            <TagBox onClick={() => addHash('2')} tag="2" text={14} py={8} px={12} mx={4} mb={16} />
-            <TagBox onClick={() => addHash('백엔드')} tag="백엔드" text={14} py={8} px={12} mx={4} mb={16} />
-            <TagBox onClick={() => addHash('1')} tag="1" text={14} py={8} px={12} mx={4} mb={16} />
-            <TagBox onClick={() => addHash('2')} tag="2" text={14} py={8} px={12} mx={4} mb={16} />
-            <TagBox onClick={() => addHash('백엔드')} tag="백엔드" text={14} py={8} px={12} mx={4} mb={16} />
-            <TagBox onClick={() => addHash('1')} tag="1" text={14} py={8} px={12} mx={4} mb={16} />
-          </div>
-        </div>
+            />
 
-      </div>
+          </div>
+          <div className="pl-16 pt-5">
+
+            {isSuccess && <TagSearch tagData={data.data} selected={hashTag} setHashTagId={setHashTagId} setHashTag={setHashTag} placeholder="해시태그를 입력해 주세요" />}
+
+          </div>
+
+        </div>
+        <div className="m-auto max-w-2xl pl-16 pt-5 flex justify-center mt-32  mb-10">
+          <button type="button" onClick={hadleCancle} className="flex w-60 border-[2px] border-developer py-3 rounded-xl justify-center bg-white font-semibold cursor-pointer hover:bg-designer hover:text-black mr-2">취소하기</button>
+          <input type="submit" className="flex w-60 border-[2px] border-developer py-3 rounded-xl justify-center bg-developer text-white font-semibold cursor-pointer hover:bg-designer hover:text-black ml-2" value="프로젝트 생성하기" />
+        </div>
+      </form>
     </div>
   );
 }
