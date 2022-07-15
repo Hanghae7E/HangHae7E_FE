@@ -8,7 +8,7 @@ export default function ChattingPageContainer() {
   const [message, setMessage] = useState<string>('');
   const client = new StompJs.Client({
     // brokerURL: 'ws://15.164.171.58/websocket', // 웹소켓 서버로 직접 접속
-    webSocketFactory: () => new SockJS('http://15.164.171.58/websocket'), // proxy를 통한 접속
+    webSocketFactory: () => new SockJS('http://3.35.49.255/websocket'), // proxy를 통한 접속
     debug(str) {
       console.log(str);
     },
@@ -16,8 +16,9 @@ export default function ChattingPageContainer() {
     heartbeatIncoming: 4000,
     heartbeatOutgoing: 4000,
     onConnect: () => {
-      client.subscribe('/topic/public', (payload) => {
-        console.log('test', payload);
+      client.subscribe('/topic/public', ({ body }) => {
+        console.log(body);
+        // setChatMessages((_chatMessages) => [..._chatMessages, JSON.parse(body)]);
       });
       const chatMessage = {
         sender: '장경태',
@@ -33,18 +34,8 @@ export default function ChattingPageContainer() {
     },
   });
 
-  const connect = () => {
-    client.activate();
-  };
-
   const disconnect = () => {
     client.deactivate();
-  };
-
-  const subscribe = () => {
-    client.subscribe('/topic/public', ({ body }) => {
-      setChatMessages((_chatMessages) => [..._chatMessages, JSON.parse(body)]);
-    });
   };
 
   const publish = (m: string) => {
@@ -66,10 +57,11 @@ export default function ChattingPageContainer() {
     setMessage('');
   };
   useEffect(() => {
-    connect();
-
-    // return () => disconnect();
-  }, []);
+    if (!client.connected) {
+      client.activate();
+    }
+    return () => disconnect();
+  }, [message]);
 
   return (
     <div>
