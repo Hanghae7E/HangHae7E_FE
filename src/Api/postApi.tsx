@@ -23,7 +23,7 @@ const postRecruitPost = async (datas: FieldValues, hashTagId?: string, imgName?:
   if (datas.body) forms.append('body', datas.body);
   const res = await baseUrl.post('/recruitPost', forms, {
     headers: {
-      Authorization: 'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOiI1IiwiZW1haWwiOiJ6eHMzNzEwQGdtYWlsLmNvbSIsInNvY2lhbC10eXBlIjoiZ29vZ2xlIiwiaWF0IjoxNjU3ODAyOTg1LCJleHAiOjE2NTc4ODkzODV9.iq5MiiXjf1dzNlM62oJOcyuUVKudr4OTx5Kk0ZLfFHg',
+      Authorization: 'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOiI3Iiwic29jaWFsLXR5cGUiOiJrYWthbyIsImlhdCI6MTY1Nzg2NTY3NiwiZXhwIjoxNjU3OTUyMDc2fQ.gUUrjo4CnrS9KqOvLumKkH7emQk3wBwihm-7upPBGdU',
       'Content-Type': 'multipart/form-data',
     },
   });

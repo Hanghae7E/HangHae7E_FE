@@ -191,7 +191,7 @@ export default function CreateBody() {
                 className="hidden"
                 id="imageFile"
                 type="file"
-                accept="image/png, image/jpeg"
+                accept="image/*"
                 {...register('image')}
                 onChange={fileGetChange}
               />
