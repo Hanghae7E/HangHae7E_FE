@@ -6,7 +6,7 @@ import { Client } from '@stomp/stompjs';
 
 interface IChat {
   sender: string;
-  content: string | '';
+  message: string | '';
   type:string
 }
 let client: Client | null = null;
@@ -16,10 +16,10 @@ export default function ChattingPageContainer() {
 
   const subscribe = () => {
     if (client != null) {
-      client.subscribe('/topic/public', ({ body }:{body:string}) => {
+      client.subscribe('/topic/public/test', ({ body }:{body:string}) => {
         const newMessage: IChat = JSON.parse(body) as IChat;
         console.log(newMessage);
-        setChatMessages((chat) => [...chat, newMessage.content]);
+        setChatMessages((chat) => [...chat, newMessage.message]);
       });
     }
   };
@@ -27,7 +27,7 @@ export default function ChattingPageContainer() {
     client = new Client({
       // brokerURL: 'ws://localhost:8080/moyobar/websocket',
       webSocketFactory() {
-        return new SockJS('http://3.35.49.255/websocket');
+        return new SockJS('http://52.79.233.193/websocket');
       },
       debug(str) {
         console.log(str);
@@ -49,6 +49,7 @@ export default function ChattingPageContainer() {
     if (client != null) {
       if (!client.connected) return;
       const chatMessage = {
+        id: 'test',
         sender: '장경태',
         content: message,
         type: 'CHAT',
