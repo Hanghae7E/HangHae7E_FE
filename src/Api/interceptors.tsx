@@ -6,7 +6,7 @@ import {
 } from 'axios';
 
 const onRequest = (config: AxiosRequestConfig): AxiosRequestConfig => {
-  console.info(`[request] [${JSON.stringify(config)}]`);
+  // console.info(`[request] [${JSON.stringify(config)}]`);
   const token = localStorage.getItem('token');
   if (token) {
     config.headers = {
