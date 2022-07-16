@@ -86,7 +86,7 @@ export default function Header({ userInfo }:{ userInfo: Iprofile }) {
                         <Menu.Button className="flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
                           <img
                             className="h-8 w-8 rounded-full"
-                            src="/profiledefault.svg"
+                            src={userInfo ? userInfo.profile_image_url : '/profiledefault.svg'}
                             alt=""
                           />
                           <div className="text-[16px] ml-[8px]">{userInfo && userInfo.username}</div>
