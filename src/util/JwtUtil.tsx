@@ -14,7 +14,7 @@ export default class jwtUtils {
     return false;
   }
 
-  static getId(token: string) {
+  static getId(token: string | null) {
     if (!token) {
       return false;
     }
