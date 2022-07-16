@@ -70,6 +70,7 @@ const putImageProfile = async (file: File, username:string) => {
   const forms = new FormData();
   const token = localStorage.getItem('token');
   const userId = jwtUtils.getId(token || '');
+  console.log(username, file);
   if (username) forms.append('username', username);
   if (file) forms.append('files', file);
   const res = await baseUrl.put(`/user/${userId}`, forms, {

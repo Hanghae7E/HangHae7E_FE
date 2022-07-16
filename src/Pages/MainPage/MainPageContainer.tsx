@@ -20,7 +20,7 @@ export default function MainPageContainer() {
     getBoard, getNextPage,
     getBoardIsSuccess, getNextPageIsPossible,
     refetch,
-  } = useInfiniteScrollQuery();
+  } = useInfiniteScrollQuery(searchTag);
   const [ref, isView] = useInView();
   useEffect(() => {
     if (isView && getNextPageIsPossible) {
