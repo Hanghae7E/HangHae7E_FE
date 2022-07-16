@@ -1,31 +1,40 @@
 import React from 'react';
-import { DetailProjectData } from '../DetailPageContainer';
+import { DetailProjectData, UserData } from '../DetailPageContainer';
 import ApplicantsInfo from './ApplicantsInfo';
 import ConfirmedApplicants from './ConfirmedApplicants';
 import CreatorInfo from './CreatorInfo';
 
 export interface Props {
   data: DetailProjectData
+  userData: UserData
   handleAcceptApplicant: () => void;
   handleRejectApplicant: () => void;
 }
 
-function DetailUserInfo({ data, handleAcceptApplicant, handleRejectApplicant }: Props) {
-  const getStanbyApplicants = () => data.applicants.filter(({ status }) => status !== 2);
+function DetailUserInfo({
+  data, userData, handleAcceptApplicant, handleRejectApplicant,
+}: Props) {
+  const getStanbyApplicants = () => data.applicants?.filter(({ status }) => status !== 2);
 
-  const getAcceptApplicants = () => data.applicants.filter(({ status }) => status === 0);
+  const getAcceptApplicants = () => data.applicants?.filter(({ status }) => status === 0);
 
   return (
     <aside className="w-[300px] mt-[30px]">
-      <CreatorInfo />
-      <ApplicantsInfo
-        applicantsStanby={getStanbyApplicants()}
-        onClickAccept={handleAcceptApplicant}
-        onClickReject={handleRejectApplicant}
+      <CreatorInfo
+        userData={userData}
       />
-      <ConfirmedApplicants
-        applicantsAccept={getAcceptApplicants()}
-      />
+      {getStanbyApplicants() && (
+        <>
+          <ApplicantsInfo
+            applicantsStanby={getStanbyApplicants()}
+            onClickAccept={handleAcceptApplicant}
+            onClickReject={handleRejectApplicant}
+          />
+          <ConfirmedApplicants
+            applicantsAccept={getAcceptApplicants()}
+          />
+        </>
+      )}
     </aside>
   );
 }
