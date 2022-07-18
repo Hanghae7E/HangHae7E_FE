@@ -1,3 +1,5 @@
+/* eslint-disable react/require-default-props */
+/* eslint-disable camelcase */
 /* eslint-disable max-len */
 /* eslint-disable array-callback-return */
 /* eslint-disable no-unused-expressions */
@@ -9,7 +11,7 @@ import useModalState from '../hooks/useModalState';
 import ConfirmApplyModal from './ConfirmApplyModal';
 
 interface Props {
-  applicantsStanby: Applicant[];
+  applicantsStanby?: Applicant[];
   onClickAccept: () => void
   onClickReject: () => void
 }
@@ -28,12 +30,14 @@ function ApplicantsInfo({ onClickAccept, onClickReject, applicantsStanby }: Prop
         신청자 리스트
       </h2>
       <ul className="w-[300px]">
-        {applicantsStanby.map(({ username, userId, position }) => (
+        {applicantsStanby?.map(({
+          username, userId, position, profile_image_url,
+        }) => (
           <li
             key={userId}
             className="flex items-center w-[255px] border-b-[1px] border-b-solid border-b-[#EEEEEE] mx-auto pb-[10px]"
           >
-            <img alt="신청자이미지" className="bg-black w-[51px] h-[51px] rounded-full" src="" />
+            <img alt="신청자이미지" className="bg-black w-[51px] h-[51px] rounded-full" src={profile_image_url} />
             <h5 className="ml-[10px] text-xl font-bold">{username}</h5>
             <PositionTag
               position={position}
