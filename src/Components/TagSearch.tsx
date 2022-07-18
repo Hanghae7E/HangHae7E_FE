@@ -53,7 +53,7 @@ function TagSearch(tagOption: tagOptionI) {
   //     .filter((item) => !tagData.includes(item) || !selected.includes(item));
   //   return newData;
   // };
-  const tagSelct = 'h-[50px] text-start  w-full pl-[20px] border-2 border-[#EEEEEE] bg-white float-left  rounded-full font-pre font-normal text-[18px] leading-[21px] text-black';
+  const tagSelct = 'h-[50px] text-start  w-full pl-[20px] border-2 border-[#EEEEEE] bg-white float-left  font-pre font-normal text-[18px] leading-[21px] text-black';
 
   const recommendsTag = (e: React.ChangeEvent<HTMLInputElement>) => {
     const userInput = e.target.value.toLowerCase();
@@ -101,7 +101,7 @@ function TagSearch(tagOption: tagOptionI) {
       </div>
       <input
         type="search"
-        className="h-[50px] w-full pl-[24px] border-2 border-inputGray rounded-full font-pre font-normal text-[18px] leading-[21px] text-[#CCCCCC]"
+        className="h-[50px] w-full pl-[24px] border-2 border-[#DFE1E5] rounded-full font-pre font-normal text-[18px] leading-[21px] text-[#CCCCCC]"
         placeholder={placeholder}
         onChange={recommendsTag}
         value={input}

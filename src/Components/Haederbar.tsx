@@ -67,7 +67,7 @@ export default function Header({ userInfo }:{ userInfo: Iprofile }) {
                 {!isLogin
                   ? (
                     <div className="flex text-sm">
-                      <div className="border border-developer text-developer text-[16px] h-[35px] w-[74px] rounded-[12px] justify-center flex items-center">
+                      <div className="border border-[#6457FA] text-[#6457FA] text-[16px] h-[35px] w-[74px] rounded-[12px] justify-center flex items-center">
 
                         <button onClick={modalClose} type="button" className="flex ">
                           <p
@@ -86,7 +86,7 @@ export default function Header({ userInfo }:{ userInfo: Iprofile }) {
                         <Menu.Button className="flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
                           <img
                             className="h-8 w-8 rounded-full"
-                            src="/profiledefault.svg"
+                            src={userInfo && userInfo.profile_image_url ? userInfo.profile_image_url : '/profiledefault.svg'}
                             alt=""
                           />
                           <div className="text-[16px] ml-[8px]">{userInfo && userInfo.username}</div>

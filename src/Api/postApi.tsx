@@ -1,8 +1,8 @@
 import { FieldValues } from 'react-hook-form';
 import baseUrl from './baseUrl';
 
-const getRecruitPosts = async (pageParam: number) => {
-  const res = await baseUrl.get(`/main?size=3&sort=new&page=${pageParam}`);
+const getRecruitPosts = async (pageParam: number, tag:number) => {
+  const res = await baseUrl.get(`/main?size=3&sort=new&page=${pageParam}&tags=${tag !== 0 ? tag : ''}`);
   return res;
 };
 
@@ -72,7 +72,7 @@ export const postRejectRecruit = async ({ postId }: {postId: string}) => {
 };
 
 export default {
-  getRecruitPosts: (pageParam: number) => getRecruitPosts(pageParam),
+  getRecruitPosts: (pageParam: number, tag:number) => getRecruitPosts(pageParam, tag),
   postRecruitPost: (
     form: FieldValues,
     hashTagId?: string,

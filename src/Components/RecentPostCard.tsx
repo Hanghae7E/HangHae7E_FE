@@ -7,7 +7,7 @@ export default function RecentPostCard({ data }: { data: IRecruitPost }) {
     return `${result[1]}/${result[2]}마감`;
   };
   return (
-    <div className="min-w-min sm:w-[411px] sm:h-[367px] rounded-[24px]  overflow-hidden min-h-min my-auto mx-auto box-border relative cursor-pointer">
+    <div className="min-w-min sm:w-[411px] sm:h-[367px] rounded-[24px]  overflow-hidden min-h-min my-auto box-border relative cursor-pointer">
       <div className="flex w-[100px] h-[44px] text-white bg-black font-medium text-[14px] absolute justify-center items-center">
         <p className="justify-center items-center">{data.recruitDueTime && recruitDueDate()}</p>
       </div>

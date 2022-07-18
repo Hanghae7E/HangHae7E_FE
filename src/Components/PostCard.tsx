@@ -8,10 +8,11 @@ export default function PostCard({ data }: { data: IRecruitPost }) {
   const goCardDetail = () => {
     nav(`/detail/${data.postId}`);
   };
+  // console.log(data);
   return (
     <div className="min-w-full relative md:min-w-min min-h-min h-[442px] w-[410px] mb-[37px] box-border cursor-pointer" onClick={goCardDetail} onKeyPress={goCardDetail}>
       <div className="box-border ">
-        <div className="bg-card-bg rounded-[24px] border-[2px] border-[#EEEEEE] h-[344px] overflow-hidden box-border">
+        <div className="bg-[#F9FBFF] rounded-[24px] border-[2px] border-[#EEEEEE] h-[344px] overflow-hidden box-border">
           <img className="w-full bg-white h-[240px] max-h-[240px] object-fit m-0" src={data.projectImage ? data.projectImage : '/defaulimg.svg'} alt="project" />
           <div className="flex absolute flex-1 font-bold h-[46px] top-[16px] right-[16px]">
 
@@ -22,7 +23,7 @@ export default function PostCard({ data }: { data: IRecruitPost }) {
           <div className="h-[245px]">
             <div className="flex py-3">
               <div className="flex items-center mb-1 py-2">
-                <img className="ml-5 w-[64px] h-[64px] rounded-full object-fill" src="/profiledefault.svg" alt="project" />
+                <img className="ml-5 w-[64px] h-[64px] rounded-full object-fill" src={data.authorImage ? data.authorImage : '/profiledefault.svg'} alt="project" />
                 <div className="ml-[16px]">
                   <div className="justify-start">
                     <p className="font-bold text-[20px]">{data.username}</p>

@@ -34,7 +34,7 @@ export default function MyPageBody({ profileData, tagList, Auth }:
     }),
     {
       onSuccess: () => {
-        query.invalidateQueries();
+        query.invalidateQueries('get_userInfo');
       },
     },
   );
