@@ -67,7 +67,7 @@ export default function Header({ userInfo }:{ userInfo: Iprofile }) {
                 {!isLogin
                   ? (
                     <div className="flex text-sm">
-                      <div className="border border-developer text-developer text-[16px] h-[35px] w-[74px] rounded-[12px] justify-center flex items-center">
+                      <div className="border border-[#6457FA] text-[#6457FA] text-[16px] h-[35px] w-[74px] rounded-[12px] justify-center flex items-center">
 
                         <button onClick={modalClose} type="button" className="flex ">
                           <p

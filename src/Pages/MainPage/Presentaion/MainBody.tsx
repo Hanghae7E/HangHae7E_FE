@@ -62,12 +62,12 @@ export default function MainBody(
             ? <GlobalIcon.DropDown onClick={() => setOpen(!open)} />
             : <GlobalIcon.DropUp onClick={() => setOpen(!open)} />}
           {open && (
-            <section className="font-medium w-[1010px] absolute top-16  bg-white border-[2px] border-inputGray pl-[32px] pt-[32px]">
+            <section className="font-medium w-[1010px] absolute top-16  bg-white border-[2px] border-[#DFE1E5] pl-[32px] pt-[32px]">
               <div className="p-[8px] pb-[12px]">관심 붙야를 선택해 주세요. (최대 4개 선택 가능)</div>
               <div className="flex flex-wrap">
-                {tagList.map((tag) => <TagBox onClick={() => adTag(tag)} key={tag.tagId} hover="hover:border-developer hover:box-border" selected={searchTagList.includes(tag)} tag={tag.body} padding="text-[14px] py-[8px] px-[12px]" margin="ml-[4px] mr-[4px] mb-[16px]" />)}
+                {tagList.map((tag) => <TagBox onClick={() => adTag(tag)} key={tag.tagId} hover="hover:border-[#6457FA] hover:box-border" selected={searchTagList.includes(tag)} tag={tag.body} padding="text-[14px] py-[8px] px-[12px]" margin="ml-[4px] mr-[4px] mb-[16px]" />)}
               </div>
-              <hr className="text-inputGray h-[2px]" />
+              <hr className="text-[#DFE1E5]] h-[2px]" />
               <div className="flex justify-end">
                 <button onClick={() => setSearchTagList([])} type="button" className="m-[20px] flex justify-center items-center">
                   <GlobalIcon.Refresh />

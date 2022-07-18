@@ -12,7 +12,7 @@ export default function PostCard({ data }: { data: IRecruitPost }) {
   return (
     <div className="min-w-full relative md:min-w-min min-h-min h-[442px] w-[410px] mb-[37px] box-border cursor-pointer" onClick={goCardDetail} onKeyPress={goCardDetail}>
       <div className="box-border ">
-        <div className="bg-card-bg rounded-[24px] border-[2px] border-[#EEEEEE] h-[344px] overflow-hidden box-border">
+        <div className="bg-[#F9FBFF] rounded-[24px] border-[2px] border-[#EEEEEE] h-[344px] overflow-hidden box-border">
           <img className="w-full bg-white h-[240px] max-h-[240px] object-fit m-0" src={data.projectImage ? data.projectImage : '/defaulimg.svg'} alt="project" />
           <div className="flex absolute flex-1 font-bold h-[46px] top-[16px] right-[16px]">
 

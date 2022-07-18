@@ -67,17 +67,17 @@ export default function ProjectCreateContainer() {
       <div className="max-w-6xl mx-auto px-3 sm:px-6 lg:px-8 pt-10 bg-white sm:mt-10 mb-8">
         {/* 프로젝트만들기 상단 */}
         <form className="mt-5 sm:mt-15" onSubmit={handleSubmit(onSubmit)}>
-          <p className="ml-16 font-extrabold text-xl sm:text-[36px] text-developer">
+          <p className="ml-16 font-extrabold text-xl sm:text-[36px] text-[#6457FA]">
             프로젝트 만들기
           </p>
           <div className="ml-16 pt-5 sm:pt-20">
             <div className="flex w-full items-center">
               <p className="font-extrabold text-xs sm:text-lg py-3 w-32 sm:w-56 self-center  min-w-max">제목</p>
-              <div className="flex flex-1 w-full border-[2px] h-[60px]  border-inputGray my-1 rounded-xl overflow-hidden max-w-[600px]">
+              <div className="flex flex-1 w-full border-[2px] h-[60px]  border-[#DFE1E5] my-1 rounded-xl overflow-hidden max-w-[600px]">
                 <input
                   className="flex-1 w-full
               sm:text-[20px] pl-3 py-3 rounded-xl outline-none
-              outline-inputGray bg-white font-inter
+              outline-[#DFE1E5] bg-white font-inter
               box-border resize-none"
                   placeholder="000 프로젝트에 함께할 팀원을 모집합니다."
                   {...register('title', { required: true })}
@@ -125,7 +125,7 @@ export default function ProjectCreateContainer() {
                             <input
                               {...field}
                               type="number"
-                              className="text-right sm:text-[18px] w-[85px] h-[60px] pr-2 py-2 my-2 border-[2px] rounded-xl border-inputGray box-border text-xs"
+                              className="text-right sm:text-[18px] w-[85px] h-[60px] pr-2 py-2 my-2 border-[2px] rounded-xl border-[#DFE1E5] box-border text-xs"
                               onChange={(e) => field.onChange(e.target.value.substring(0, 2))}
                             />
                           )}
@@ -145,7 +145,7 @@ export default function ProjectCreateContainer() {
                             <input
                               {...field}
                               type="number"
-                              className="text-right sm:text-[18px] text w-[85px] h-[60px] pr-2 py-2 my-2 border-[2px] rounded-xl border-inputGray box-border text-xs "
+                              className="text-right sm:text-[18px] text w-[85px] h-[60px] pr-2 py-2 my-2 border-[2px] rounded-xl border-[#DFE1E5] box-border text-xs "
                               onChange={(e) => field.onChange(e.target.value.substring(0, 2))}
                             />
                           )}
@@ -165,7 +165,7 @@ export default function ProjectCreateContainer() {
                             <input
                               {...field}
                               type="number"
-                              className="text-right sm:text-[18px] w-[85px] h-[60px] pr-2 py-2 my-2 border-[2px] rounded-xl border-inputGray box-border text-xs "
+                              className="text-right sm:text-[18px] w-[85px] h-[60px] pr-2 py-2 my-2 border-[2px] rounded-xl border-[#DFE1E5] box-border text-xs "
                               onChange={(e) => field.onChange(e.target.value.substring(0, 2))}
                             />
                           )}
@@ -182,14 +182,14 @@ export default function ProjectCreateContainer() {
             <div className="flex min-w-min sm:w-3/4">
               <p className=" font-extrabold text-xs sm:text-lg py-3 w-32 sm:w-56 self-center">참고이미지</p>
               {imgName?.name && (
-              <div className="flex px-[21.5px] items-center max-w-min text-xs sm:text-base py-[13px] my-2  border-[2px] rounded-2xl border-inputGray bg-[#F2F2F2] font-normal mr-3">
+              <div className="flex px-[21.5px] items-center max-w-min text-xs sm:text-base py-[13px] my-2  border-[2px] rounded-2xl border-[#DFE1E5] bg-[#F2F2F2] font-normal mr-3">
                 <div className="text-[18px] whitespace-nowrap">{imgName?.name.length > 20 ? `${imgName?.name.substring(0, 20)}...${imgName?.name.substring(Number(imgName?.name.length) - 3, imgName?.name.length)}` : imgName?.name}</div>
               </div>
               )}
-              <div className="flex pl-[21.5px] pr-[20px] flex-1 w-full items-center max-w-[235px] min-w-max text-xs sm:text-base py-[13px] my-2  border-[2px] rounded-2xl border-developer">
+              <div className="flex pl-[21.5px] pr-[20px] flex-1 w-full items-center max-w-[235px] min-w-max text-xs sm:text-base py-[13px] my-2  border-[2px] rounded-2xl border-[#6457FA]">
                 <label className="sm:whitespace-nowrap flex items-center cursor-pointer" htmlFor="imageFile">
                   <GlobalIcon.FileIcon />
-                  <span className="flex font-inter text-developer text-[18px] ml-[8.5px] ">
+                  <span className="flex font-inter text-[#6457FA] text-[18px] ml-[8.5px] ">
 
                     {imgName ? '파일변경(최대 2MB)' : '파일첨부(최대 2MB)'}
                   </span>
@@ -216,7 +216,7 @@ export default function ProjectCreateContainer() {
                 control={control}
                 name="body"
                 render={({ field }) => (
-                  <textarea {...field} className="w-full h-52 text-[18px] sm:h-96 p-4 border-[2px] bg-white border-inputGray  resize-none rounded-lg" />
+                  <textarea {...field} className="w-full h-52 text-[18px] sm:h-96 p-4 border-[2px] bg-white border-[#DFE1E5]  resize-none rounded-lg" />
                 )}
               />
 
@@ -229,8 +229,8 @@ export default function ProjectCreateContainer() {
 
           </div>
           <div className="m-auto max-w-2xl pl-16 pt-5 flex justify-center mt-32  mb-10">
-            <button type="button" onClick={hadleCancle} className="flex w-60 border-[2px] text-developer border-developer py-3 rounded-xl justify-center bg-white font-semibold cursor-pointer  mr-2">취소하기</button>
-            <input type="submit" className="flex w-60 border-[2px] border-developer py-3 rounded-xl justify-center bg-developer text-white font-semibold cursor-pointer ml-2" value="프로젝트 생성하기" />
+            <button type="button" onClick={hadleCancle} className="flex w-60 border-[2px] text-[#6457FA] border-[#6457FA] py-3 rounded-xl justify-center bg-white font-semibold cursor-pointer  mr-2">취소하기</button>
+            <input type="submit" className="flex w-60 border-[2px] border-[#6457FA] py-3 rounded-xl justify-center bg-[#6457FA] text-white font-semibold cursor-pointer ml-2" value="프로젝트 생성하기" />
           </div>
         </form>
       </div>

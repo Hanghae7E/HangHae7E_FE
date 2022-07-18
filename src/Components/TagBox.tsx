@@ -34,13 +34,13 @@ export default function TagBox({
   const tagBg = (name:string) => {
     switch (name) {
       case '1':
-        return 'bg-designer border-designer';
+        return 'bg-[#74EC8B] border-[#74EC8B]';
       case '2':
-        return 'bg-developer text-white border-developer';
+        return 'bg-[#6457FA] text-white border-[#6457FA]';
       case '3':
-        return 'bg-pmaster border-pmaster';
+        return 'bg-[#FFC700] border-[#FFC700]';
       default:
-        return 'bg-tag-bg border-tag-bg';
+        return 'bg-[#E8EDF4] border-[#E8EDF4]';
     }
   };
   return (
@@ -49,7 +49,7 @@ export default function TagBox({
         ? (
           <div
             onClick={onClick}
-            className={`flex ${selected ? 'bg-white border-developer text-developer' : tagBg(tag)}  
+            className={`flex ${selected ? 'bg-white border-[#6457FA] text-[#6457FA]' : tagBg(tag)}  
             border box-border
             ${selected ? 'bg-white' : tagBg(tag)}
             whitespace-nowrap
