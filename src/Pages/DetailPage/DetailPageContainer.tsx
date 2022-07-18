@@ -107,7 +107,7 @@ export default function DetailPageContainer() {
 
   return (
     <div className="flex flex-row h-screen w-[1260px] mx-auto">
-      {isLoading && (
+      {isLoading && data && (
         <>
           <DetailUserInfo
             data={data}
