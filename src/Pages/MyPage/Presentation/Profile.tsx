@@ -3,7 +3,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { useForm, FormProvider, SubmitHandler } from 'react-hook-form';
 import { useMutation } from 'react-query';
-import { Iprofile, IProfileFormData, auth } from '../../../TypeInterface/userType';
+import { IProfileFormData, auth } from '../../../TypeInterface/userType';
 import TagInput from '../../../Components/TagInput';
 import userAPi from '../../../Api/userAPi';
 
@@ -12,7 +12,7 @@ export default function Profile({
   tagList,
   Auth,
 }: {
-  profileData: Iprofile;
+  profileData: IProfileFormData;
   tagList: Array<string>;
   Auth:auth
 }) {
@@ -23,6 +23,7 @@ export default function Profile({
   const positionOptions = ['개발자', '디자이너', '기획자'];
   const residenceOptions = ['서울', '부산', '대구', '제주'];
   const fieldsOptions = ['프론트', '백', '웹디자인'];
+
   function dateFormat(date: Date) {
     let month = date.getMonth() + 1;
     let day = date.getDate();
@@ -31,76 +32,48 @@ export default function Profile({
     return `${date.getFullYear()}-${month}-${day}`;
   }
   const Today = dateFormat(new Date());
-  // const urltitle = profileData.position === '개발자' ? 'Git' : '링크';
-  // const placeholder = '스킬을 입력 하세요.';
-  // const string = [''];
-  // const [corporationData,setCorporationData] = useState({
-  //   career: profileData ? profileData.career_period: '',
-  //   meeting: profileData ? profileData.faceToFace.toString() : '',
-  //   workDayoption: workDay,
-  //   weekendOption: IncludWeekend,
-  //   position: '',
-  //   fields: '',
-  // });
-
-  // const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
-  //   const { value,name } = e.target;
-  //   setCorporationData({ ...corporationData,[name]: value });
-  // };
-  // const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   const userInput = e.target.value.toLowerCase();
-  //   if (e.target.value.length === 0) {
-  //   }
-  // };
-  // function dateFormat(date: Date) {
-  //   let month = date.getMonth() + 1;
-  //   let day = date.getDate();
-  //   month = Number(month >= 10 ? month : '0' + month);
-  //   day = Number(day >= 10 ? day : '0' + day);
-  //   return date.getFullYear() + '-' + month + '-' + day;
-  // }
   const selected = profileData.skills ? profileData.skills : [''];
   const {
-    username, email, phone_number, position,
-    career_period, portfolio_url, face_to_face,
+    username, email, phone_number, position, residence,
+    career_period, portfolio_url, face_to_face, skills, test,
   } = profileData;
   const [workDay, time] = profileData.available_period ? profileData.available_period.split(',') : ['', ''];
   const [startDate, endDate] = profileData.available_time ? profileData.available_time.split(',') : [Today, Today];
-  const methods = useForm();
-  /* const buttoncs = 'bg-[#EEEEE]  border-2 border-[#6457FA]
-   rounded - [24px] text - black px - [12px] py - [6px] mr - [8px]
-   mt - [8px] font - pre text - [14px] leading - [16.9x]'; */
-  const {
-    register, handleSubmit,
-  } = useForm<IProfileFormData>({
+
+  const methods = useForm<IProfileFormData>({
     defaultValues: {
       username,
       email,
+      skills,
+      test,
       phone_number,
       startDate,
       endDate,
       workDay,
+      residence,
       time,
       face_to_face,
       career_period,
       portfolio_url,
       position,
     },
-    mode: 'onBlur',
+    mode: 'onSubmit',
     reValidateMode: 'onSubmit',
   });
+  const { register } = methods;
 
   const profileRecruit = useMutation(
     (data: IProfileFormData) => userAPi.putUserProfile(data, Auth),
     {
       onSuccess: (res) => {
         console.log('응답', res);
-        // nav('/');
       },
     },
   );
 
   const onSubmit: SubmitHandler<IProfileFormData> = (data) => {
+    const singleValue = methods.getValues('test');
+    console.log('form data singleValue', singleValue);
     console.log('form data set', data);
     profileRecruit.mutate(data);
   };
@@ -108,7 +81,7 @@ export default function Profile({
   return (
     <FormProvider {...methods}>
       <fieldset>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={methods.handleSubmit(onSubmit)}>
           <div className="profile max-w-[736px] pl-[10px] pb-[63px] border-2 border-[#EEEEEE] rounded-2xl">
             <h2 className="prorileTitle pt-[40px] font-pre font-bold text-[28px] leading-[33px] ">
               안녕하세요
@@ -234,7 +207,7 @@ export default function Profile({
               </h2>
               <select
                 className="border-2 border-[#EEEEEE] rounded-md "
-                {...register('career_period')}
+                {...register('face_to_face')}
               >
                 {meetingoptions.map((item) => (
                   <option value={item.value} key={item.value}>
@@ -265,7 +238,7 @@ export default function Profile({
                   </option>
                 ))}
               </select>
-              <select
+              {/* <select
                 className="border-2 mr-[8px] border-[#EEEEEE] rounded-md "
                 {...register('time')}
               >
@@ -274,7 +247,13 @@ export default function Profile({
                     {item}
                   </option>
                 ))}
-              </select>
+              </select> */}
+              {timeOptions.map((item) => (
+                <label key={item} htmlFor={item} className="peer border-2 border-[#6457FA] bg-[#CCCCC] rounded-[24px] text-#6457FA px-[12px] py-[6px] mr-[8px] mb-[8px] font-pre text-[14px] leading-[16.9x]">
+                  <input {...register('time')} type="radio" value={item} id={item} className="bg-[#ccccc] peer-checked:bg-#6457fA" />
+                  {item}
+                </label>
+              ))}
             </div>
           </div>
           <button

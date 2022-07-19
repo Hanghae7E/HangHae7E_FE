@@ -1,3 +1,5 @@
+import { IapplyPosts, IRegisteredPosts } from './postType';
+
 export interface userType {
   id: string
   email: string
@@ -7,6 +9,7 @@ export interface userType {
   socialName: string,
 }
 export interface Iprofile {
+  userId: number;
   username: string;
   email: string;
   phone_number: string;
@@ -20,30 +23,35 @@ export interface Iprofile {
   skills: Array<string>;
   career_period: string;
   portfolio_url: string;
+  file:File;
 }
 
 export interface auth {
-    userId: string | false;
+    userId: number | false;
     username: string | null;
     token:string | null;
   }
 export interface IProfileFormData {
-    id:number;
-    username: string;
-    email: string;
-    phone_number: string;
-    profile_image_url:string;
-    residence: Array<string>;
-    available_period: string ;
-    workDay: string ;
-    time: string ;
-    available_time: string ;
-    startDate: string;
-    endDate: string;
-    position: string ;
-    fields: Array<string>;
-    face_to_face: boolean ;
-    skills: Array<string> ;
-    career_period: string ;
-    portfolio_url: string ;
+  userId:number;
+  username: string;
+  file:File;
+  profile_image_url:string;
+  position: string ;
+  fields: Array<string>;
+  career_period: string ;
+  skills: Array<string> ;
+  portfolio_url: string ;
+  phone_number: string;
+  email: string;
+  residence: string;
+  face_to_face: boolean ;
+  available_period: string ;
+  startDate: string;
+  endDate: string;
+  available_time: string ;
+  workDay: string ;
+  time: string ;
+  test : string ;
+  registeredPosts: Array<IRegisteredPosts>;
+  applyPosts:Array<IapplyPosts>;
   }

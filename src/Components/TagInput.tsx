@@ -46,8 +46,8 @@ export default function TagInput(tagOption: tagOptionI) {
       const all = tags.concat(selected);
       const newData = all.filter((item) => !tags.includes(item) || !selected.includes(item));
       setTagList(newData);
-      setRecommends(newData);
-      setMyTags(myTags);
+      // setRecommends(newData);
+      setMyTags(selected);
     } else {
       setTagList(tags);
       setRecommends([]);
@@ -92,10 +92,10 @@ export default function TagInput(tagOption: tagOptionI) {
     setTagList(tagListCopy);
   };
 
-  const data = useFormContext();
+  const methods = useFormContext();
   return (
     <div>
-      <input type="hidden" value={myTags} className="hidden text-white backbroud-white" {...data.register('skills')} />
+      <input type="text" value={myTags} className="backbroud-white" {...methods.register('test')} />
       <div className="prev w-full ">
         <div className="SkilList flex flex-wrap ">
           {recommends.map((tag) => (

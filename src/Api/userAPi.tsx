@@ -9,6 +9,7 @@ export const getMyInfo = (id: string| false) => {
   const res = baseUrl.get(`/user/${id}`);
   return res;
 };
+
 export const setMyName = (userInfo: Iprofile) => {
   const form = new FormData();
   const token = localStorage.getItem('token');
@@ -16,6 +17,19 @@ export const setMyName = (userInfo: Iprofile) => {
   form.append('username', userInfo.username);
   form.append('phone_number', userInfo.phone_number);
   const res = baseUrl.put(`/user/${userId}`, form, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+  return res;
+};
+
+export const setProfile = (userInfo: IProfileFormData) => {
+  const form = new FormData();
+  form.append('username', userInfo.username);
+  form.append('phone_number', userInfo.phone_number);
+  if (userInfo.file) form.append('files', userInfo.file);
+  const res = baseUrl.put(`/user/${userInfo.userId}`, form, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },
@@ -46,20 +60,25 @@ const getUserProfile = async (id: string | false) => {
 
 // 유저 프로필 수정
 const putUserProfile = async (profile: IProfileFormData, Auth : auth) => {
-  // console.log('리퀘스트 전 데이터', profile);
+  console.log('리퀘스트 전 데이터', profile);
+
   const forms = new FormData();
   const availableTime = `${profile.workDay},${profile.time}`;
   const availablePeriod = `${profile.startDate},${profile.endDate}`;
   if (profile.username) forms.append('username', profile.username);
+  if (profile.position) forms.append('position', profile.position);
+  if (profile.fields) forms.append('fields', profile.fields.toString());
+  if (profile.career_period) forms.append('career_period', profile.career_period);
+  if (profile.skills)forms.append('skills', profile.skills.toString());
+  if (profile.portfolio_url) forms.append('portfolio_url', profile.portfolio_url);
   if (profile.email)forms.append('email', profile.email);
   if (profile.phone_number)forms.append('phone_number', profile.phone_number);
+  if (profile.residence) forms.append('residence', profile.residence);
+  if (profile.face_to_face) forms.append('face_to_face', profile.face_to_face.toString());
   if (profile.startDate || profile.endDate)forms.append('available_period', availablePeriod);
   if (profile.workDay || profile.time)forms.append('available_time', availableTime);
-  if (profile.skills)forms.append('skills', profile.skills.toString());
-  if (profile.position) forms.append('fields', profile.position);
-  if (profile.face_to_face) forms.append('face_to_face', profile.face_to_face.toString());
-  if (profile.career_period) forms.append('career_period', profile.career_period);
-  if (profile.portfolio_url) forms.append('portfolio_url', profile.portfolio_url);
+  if (profile.file) forms.append('files', profile.file);
+
   const res = await baseUrl.put(`/user/${Auth.userId}`, forms, {
     headers: {
       'Content-Type': 'multipart/form-data',
@@ -85,6 +104,7 @@ const putImageProfile = async (file: File, username:string) => {
 export default {
   getMyInfo: (id: string |false) => getMyInfo(id),
   setMyName: (userInfo: Iprofile) => setMyName(userInfo),
+  setProfile: (userInfo: IProfileFormData) => setProfile(userInfo),
   getAllUser: () => getAllUser(),
   postUser: () => postUser(),
   getUserProfile: (id: string | false) => getUserProfile(id),

@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import React, { MouseEventHandler, useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
-import { Iprofile, auth } from '../../../TypeInterface/userType';
+import { Iprofile, auth, IProfileFormData } from '../../../TypeInterface/userType';
 import wy from '../Wy.jpg';
 import user from '../User.jpg';
 import EditIcon from '../EditIcon.png';
@@ -10,35 +10,50 @@ import userAPi from '../../../Api/userAPi';
 
 export default function MyPageBody({ profileData, tagList, Auth }:
 {
-  profileData: Iprofile;
+  profileData: IProfileFormData;
   tagList: Array<string>;
   Auth:auth;
   }) {
   const query = useQueryClient();
+  const [imgFile, setImgFile] = useState<File>();
   const [imgs, setImgs] = useState<string>(profileData.profile_image_url);
-  const [innerContents, setInnerContents] = useState('profile');
+  const [Tab, setTab] = useState('profile');
   const [profileName, setProfileName] = useState(profileData.username);
   // const [modify, setModify] = useState(true);
   const [nameModify, setNameModify] = useState(false);
-  const tabClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+
+  const tabClick = (e:React.MouseEvent<HTMLButtonElement>) => {
     const val = e.currentTarget.value;
-    setInnerContents(val);
+    setTab(val);
   };
+
   const modifyUserInfo = () => {
     // console.log('클릭');
   };
-  const changeName = useMutation(
-    () => userAPi.setMyName({
-      ...profileData,
-      username: profileName,
-    }),
-    {
-      onSuccess: () => {
-        query.invalidateQueries('get_userInfo');
-      },
-    },
-  );
-
+  /// TODO : 타입 바꿔야 할듯.ㅠ 아니면 닉네임만 업데이트 할 수 있도록 api 만들어달라해야할듯
+  const data :Iprofile = {
+    userId: Number(Auth.userId),
+    username: profileName,
+    phone_number: profileData.phone_number,
+    email: profileData.email,
+    profile_image_url: profileData.profile_image_url,
+    residence: profileData.residence,
+    available_period: profileData.available_period,
+    available_time: profileData.available_time,
+    position: profileData.position,
+    fields: profileData.fields,
+    face_to_face: profileData.face_to_face,
+    skills: profileData.skills,
+    career_period: profileData.career_period,
+    portfolio_url: profileData.portfolio_url,
+    file: profileData.file,
+  };
+  const changeName = () => {
+    if (nameModify) {
+      userAPi.setMyName(data);
+    }
+    setNameModify(!nameModify);
+  };
   const onChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files === null) return;
 
@@ -48,7 +63,6 @@ export default function MyPageBody({ profileData, tagList, Auth }:
   };
   const onChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value === null) return;
-
     const values = e.target.value;
     setProfileName(values);
   };
@@ -75,10 +89,7 @@ export default function MyPageBody({ profileData, tagList, Auth }:
               {nameModify ? <input className="w-[100px]" type="text" value={profileName} onChange={onChangeName} /> : profileData.username}
               <button
                 type="button"
-                onClick={() => {
-                  changeName.mutate();
-                  setNameModify(!nameModify);
-                }}
+                onClick={changeName}
                 value="modifyUserInfo"
               >
                 <img className="w-8 h-8 inline-block" src={EditIcon} alt="userImage" />
@@ -109,7 +120,7 @@ export default function MyPageBody({ profileData, tagList, Auth }:
             </button>
             <button
               type="button"
-              value="appProject"
+              value="registeredPosts"
               onClick={tabClick}
               className="pr-8 hover:underline hover:decoration-4"
             >
@@ -117,17 +128,17 @@ export default function MyPageBody({ profileData, tagList, Auth }:
             </button>
             <button
               type="button"
-              defaultValue="reqProject"
+              value="applyPosts"
               onClick={tabClick}
               className="pr-8 hover:underline hover:decoration-4"
             >
               신청한 프로젝트
             </button>
           </div>
-          {innerContents === 'profile' ? (
+          {Tab === 'profile' ? (
             <Profile profileData={profileData} tagList={tagList} Auth={Auth} />
           ) : (
-            <Project />
+            <Project type={Tab} profileData={profileData} />
           )}
         </div>
       </div>
