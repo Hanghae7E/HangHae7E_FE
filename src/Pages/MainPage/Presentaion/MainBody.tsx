@@ -83,7 +83,7 @@ export default function MainBody(
                     });
                   }}
                   type="button"
-                  className="flex  border box-border border-developer py-[10px] px-[60px] rounded-[16px] justify-center bg-developer text-white text-[20px] font-semibold cursor-pointer m-[20px]"
+                  className="flex  border box-border border-[#6457FA] py-[10px] px-[60px] rounded-[16px] justify-center bg-[#6457FA] text-white text-[20px] font-semibold cursor-pointer m-[20px]"
                 >
                   선택 완료
 
