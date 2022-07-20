@@ -1,15 +1,15 @@
 import logo from '../img/logo.png';
 import close from '../img/close.png';
 
-interface IModalData{
+type textModalType={
     messages :string[],
     messageCSS?:string,
-    modalClose: React.Dispatch<React.SetStateAction<boolean>>
+    modalOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default function TextModal(ModalData: IModalData) {
+export default function TextModal(ModalData: textModalType) {
   const {
-    messages, modalClose, messageCSS,
+    messages, modalOpen, messageCSS,
   } = ModalData;
   const defaultModalCSS = 'w-1/2 h-fit pb-20 bg-white  rounded-[16px]';
   const defaultMessageCSS = messageCSS || 'font-pre font-semibold text-[22px] leading-[30px]';
@@ -19,7 +19,7 @@ export default function TextModal(ModalData: IModalData) {
         <button
           type="button"
           className="w-[44px]  h-[44px] float-right mr-3 mt-3"
-          onClick={() => (modalClose)}
+          onClick={() => (modalOpen(false))}
         >
           <img src={close} className="rounded-full" alt="close" />
         </button>

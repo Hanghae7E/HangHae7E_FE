@@ -2,7 +2,6 @@
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { createGlobalStyle } from 'styled-components';
-import { NOTFOUND } from 'dns';
 import DetailPage from './Pages/DetailPage';
 import MainPage from './Pages/MainPage';
 import MyPage from './Pages/MyPage';

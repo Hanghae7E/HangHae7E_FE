@@ -2,11 +2,13 @@ import close from '../img/close.png';
 import logo from '../img/logo.png';
 import GlobalIcon from './GlobalIcon';
 
-export default function Login({
-  closeModal,
-}: {
-  closeModal: () => void;
-}) {
+type textModalType={
+  titles?:string[],
+  messages?:string[],
+  closeModal: () => void
+}
+export default function Login(data:textModalType) {
+  const { titles, messages, closeModal } = data;
   const kakaoClick = () => {
     const KAKAO_AUTH_URL = 'http://huddledown.link/oauth2/authorization/kakao';
     window.location.replace(KAKAO_AUTH_URL);
@@ -29,11 +31,23 @@ export default function Login({
           </button>
         </div>
         <div className="title-area flex flex-col items-center text-center pt-[9px]">
-          <p className="font-pre font-bold text-[20px] leading-[24px] ">
-            사이드 프로젝트 할 사람
-            <br />
-            여기 모여라 !
-          </p>
+          {titles && titles.length > 1 && (
+            titles.map((title) => (
+              <p key={title} className="font-pre font-bold text-[20px] leading-[30px] ">{title}</p>
+            ))
+          )}
+          {messages && messages.length > 1 && (
+            messages.map((message) => (
+              <p
+                key={message}
+                className="font-pre font-bold text-[20px]
+              leading-[30px] "
+              >
+                {message}
+
+              </p>
+            ))
+          )}
           <div className="flex align-middle items-center pt-[40px]">
             <hr className="h-[1px]  w-[80px]  flex-auto border-none  bg-[#CCCCCC] " />
             <p className="font-pre font-bold text-[16px] mx-4">
