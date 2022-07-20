@@ -1,5 +1,5 @@
 import React from 'react';
-import { DetailProjectData, UserData } from '../interface';
+import { DetailProjectData, UserData } from '../../../TypeInterface/detailType';
 import ApplicantsInfo from './ApplicantsInfo';
 import ConfirmedApplicants from './ConfirmedApplicants';
 import CreatorInfo from './CreatorInfo';

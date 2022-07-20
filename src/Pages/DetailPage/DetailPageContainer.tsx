@@ -14,7 +14,7 @@ import {
   postRejectRecruit,
 } from '../../Api/postApi';
 import userApi from '../../Api/userAPi';
-import { UserData } from './interface';
+import { UserData } from '../../TypeInterface/detailType';
 
 export default function DetailPageContainer() {
   const { pathname } = useLocation();
