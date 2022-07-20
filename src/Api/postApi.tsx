@@ -90,4 +90,5 @@ export default {
   ),
   getTag,
   getRecommendPosts,
+  getRecruitPostDetails: ({ postId }:{postId:string}) => getRecruitPostDetails({ postId }),
 };

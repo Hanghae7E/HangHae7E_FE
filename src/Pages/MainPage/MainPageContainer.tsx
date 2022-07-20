@@ -42,7 +42,7 @@ export default function MainPageContainer() {
           />
         </Portal>
       )}
-      <MainHeader userInfo={userInfo?.data?.data} />
+      <MainHeader />
       {
         recommendPosts.isSuccess && getBoardIsSuccess && (
           <div>

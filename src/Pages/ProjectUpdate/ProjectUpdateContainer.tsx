@@ -1,10 +1,11 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable react/jsx-props-no-spreading */
 import { Controller, FieldValues, useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { useQuery } from 'react-query';
-import CreateFooter from './Presentation/CreateFooter';
-import CreateHeader from './Presentation/CreateHeader';
-import { dateFormat } from '../../util/util';
+import { useNavigate, useParams } from 'react-router-dom';
+import UpdateFooter from './Presentation/UpdateFooter';
+import UpdateHeader from './Presentation/UpdateHeader';
 import postApi from '../../Api/postApi';
 import { ITag } from '../../TypeInterface/postType';
 import TagBox from '../../Components/TagBox';
@@ -12,15 +13,22 @@ import CustomCalinder from '../../Components/CustomCalinder';
 import GlobalIcon from '../../Components/GlobalIcon';
 import TagSearch from '../../Components/TagSearch';
 import usePostRecruitMutation from './hooks/usePostRecruitMutation';
+import usePostRecruitQuery from './hooks/usePostRecruitQuery';
 
-export default function ProjectCreateContainer() {
+export default function ProjectUpdateContainer() {
+  const { postId } = useParams();
+  const nav = useNavigate();
+  const updateData = usePostRecruitQuery(postId || '0');
+  if (updateData.isError) {
+    alert('존재하지않는 게시물입니다.');
+    nav('/');
+  }
   const [hashTag, setHashTag] = useState<Array<ITag>>([]);
   const [hashTagId, setHashTagId] = useState<string>();
   const [imgName, setImageName] = useState<File>();
-  const Today = new Date();
-  const [startDate, setStartDate] = useState<string| undefined>(dateFormat(Today));
-  const [endDate, setEndDate] = useState<string| undefined>(dateFormat(Today));
-  const [dueDate, setDueDate] = useState<string| undefined>(dateFormat(Today));
+  const [startDate, setStartDate] = useState<string>();
+  const [endDate, setEndDate] = useState<string>();
+  const [dueDate, setDueDate] = useState<string>();
 
   const {
     register,
@@ -52,9 +60,11 @@ export default function ProjectCreateContainer() {
   const onSubmit = (datas: FieldValues) => {
     postRecruitMustation.mutate(datas);
   };
+
   return (
     <>
-      <CreateHeader />
+      <UpdateHeader />
+      {updateData.isSuccess && (
       <div className="max-w-6xl mx-auto px-3 sm:px-6 lg:px-8 pt-10 bg-white sm:mt-10 mb-8">
         {/* 프로젝트만들기 상단 */}
         <form className="mt-5 sm:mt-15" onSubmit={handleSubmit(onSubmit)}>
@@ -70,29 +80,27 @@ export default function ProjectCreateContainer() {
               sm:text-[20px] pl-3 py-3 rounded-xl outline-none
               outline-[#DFE1E5] bg-white font-inter
               box-border resize-none"
+                  defaultValue={updateData.data.title}
                   placeholder="000 프로젝트에 함께할 팀원을 모집합니다."
                   {...register('title', { required: true })}
                 />
               </div>
               {errors.title && <span className="text-[#ff0000]">필수 입력 값 입니다.</span>}
             </div>
-
             <div className="flex min-w-min sm:w-3/4">
               <p className="font-extrabold text-xs sm:text-lg py-3 w-32 sm:w-56 self-center ">프로젝트 기간</p>
               <CustomCalinder
-                start={startDate}
-                end={endDate}
+                start={updateData.data.projectStartTime}
+                end={updateData.data.projectEndTime}
                 setStart={setStartDate}
                 setEnd={setEndDate}
                 isRange
               />
-
             </div>
             <div className="flex min-w-min sm:w-3/4">
               <p className=" font-extrabold text-xs sm:text-lg py-3 w-32 sm:w-56 self-center">모집 마감일</p>
-
               <CustomCalinder
-                start={dueDate}
+                start={updateData.data.recruitDueTime}
                 setStart={setDueDate}
               />
             </div>
@@ -111,7 +119,7 @@ export default function ProjectCreateContainer() {
                           control={control}
                           name="developer"
                           rules={{ maxLength: 2 }}
-                          defaultValue=""
+                          defaultValue={updateData.data.requiredDevelopers}
                           render={({ field }) => (
                             <input
                               {...field}
@@ -131,7 +139,7 @@ export default function ProjectCreateContainer() {
                           control={control}
                           name="designer"
                           rules={{ maxLength: 2 }}
-                          defaultValue=""
+                          defaultValue={updateData.data.requiredDesigners}
                           render={({ field }) => (
                             <input
                               {...field}
@@ -151,7 +159,7 @@ export default function ProjectCreateContainer() {
                           control={control}
                           name="pmaster"
                           rules={{ maxLength: 2 }}
-                          defaultValue=""
+                          defaultValue={updateData.data.requiredProjectManagers}
                           render={({ field }) => (
                             <input
                               {...field}
@@ -172,16 +180,20 @@ export default function ProjectCreateContainer() {
             </div>
             <div className="flex min-w-min sm:w-3/4">
               <p className=" font-extrabold text-xs sm:text-lg py-3 w-32 sm:w-56 self-center">참고이미지</p>
-              {imgName?.name && (
-              <div className="flex px-[21.5px] items-center max-w-min text-xs sm:text-base py-[13px] my-2  border-[2px] rounded-2xl border-[#DFE1E5] bg-[#F2F2F2] font-normal mr-3">
-                <div className="text-[18px] whitespace-nowrap">{imgName?.name.length > 20 ? `${imgName?.name.substring(0, 20)}...${imgName?.name.substring(Number(imgName?.name.length) - 3, imgName?.name.length)}` : imgName?.name}</div>
-              </div>
-              )}
+              {imgName?.name ? (
+                <div className="flex px-[21.5px] items-center max-w-min text-xs sm:text-base py-[13px] my-2  border-[2px] rounded-2xl border-[#DFE1E5] bg-[#F2F2F2] font-normal mr-3">
+                  <div className="text-[18px] whitespace-nowrap">{imgName?.name.length > 20 ? `${imgName?.name.substring(0, 20)}...${imgName?.name.substring(Number(imgName?.name.length) - 3, imgName?.name.length)}` : imgName?.name}</div>
+                </div>
+              )
+                : (
+                  <div className="flex px-[21.5px] items-center max-w-min text-xs sm:text-base py-[13px] my-2  border-[2px] rounded-2xl border-[#DFE1E5] bg-[#F2F2F2] font-normal mr-3">
+                    <div className="text-[18px] whitespace-nowrap">{updateData.data?.imageUrl.length > 20 ? `${updateData.data?.imageUrl.substring(0, 20)}...${updateData.data?.imageUrl.substring(Number(updateData.data?.imageUrl.length) - 3, updateData.data?.imageUrl.length)}` : updateData.data?.imageUrl}</div>
+                  </div>
+                )}
               <div className="flex pl-[21.5px] pr-[20px] flex-1 w-full items-center max-w-[235px] min-w-max text-xs sm:text-base py-[13px] my-2  border-[2px] rounded-2xl border-[#6457FA]">
                 <label className="sm:whitespace-nowrap flex items-center cursor-pointer" htmlFor="imageFile">
                   <GlobalIcon.FileIcon />
                   <span className="flex font-inter text-[#6457FA] text-[18px] ml-[8.5px] ">
-
                     {imgName ? '파일변경(최대 2MB)' : '파일첨부(최대 2MB)'}
                   </span>
                 </label>
@@ -194,7 +206,6 @@ export default function ProjectCreateContainer() {
                   onChange={fileGetChange}
                 />
               </div>
-
             </div>
           </div>
           <div className="mx-auto w-1/2  overflow-hidden pb-5 sm:pb-20" />
@@ -206,6 +217,7 @@ export default function ProjectCreateContainer() {
               <Controller
                 control={control}
                 name="body"
+                defaultValue={updateData.isSuccess && updateData.data.body}
                 render={({ field }) => (
                   <textarea {...field} className="w-full h-52 text-[18px] sm:h-96 p-4 border-[2px] bg-white border-[#DFE1E5]  resize-none rounded-lg" />
                 )}
@@ -213,11 +225,8 @@ export default function ProjectCreateContainer() {
 
             </div>
             <div className="pl-16 pt-[8px]">
-
-              {isSuccess && <TagSearch tagData={data.data} selected={hashTag} setHashTagId={setHashTagId} setHashTag={setHashTag} placeholder="해시태그를 입력해 주세요" />}
-
+              {isSuccess && <TagSearch tagData={data.data} selected={updateData.data.tags} setHashTagId={setHashTagId} setHashTag={setHashTag} placeholder="해시태그를 입력해 주세요" />}
             </div>
-
           </div>
           <div className="m-auto max-w-2xl pl-16 pt-5 flex justify-center mt-32  mb-10">
             <button type="button" onClick={hadleCancle} className="flex w-60 border-[2px] text-[#6457FA] border-[#6457FA] py-3 rounded-xl justify-center bg-white font-semibold cursor-pointer  mr-2">취소하기</button>
@@ -225,7 +234,8 @@ export default function ProjectCreateContainer() {
           </div>
         </form>
       </div>
-      <CreateFooter />
+      )}
+      <UpdateFooter />
     </>
   );
 }

@@ -1,10 +1,12 @@
+/* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import { Fragment, useEffect, useState } from 'react';
+import {
+  Fragment, useContext, useEffect, useState,
+} from 'react';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { Link, useNavigate } from 'react-router-dom';
-import GlobalIcon from './GlobalIcon';
 import Login from './Login';
 import jwtUtils from '../util/JwtUtil';
 import { Iprofile } from '../TypeInterface/userType';
@@ -13,7 +15,7 @@ function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
 }
 
-export default function Header({ userInfo }:{ userInfo: Iprofile }) {
+export default function Headerbar({ userInfo }:{ userInfo: Iprofile }) {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const nav = useNavigate();
   const token = localStorage.getItem('token');
@@ -25,13 +27,14 @@ export default function Header({ userInfo }:{ userInfo: Iprofile }) {
     setModalOpen(!modalOpen);
   };
   useEffect(() => {
+    console.log('test', token);
     if (token) {
       setIsLogin(jwtUtils.isAuth(token));
     }
   }, []);
   return (
     <>
-      <Disclosure as="nav" className="bg-gray-100">
+      <Disclosure as="nav" className="bg-white">
         {() => (
           <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
             <div className="relative flex items-center justify-between h-16">
@@ -83,7 +86,7 @@ export default function Header({ userInfo }:{ userInfo: Iprofile }) {
                   : (
                     <Menu as="div" className="ml-3 relative">
                       <div>
-                        <Menu.Button className="flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
+                        <Menu.Button className="flex items-center text-sm rounded-full focus:outline-none ">
                           <img
                             className="h-8 w-8 rounded-full"
                             src={userInfo && userInfo.profile_image_url ? userInfo.profile_image_url : '/profiledefault.svg'}
