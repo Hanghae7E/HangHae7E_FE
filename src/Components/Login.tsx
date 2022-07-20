@@ -36,9 +36,9 @@ export default function Login({
           </p>
           <div className="flex align-middle items-center pt-[40px]">
             <hr className="h-[1px]  w-[80px]  flex-auto border-none  bg-[#CCCCCC] " />
-            <text className="font-pre font-bold text-[16px] mx-4">
+            <p className="font-pre font-bold text-[16px] mx-4">
               회원가입
-            </text>
+            </p>
             <hr className="h-[1px]  w-[80px] flex-auto border-none  bg-[#CCCCCC]" />
           </div>
         </div>
