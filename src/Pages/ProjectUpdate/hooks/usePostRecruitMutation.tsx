@@ -3,9 +3,10 @@ import { FieldValues } from 'react-hook-form';
 import { useMutation } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import postApi from '../../../Api/postApi';
+import { ITag } from '../../../TypeInterface/postType';
 
 function usePostRecruitMutation(
-  hashTagId:string | undefined,
+  hashTag:Array<ITag> | undefined,
   startDate:string | undefined,
   endDate:string | undefined,
   dueDate:string | undefined,
@@ -14,7 +15,7 @@ function usePostRecruitMutation(
   const nav = useNavigate();
   return useMutation((form: FieldValues) => postApi.postRecruitPost(
     form,
-    hashTagId,
+    hashTag,
     startDate,
     endDate,
     dueDate,

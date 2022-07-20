@@ -15,12 +15,11 @@ import usePostRecruitMutation from './hooks/usePostRecruitMutation';
 
 export default function ProjectCreateContainer() {
   const [hashTag, setHashTag] = useState<Array<ITag>>([]);
-  const [hashTagId, setHashTagId] = useState<string>();
   const [imgName, setImageName] = useState<File>();
   const Today = new Date();
-  const [startDate, setStartDate] = useState<string| undefined>(dateFormat(Today));
-  const [endDate, setEndDate] = useState<string| undefined>(dateFormat(Today));
-  const [dueDate, setDueDate] = useState<string| undefined>(dateFormat(Today));
+  const [startDate, setStartDate] = useState<string>(dateFormat(Today));
+  const [endDate, setEndDate] = useState<string>(dateFormat(Today));
+  const [dueDate, setDueDate] = useState<string>(dateFormat(Today));
 
   const {
     register,
@@ -29,7 +28,7 @@ export default function ProjectCreateContainer() {
     formState: { errors },
   } = useForm();
   const postRecruitMustation = usePostRecruitMutation(
-    hashTagId,
+    hashTag,
     startDate,
     endDate,
     dueDate,
@@ -214,7 +213,7 @@ export default function ProjectCreateContainer() {
             </div>
             <div className="pl-16 pt-[8px]">
 
-              {isSuccess && <TagSearch tagData={data.data} selected={hashTag} setHashTagId={setHashTagId} setHashTag={setHashTag} placeholder="해시태그를 입력해 주세요" />}
+              {isSuccess && <TagSearch tagData={data.data} selected={hashTag} setHashTag={setHashTag} placeholder="해시태그를 입력해 주세요" />}
 
             </div>
 
