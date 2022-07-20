@@ -1,7 +1,7 @@
 import Haederbar from '../../../Components/Haederbar';
-import { Iprofile } from '../../../TypeInterface/userType';
+import { Iuser } from '../../../TypeInterface/userType';
 
-export default function MainHeader({ userInfo }:{ userInfo: Iprofile }) {
+export default function MainHeader({ userInfo }:{ userInfo: Iuser }) {
   return (
     <>
       <Haederbar userInfo={userInfo} />

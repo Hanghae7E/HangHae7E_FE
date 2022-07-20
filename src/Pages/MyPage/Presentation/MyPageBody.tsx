@@ -1,70 +1,69 @@
-import React, { MouseEventHandler, useState } from 'react';
-import { useMutation, useQueryClient } from 'react-query';
-import { Iprofile, auth, IProfileFormData } from '../../../TypeInterface/userType';
+import React, { useState } from 'react';
+import { useMutation } from 'react-query';
+import { useNavigate } from 'react-router-dom';
+import { IProfileFormData, IsideProfile } from '../../../TypeInterface/userType';
 import wy from '../Wy.jpg';
 import user from '../User.jpg';
 import EditIcon from '../EditIcon.png';
 import Profile from './Profile';
 import Project from './Project';
 import userAPi from '../../../Api/userAPi';
+import { Itag } from '../../../TypeInterface/tagType';
 
-export default function MyPageBody({ profileData, tagList, Auth }:
+export default function MyPageBody({ profileData, tagList }:
 {
   profileData: IProfileFormData;
-  tagList: Array<string>;
-  Auth:auth;
+  tagList: Array<Itag>;
   }) {
-  const query = useQueryClient();
-  const [imgFile, setImgFile] = useState<File>();
-  const [imgs, setImgs] = useState<string>(profileData.profile_image_url);
+  const tag = tagList.map((obj: Itag) => obj.body);
+  const newTag = tag.splice(8);
+  const [objectURL, setObjectURL] = useState<string>(profileData.profile_image_url);
   const [Tab, setTab] = useState('profile');
-  const [profileName, setProfileName] = useState(profileData.username);
-  // const [modify, setModify] = useState(true);
+  const [err, setErr] = useState(true);
+  const [NewUserName, setNewUserName] = useState(profileData.username);
+  const [nicknameMessage, setNicknameMessage] = useState('');
   const [nameModify, setNameModify] = useState(false);
+  const [modify, setModify] = useState(false);
 
+  const navigation = useNavigate();
   const tabClick = (e:React.MouseEvent<HTMLButtonElement>) => {
     const val = e.currentTarget.value;
     setTab(val);
   };
 
-  const modifyUserInfo = () => {
-    // console.log('클릭');
-  };
-  /// TODO : 타입 바꿔야 할듯.ㅠ 아니면 닉네임만 업데이트 할 수 있도록 api 만들어달라해야할듯
-  const data :Iprofile = {
-    userId: Number(Auth.userId),
-    username: profileName,
-    phone_number: profileData.phone_number,
-    email: profileData.email,
-    profile_image_url: profileData.profile_image_url,
-    residence: profileData.residence,
-    available_period: profileData.available_period,
-    available_time: profileData.available_time,
-    position: profileData.position,
-    fields: profileData.fields,
-    face_to_face: profileData.face_to_face,
-    skills: profileData.skills,
-    career_period: profileData.career_period,
-    portfolio_url: profileData.portfolio_url,
-    file: profileData.file,
-  };
-  const changeName = () => {
-    if (nameModify) {
-      userAPi.setMyName(data);
-    }
-    setNameModify(!nameModify);
-  };
+  const UpdateSideProfile = useMutation(
+    (data: IsideProfile) => userAPi.setSideProfile(data),
+    {
+      onSuccess: () => {
+        URL.revokeObjectURL(objectURL);
+        navigation('/mypage');
+      },
+    },
+  );
+
   const onChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files === null) return;
-
     const files = e.target.files[0];
-    userAPi.putImageProfile(files, profileData.username);
-    setImgs(URL.createObjectURL(files));
+    const SideProfile:IsideProfile = { file: files, username: NewUserName };
+
+    setObjectURL(URL.createObjectURL(files));
+    UpdateSideProfile.mutate(SideProfile);
   };
-  const onChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value === null) return;
-    const values = e.target.value;
-    setProfileName(values);
+  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.value.length < 2 || e.target.value.length > 5) {
+      setErr(true);
+      setNicknameMessage('2글자 이상 5글자 미만으로 입력해주세요.');
+    } else { setNewUserName(e.target.value); }
+  };
+  const onChangeName = () => {
+    const SideProfile:IsideProfile = { username: NewUserName };
+    if (nameModify) {
+      UpdateSideProfile.mutate(SideProfile);
+    }
+    setNameModify(false);
+  };
+  const modifyUserInfo = () => {
+    setModify(!modify);
   };
   return (
     <div className="max-w-full mx-auto">
@@ -78,22 +77,39 @@ export default function MyPageBody({ profileData, tagList, Auth }:
               <label className="cursor-pointer" htmlFor="file">
                 <img
                   className="w-[80px]  h-[80px] mx-auto rounded-full"
-                  src={imgs || user}
+                  src={profileData.profile_image_url || objectURL || user}
                   alt="userImage"
                 />
                 <input className="hidden" type="file" id="file" accept="image/jpg, image/jpeg, image/png" onChange={onChangeFile} />
               </label>
 
             </div>
-            <div className="flex justify-center userName font-pre font-semibold text-[22px] leading-[22px] pb-[18px]">
-              {nameModify ? <input className="w-[100px]" type="text" value={profileName} onChange={onChangeName} /> : profileData.username}
-              <button
-                type="button"
-                onClick={changeName}
-                value="modifyUserInfo"
-              >
-                <img className="w-8 h-8 inline-block" src={EditIcon} alt="userImage" />
-              </button>
+            <div className="flex justify-center userName font-pre font-semibold text-[22px] leading-[25px] pb-[18px]">
+              {nameModify ? (
+                <div className=" ">
+                  {err === true && (<span className="font-pre font-normal text-[12px] leading-[13.32px]">{nicknameMessage}</span>)}
+                  <input className="w-[100px] pl-[10px] shadow-lg " type="text" onChange={handleInput} />
+                  <button
+                    type="button"
+                    onClick={onChangeName}
+                    value="editName"
+                  >
+                    <img className="w-8 h-8 inline-block" src={EditIcon} alt="userImage" />
+                  </button>
+                </div>
+              )
+                : (
+                  <div>
+                    {profileData.username}
+                    <button
+                      type="button"
+                      onClick={() => { setNameModify(!modify); }}
+                      value="editName"
+                    >
+                      <img className="w-8 h-8 inline-block" src={EditIcon} alt="userImage" />
+                    </button>
+                  </div>
+                )}
             </div>
             <div className="userEmail font-pre font-normal  text-[16px] leading-[19px] pb-[18px]  ">
               {profileData.email}
@@ -136,7 +152,12 @@ export default function MyPageBody({ profileData, tagList, Auth }:
             </button>
           </div>
           {Tab === 'profile' ? (
-            <Profile profileData={profileData} tagList={tagList} Auth={Auth} />
+            <Profile
+              profileData={profileData}
+              tagList={newTag}
+              modify={modify}
+              setModify={setModify}
+            />
           ) : (
             <Project type={Tab} profileData={profileData} />
           )}

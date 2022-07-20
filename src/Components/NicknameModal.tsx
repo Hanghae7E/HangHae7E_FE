@@ -4,7 +4,7 @@
 import React, { useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import userAPi from '../Api/userAPi';
-import { Iprofile } from '../TypeInterface/userType';
+import { Iuser } from '../TypeInterface/userType';
 import close from '../img/close.png';
 import logo from '../img/logo.png';
 import profile from '../img/profile.png';
@@ -14,22 +14,28 @@ export default function NickNameModal({
   userInfo,
 }: {
     modalClose: any,
-    userInfo: Iprofile,
+    userInfo: Iuser,
 }) {
-  const token = localStorage.getItem('token');
+  const [nicknameCheck, setNicknameCheck] = useState(false);
+  const [nicknameMessage, setNicknameMessage] = useState('');
+  const [Input, setInput] = useState('');
 
-  const [users, setUsers] = useState<Iprofile>(userInfo);
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const input = e.target.value;
-    setUsers({
-      ...userInfo,
-      username: input,
-      phone_number: '010-0000-0000',
-    });
-    // 유효성검사
+    if (e.target.value.length < 2 || e.target.value.length > 5) {
+      setNicknameMessage('2글자 이상 5글자 미만으로 입력해주세요.');
+      setNicknameCheck(false);
+    }
+    if (e.target.value.length === 0) {
+      setNicknameMessage(`입력하지 않으면 ${userInfo.username}이 닉네임으로 사용됩니다.`);
+      setNicknameCheck(false);
+    } else {
+      setNicknameMessage('환영합니다 :)');
+      setNicknameCheck(true);
+      setInput(e.target.value);
+    }
   };
   const query = useQueryClient();
-  const changeNickName = useMutation((user:Iprofile) => userAPi.setMyName(user), {
+  const changeNickName = useMutation((username:string) => userAPi.setMyName(username), {
     onSuccess: (v) => {
       console.log(v);
       query.invalidateQueries('get_userInfo');
@@ -37,9 +43,7 @@ export default function NickNameModal({
     },
   });
   async function savebtn() {
-    if (users?.username) {
-      changeNickName.mutate(users);
-    }
+    if (Input) { changeNickName.mutate(Input); } else { changeNickName.mutate(userInfo.username); }
   }
   return (
     <div className="flex w-full h-full fixed items-center justify-center bg-black/30 z-10">
@@ -70,9 +74,11 @@ export default function NickNameModal({
             className="w-[300px] h-[50px] mt-[12px] pl-[20px] border-2 border-[#EEEEEE] rounded-[8px] font-pre font-normal text-[18px] leading-[21px] placeholder:text-[#CCCCCC] text-black"
             type="text"
             placeholder="ex)룰루랄라조로"
-            value={users?.username}
+            value={Input}
             onChange={handleInput}
           />
+          {nicknameCheck === false && (<span>{nicknameMessage}</span>)}
+
           <button
             type="button"
             value="nickBtn"
