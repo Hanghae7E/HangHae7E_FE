@@ -37,6 +37,7 @@ export default function MainBody(
     const tags = tag.map((v) => v.tagId).join();
     setSearchTag(Number(tags));
   };
+
   return (
     <div className="max-w-[1350px] mx-auto px-2 sm:px-6 lg:px-8 mt-[126px]">
       <div className="pt-1 pb-5 bg-white">

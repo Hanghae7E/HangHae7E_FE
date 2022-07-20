@@ -1,7 +1,7 @@
 /* eslint-disable react/require-default-props */
 /* eslint-disable camelcase */
 import React from 'react';
-import { Applicant } from '../DetailPageContainer';
+import { Applicant } from '../interface';
 import PositionTag from './PositionTag';
 
 interface Props {

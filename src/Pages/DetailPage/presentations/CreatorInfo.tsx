@@ -1,5 +1,5 @@
 import React from 'react';
-import { UserData } from '../DetailPageContainer';
+import { UserData } from '../interface';
 
 interface Props {
   userData: UserData;
@@ -7,6 +7,7 @@ interface Props {
 
 function CreatorInfo({ userData }: Props) {
   const { username } = userData;
+
   return (
     <div className="w-[300px] text-center border-2 border-solid border-[#EEEEEE] pt-[46px] pb-[20px] rounded-xl mb-6">
       <img alt="프로필이미지" className="w-[80px] h-[80px] rounded-full mx-auto" src="" />

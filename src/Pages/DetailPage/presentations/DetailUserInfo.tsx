@@ -1,12 +1,12 @@
 import React from 'react';
-import { DetailProjectData, UserData } from '../DetailPageContainer';
+import { DetailProjectData, UserData } from '../interface';
 import ApplicantsInfo from './ApplicantsInfo';
 import ConfirmedApplicants from './ConfirmedApplicants';
 import CreatorInfo from './CreatorInfo';
 
 export interface Props {
   data: DetailProjectData
-  userData: UserData
+  userData: UserData | null
   handleAcceptApplicant: () => void;
   handleRejectApplicant: () => void;
 }
@@ -17,6 +17,8 @@ function DetailUserInfo({
   const getStanbyApplicants = () => data.applicants?.filter(({ status }) => status !== 2);
 
   const getAcceptApplicants = () => data.applicants?.filter(({ status }) => status === 0);
+
+  if (userData === null) return null;
 
   return (
     <aside className="w-[300px] mt-[30px]">

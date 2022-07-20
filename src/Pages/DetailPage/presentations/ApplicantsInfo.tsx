@@ -4,7 +4,7 @@
 /* eslint-disable array-callback-return */
 /* eslint-disable no-unused-expressions */
 import React from 'react';
-import { Applicant } from '../DetailPageContainer';
+import { Applicant } from '../interface';
 import DetailIcon from './DetailIcon';
 import PositionTag from './PositionTag';
 import useModalState from '../hooks/useModalState';

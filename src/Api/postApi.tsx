@@ -67,7 +67,7 @@ export const deleteRecruitDetail = async ({ postId }: {postId: string}) => {
 };
 
 export const postRejectRecruit = async ({ postId }: {postId: string}) => {
-  const res = await baseUrl.post(`recruitPost/${postId}/application/denied`);
+  const res = await baseUrl.post(`/recruitPost/${postId}/application/denied`);
   return res;
 };
 
