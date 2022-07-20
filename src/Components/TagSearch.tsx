@@ -9,8 +9,7 @@ interface tagOptionI {
   tagData: Array<ITag>;
   selected: Array<ITag>;
   placeholder: string;
-  setHashTag: React.Dispatch<SetStateAction<Array<ITag>>>;
-  setHashTagId: React.Dispatch<SetStateAction<string | undefined>>;
+  setHashTag?: React.Dispatch<SetStateAction<Array<ITag>>>;
   style?: {
     tag?: {
       width?: number;
@@ -36,7 +35,7 @@ interface tagOptionI {
 }
 function TagSearch(tagOption: tagOptionI) {
   const {
-    tagData, selected, placeholder, setHashTag, setHashTagId,
+    tagData, selected, placeholder, setHashTag,
   } = tagOption;
   const [myTags, setMyTags] = useState<Array<ITag>>(selected);
   const [recommends, setRecommends] = useState<Array<ITag>>([]);
@@ -71,8 +70,7 @@ function TagSearch(tagOption: tagOptionI) {
     tagCopy.push(clickedValue);
     tagCopy.filter((tag) => tag !== clickedValue);
     setMyTags(tagCopy);
-    setHashTag(tagCopy);
-    setHashTagId(tagCopy.map((v) => v.tagId).join(','));
+    if (setHashTag)setHashTag(tagCopy);
     setRecommends([]);
     setInput('');
   };
@@ -84,8 +82,7 @@ function TagSearch(tagOption: tagOptionI) {
     const tagListCopy = [...tagData];
     tagListCopy.push(clickedValue);
     setMyTags(newMyTags);
-    setHashTag(newMyTags);
-    setHashTagId(newMyTags.map((v) => v.body).join(','));
+    if (setHashTag)setHashTag(newMyTags);
   };
   return (
     <div className="relative h-[45px] w-full border-none">

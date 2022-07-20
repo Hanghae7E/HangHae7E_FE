@@ -20,8 +20,8 @@ import { dateFormat } from '../util/util';
 interface Iprops {
 start?: string;
 end?: string;
-setStart:React.Dispatch<SetStateAction<string | undefined>>
-setEnd?:React.Dispatch<SetStateAction<string| undefined>>
+setStart:React.Dispatch<SetStateAction<string>>
+setEnd?:React.Dispatch<SetStateAction<string>>
 isRange?: boolean;
 }
 interface IData{

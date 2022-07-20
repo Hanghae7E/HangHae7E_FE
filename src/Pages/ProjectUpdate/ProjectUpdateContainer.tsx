@@ -1,34 +1,48 @@
+/* eslint-disable no-alert */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable react/jsx-props-no-spreading */
 import { Controller, FieldValues, useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { useQuery } from 'react-query';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import UpdateFooter from './Presentation/UpdateFooter';
 import UpdateHeader from './Presentation/UpdateHeader';
 import postApi from '../../Api/postApi';
-import { ITag } from '../../TypeInterface/postType';
 import TagBox from '../../Components/TagBox';
 import CustomCalinder from '../../Components/CustomCalinder';
 import GlobalIcon from '../../Components/GlobalIcon';
 import TagSearch from '../../Components/TagSearch';
-import usePostRecruitMutation from './hooks/usePostRecruitMutation';
-import usePostRecruitQuery from './hooks/usePostRecruitQuery';
+import { ITag } from '../../TypeInterface/postType';
+import useUpdateRecruitMutation from './hooks/useUpdateRecruitMutation';
+
+interface IUpdateData{
+  body: string,
+    imageUrl: string,
+    projectEndTime: string,
+    projectStartTime: string,
+    recruitDueTime: string,
+    requiredDesigners: number,
+    requiredDevelopers: number,
+    requiredProjectManagers: number,
+    tags: Array<ITag>,
+    title: string,
+    userId: number,
+}
 
 export default function ProjectUpdateContainer() {
+  const update = useLocation();
   const { postId } = useParams();
   const nav = useNavigate();
-  const updateData = usePostRecruitQuery(postId || '0');
-  if (updateData.isError) {
+  const updateData = update.state as IUpdateData;
+  if (!updateData) {
     alert('존재하지않는 게시물입니다.');
     nav('/');
   }
-  const [hashTag, setHashTag] = useState<Array<ITag>>([]);
-  const [hashTagId, setHashTagId] = useState<string>();
+  const [hashTag, setHashTag] = useState<Array<ITag>>(updateData.tags);
   const [imgName, setImageName] = useState<File>();
-  const [startDate, setStartDate] = useState<string>();
-  const [endDate, setEndDate] = useState<string>();
-  const [dueDate, setDueDate] = useState<string>();
+  const [startDate, setStartDate] = useState<string>(updateData.projectStartTime);
+  const [endDate, setEndDate] = useState<string>(updateData.projectEndTime);
+  const [dueDate, setDueDate] = useState<string>(updateData.recruitDueTime);
 
   const {
     register,
@@ -36,8 +50,9 @@ export default function ProjectUpdateContainer() {
     control,
     formState: { errors },
   } = useForm();
-  const postRecruitMustation = usePostRecruitMutation(
-    hashTagId,
+  const postRecruitMustation = useUpdateRecruitMutation(
+    postId,
+    hashTag,
     startDate,
     endDate,
     dueDate,
@@ -64,7 +79,7 @@ export default function ProjectUpdateContainer() {
   return (
     <>
       <UpdateHeader />
-      {updateData.isSuccess && (
+      {updateData && (
       <div className="max-w-6xl mx-auto px-3 sm:px-6 lg:px-8 pt-10 bg-white sm:mt-10 mb-8">
         {/* 프로젝트만들기 상단 */}
         <form className="mt-5 sm:mt-15" onSubmit={handleSubmit(onSubmit)}>
@@ -80,7 +95,7 @@ export default function ProjectUpdateContainer() {
               sm:text-[20px] pl-3 py-3 rounded-xl outline-none
               outline-[#DFE1E5] bg-white font-inter
               box-border resize-none"
-                  defaultValue={updateData.data.title}
+                  defaultValue={updateData.title}
                   placeholder="000 프로젝트에 함께할 팀원을 모집합니다."
                   {...register('title', { required: true })}
                 />
@@ -90,8 +105,8 @@ export default function ProjectUpdateContainer() {
             <div className="flex min-w-min sm:w-3/4">
               <p className="font-extrabold text-xs sm:text-lg py-3 w-32 sm:w-56 self-center ">프로젝트 기간</p>
               <CustomCalinder
-                start={updateData.data.projectStartTime}
-                end={updateData.data.projectEndTime}
+                start={updateData.projectStartTime}
+                end={updateData.projectEndTime}
                 setStart={setStartDate}
                 setEnd={setEndDate}
                 isRange
@@ -100,7 +115,7 @@ export default function ProjectUpdateContainer() {
             <div className="flex min-w-min sm:w-3/4">
               <p className=" font-extrabold text-xs sm:text-lg py-3 w-32 sm:w-56 self-center">모집 마감일</p>
               <CustomCalinder
-                start={updateData.data.recruitDueTime}
+                start={updateData.recruitDueTime}
                 setStart={setDueDate}
               />
             </div>
@@ -119,7 +134,7 @@ export default function ProjectUpdateContainer() {
                           control={control}
                           name="developer"
                           rules={{ maxLength: 2 }}
-                          defaultValue={updateData.data.requiredDevelopers}
+                          defaultValue={updateData.requiredDevelopers}
                           render={({ field }) => (
                             <input
                               {...field}
@@ -139,7 +154,7 @@ export default function ProjectUpdateContainer() {
                           control={control}
                           name="designer"
                           rules={{ maxLength: 2 }}
-                          defaultValue={updateData.data.requiredDesigners}
+                          defaultValue={updateData.requiredDesigners}
                           render={({ field }) => (
                             <input
                               {...field}
@@ -159,7 +174,7 @@ export default function ProjectUpdateContainer() {
                           control={control}
                           name="pmaster"
                           rules={{ maxLength: 2 }}
-                          defaultValue={updateData.data.requiredProjectManagers}
+                          defaultValue={updateData.requiredProjectManagers}
                           render={({ field }) => (
                             <input
                               {...field}
@@ -187,7 +202,7 @@ export default function ProjectUpdateContainer() {
               )
                 : (
                   <div className="flex px-[21.5px] items-center max-w-min text-xs sm:text-base py-[13px] my-2  border-[2px] rounded-2xl border-[#DFE1E5] bg-[#F2F2F2] font-normal mr-3">
-                    <div className="text-[18px] whitespace-nowrap">{updateData.data?.imageUrl.length > 20 ? `${updateData.data?.imageUrl.substring(0, 20)}...${updateData.data?.imageUrl.substring(Number(updateData.data?.imageUrl.length) - 3, updateData.data?.imageUrl.length)}` : updateData.data?.imageUrl}</div>
+                    <div className="text-[18px] whitespace-nowrap">{updateData?.imageUrl.length > 20 ? `${updateData?.imageUrl.substring(0, 20)}...${updateData?.imageUrl.substring(Number(updateData?.imageUrl.length) - 3, updateData?.imageUrl.length)}` : updateData?.imageUrl}</div>
                   </div>
                 )}
               <div className="flex pl-[21.5px] pr-[20px] flex-1 w-full items-center max-w-[235px] min-w-max text-xs sm:text-base py-[13px] my-2  border-[2px] rounded-2xl border-[#6457FA]">
@@ -217,7 +232,7 @@ export default function ProjectUpdateContainer() {
               <Controller
                 control={control}
                 name="body"
-                defaultValue={updateData.isSuccess && updateData.data.body}
+                defaultValue={updateData && updateData.body}
                 render={({ field }) => (
                   <textarea {...field} className="w-full h-52 text-[18px] sm:h-96 p-4 border-[2px] bg-white border-[#DFE1E5]  resize-none rounded-lg" />
                 )}
@@ -225,7 +240,7 @@ export default function ProjectUpdateContainer() {
 
             </div>
             <div className="pl-16 pt-[8px]">
-              {isSuccess && <TagSearch tagData={data.data} selected={updateData.data.tags} setHashTagId={setHashTagId} setHashTag={setHashTag} placeholder="해시태그를 입력해 주세요" />}
+              {isSuccess && <TagSearch tagData={data.data} selected={updateData.tags} setHashTag={setHashTag} placeholder="해시태그를 입력해 주세요" />}
             </div>
           </div>
           <div className="m-auto max-w-2xl pl-16 pt-5 flex justify-center mt-32  mb-10">

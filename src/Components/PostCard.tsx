@@ -7,6 +7,26 @@ export default function PostCard({ data }: { data: IRecruitPost }) {
   const nav = useNavigate();
   const goCardDetail = () => {
     nav(`/detail/${data.postId}`);
+    // nav(`/projectupdate/${data.postId}`, {
+    //   state: {
+    //     body: 'adsadasds',
+    //     imageUrl: 'https://huddle-up-image.s3.ap-northeast-2.amazonaws.com/images/recruitPosts/1.jpg',
+    //     postId: 1,
+    //     projectEndTime: '2022-08-25',
+    //     projectStartTime: '2022-08-09',
+    //     recruitDueTime: '2022-07-20',
+    //     requiredDesigners: 2,
+    //     requiredDevelopers: 2,
+    //     requiredProjectManagers: 2,
+    //     tags: [
+    //       { tagId: 13, body: 'spring' },
+    //       { tagId: 27, body: 'react' },
+    //       { tagId: 10, body: 'aws' },
+    //     ],
+    //     title: 'testestestet',
+    //     userId: 3,
+    //   },
+    // });
   };
   // console.log(data);
   return (
@@ -16,7 +36,7 @@ export default function PostCard({ data }: { data: IRecruitPost }) {
           <img className="w-full bg-white h-[240px] max-h-[240px] object-fit m-0" src={data.projectImage ? data.projectImage : '/defaulimg.svg'} alt="project" />
           <div className="flex absolute flex-1 font-bold h-[46px] top-[16px] right-[16px]">
 
-            {data.requiredDevelopers > -1 && <TagBox tag="2" padding="text-[12px] px-[12px] py-[6px]" margin="mx-[4px] h-[30px]" />}
+            {data.requiredDevelopers > 0 && <TagBox tag="2" padding="text-[12px] px-[12px] py-[6px]" margin="mx-[4px] h-[30px]" />}
             {data.requiredDesigners > 0 && <TagBox tag="1" padding="text-[12px] px-[12px] py-[6px]" margin="mx-[4px] h-[30px]" />}
             {data.requiredProjectManagers > 0 && <TagBox tag="3" padding="text-[12px] px-[12px] py-[6px]" margin="mx-[4px] h-[30px]" />}
           </div>
