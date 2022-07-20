@@ -1,6 +1,6 @@
-import google from '../img/google.png';
 import close from '../img/close.png';
 import logo from '../img/logo.png';
+import GlobalIcon from './GlobalIcon';
 
 export default function Login({
   closeModal,
@@ -49,7 +49,7 @@ export default function Login({
             onClick={kakaoClick}
             className="flex px-4 items-center w-[300px] h-[45px] rounded-[4px]  ring-1 ring-yellow-500 bg-yellow-500 drop-shadow-xl"
           >
-            <img className="w-6" src={google} alt="KakaoLogin" />
+            <GlobalIcon.Kakao />
             <p className="w-full pr-[24px] font-pre font-normal text-[18]">
               카카오로 시작하기
             </p>
@@ -60,7 +60,7 @@ export default function Login({
             onClick={googleClick}
             className="flex mt-[13px] px-4 items-center w-[300px] h-[45px] rounded-[4px] bg-white  ring-1 ring-[#CCCCCC] hover:ring-2 drop-shadow-xl"
           >
-            <img className="w-6" src={google} alt="googleLogin" />
+            <GlobalIcon.Google />
             <p className="w-full pr-[24px] font-pre font-normal text-[18]">
               구글로 시작하기
             </p>
