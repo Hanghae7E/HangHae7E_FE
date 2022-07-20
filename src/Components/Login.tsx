@@ -1,5 +1,4 @@
 import close from '../img/close.png';
-import logo from '../img/logo.png';
 import GlobalIcon from './GlobalIcon';
 
 type textModalType={
@@ -19,16 +18,16 @@ export default function Login(data:textModalType) {
   };
   return (
     <div className="flex w-full h-full fixed items-center justify-center bg-black/30 z-10">
-      <div className="max-w-[410px] max-h-[370px] w-full h-full  bg-white  rounded-[16px]">
-        <div className="modal-nav-area flex justify-end p-[24px]">
-          <img src={logo} className="w-[139px] h-[39px] mr-[61px]" alt="logo" />
-          <button
-            type="button"
-            className="w-[44px] h-[44px] m-0 p-0"
-            onClick={closeModal}
-          >
-            <img src={close} alt="close" />
-          </button>
+      <div className="max-w-[336px] max-h-[347px] rounded-lg sm:max-w-[410px] sm:max-h-[370px] w-full h-full bg-white sm:rounded-[16px]">
+        <button
+          type="button"
+          className="w-9 h-9 sm:w-[44px] sm:h-[44px] float-right mr-4 mt-4"
+          onClick={closeModal}
+        >
+          <img src={close} alt="close" />
+        </button>
+        <div className="modalNav flex justify-around items-center p-[24px]">
+          <img src="/logo.svg" className="w-[86px] h-[19px] ml-[52px] sm:w-[139px] sm:h-[39px] sm:ml-[68px]" alt="logo" />
         </div>
         <div className="title-area flex flex-col items-center text-center pt-[9px]">
           {titles && titles.length > 1 && (
@@ -48,23 +47,23 @@ export default function Login(data:textModalType) {
               </p>
             ))
           )}
-          <div className="flex align-middle items-center pt-[40px]">
-            <hr className="h-[1px]  w-[80px]  flex-auto border-none  bg-[#CCCCCC] " />
-            <p className="font-pre font-bold text-[16px] mx-4">
-              회원가입
+          <div className="flex align-middle items-center mt-7 sm:mt-[40px]">
+            <hr className="h-[1px]  w-[110px]  flex-auto border-none  bg-[#CCCCCC] " />
+            <p className="font-pre font-bold text-[16px] mx-[18px] sm:mx-3 ">
+              시작하기
             </p>
-            <hr className="h-[1px]  w-[80px] flex-auto border-none  bg-[#CCCCCC]" />
+            <hr className="h-[1px]  w-[110px] flex-auto border-none  bg-[#CCCCCC]" />
           </div>
         </div>
-        <div className="flex flex-col items-center text-center pt-[18px] pb-[36px]">
+        <div className="flex flex-col items-center text-center sm:mb-10 mb-10">
           <button
             type="button"
             name="KAKAO"
             onClick={kakaoClick}
-            className="flex px-4 items-center w-[300px] h-[45px] rounded-[4px]  ring-1 ring-yellow-500 bg-yellow-500 drop-shadow-xl"
+            className="flex sm:mt-[18px] mt-5  px-4 items-center w-80 sm:w-[300px] h-[45px] rounded-[4px]  ring-1 ring-yellow-500 bg-yellow-500 drop-shadow-xl"
           >
             <GlobalIcon.Kakao />
-            <p className="w-full pr-[24px] font-pre font-normal text-[18]">
+            <p className="w-full pr-[24px] font-pre font-normal text-[18px]">
               카카오로 시작하기
             </p>
           </button>
@@ -72,10 +71,10 @@ export default function Login(data:textModalType) {
             type="button"
             name="GOOGLE"
             onClick={googleClick}
-            className="flex mt-[13px] px-4 items-center w-[300px] h-[45px] rounded-[4px] bg-white  ring-1 ring-[#CCCCCC] hover:ring-2 drop-shadow-xl"
+            className="flex mt-3 px-4 items-center w-80 sm:w-[300px] h-[45px] rounded-[4px] bg-white  ring-1 ring-[#CCCCCC] hover:ring-2 drop-shadow-xl"
           >
             <GlobalIcon.Google />
-            <p className="w-full pr-[24px] font-pre font-normal text-[18]">
+            <p className="w-full pr-[24px] font-pre font-normal text-[18px]">
               구글로 시작하기
             </p>
           </button>
