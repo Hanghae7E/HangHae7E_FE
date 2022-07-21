@@ -13,8 +13,8 @@ export default function NickNameModal({
   modalClose,
   userInfo,
 }: {
-    modalClose: any,
-    userInfo: Iprofile,
+  modalClose: any,
+  userInfo: Iprofile,
 }) {
   const token = localStorage.getItem('token');
 
@@ -43,18 +43,18 @@ export default function NickNameModal({
   }
   return (
     <div className="flex w-full h-full fixed items-center justify-center bg-black/30 z-10">
-      <div className="modal-contents max-w-[410px] max-h-[494px]  px-[24px] py-[26px] bg-white  rounded-[16px]">
-        <div className="modal-nav-area flex justify-end">
-          <img src={logo} className="w-[139px] h-[39px] mr-[61px]" alt="logo" />
-          <button
-            type="button"
-            className="w-[44px] h-[44px] m-0 p-0"
-            onClick={modalClose}
-          >
-            <img src={close} className="rounded-full" alt="close" />
-          </button>
+      <div className="nickNameModal pc:max-w-[386px] pc:max-h-[494px]  max-w-[336px] pc:pt-6 pc:pb-10 px-3 pt-4 pb-10  bg-white  rounded-[16px]">
+        <button
+          type="button"
+          className="w-9 h-9 pc:w-[44px] pc:h-[44px] float-right"
+        >
+          <img src={close} className="rounded-full" alt="close" />
+        </button>
+        <div className="ml-4 pc:ml-[44px]">
+          <img src={logo} className="w-[86px] h-[19px] pc:w-[139px] pc:h-[39px] mx-auto pc:mt-6 mt-6" alt="logo" />
         </div>
-        <div className="modal-inner flex-col justify-center text-center">
+
+        <div className="modal-inner flex-col justify-center text-center  pc:px-[24px] mt-6 pc:mt-[30px]">
           <img
             className="w-[80px] h-[80px] mx-auto rounded-full"
             src={profile}
@@ -77,7 +77,7 @@ export default function NickNameModal({
             type="button"
             value="nickBtn"
             onClick={savebtn}
-            className="w-[300px] h-[60px] rounded-[15px] mt-[60px] font-pre font-bold text-[20px] leading-[24px] bg-[#6457FA] text-white hover:bg-white hover:text-[#6457FA]  hover:border-2 hover:border-[#6457FA]"
+            className="w-[300px] h-[60px] rounded-[15px] pc:mt-[60px] mt-[28px] font-pre font-bold text-[20px] leading-[24px] bg-[#6457FA] text-white hover:bg-white hover:text-[#6457FA]  hover:border-2 hover:border-[#6457FA]"
           >
             이걸로 할께요!
           </button>
