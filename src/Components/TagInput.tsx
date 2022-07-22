@@ -1,12 +1,12 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useEffect, useState } from 'react';
-import { useFormContext } from 'react-hook-form';
+import React, { SetStateAction, useEffect, useState } from 'react';
 
 interface tagOptionI {
-  tags: Array<string>
+  tags: string[];
   selected: Array<string>|null;
   placeholder: string;
+  setSelected:React.Dispatch<SetStateAction<string[]>>;
 }
 // TODO: 아토믹/ 스타일링
 // style?: {
@@ -35,7 +35,9 @@ export default function TagInput(tagOption: tagOptionI) {
   const tagRec = 'bg-[#6457FA] rounded-[24px] text-white px-[12px] py-[6px] mr-[8px] mb-[8px] font-pre text-[14px] leading-[16.9x]';
   const tagSelct = 'bg-[#EEEEE]  border-2 border-[#6457FA] rounded-[24px] text-black px-[12px] py-[6px] mr-[8px] mt-[8px] font-pre text-[14px] leading-[16.9x] ';
 
-  const { tags, selected, placeholder } = tagOption;
+  const {
+    tags, selected, placeholder, setSelected,
+  } = tagOption;
   const [tagList, setTagList] = useState<string[]>(tags);
   const [myTags, setMyTags] = useState<string[]>([]);
   const [recommends, setRecommends] = useState<string[]>([]);
@@ -46,11 +48,10 @@ export default function TagInput(tagOption: tagOptionI) {
       const all = tags.concat(selected);
       const newData = all.filter((item) => !tags.includes(item) || !selected.includes(item));
       setTagList(newData);
-      setRecommends(newData);
-      setMyTags(myTags);
+      // setRecommends(newData);
+      setMyTags(selected);
     } else {
       setTagList(tags);
-      setRecommends([]);
     }
   }, []);
 
@@ -58,11 +59,7 @@ export default function TagInput(tagOption: tagOptionI) {
     const userInput = e.target.value.toLowerCase();
     setInput(userInput);
 
-    // console.log(tagList);
-    let filterData = tagList.filter(
-
-      (tag: string) => tag.toString().toLowerCase().includes(userInput),
-    );
+    let filterData = tagList.filter((tag) => tag.toLowerCase().includes(userInput));
     if (e.target.value.length === 0) {
       filterData = [];
     }
@@ -73,33 +70,31 @@ export default function TagInput(tagOption: tagOptionI) {
     const MytagCopy = [...myTags];
     MytagCopy.push(clickedValue);
 
-    MytagCopy.filter((tag) => tag[1] !== clickedValue);
+    MytagCopy.filter((tag) => tag !== clickedValue);
 
-    const newTagList = tagList.filter((tag: string) => tag[1] !== clickedValue);
+    const newTagList = tagList.filter((tag: string) => tag !== clickedValue);
     setTagList(newTagList);
     setMyTags(MytagCopy);
     setRecommends([]);
     setInput('');
+    setSelected(MytagCopy);
   };
   const selectedTagRemove = (e: React.MouseEvent<HTMLButtonElement>) => {
     const clickedValue = e.currentTarget.value;
     const tagCopy = [...myTags];
-    tagCopy.push();
     const newMyTags = tagCopy.filter((tag) => tag !== clickedValue);
     setMyTags(newMyTags);
     const tagListCopy = [...tagList];
     tagListCopy.push(clickedValue);
     setTagList(tagListCopy);
+    setSelected(newMyTags);
   };
-
-  const data = useFormContext();
   return (
     <div>
-      <input type="hidden" value={myTags} className="hidden text-white backbroud-white" {...data.register('skills')} />
       <div className="prev w-full ">
         <div className="SkilList flex flex-wrap ">
           {recommends.map((tag) => (
-            <button className={tagRec} type="button" id={tag[0]} value={tag[1]} key={tag[0]} onClick={selectedTag}>{tag[1]}</button>
+            <button className={tagRec} type="button" id={tag} value={tag} key={tag} onClick={selectedTag}>{tag}</button>
           ))}
         </div>
       </div>

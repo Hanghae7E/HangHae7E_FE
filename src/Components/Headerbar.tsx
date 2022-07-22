@@ -9,13 +9,13 @@ import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { Link, useNavigate } from 'react-router-dom';
 import Login from './Login';
 import jwtUtils from '../util/JwtUtil';
-import { Iprofile } from '../TypeInterface/userType';
+import { Iuser } from '../TypeInterface/userType';
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
 }
 
-export default function Headerbar({ userInfo }:{ userInfo: Iprofile }) {
+export default function Header({ userInfo }:{ userInfo: Iuser }) {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const nav = useNavigate();
   const token = localStorage.getItem('token');
