@@ -1,6 +1,7 @@
 /* eslint-disable implicit-arrow-linebreak */
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { createGlobalStyle } from 'styled-components';
+import { QueryClient, QueryClientProvider } from 'react-query';
 import DetailPage from './Pages/DetailPage';
 import MainPage from './Pages/MainPage';
 import MyPage from './Pages/MyPage';
@@ -22,6 +23,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
 `;
+
 function App() {
   const userInfo = userGetUserInfo();
 

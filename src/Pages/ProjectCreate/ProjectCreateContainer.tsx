@@ -73,9 +73,8 @@ export default function ProjectCreateContainer() {
                   {...register('title', { required: true })}
                 />
               </div>
-              {errors.title && <span className="text-[#ff0000]">필수 입력 값 입니다.</span>}
             </div>
-
+            {errors.title && <div className=" w-full items-end justify-center flex"><span className="text-[#ff0000] float-right">제목을 입력 해 주세요.</span></div>}
             <div className="flex min-w-min sm:w-3/4">
               <p className="font-extrabold text-xs sm:text-lg py-3 w-32 sm:w-56 self-center ">프로젝트 기간</p>
               <CustomCalinder
@@ -109,7 +108,10 @@ export default function ProjectCreateContainer() {
                         <Controller
                           control={control}
                           name="developer"
-                          rules={{ maxLength: 2 }}
+                          rules={{
+                            maxLength: 2,
+                            required: true,
+                          }}
                           defaultValue=""
                           render={({ field }) => (
                             <input
@@ -121,15 +123,20 @@ export default function ProjectCreateContainer() {
                           )}
                         />
                         <span className="text-xs ml-1 sm:text-[18px] font-normal">명</span>
+
                       </div>
                     </div>
+                    {errors.developer && <span className="text-[#ff0000] pl-24">필수 입력 값 입니다.</span>}
                     <div className="flex w-full box-border justify-between min-w-max items-center">
                       <TagBox tag="1" padding="text-[18px] px-[12px] py-[6px]  font-bold" />
                       <div className="flex items-center ml-[40px]">
                         <Controller
                           control={control}
                           name="designer"
-                          rules={{ maxLength: 2 }}
+                          rules={{
+                            maxLength: 2,
+                            required: true,
+                          }}
                           defaultValue=""
                           render={({ field }) => (
                             <input
@@ -143,13 +150,17 @@ export default function ProjectCreateContainer() {
                         <span className="text-xs ml-1 sm:text-[18px] font-normal">명</span>
                       </div>
                     </div>
+                    {errors.designer && <div><span className="text-[#ff0000] pl-24">필수 입력 값 입니다.</span></div>}
                     <div className="flex w-full box-border justify-between min-w-max items-center">
                       <TagBox tag="3" padding="text-[18px] px-[12px] py-[6px]  font-bold" />
                       <div className="flex items-center">
                         <Controller
                           control={control}
-                          name="pmaster"
-                          rules={{ maxLength: 2 }}
+                          name="pmanager"
+                          rules={{
+                            maxLength: 2,
+                            required: true,
+                          }}
                           defaultValue=""
                           render={({ field }) => (
                             <input
@@ -161,8 +172,10 @@ export default function ProjectCreateContainer() {
                           )}
                         />
                         <span className="text-xs ml-1 sm:text-[18px] font-normal">명</span>
+
                       </div>
                     </div>
+                    {errors.pmanager && <span className="text-[#ff0000] pl-24">필수 입력 값 입니다.</span>}
                   </div>
                 </div>
                 {/* 경력 */}
@@ -205,12 +218,16 @@ export default function ProjectCreateContainer() {
               <Controller
                 control={control}
                 name="body"
+                rules={{
+                  required: true,
+                }}
                 render={({ field }) => (
                   <textarea {...field} className="w-full h-52 text-[18px] sm:h-96 p-4 border-[2px] bg-white border-[#DFE1E5]  resize-none rounded-lg" />
                 )}
               />
 
             </div>
+            {errors.body && <span className="text-[#ff0000] pl-16 pt-5">상세내용을 입력 해 주세요.</span>}
             <div className="pl-16 pt-[8px]">
 
               {isSuccess && <TagSearch tagData={data.data} selected={hashTag} setHashTag={setHashTag} placeholder="해시태그를 입력해 주세요" />}

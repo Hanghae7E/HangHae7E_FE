@@ -38,19 +38,21 @@ export default function MainBody(
     setSearchTag(Number(tags));
   };
   return (
-    <div className="max-w-[1350px] mx-auto px-2 sm:px-6 lg:px-8 mt-[126px]">
+    <div className="w-full lg:w-[1280px] mx-auto mt-[40px] lg:mt-[126px] overflow-hidden">
       <div className="pt-1 pb-5 bg-white">
-        <p className="font-bold text-2xl mb-[32px]">마감 임박 프로젝트</p>
-        <div className="mx-auto items-center gap-[24px] overflow-hidden  flex overflow-x-auto sm:overflow ">
+        <p className="font-bold text-[18px] md:ml-[10px] md:text-2xl mb-[20px] lg:mb-[32px]">마감 임박 프로젝트</p>
+        <div className="px-[12px] lg:px-0 w-full items-center
+        gap-[16px] lg:gap-[24px] flex overflow-x-auto scrollbar-hide"
+        >
           {recommendPosts && recommendPosts.map(
             (data) => <RecentPostCard key={data.postId} data={data} />,
           )}
         </div>
       </div>
       <div className=" w-full flex pt-5 pb-5 z-[1] sticky top-0 bg-white py-3">
-        <div className="flex flex-1 mr-5 relative items-center">
-          <p className="flex font-bold text-2xl mr-5">프로젝트</p>
-          <div className="flex items-center justify-center">
+        <div className="flex flex-1 mr-5 relative items-center md:ml-[10px]">
+          <p className="flex font-bold text-[18px] md:text-2xl mr-5">프로젝트</p>
+          <div className="flex items-end justify-center text-[14px]">
             <span className="pr-3">관심분야</span>
             {' | '}
             <div className="flex mx-[12px]">
@@ -61,9 +63,9 @@ export default function MainBody(
           {!open
             ? <GlobalIcon.DropDown onClick={() => setOpen(!open)} />
             : <GlobalIcon.DropUp onClick={() => setOpen(!open)} />}
-          {open && (
+          {open && window.innerWidth > 768 && (
             <section className="font-medium w-[1010px] absolute top-16  bg-white border-[2px] border-[#DFE1E5] pl-[32px] pt-[32px]">
-              <div className="p-[8px] pb-[12px]">관심 붙야를 선택해 주세요. (최대 4개 선택 가능)</div>
+              <div className="p-[8px] pb-[12px]">관심 붙야를 선택해 주세요. (1개 선택 가능)</div>
               <div className="flex flex-wrap">
                 {tagList.map((tag) => <TagBox onClick={() => adTag(tag)} key={tag.tagId} hover="hover:border-[#6457FA] hover:box-border" selected={searchTagList.includes(tag)} tag={tag.body} padding="text-[14px] py-[8px] px-[12px]" margin="ml-[4px] mr-[4px] mb-[16px]" />)}
               </div>
@@ -106,15 +108,13 @@ export default function MainBody(
         </div> */}
 
       </div>
-      <div className="mx-auto items-center overflow-hidden flex flex-wrap mb-5 mt-[40px] gap-[23px] bg-white">
-
+      <div className="pl-[5px] md:pl-[20px] lg:px-0 mx-auto w-full items-center overflow-hidden flex flex-wrap mb-5 mt-[40px] gap-[16px] md:gap-[25px] bg-white">
         {recruitPost && recruitPost.map((pages) => pages.postPage.map((data) => (
           <PostCard
             key={data.postId}
             data={data}
           />
         )))}
-
       </div>
     </div>
   );

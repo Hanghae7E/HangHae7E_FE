@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { FieldValues } from 'react-hook-form';
 import { ITag } from '../TypeInterface/postType';
 import baseUrl from './baseUrl';
@@ -25,7 +26,7 @@ const postRecruitPost = async (
   if (datas.title) forms.append('title', datas.title);
   if (datas.designer)forms.append('requiredDesigners', datas.designer);
   if (datas.developer)forms.append('requiredDevelopers', datas.developer);
-  if (datas.pmaster) forms.append('requiredProjectManagers', datas.pmaster);
+  if (datas.pmanager) forms.append('requiredProjectManagers', datas.pmanager);
   if (startDate)forms.append('projectStartTime', startDate);
   if (endDate) forms.append('projectEndTime', endDate);
   if (dueDate)forms.append('recruitDueTime', dueDate);
@@ -55,7 +56,7 @@ const updateRecruitPost = async (
   if (datas.title) forms.append('title', datas.title);
   if (datas.designer)forms.append('requiredDesigners', datas.designer);
   if (datas.developer)forms.append('requiredDevelopers', datas.developer);
-  if (datas.pmaster) forms.append('requiredProjectManagers', datas.pmaster);
+  if (datas.pmanager) forms.append('requiredProjectManagers', datas.pmanager);
   if (startDate)forms.append('projectStartTime', startDate);
   if (endDate) forms.append('projectEndTime', endDate);
   if (dueDate)forms.append('recruitDueTime', dueDate);

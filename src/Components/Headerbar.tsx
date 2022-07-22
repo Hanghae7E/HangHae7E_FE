@@ -36,13 +36,13 @@ export default function Headerbar({ userInfo }:{ userInfo: Iprofile }) {
     <>
       <Disclosure as="nav" className="bg-white">
         {() => (
-          <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
-            <div className="relative flex items-center justify-between h-16">
-              <div className="flex-1 flex items-center justify-center ">
-                <div className="flex-1 flex-shrink-0 flex items-center">
-                  <img src="/logo.svg" alt="로고" />
+          <div className="mx-auto w-full px-[2px] sm:px-6">
+            <div className="relative flex items-center h-[44px] sm:h-16">
+              <div className="flex flex-1 items-center">
+                <div className="flex items-center flex-1">
+                  <img className="h-[19px] sm:h-[29px] px-[10px] sm:px-0 " src="/logo.svg" alt="로고" />
                 </div>
-                <div className="hidden sm:block   text-[18px] px-5 py-2 rounded-2xl">
+                <div className="text-[14px] sm:text-[18px] px-5 py-2">
                   <div className="flex justify-center items-center">
 
                     <div
@@ -55,7 +55,7 @@ export default function Headerbar({ userInfo }:{ userInfo: Iprofile }) {
                   </div>
                 </div>
               </div>
-              <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+              <div className="inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                 {/* <button
                 type="button"
                 className="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white
@@ -70,7 +70,7 @@ export default function Headerbar({ userInfo }:{ userInfo: Iprofile }) {
                 {!isLogin
                   ? (
                     <div className="flex text-sm">
-                      <div className="border border-[#6457FA] text-[#6457FA] text-[16px] h-[35px] w-[74px] rounded-[12px] justify-center flex items-center">
+                      <div className="border border-[#6457FA] text-[#6457FA] text-[14px] sm:text-[16px]  h-[29px] w-[69px] sm:h-[35px] sm:w-[74px] rounded-full sm:rounded-[12px] justify-center flex items-center">
 
                         <button onClick={modalClose} type="button" className="flex ">
                           <p
@@ -105,7 +105,7 @@ export default function Headerbar({ userInfo }:{ userInfo: Iprofile }) {
                         leaveFrom="transform opacity-100 scale-100"
                         leaveTo="transform opacity-0 scale-95"
                       >
-                        <Menu.Items className="absolute right-[-35px] mt-2 w-[126px] h-[90px] rounded-[8px] shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                        <Menu.Items className="absolute right-[-5px] md:right-[-20px] mt-2 w-[126px] h-[90px] rounded-[8px] shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                           <Menu.Item>
                             {({ active }) => (
                               <Link
@@ -127,7 +127,7 @@ export default function Headerbar({ userInfo }:{ userInfo: Iprofile }) {
                                 }}
                                 className={classNames(active ? 'bg-gray-100' : '', 'px-4 py-2 text-[16px] items-center justify-center flex cursor-pointer')}
                               >
-                                로그 아웃
+                                로그아웃
                               </div>
                             )}
                           </Menu.Item>

@@ -145,6 +145,7 @@ export default function ProjectUpdateContainer() {
                           )}
                         />
                         <span className="text-xs ml-1 sm:text-[18px] font-normal">명</span>
+                        {errors.developer && <span className="text-[#ff0000]">필수 입력 값 입니다.</span>}
                       </div>
                     </div>
                     <div className="flex w-full box-border justify-between min-w-max items-center">
@@ -165,6 +166,7 @@ export default function ProjectUpdateContainer() {
                           )}
                         />
                         <span className="text-xs ml-1 sm:text-[18px] font-normal">명</span>
+                        {errors.designer && <span className="text-[#ff0000]">필수 입력 값 입니다.</span>}
                       </div>
                     </div>
                     <div className="flex w-full box-border justify-between min-w-max items-center">
@@ -172,7 +174,7 @@ export default function ProjectUpdateContainer() {
                       <div className="flex items-center">
                         <Controller
                           control={control}
-                          name="pmaster"
+                          name="pmanager"
                           rules={{ maxLength: 2 }}
                           defaultValue={updateData.requiredProjectManagers}
                           render={({ field }) => (
@@ -185,6 +187,7 @@ export default function ProjectUpdateContainer() {
                           )}
                         />
                         <span className="text-xs ml-1 sm:text-[18px] font-normal">명</span>
+                        {errors.pmanager && <span className="text-[#ff0000]">필수 입력 값 입니다.</span>}
                       </div>
                     </div>
                   </div>
