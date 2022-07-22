@@ -1,6 +1,4 @@
-import google from '../img/google.png';
-import close from '../img/close.png';
-import logo from '../img/logo.png';
+import GlobalIcon from './GlobalIcon';
 
 export default function Login({
   closeModal,
@@ -19,13 +17,13 @@ export default function Login({
     <div className="flex w-full h-full fixed items-center justify-center bg-black/30 z-10">
       <div className="max-w-[410px] max-h-[370px] w-full h-full  bg-white  rounded-[16px]">
         <div className="modal-nav-area flex justify-end p-[24px]">
-          <img src={logo} className="w-[139px] h-[39px] mr-[61px]" alt="logo" />
+          <img src="/logo.svg" className="w-[139px] h-[39px] mr-[61px]" alt="logo" />
           <button
             type="button"
             className="w-[44px] h-[44px] m-0 p-0"
             onClick={closeModal}
           >
-            <img src={close} alt="close" />
+            <GlobalIcon.Closed2 />
           </button>
         </div>
         <div className="title-area flex flex-col items-center text-center pt-[9px]">
@@ -36,9 +34,9 @@ export default function Login({
           </p>
           <div className="flex align-middle items-center pt-[40px]">
             <hr className="h-[1px]  w-[80px]  flex-auto border-none  bg-[#CCCCCC] " />
-            <text className="font-pre font-bold text-[16px] mx-4">
+            <p className="font-pre font-bold text-[16px] mx-4">
               회원가입
-            </text>
+            </p>
             <hr className="h-[1px]  w-[80px] flex-auto border-none  bg-[#CCCCCC]" />
           </div>
         </div>
@@ -49,7 +47,7 @@ export default function Login({
             onClick={kakaoClick}
             className="flex px-4 items-center w-[300px] h-[45px] rounded-[4px]  ring-1 ring-yellow-500 bg-yellow-500 drop-shadow-xl"
           >
-            <img className="w-6" src={google} alt="KakaoLogin" />
+            <GlobalIcon.Kakao />
             <p className="w-full pr-[24px] font-pre font-normal text-[18]">
               카카오로 시작하기
             </p>
@@ -60,7 +58,7 @@ export default function Login({
             onClick={googleClick}
             className="flex mt-[13px] px-4 items-center w-[300px] h-[45px] rounded-[4px] bg-white  ring-1 ring-[#CCCCCC] hover:ring-2 drop-shadow-xl"
           >
-            <img className="w-6" src={google} alt="googleLogin" />
+            <GlobalIcon.Google />
             <p className="w-full pr-[24px] font-pre font-normal text-[18]">
               구글로 시작하기
             </p>

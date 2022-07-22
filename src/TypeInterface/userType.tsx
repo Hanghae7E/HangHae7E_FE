@@ -8,19 +8,13 @@ export interface Iuser {
   profile_image_url: string,
   socialType: string,
 }
-// Todo : 사용하는 데이터만 업데이트하면 ... 사용하는 것만
-// 인터페이스에 정의하도록
+
 export interface IsideProfile {
   userId?: string|false;
   username: string;
   file?:File;
 }
 
-export interface auth {
-    userId: number | false;
-    username: string | null;
-    token:string | null;
-  }
 export interface IProfileFormData {
   userId:number;
   username: string;

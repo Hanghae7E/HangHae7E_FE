@@ -1,10 +1,9 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { SetStateAction, useEffect, useState } from 'react';
-import { useFormContext } from 'react-hook-form';
 
 interface tagOptionI {
-  tags: string[]
+  tags: string[];
   selected: Array<string>|null;
   placeholder: string;
   setSelected:React.Dispatch<SetStateAction<string[]>>;
@@ -53,7 +52,6 @@ export default function TagInput(tagOption: tagOptionI) {
       setMyTags(selected);
     } else {
       setTagList(tags);
-      console.log(tags);
     }
   }, []);
 
@@ -91,12 +89,8 @@ export default function TagInput(tagOption: tagOptionI) {
     setTagList(tagListCopy);
     setSelected(newMyTags);
   };
-
-  const methods = useFormContext();
   return (
     <div>
-      {/* <input type="text" value={myTags} className="backbroud-white"
-      {...methods.register('test')} /> */}
       <div className="prev w-full ">
         <div className="SkilList flex flex-wrap ">
           {recommends.map((tag) => (

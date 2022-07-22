@@ -4,7 +4,6 @@ import { IProfileFormData } from '../../../TypeInterface/userType';
 export default function Project({ profileData, type }:
   {profileData: IProfileFormData, type:string}) {
   //   대기중:0,수락:1,거절:2
-  console.log('111', profileData.applyPosts, profileData.registeredPosts);
   return (
     <div className="projectComponent flex flex-col  bg-white">
       <div className="title flex max-w-[736px] h-[50px] pl-2 items-center

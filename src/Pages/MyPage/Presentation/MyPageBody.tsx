@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import { useMutation } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { IProfileFormData, IsideProfile } from '../../../TypeInterface/userType';
-import wy from '../Wy.jpg';
-import user from '../User.jpg';
-import EditIcon from '../EditIcon.png';
+import { Itag } from '../../../TypeInterface/tagType';
 import Profile from './Profile';
 import Project from './Project';
 import userAPi from '../../../Api/userAPi';
-import { Itag } from '../../../TypeInterface/tagType';
+import GlobalIcon from '../../../Components/GlobalIcon';
+// import defaultUserIcon from '../../../../assets/defaultUserIcon.png';
+// import myPageBack from '../../../assets/myPageBack.png';
 
 export default function MyPageBody({ profileData, tagList }:
 {
@@ -68,7 +68,7 @@ export default function MyPageBody({ profileData, tagList }:
   return (
     <div className="max-w-full mx-auto">
       <div className="myPageBanner  bg-cover bg-center">
-        <img className="w-full h-[255px] object-cover" src={wy} alt="backgroundImage" />
+        <img className="w-full h-[255px] object-cover" src="/headerimg.svg" alt="backgroundImage" />
       </div>
       <div className="myPageContents flex max-w-[1062px] mx-auto ">
         <div className="side relative flex-none -top-[88px] w-[300px] h-[332px] px-[20px] pb-20px max-w-[300px] bg-white border-2 border-[#EEEEEE]  rounded-2xl ">
@@ -77,7 +77,7 @@ export default function MyPageBody({ profileData, tagList }:
               <label className="cursor-pointer" htmlFor="file">
                 <img
                   className="w-[80px]  h-[80px] mx-auto rounded-full"
-                  src={profileData.profile_image_url || objectURL || user}
+                  src={profileData.profile_image_url || objectURL || '/profiledefault.svg'}
                   alt="userImage"
                 />
                 <input className="hidden" type="file" id="file" accept="image/jpg, image/jpeg, image/png" onChange={onChangeFile} />
@@ -94,7 +94,7 @@ export default function MyPageBody({ profileData, tagList }:
                     onClick={onChangeName}
                     value="editName"
                   >
-                    <img className="w-8 h-8 inline-block" src={EditIcon} alt="userImage" />
+                    <GlobalIcon.Edit />
                   </button>
                 </div>
               )
@@ -106,7 +106,7 @@ export default function MyPageBody({ profileData, tagList }:
                       onClick={() => { setNameModify(!modify); }}
                       value="editName"
                     >
-                      <img className="w-8 h-8 inline-block" src={EditIcon} alt="userImage" />
+                      <GlobalIcon.Edit />
                     </button>
                   </div>
                 )}

@@ -5,9 +5,7 @@ import React, { useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import userAPi from '../Api/userAPi';
 import { Iuser } from '../TypeInterface/userType';
-import close from '../img/close.png';
-import logo from '../img/logo.png';
-import profile from '../img/profile.png';
+import GlobalIcon from './GlobalIcon';
 
 export default function NickNameModal({
   modalClose,
@@ -49,19 +47,19 @@ export default function NickNameModal({
     <div className="flex w-full h-full fixed items-center justify-center bg-black/30 z-10">
       <div className="modal-contents max-w-[410px] max-h-[494px]  px-[24px] py-[26px] bg-white  rounded-[16px]">
         <div className="modal-nav-area flex justify-end">
-          <img src={logo} className="w-[139px] h-[39px] mr-[61px]" alt="logo" />
+          <img src="/logo.svg" className="w-[139px] h-[39px] mr-[61px]" alt="logo" />
           <button
             type="button"
             className="w-[44px] h-[44px] m-0 p-0"
             onClick={modalClose}
           >
-            <img src={close} className="rounded-full" alt="close" />
+            <GlobalIcon.Closed2 />
           </button>
         </div>
         <div className="modal-inner flex-col justify-center text-center">
           <img
             className="w-[80px] h-[80px] mx-auto rounded-full"
-            src={profile}
+            src="/defaultimg.svg"
             alt="userImage"
           />
           <p className="font-pre font-bold text-[16px] leading-[19px] pt-[15px] ">
