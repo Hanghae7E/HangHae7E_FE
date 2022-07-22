@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { useMutation } from 'react-query';
-import { useNavigate } from 'react-router-dom';
+import { useMutation, useQueryClient } from 'react-query';
 import { IProfileFormData, IsideProfile } from '../../../TypeInterface/userType';
 import { Itag } from '../../../TypeInterface/tagType';
 import Profile from './Profile';
@@ -25,18 +24,16 @@ export default function MyPageBody({ profileData, tagList }:
   const [nameModify, setNameModify] = useState(false);
   const [modify, setModify] = useState(false);
 
-  const navigation = useNavigate();
   const tabClick = (e:React.MouseEvent<HTMLButtonElement>) => {
     const val = e.currentTarget.value;
     setTab(val);
   };
-
+  const query = useQueryClient();
   const UpdateSideProfile = useMutation(
     (data: IsideProfile) => userAPi.setSideProfile(data),
     {
       onSuccess: () => {
-        URL.revokeObjectURL(objectURL);
-        navigation('/mypage');
+        query.invalidateQueries(['get_userInfo']);
       },
     },
   );
@@ -77,7 +74,7 @@ export default function MyPageBody({ profileData, tagList }:
               <label className="cursor-pointer" htmlFor="file">
                 <img
                   className="w-[80px]  h-[80px] mx-auto rounded-full"
-                  src={profileData.profile_image_url || objectURL || '/profiledefault.svg'}
+                  src={objectURL || '/profiledefault.svg'}
                   alt="userImage"
                 />
                 <input className="hidden" type="file" id="file" accept="image/jpg, image/jpeg, image/png" onChange={onChangeFile} />
