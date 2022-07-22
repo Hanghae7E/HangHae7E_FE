@@ -3,13 +3,11 @@ import { useQuery } from 'react-query';
 // import jwtDecode from 'jwt-decode';
 import tagApi from '../../Api/tagApi';
 import userAPi from '../../Api/userAPi';
-import Haederbar from '../../Components/Haederbar';
 import { Itag } from '../../TypeInterface/tagType';
 import MyPageBody from './Presentation/MyPageBody';
 import { auth } from '../../TypeInterface/userType';
 // import { ITokenDecode } from '../../TypeInterface/tokenType';
 import jwtUtils from '../../util/JwtUtil';
-import userGetUserInfo from '../../Hooks/userGetUserInfo';
 
 export default function MyPageContainer() {
   const [isLoading, setLoding] = useState<boolean>(false);
@@ -33,7 +31,6 @@ export default function MyPageContainer() {
   const userId = jwtUtils.getId(token);
   userAuth.token = token;
   userAuth.userId = userId;
-  const userInfo = userGetUserInfo();
   const userProfile = useQuery('user_profile', () => userAPi.getUserProfile(userAuth.userId));
   const skillTags = useQuery('tag', () => tagApi.getAllTag());
   useEffect(() => {
@@ -43,7 +40,6 @@ export default function MyPageContainer() {
   }, [isLoading]);
   return (
     <>
-      <Haederbar userInfo={userInfo?.data?.data} />
       {userProfile.isSuccess && skillTags.isSuccess
         && (
           <MyPageBody

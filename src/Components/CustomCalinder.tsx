@@ -18,7 +18,7 @@ import GlobalIcon from './GlobalIcon';
 import { dateFormat } from '../util/util';
 
 interface Iprops {
-start: string;
+start?: string;
 end?: string;
 setStart:React.Dispatch<SetStateAction<string>>
 setEnd?:React.Dispatch<SetStateAction<string>>
@@ -36,7 +36,7 @@ export default function CustomCalinder({
   const nextBtnClass = 'react-datepicker__navigation react-datepicker__navigation--next';
   const nextSpanClass = 'react-datepicker__navigation-icon react-datepicker__navigation-icon--next';
 
-  const [startDate, setStartDate] = useState(new Date(start));
+  const [startDate, setStartDate] = useState(new Date(start || ''));
   const [endDate, setEndDate] = useState(end ? new Date(end) : new Date());
   const [isOpen, setIsOpen] = useState(false);
 

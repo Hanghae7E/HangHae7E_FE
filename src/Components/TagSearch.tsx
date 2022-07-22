@@ -9,8 +9,7 @@ interface tagOptionI {
   tagData: Array<ITag>;
   selected: Array<ITag>;
   placeholder: string;
-  setHashTag: React.Dispatch<SetStateAction<Array<ITag>>>;
-  setHashTagId: React.Dispatch<SetStateAction<string | undefined>>;
+  setHashTag?: React.Dispatch<SetStateAction<Array<ITag>>>;
   style?: {
     tag?: {
       width?: number;
@@ -36,13 +35,11 @@ interface tagOptionI {
 }
 function TagSearch(tagOption: tagOptionI) {
   const {
-    tagData, selected, placeholder, setHashTag, setHashTagId,
+    tagData, selected, placeholder, setHashTag,
   } = tagOption;
-  const [tagList, setTagList] = useState(tagData);
   const [myTags, setMyTags] = useState<Array<ITag>>(selected);
   const [recommends, setRecommends] = useState<Array<ITag>>([]);
   const [input, setInput] = useState('');
-
   // if (selected.length === 0) {
   //   setTagList(tagData);
   // }
@@ -58,7 +55,7 @@ function TagSearch(tagOption: tagOptionI) {
   const recommendsTag = (e: React.ChangeEvent<HTMLInputElement>) => {
     const userInput = e.target.value.toLowerCase();
     setInput(userInput);
-    let filterData = tagList.filter(
+    let filterData = tagData.filter(
       (tag: ITag) => tag.body.toString().toLowerCase().includes(userInput),
     );
     if (e.target.value.length === 0) {
@@ -72,13 +69,8 @@ function TagSearch(tagOption: tagOptionI) {
     const tagCopy = [...myTags];
     tagCopy.push(clickedValue);
     tagCopy.filter((tag) => tag !== clickedValue);
-
-    const newTagList = tagList.filter((tag: ITag) => tag.body !== clickedValue.body);
-    setTagList(newTagList);
-
     setMyTags(tagCopy);
-    setHashTag(tagCopy);
-    setHashTagId(tagCopy.map((v) => v.tagId).join(','));
+    if (setHashTag)setHashTag(tagCopy);
     setRecommends([]);
     setInput('');
   };
@@ -87,12 +79,10 @@ function TagSearch(tagOption: tagOptionI) {
     const clickedValue = tagName;
     const tagCopy = [...myTags];
     const newMyTags = tagCopy.filter((tag: ITag) => tag.body !== clickedValue.body);
-    const tagListCopy = [...tagList];
+    const tagListCopy = [...tagData];
     tagListCopy.push(clickedValue);
-    setTagList(tagListCopy);
     setMyTags(newMyTags);
-    setHashTag(newMyTags);
-    setHashTagId(newMyTags.map((v) => v.body).join(','));
+    if (setHashTag)setHashTag(newMyTags);
   };
   return (
     <div className="relative h-[45px] w-full border-none">
