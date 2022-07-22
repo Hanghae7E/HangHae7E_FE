@@ -1,6 +1,5 @@
 import { useQuery } from 'react-query';
 import tagApi from '../../Api/tagApi';
-import Haederbar from '../../Components/Haederbar';
 import MyPageBody from './Presentation/MyPageBody';
 import userGetUserInfo from '../../Hooks/userGetUserInfo';
 
@@ -13,7 +12,6 @@ export default function MyPageContainer() {
 
   return (
     <>
-      <Haederbar userInfo={userProfile?.data?.data} />
       {userProfile?.isSuccess && skillTags.isSuccess
           && (
             <MyPageBody
