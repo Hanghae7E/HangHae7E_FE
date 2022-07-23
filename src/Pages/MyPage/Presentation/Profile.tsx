@@ -3,7 +3,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { useForm } from 'react-hook-form';
 import { useMutation, useQueryClient } from 'react-query';
-import React, { SetStateAction, useState } from 'react';
+import React, { SetStateAction, useEffect, useState } from 'react';
 import { IProfileFormData } from '../../../TypeInterface/userType';
 import TagInput from '../../../Components/TagInput';
 import userAPi from '../../../Api/userAPi';
@@ -44,7 +44,6 @@ export default function Profile({
 
   const Myskils = profileData.skills ? profileData.skills : [''];
   const [selected, setSelected] = useState<string[]>(Myskils);
-
   const methods = useForm<IProfileFormData>({
     defaultValues: {
       username,
@@ -66,8 +65,14 @@ export default function Profile({
     shouldUnregister: true,
   });
   const {
-    register, formState: { errors, isSubmitSuccessful }, reset, handleSubmit,
+    register, formState: { errors }, reset, handleSubmit,
   } = methods;
+
+  useEffect(() => {
+    if (profileData) {
+      reset(profileData);
+    }
+  }, [profileData]);
 
   const profileRecruit = useMutation(
     (data: IProfileFormData) => userAPi.putUserProfile(
@@ -76,11 +81,16 @@ export default function Profile({
       startDate,
       endDate,
     ),
+
     {
       onSuccess: () => {
         queryClient.invalidateQueries('get_userInfo');
         queryClient.invalidateQueries('get_profile_info');
         setModifyState(!modifyState);
+      },
+      onError: (res) => {
+        // TODO: 에러일 경우 에러 모달 추가
+        console.log('putUser에러 콘솔:', res);
       },
     },
   );

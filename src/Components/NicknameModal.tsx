@@ -59,7 +59,7 @@ export default function NickNameModal({
         <div className="modal-inner flex-col justify-center text-center">
           <img
             className="w-[80px] h-[80px] mx-auto rounded-full"
-            src="/defaultimg.svg"
+            src="/profiledefault.svg"
             alt="userImage"
           />
           <p className="font-pre font-bold text-[16px] leading-[19px] pt-[15px] ">

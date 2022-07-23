@@ -14,10 +14,7 @@ export default function MyPageContainer() {
 
   const profileId = id || currentUserId;
   const skillTags = useQuery('tag', () => tagApi.getAllTag());
-  const userProfile = useQuery('get_profile_info', () => userAPi.getUserProfile(profileId), {
-    staleTime: 5000,
-    cacheTime: Infinity,
-  });
+  const userProfile = useQuery('get_profile_info', () => userAPi.getUserProfile(profileId));
 
   return (
     <div>
