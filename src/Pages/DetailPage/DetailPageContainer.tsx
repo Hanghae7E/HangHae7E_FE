@@ -14,7 +14,7 @@ import {
   postRejectRecruit,
 } from '../../Api/postApi';
 import userApi from '../../Api/userAPi';
-import { UserData } from '../../TypeInterface/detailType';
+import { DetailProjectData, UserData } from '../../TypeInterface/detailType';
 
 export default function DetailPageContainer() {
   const { pathname } = useLocation();
@@ -43,8 +43,8 @@ export default function DetailPageContainer() {
     navigate(-1);
   }, []);
 
-  const goToEditPage = useCallback(() => {
-    navigate(`/projectupdate/${postId}`, { state: data });
+  const goToEditPage = useCallback((allData:DetailProjectData) => {
+    navigate(`/projectupdate/${postId}`, { state: allData });
   }, []);
 
   const handleDeleteProject = useCallback(() => {

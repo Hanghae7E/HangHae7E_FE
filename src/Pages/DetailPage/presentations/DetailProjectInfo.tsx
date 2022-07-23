@@ -7,7 +7,7 @@ interface Props {
   data: DetailProjectData
   onClickApply: () => void
   goBack: () => void
-  goToEditPage: () => void
+  goToEditPage: (allData:DetailProjectData) => void
   handleDeleteProject: () => void
 
 }
@@ -40,7 +40,7 @@ function DetailProjectInfo({
         </div>
         <div>
           <button
-            onClick={goToEditPage}
+            onClick={() => goToEditPage(data)}
             className="underline mr-4"
             type="button"
           >
