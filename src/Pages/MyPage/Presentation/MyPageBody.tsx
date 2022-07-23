@@ -1,61 +1,71 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
-import { Iprofile, auth } from '../../../TypeInterface/userType';
-import wy from '../Wy.jpg';
-import user from '../User.jpg';
-import EditIcon from '../EditIcon.png';
+import { IProfileFormData, IsideProfile } from '../../../TypeInterface/userType';
+import { Itag } from '../../../TypeInterface/tagType';
 import Profile from './Profile';
 import Project from './Project';
 import userAPi from '../../../Api/userAPi';
+import GlobalIcon from '../../../Components/GlobalIcon';
+// import defaultUserIcon from '../../../../assets/defaultUserIcon.png';
+// import myPageBack from '../../../assets/myPageBack.png';
 
-export default function MyPageBody({ profileData, tagList, Auth }:
+export default function MyPageBody({ profileData, tagList }:
 {
-  profileData: Iprofile;
-  tagList: Array<string>;
-  Auth:auth;
+  profileData: IProfileFormData;
+  tagList: Array<Itag>;
   }) {
-  const query = useQueryClient();
-  const [imgs, setImgs] = useState<string>(profileData.profile_image_url);
-  const [innerContents, setInnerContents] = useState('profile');
-  const [profileName, setProfileName] = useState(profileData.username);
-  // const [modify, setModify] = useState(true);
+  const tag = tagList.map((obj: Itag) => obj.body);
+  const newTag = tag.splice(8);
+  const [objectURL, setObjectURL] = useState<string>(profileData.profile_image_url);
+  const [Tab, setTab] = useState('profile');
+  const [err, setErr] = useState(true);
+  const [NewUserName, setNewUserName] = useState(profileData.username);
+  const [nicknameMessage, setNicknameMessage] = useState('');
   const [nameModify, setNameModify] = useState(false);
-  const tabClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const [modify, setModify] = useState(false);
+
+  const tabClick = (e:React.MouseEvent<HTMLButtonElement>) => {
     const val = e.currentTarget.value;
-    setInnerContents(val);
+    setTab(val);
   };
-  const modifyUserInfo = () => {
-    // console.log('클릭');
-  };
-  const changeName = useMutation(
-    () => userAPi.setMyName({
-      ...profileData,
-      username: profileName,
-    }),
+  const query = useQueryClient();
+  const UpdateSideProfile = useMutation(
+    (data: IsideProfile) => userAPi.setSideProfile(data),
     {
       onSuccess: () => {
-        query.invalidateQueries('get_userInfo');
+        query.invalidateQueries(['get_userInfo']);
       },
     },
   );
 
   const onChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files === null) return;
-
     const files = e.target.files[0];
-    userAPi.putImageProfile(files, profileData.username);
-    setImgs(URL.createObjectURL(files));
-  };
-  const onChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value === null) return;
+    const SideProfile:IsideProfile = { file: files, username: NewUserName };
 
-    const values = e.target.value;
-    setProfileName(values);
+    setObjectURL(URL.createObjectURL(files));
+    UpdateSideProfile.mutate(SideProfile);
+  };
+  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.value.length < 2 || e.target.value.length > 5) {
+      setErr(true);
+      setNicknameMessage('2글자 이상 5글자 미만으로 입력해주세요.');
+    } else { setNewUserName(e.target.value); }
+  };
+  const onChangeName = () => {
+    const SideProfile:IsideProfile = { username: NewUserName };
+    if (nameModify) {
+      UpdateSideProfile.mutate(SideProfile);
+    }
+    setNameModify(false);
+  };
+  const modifyUserInfo = () => {
+    setModify(!modify);
   };
   return (
     <div className="max-w-full mx-auto">
       <div className="myPageBanner  bg-cover bg-center">
-        <img className="w-full h-[255px] object-cover" src={wy} alt="backgroundImage" />
+        <img className="w-full h-[255px] object-cover" src="/headerimg.svg" alt="backgroundImage" />
       </div>
       <div className="myPageContents flex max-w-[1062px] mx-auto ">
         <div className="side relative flex-none -top-[88px] w-[300px] h-[332px] px-[20px] pb-20px max-w-[300px] bg-white border-2 border-[#EEEEEE]  rounded-2xl ">
@@ -64,25 +74,39 @@ export default function MyPageBody({ profileData, tagList, Auth }:
               <label className="cursor-pointer" htmlFor="file">
                 <img
                   className="w-[80px]  h-[80px] mx-auto rounded-full"
-                  src={imgs || user}
+                  src={objectURL || '/profiledefault.svg'}
                   alt="userImage"
                 />
                 <input className="hidden" type="file" id="file" accept="image/jpg, image/jpeg, image/png" onChange={onChangeFile} />
               </label>
 
             </div>
-            <div className="flex justify-center userName font-pre font-semibold text-[22px] leading-[22px] pb-[18px]">
-              {nameModify ? <input className="w-[100px]" type="text" value={profileName} onChange={onChangeName} /> : profileData.username}
-              <button
-                type="button"
-                onClick={() => {
-                  changeName.mutate();
-                  setNameModify(!nameModify);
-                }}
-                value="modifyUserInfo"
-              >
-                <img className="w-8 h-8 inline-block" src={EditIcon} alt="userImage" />
-              </button>
+            <div className="flex justify-center userName font-pre font-semibold text-[22px] leading-[25px] pb-[18px]">
+              {nameModify ? (
+                <div className=" ">
+                  {err === true && (<span className="font-pre font-normal text-[12px] leading-[13.32px]">{nicknameMessage}</span>)}
+                  <input className="w-[100px] pl-[10px] shadow-lg " type="text" onChange={handleInput} />
+                  <button
+                    type="button"
+                    onClick={onChangeName}
+                    value="editName"
+                  >
+                    <GlobalIcon.Edit />
+                  </button>
+                </div>
+              )
+                : (
+                  <div>
+                    {profileData.username}
+                    <button
+                      type="button"
+                      onClick={() => { setNameModify(!modify); }}
+                      value="editName"
+                    >
+                      <GlobalIcon.Edit />
+                    </button>
+                  </div>
+                )}
             </div>
             <div className="userEmail font-pre font-normal  text-[16px] leading-[19px] pb-[18px]  ">
               {profileData.email}
@@ -109,7 +133,7 @@ export default function MyPageBody({ profileData, tagList, Auth }:
             </button>
             <button
               type="button"
-              value="appProject"
+              value="registeredPosts"
               onClick={tabClick}
               className="pr-8 hover:underline hover:decoration-4"
             >
@@ -117,17 +141,22 @@ export default function MyPageBody({ profileData, tagList, Auth }:
             </button>
             <button
               type="button"
-              defaultValue="reqProject"
+              value="applyPosts"
               onClick={tabClick}
               className="pr-8 hover:underline hover:decoration-4"
             >
               신청한 프로젝트
             </button>
           </div>
-          {innerContents === 'profile' ? (
-            <Profile profileData={profileData} tagList={tagList} Auth={Auth} />
+          {Tab === 'profile' ? (
+            <Profile
+              profileData={profileData}
+              tagList={newTag}
+              modify={modify}
+              setModify={setModify}
+            />
           ) : (
-            <Project />
+            <Project type={Tab} profileData={profileData} />
           )}
         </div>
       </div>
