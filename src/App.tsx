@@ -41,6 +41,12 @@ function App() {
                 )}
           />
           <Route
+            path="/mypage/:id"
+            element={(
+              <MyPage />
+                )}
+          />
+          <Route
             path="/projectcreate"
             element={(
               <ProjectCreate />
