@@ -43,8 +43,8 @@ export default function DetailPageContainer() {
     navigate(-1);
   }, []);
 
-  const goToEditPage = useCallback((allData:DetailProjectData) => {
-    navigate(`/projectupdate/${postId}`, { state: allData });
+  const goToEditPage = useCallback(() => {
+    navigate(`/projectupdate/${postId}`, { state: data });
   }, []);
 
   const handleDeleteProject = useCallback(() => {
