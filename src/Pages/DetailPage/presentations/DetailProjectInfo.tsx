@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import React from 'react';
-import { DetailProjectData } from '../DetailPageContainer';
+import { DetailProjectData } from '../../../TypeInterface/detailType';
 import DetailIcon from './DetailIcon';
 
 interface Props {
@@ -59,10 +59,10 @@ function DetailProjectInfo({
       <ul className="flex flex-row mt-3">
         {tags.map((item) => (
           <li
-            key={item}
+            key={item.tagId}
             className="bg-[#E8EDF4] rounded-3xl py-2 px-3 mr-2"
           >
-            {item}
+            {item.body}
           </li>
         ))}
       </ul>

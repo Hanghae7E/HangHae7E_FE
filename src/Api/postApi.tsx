@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { FieldValues } from 'react-hook-form';
 import { ITag } from '../TypeInterface/postType';
 import baseUrl from './baseUrl';
@@ -63,16 +62,6 @@ const updateRecruitPost = async (
   if (hashTag)forms.append('tags', hashTag.map((v) => v.tagId).join(','));
   if (imgName) forms.append('img', imgName);
   if (datas.body) forms.append('body', datas.body);
-  console.log('title', forms.get('title'));
-  console.log('requiredDesigners', forms.get('requiredDesigners'));
-  console.log('requiredDevelopers', forms.get('requiredDevelopers'));
-  console.log('requiredProjectManagers', forms.get('requiredProjectManagers'));
-  console.log('projectStartTime', forms.get('projectStartTime'));
-  console.log('projectEndTime', forms.get('projectEndTime'));
-  console.log('recruitDueTime', forms.get('recruitDueTime'));
-  console.log('tags', forms.get('tags'));
-  console.log('img', forms.get('img'));
-  console.log('body', forms.get('body'));
 
   const res = await baseUrl.put(`/recruitPost/${postId}`, forms, {
     headers: {
@@ -109,7 +98,7 @@ export const deleteRecruitDetail = async ({ postId }: {postId: string}) => {
 };
 
 export const postRejectRecruit = async ({ postId }: {postId: string}) => {
-  const res = await baseUrl.post(`recruitPost/${postId}/application/denied`);
+  const res = await baseUrl.post(`/recruitPost/${postId}/application/denied`);
   return res;
 };
 
