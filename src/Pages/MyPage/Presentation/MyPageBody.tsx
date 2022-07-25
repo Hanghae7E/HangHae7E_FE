@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { IProfileFormData, IsideProfile } from '../../../TypeInterface/userType';
