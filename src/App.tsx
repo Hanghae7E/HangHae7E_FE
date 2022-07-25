@@ -33,17 +33,18 @@ function App() {
         <Route path="/" element={<MainPage />} />
         <Route element={<ProtectedRoute redirectPath="/" />}>
           <Route
-            path="/mypage/:id"
-            element={(
-              <MyPage />
-              )}
-          />
-          <Route
             path="/mypage"
             element={(
               <MyPage />
+            )}
+          >
+            <Route
+              path=":id"
+              element={(
+                <MyPage />
               )}
-          />
+            />
+          </Route>
           <Route
             path="/projectcreate"
             element={(

@@ -85,6 +85,7 @@ export default function CustomCalinder({
         <DatePicker
           id="calendar"
           className="bg-white"
+          withPortal
           onCalendarClose={() => setIsOpen(false)}
           onCalendarOpen={() => setIsOpen(true)}
           renderCustomHeader={({

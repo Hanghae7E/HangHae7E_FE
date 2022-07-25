@@ -30,7 +30,7 @@ export default function Project({ profileData, type }:
             <span className="w-auto mx-auto rounded-[24px] font-pre font-bold text-[16px]
         leading-[19px]  bg-[#EEEEEE] px-4 py-1"
             >
-              {item.status && item.project_start_time > Today ? '진행중' : '모집중'}
+              {item.status && item.recruit_due_time > Today ? '모집중' : '진행중'}
               {!item.status && '마감'}
             </span>
             <span className="w-1/4 font-pre font-bold text-[16px] leading-[19px]">
