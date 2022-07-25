@@ -27,7 +27,6 @@ export default function Header({ userInfo }:{ userInfo: Iuser }) {
     setModalOpen(!modalOpen);
   };
   useEffect(() => {
-    console.log('test', token);
     if (token) {
       setIsLogin(jwtUtils.isAuth(token));
     }
