@@ -71,7 +71,7 @@ export default function Profile({
     shouldUnregister: true,
   });
   const {
-    register, formState: { errors }, reset, handleSubmit, setValue,
+    register, formState: { errors }, reset, handleSubmit,
   } = methods;
 
   useEffect(() => {

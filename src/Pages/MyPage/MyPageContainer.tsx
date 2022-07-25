@@ -1,6 +1,5 @@
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
-import { useState } from 'react';
 import tagApi from '../../Api/tagApi';
 import MyPageBody from './Presentation/MyPageBody';
 import userAPi from '../../Api/userAPi';
@@ -8,9 +7,7 @@ import jwtUtils from '../../util/JwtUtil';
 
 export default function MyPageContainer() {
   const { id } = useParams();
-  const [currentUserId, setCurrentUserId] = useState<string|false>(
-    () => jwtUtils.getId(localStorage.getItem('token')),
-  );
+  const currentUserId = jwtUtils.getId(localStorage.getItem('token'));
 
   const profileId = id || currentUserId;
   const skillTags = useQuery('tag', () => tagApi.getAllTag());
