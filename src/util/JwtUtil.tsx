@@ -9,7 +9,7 @@ export default class jwtUtils {
     }
 
     const decoded: ITokenDecode = jwtDecode(token);
-    console.log(decoded, new Date().getTime() / 1000);
+    // console.log(decoded, new Date().getTime() / 1000);
     if (decoded.exp > new Date().getTime() / 1000) {
       return true;
     }
