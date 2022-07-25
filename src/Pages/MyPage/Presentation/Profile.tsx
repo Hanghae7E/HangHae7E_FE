@@ -4,12 +4,14 @@
 import { useForm } from 'react-hook-form';
 import { useMutation, useQueryClient } from 'react-query';
 import React, { SetStateAction, useEffect, useState } from 'react';
+import { watch } from 'fs';
 import { IProfileFormData } from '../../../TypeInterface/userType';
 import TagInput from '../../../Components/TagInput';
 import userAPi from '../../../Api/userAPi';
 import CustomCalinder from '../../../Components/CustomCalinder';
 import { dateFormat } from '../../../util/util';
 import TextModal from '../../../Components/TextModal';
+import GlobalIcon from '../../../Components/GlobalIcon';
 
 export default function Profile({
   profileData,
@@ -115,6 +117,7 @@ export default function Profile({
     });
   };
   const titleCSS = 'min-w-fit pr-[22px] font-pre font-bold text-[18px] leading-[40px] align-middle ';
+  const valTextCss = 'font-pre text-[12px] text-red-400';
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       { modalOpen && updateErrMessage && (
@@ -123,14 +126,15 @@ export default function Profile({
       <div className="profile max-w-[736px] pl-[30px] pb-[63px] border-2 border-[#EEEEEE] rounded-2xl">
         <h2 className="prorileTitle pt-[40px] font-pre font-bold text-[28px] leading-[33px] ">
           안녕하세요
-          <br />
           {profileData.fields.length > 0 && (
-            `${profileData.fields[0]} `
+            ` ${profileData.fields[0]} `
           ) }
           {profileData.position && (
-            `${profileData.position} `
+            ` ${profileData.position} `
           )}
           {`${profileData.username} 입니다.`}
+          <br />
+          만나서 반갑습니다! 잘 부탁 드려요!
         </h2>
         <hr className="mt-[40px] mr-[64px]  border-1 border-[#CCCCCC]" />
         <div className="flex pt-[40px] text-center ">
@@ -140,7 +144,7 @@ export default function Profile({
           {currentUser && modifyState
             ? (
               <select
-                className="border-2 mr-[8px] w-[198px] h-[36px] border-[#EEEEEE] rounded-md pl-[10px] font-pre font-normal text-[18px] leading-[21px]"
+                className="border-2 mr-[8px] w-[198px] h-12 border-[#EEEEEE] rounded-md pl-[10px] font-pre font-normal text-[18px] leading-[21px]"
                 {...register('position')}
               >
                 {positionOptions.map((item) => (
@@ -159,7 +163,7 @@ export default function Profile({
           {currentUser && modifyState
             ? (
               <select
-                className="border-2 mr-[8px] w-[198px] h-[36px] border-[#EEEEEE] rounded-md pl-[10px]  font-pre font-normal text-[18px] leading-[21px]"
+                className="border-2 mr-[8px] w-[198px] h-12 border-[#EEEEEE] rounded-md pl-[10px]  font-pre font-normal text-[18px] leading-[21px]"
                 {...register('fields')}
               >
                 {fieldsOptions.map((item) => (
@@ -179,7 +183,7 @@ export default function Profile({
           {currentUser && modifyState
             ? (
               <select
-                className="border-2 mr-[8px] w-[198px] h-[36px] border-[#EEEEEE] rounded-md pl-[10px] font-pre font-normal text-[18px] leading-[21px]"
+                className="border-2 mr-[8px] w-[198px] h-12 border-[#EEEEEE] rounded-md pl-[10px] font-pre font-normal text-[18px] leading-[21px]"
                 {...register('career_period')}
               >
                 {careerOptions.map((item) => (
@@ -230,17 +234,23 @@ export default function Profile({
         <hr className="mt-[40px] mr-[64px]  border-1 border-[#CCCCCC]" />
         <div className="flex flex-col pt-[40px] mr-[64px]">
           <h2 className="font-pre font-bold text-[24px] leading-[29px]  text-black placeholder:text-[#CCCCCC]">연락처</h2>
-          <p className="pt-[10px]">{errors.email?.type === 'pattern' && '유효한 이메일 주소를 입력 해 주세요'}</p>
+          <div className="float font-pre h-[20px] text-[12px] text-red-400">{errors.email?.type === 'pattern' && '유효한 이메일 주소를 입력 해 주세요'}</div>
+          <div className="relative w-0 h-0 ml-[10px] -bottom-[15px]">
+            <GlobalIcon.Email />
+          </div>
           <input
-            className="w-full h-[50px] mt-[20px] pl-[20px] read-only:border-none border-2 border-[#EEEEEE] rounded-2xl font-pre font-normal text-[18px] leading-[21px] text-black placeholder:text-[#CCCCCC] "
+            className="w-full h-[50px]  pl-[56px] read-only:border-none border-2 border-[#EEEEEE] rounded-2xl font-pre font-normal text-[18px] leading-[21px] text-black placeholder:text-[#CCCCCC] "
             type="text"
             readOnly={!modifyState}
             placeholder="이메일"
             {...register('email', ({ pattern: /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/ }))}
           />
-          <p>{errors.phone_number?.type === 'pattern' && '유효한 핸드폰 번호를 입력 해 주세요'}</p>
+          <div className=" font-pre h-[20px] text-[10px] text-red-400 ">{errors.phone_number?.type === 'pattern' && '유효한 핸드폰 번호를 입력 해 주세요'}</div>
+          <div className="relative w-0 h-0 ml-[10px] -bottom-[15px]">
+            <GlobalIcon.Call />
+          </div>
           <input
-            className="w-full h-[50px] mt-[20px] pl-[20px] read-only:border-none  border-2 border-[#EEEEEE] rounded-2xl font-pre font-normal text-[18px] leading-[21px]  text-black placeholder:text-[#CCCCCC]"
+            className="w-full h-[52px] pl-[56px] read-only:border-none  border-2 border-[#EEEEEE] rounded-2xl font-pre font-normal text-[18px] leading-[21px]  text-black placeholder:text-[#CCCCCC]"
             type="text"
             placeholder="연락처"
             readOnly={!modifyState}
@@ -253,14 +263,14 @@ export default function Profile({
             협업 사항
           </h2>
         </div>
-        <div className="flex pt-[40px]">
+        <div className="flex pt-[20px]">
           <h2 className="min-w-[122px] pr-[20px] font-pre font-bold text-[18px]  leading-[40px] align-middle ">
             거주지역
           </h2>
           {currentUser && modifyState
             ? (
               <select
-                className="border-2 mr-[8px] w-[198px] h-[36px] border-[#EEEEEE] rounded-md pl-[10px] font-pre font-normal text-[18px] leading-[21px]"
+                className="border-2 mr-[8px] w-[198px] h-12 border-[#EEEEEE] rounded-md pl-[10px] font-pre font-normal text-[18px] leading-[21px]"
                 {...register('residence')}
               >
                 {residenceOptions.map((item) => (
@@ -281,7 +291,7 @@ export default function Profile({
           {currentUser && modifyState
             ? (
               <select
-                className="border-2 mr-[8px] w-[198px] h-[36px] border-[#EEEEEE] rounded-md pl-[10px] font-pre font-normal text-[18px] leading-[21px]"
+                className="border-2 mr-[8px] w-[198px] h-12 border-[#EEEEEE] rounded-md pl-[10px] font-pre font-normal text-[18px] leading-[21px]"
                 {...register('face_to_face')}
               >
                 {meetingoptions.map((item) => (
@@ -296,8 +306,8 @@ export default function Profile({
             )}
 
         </div>
-        <div className="flex pt-[28px]">
-          <h2 className="min-w-[102px] pr-[20px] font-pre font-bold text-[18px]  leading-[75px] align-middle ">
+        <div className="flex pt-[28px] flex-wrap">
+          <h2 className="min-w-[102px] pr-[20px] font-pre font-bold text-[18px] leading-[50px] align-middle ">
             작업 가능 기간
           </h2>
           {currentUser && modifyState ? (
@@ -307,10 +317,12 @@ export default function Profile({
               setStart={setStartDate}
               setEnd={setEndDate}
               isRange
+              customCss={`flex flex-1 max-w-[282px] w-[282px] h-[48px] min-w-max
+                border-[2px] rounded-lg border-[#DFE1E5] items-center pl-[16px]`}
             />
           )
             : (
-              <p className="font-pre font-normal text-[18px] leading-[75px]">{`${startDate} ~ ${endDate}`}</p>
+              <p className="font-pre font-normal text-[18px] leading-[50px] ">{`${startDate} ~ ${endDate}`}</p>
             )}
         </div>
         <div className="flex pt-[28px]">
@@ -322,7 +334,7 @@ export default function Profile({
               ? (
                 <select
                   defaultValue={workDay}
-                  className="border-2 mr-[8px] w-[198px] h-[36px] border-[#EEEEEE] rounded-md pl-[10px] font-pre font-normal text-[18px] leading-[21px]"
+                  className="border-2 mr-[8px] w-[198px] h-12 border-[#EEEEEE] rounded-md pl-[10px] font-pre font-normal text-[18px] leading-[21px]"
                   {...register('workDay')}
                 >
                   {workdayOptions.map((item) => (
