@@ -28,6 +28,10 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
   const [updateErrMessage, setUpdateErrMessage] = useState('');
   const [modalOpen, setModalOpen] = useState<boolean>(true);
 
+  const profileChangeButtonDefault = 'w-full h-[67px] rounded-[15px] font-pre font-normal text-[16px] leading-[19px] bg-[#EEEEEE] text-[#CCCCCC]';
+  const profileChangeButtonActive = 'w-full h-[67px] rounded-[15px] font-pre font-normal text-[16px] leading-[19px] bg-white border-2 text-[#6457FA] border-[#6457FA]';
+  const [buttonCss, setButtonCss] = useState(profileChangeButtonDefault);
+
   const queryClient = useQueryClient();
 
   const UpdateSideProfile = useMutation(
@@ -82,6 +86,7 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
 
   const modifyUserInfo = () => {
     setModifyState(!modifyState);
+    setButtonCss(modifyState ? profileChangeButtonDefault : profileChangeButtonActive);
   };
 
   const tabClick = (e:React.MouseEvent<HTMLButtonElement>) => {
@@ -96,10 +101,10 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
         <TextModal messages={['프로필을 변경할 수 없습니다.', updateErrMessage]} modalClose={setModalOpen} />
       )}
       <div className="myPageBanner  bg-cover bg-center">
-        <img className="w-full h-[91px] pc:h-[255px] object-cover" src="/headerimg.svg" alt="backgroundImage" />
+        <img className="w-full h-[91px] pc:h-[240px] object-cover" src="/headerimg.svg" alt="backgroundImage" />
       </div>
       <div className="myPageContents flex w-full pc:max-w-[1062px] mx-auto ">
-        <div className="side_pc  hidden  pc:block pc:relative flex-none  pc:-top-[88px]  pc:w-[300px]  pc:h-[332px]  pc:px-[20px]  pc:pb-20px  pc:max-w-[300px] bg-white border-2 border-[#EEEEEE]  rounded-2xl ">
+        <div className="side_pc  hidden  pc:block pc:relative flex-none  pc:-top-[90px]  pc:w-[300px]  pc:h-[332px]  pc:px-[20px]  pc:pb-20px  pc:max-w-[300px] bg-white border-2 border-[#EEEEEE]  rounded-2xl ">
           <div className="sideInner text-center mb-[20px]">
             <div className="userImg pt-[40px] pb-[18px]">
               <label className="cursor-pointer" htmlFor="file">
@@ -148,7 +153,7 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
               type="button"
               value="modifyUserInfo"
               onClick={modifyUserInfo}
-              className="w-full h-[67px] rounded-[15px] font-pre font-normal text-[16px] leading-[19px] bg-[#6457FA] text-white hover:bg-white hover:text-[#6457FA]  hover:border-2 hover:border-[#6457FA]"
+              className={buttonCss}
             >
               내 정보 수정하기
             </button>
@@ -160,7 +165,7 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
               type="button"
               value="profile"
               onClick={tabClick}
-              className="w-full h-[67px] rounded-[15px] font-pre font-normal text-[16px] leading-[19px] bg-[#cccccc] text-white hover:bg-white hover:text-[#6457FA]  hover:border-2 hover:border-[#6457FA]"
+              className="w-full h-[67px] rounded-[15px] font-pre font-normal text-[16px] leading-[19px] bg-[#EEEEEE] text-[#CCCCCC] hover:bg-white hover:text-[#6457FA]  hover:border-2 hover:border-[#6457FA]"
             >
               프로필로 이동
             </button>

@@ -9,6 +9,7 @@ import TagInput from '../../../Components/TagInput';
 import userAPi from '../../../Api/userAPi';
 import CustomCalinder from '../../../Components/CustomCalinder';
 import { dateFormat } from '../../../util/util';
+import TextModal from '../../../Components/TextModal';
 
 export default function Profile({
   profileData,
@@ -23,6 +24,9 @@ export default function Profile({
   modifyState:boolean;
   setModifyState :React.Dispatch<SetStateAction<boolean>>;
 }) {
+  const [modalOpen, setModalOpen] = useState<boolean>(true);
+  const [updateErrMessage, setUpdateErrMessage] = useState('');
+
   const workdayOptions = ['주 1일', '주 2일', '주 3일', '주 4일', '주 5일'];
   const timeOptions = ['오전', '오후', '저녁', '야간'];
   const careerOptions = ['1년 미만', '1-2년', '2-3년', '3-4년', '4-5년', '5년 이상', '10년 이상'];
@@ -40,7 +44,6 @@ export default function Profile({
   const [w, t] = profileData.available_time ? profileData.available_time.split(',') : ['', ''];
   const [workDay, setWorkDay] = useState<string>(w);
   const [time, setTime] = useState<string>(t);
-  console.log(w === '주 2일');
   const Today = dateFormat(new Date());
   const [start, end] = profileData.available_period ? profileData.available_period.split(',') : [Today, Today];
   const [startDate, setStartDate] = useState<string>(start);
@@ -92,17 +95,16 @@ export default function Profile({
       onSuccess: () => {
         queryClient.invalidateQueries('get_userInfo');
         queryClient.invalidateQueries('get_profile_info');
+        setUpdateErrMessage('');
         setModifyState(!modifyState);
       },
-      onError: (res) => {
+      onError: () => {
         queryClient.invalidateQueries('get_userInfo');
         queryClient.invalidateQueries('get_profile_info');
-        // TODO: 에러일 경우 에러 모달 추가
-        console.log('putUser에러 콘솔:', res);
+        setUpdateErrMessage('다시 작성해 주세요.');
       },
     },
   );
-
   const onSubmit = (data: IProfileFormData) => {
     setWorkDay(data.workDay);
     setTime(data.time);
@@ -112,10 +114,12 @@ export default function Profile({
       },
     });
   };
-  // const fixInputCSS = 'font-pre font-normal text-[18px] leading-[21px]';
   const titleCSS = 'min-w-fit pr-[22px] font-pre font-bold text-[18px] leading-[40px] align-middle ';
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
+      { modalOpen && updateErrMessage && (
+      <TextModal messages={['프로필을 변경할 수 없습니다.', updateErrMessage]} modalClose={setModalOpen} />
+      )}
       <div className="profile max-w-[736px] pl-[30px] pb-[63px] border-2 border-[#EEEEEE] rounded-2xl">
         <h2 className="prorileTitle pt-[40px] font-pre font-bold text-[28px] leading-[33px] ">
           안녕하세요
@@ -343,16 +347,18 @@ export default function Profile({
           </div>
         </div>
       </div>
-      {currentUser && modifyState && (
-      <button
-        type="submit"
-        className="w-full h-[67px] rounded-[15px] mt-[40px] font-pre font-normal
-      text-[16px] leading-[19px] bg-[#6457FA] text-white
-     hover:bg-white hover:text-[#6457FA]  hover:border-2 hover:border-[#6457FA]"
-      >
-        내 정보 수정하기
-      </button>
-      )}
+      <div className="flex justify-center">
+        {currentUser && modifyState && (
+        <button
+          type="submit"
+          className="w-[290px] h-[72px] rounded-[15px] mt-[40px] font-pre font-normal
+      text-[28px] leading-[19px] bg-[#6457FA] text-white
+     "
+        >
+          저장하기
+        </button>
+        )}
+      </div>
 
     </form>
   );
