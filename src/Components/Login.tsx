@@ -29,16 +29,16 @@ export default function Login(data:textModalType) {
           <img src="/logo.svg" className="w-[86px] h-[19px] ml-[52px] sm:w-[139px] sm:h-[39px] sm:ml-[68px]" alt="logo" />
         </div>
         <div className="title-area flex flex-col items-center text-center pt-[9px]">
-          {titles && titles.length > 1 && (
+          {titles && titles.length >= 1 && (
             titles.map((title) => (
               <p key={title} className="font-pre font-bold text-[20px] leading-[30px] ">{title}</p>
             ))
           )}
-          {messages && messages.length > 1 && (
+          {messages && messages.length >= 1 && (
             messages.map((message) => (
               <p
                 key={message}
-                className="font-pre font-bold text-[20px]
+                className="font-pre font-normal text-[20px]
               leading-[30px] "
               >
                 {message}
