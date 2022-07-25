@@ -59,7 +59,7 @@ export default function Login(data:textModalType) {
             type="button"
             name="KAKAO"
             onClick={kakaoClick}
-            className="flex sm:mt-[18px] mt-5  px-4 items-center w-80 sm:w-[300px] h-[45px] rounded-[4px]  ring-1 ring-yellow-500 bg-yellow-500 drop-shadow-xl"
+            className="flex sm:mt-[18px] mt-5  px-4 items-center w-80 sm:w-[300px] h-[45px] rounded-[4px]  ring-1 ring-[#f9e000] bg-[#f9e000] drop-shadow-xl"
           >
             <GlobalIcon.Kakao />
             <p className="w-full pr-[24px] font-pre font-normal text-[18px]">

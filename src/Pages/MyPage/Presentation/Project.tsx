@@ -1,11 +1,15 @@
 import { IapplyPosts, IRegisteredPosts } from '../../../TypeInterface/postType';
 import { IProfileFormData } from '../../../TypeInterface/userType';
+import { dateFormat } from '../../../util/util';
 
 export default function Project({ profileData, type }:
   {profileData: IProfileFormData, type:string}) {
   //   대기중:0,수락:1,거절:2
+
+  const Today = dateFormat(new Date());
   return (
     <div className="projectComponent flex flex-col  bg-white">
+
       <div className="title flex max-w-[736px] h-[50px] pl-2 items-center
        border-2 border-[#EEEEEE] rounded-md"
       >
@@ -26,7 +30,8 @@ export default function Project({ profileData, type }:
             <span className="w-auto mx-auto rounded-[24px] font-pre font-bold text-[16px]
         leading-[19px]  bg-[#EEEEEE] px-4 py-1"
             >
-              {item.status}
+              {item.status && item.project_start_time > Today ? '진행중' : '모집중'}
+              {!item.status && '마감'}
             </span>
             <span className="w-1/4 font-pre font-bold text-[16px] leading-[19px]">
               {item.title}
