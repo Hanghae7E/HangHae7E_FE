@@ -4,7 +4,7 @@
 import { Controller, FieldValues, useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { useQuery } from 'react-query';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import UpdateFooter from './Presentation/UpdateFooter';
 import UpdateHeader from './Presentation/UpdateHeader';
 import postApi from '../../Api/postApi';
@@ -32,12 +32,12 @@ interface IUpdateData{
 export default function ProjectUpdateContainer() {
   const update = useLocation();
   const { postId } = useParams();
-  const nav = useNavigate();
+  // const nav = useNavigate();
   const updateData = update.state as IUpdateData;
-  if (!updateData) {
-    alert('존재하지않는 게시물입니다.');
-    nav('/');
-  }
+  // if (!updateData) {
+  //   alert('존재하지않는 게시물입니다.');
+  //   nav('/');
+  // }
   const [hashTag, setHashTag] = useState<Array<ITag>>(updateData.tags);
   const [imgName, setImageName] = useState<File>();
   const [startDate, setStartDate] = useState<string>(updateData.projectStartTime);

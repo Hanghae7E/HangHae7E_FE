@@ -9,7 +9,7 @@ import MainHeader from './Presentaion/MainHeader';
 import Portal from '../../Components/Portal';
 import NickNameModal from '../../Components/NicknameModal';
 import userGetUserInfo from '../../Hooks/userGetUserInfo';
-import useInfiniteScrollQuery from '../../Hooks/useInfiniteScrollQuery';
+import useMainInfiniteScrollQuery from './hooks/useMainInfiniteScrollQuery';
 
 export default function MainPageContainer() {
   const recommendPosts = useQuery('recommend_post', postApi.getRecommendPosts);
@@ -20,7 +20,7 @@ export default function MainPageContainer() {
     getBoard, getNextPage,
     getBoardIsSuccess, getNextPageIsPossible,
     refetch,
-  } = useInfiniteScrollQuery(searchTag);
+  } = useMainInfiniteScrollQuery(searchTag);
   const [ref, isView] = useInView();
   useEffect(() => {
     if (isView && getNextPageIsPossible) {
