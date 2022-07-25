@@ -1,4 +1,5 @@
 import { FieldValues } from 'react-hook-form';
+import { ITag } from '../TypeInterface/postType';
 import baseUrl from './baseUrl';
 
 const getRecruitPosts = async (pageParam: number, tag:number) => {
@@ -13,7 +14,7 @@ const getRecommendPosts = async () => {
 
 const postRecruitPost = async (
   datas: FieldValues,
-  hashTagId?: string,
+  hashTag?: Array<ITag>,
   startDate?: string,
   endDate?: string,
   dueDate?: string,
@@ -24,13 +25,14 @@ const postRecruitPost = async (
   if (datas.title) forms.append('title', datas.title);
   if (datas.designer)forms.append('requiredDesigners', datas.designer);
   if (datas.developer)forms.append('requiredDevelopers', datas.developer);
-  if (datas.pmaster) forms.append('requiredProjectManagers', datas.pmaster);
+  if (datas.pmanager) forms.append('requiredProjectManagers', datas.pmanager);
   if (startDate)forms.append('projectStartTime', startDate);
   if (endDate) forms.append('projectEndTime', endDate);
   if (dueDate)forms.append('recruitDueTime', dueDate);
-  if (hashTagId)forms.append('tags', hashTagId);
+  if (hashTag)forms.append('tags', hashTag.map((v) => v.tagId).join(','));
   if (imgName) forms.append('img', imgName);
   if (datas.body) forms.append('body', datas.body);
+
   const res = await baseUrl.post('/recruitPost', forms, {
     headers: {
       'Content-Type': 'multipart/form-data',
@@ -39,6 +41,35 @@ const postRecruitPost = async (
   return res;
 };
 
+const updateRecruitPost = async (
+  datas: FieldValues,
+  postId:string | undefined,
+  hashTag?: Array<ITag>,
+  startDate?: string,
+  endDate?: string,
+  dueDate?: string,
+  imgName?: File,
+) => {
+  const forms = new FormData();
+
+  if (datas.title) forms.append('title', datas.title);
+  if (datas.designer)forms.append('requiredDesigners', datas.designer);
+  if (datas.developer)forms.append('requiredDevelopers', datas.developer);
+  if (datas.pmanager) forms.append('requiredProjectManagers', datas.pmanager);
+  if (startDate)forms.append('projectStartTime', startDate);
+  if (endDate) forms.append('projectEndTime', endDate);
+  if (dueDate)forms.append('recruitDueTime', dueDate);
+  if (hashTag)forms.append('tags', hashTag.map((v) => v.tagId).join(','));
+  if (imgName) forms.append('img', imgName);
+  if (datas.body) forms.append('body', datas.body);
+
+  const res = await baseUrl.put(`/recruitPost/${postId}`, forms, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+  return res;
+};
 const getTag = async () => {
   const res = await baseUrl.get('/tag');
   return res;
@@ -51,7 +82,7 @@ export const getRecruitPostDetails = ({ postId }: {postId: string}) => async () 
 };
 
 // 프로젝트 신청
-export const postRecriutDetailPosts = async ({ postId }: {postId: string}) => {
+export const postRecriutDetailPosts = async ({ postId }: { postId: string }) => {
   const res = await baseUrl.post(`/recruitPost/${postId}/application`);
   return res;
 };
@@ -67,7 +98,7 @@ export const deleteRecruitDetail = async ({ postId }: {postId: string}) => {
 };
 
 export const postRejectRecruit = async ({ postId }: {postId: string}) => {
-  const res = await baseUrl.post(`recruitPost/${postId}/application/denied`);
+  const res = await baseUrl.post(`/recruitPost/${postId}/application/denied`);
   return res;
 };
 
@@ -75,14 +106,31 @@ export default {
   getRecruitPosts: (pageParam: number, tag:number) => getRecruitPosts(pageParam, tag),
   postRecruitPost: (
     form: FieldValues,
-    hashTagId?: string,
+    hashTag?: Array<ITag>,
     startDate?: string,
     endDate?: string,
     dueDate?: string,
     imgName?: File,
   ) => postRecruitPost(
     form,
-    hashTagId,
+    hashTag,
+    startDate,
+    endDate,
+    dueDate,
+    imgName,
+  ),
+  updateRecruitPost: (
+    form: FieldValues,
+    postId:string | undefined,
+    hashTag?: Array<ITag>,
+    startDate?: string,
+    endDate?: string,
+    dueDate?: string,
+    imgName?: File,
+  ) => updateRecruitPost(
+    form,
+    postId,
+    hashTag,
     startDate,
     endDate,
     dueDate,
@@ -90,4 +138,5 @@ export default {
   ),
   getTag,
   getRecommendPosts,
+  getRecruitPostDetails: ({ postId }: { postId: string }) => getRecruitPostDetails({ postId }),
 };

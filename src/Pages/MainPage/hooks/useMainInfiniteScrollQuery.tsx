@@ -1,7 +1,7 @@
 import { useInfiniteQuery } from 'react-query';
-import postApi from '../Api/postApi';
+import postApi from '../../../Api/postApi';
 
-export default function useInfiniteScrollQuery(searchTag: number) {
+export default function useMainInfiniteScrollQuery(searchTag: number) {
   const getPageBoard = async ({ pageParam = 0 }) => {
     const res = await postApi.getRecruitPosts(pageParam, searchTag);
     return {
