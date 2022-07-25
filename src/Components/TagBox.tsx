@@ -64,7 +64,7 @@ export default function TagBox({
           </div>
         )
         : (
-          <div className={`${tagBg(tag)} whitespace-nowrap  ${padding} rounded-full ${margin}`}>
+          <div className={`${tagBg(tag)} whitespace-nowrap ${padding} rounded-full ${margin}`}>
             {tags(tag)}
             {isCancled && <p className="pl-[11px]">X</p>}
           </div>

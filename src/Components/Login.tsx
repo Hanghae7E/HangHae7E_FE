@@ -1,4 +1,3 @@
-import close from '../img/close.png';
 import GlobalIcon from './GlobalIcon';
 
 type textModalType={
@@ -24,7 +23,7 @@ export default function Login(data:textModalType) {
           className="w-9 h-9 sm:w-[44px] sm:h-[44px] float-right mr-4 mt-4"
           onClick={closeModal}
         >
-          <img src={close} alt="close" />
+          <GlobalIcon.Closed2 />
         </button>
         <div className="modalNav flex justify-around items-center p-[24px]">
           <img src="/logo.svg" className="w-[86px] h-[19px] ml-[52px] sm:w-[139px] sm:h-[39px] sm:ml-[68px]" alt="logo" />

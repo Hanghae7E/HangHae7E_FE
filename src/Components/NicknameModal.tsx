@@ -4,32 +4,36 @@
 import React, { useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import userAPi from '../Api/userAPi';
-import { Iprofile } from '../TypeInterface/userType';
-import close from '../img/close.png';
-import logo from '../img/logo.png';
-import profile from '../img/profile.png';
+import { Iuser } from '../TypeInterface/userType';
+import GlobalIcon from './GlobalIcon';
 
 export default function NickNameModal({
   modalClose,
   userInfo,
 }: {
-  modalClose: any,
-  userInfo: Iprofile,
+    modalClose: any,
+    userInfo: Iuser,
 }) {
-  const token = localStorage.getItem('token');
+  const [nicknameCheck, setNicknameCheck] = useState(false);
+  const [nicknameMessage, setNicknameMessage] = useState('');
+  const [Input, setInput] = useState('');
 
-  const [users, setUsers] = useState<Iprofile>(userInfo);
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const input = e.target.value;
-    setUsers({
-      ...userInfo,
-      username: input,
-      phone_number: '010-0000-0000',
-    });
-    // 유효성검사
+    setInput(e.target.value);
+    if (e.target.value.length < 2 || e.target.value.length > 5) {
+      setNicknameMessage('2글자 이상 5글자 미만으로 입력해주세요.');
+      setNicknameCheck(false);
+    }
+    if (e.target.value.length === 0) {
+      setNicknameMessage(`입력하지 않으면 ${userInfo.username}이(가) 닉네임으로 사용됩니다.`);
+      setNicknameCheck(false);
+    } else {
+      setNicknameMessage('환영합니다 :)');
+      setNicknameCheck(true);
+    }
   };
   const query = useQueryClient();
-  const changeNickName = useMutation((user:Iprofile) => userAPi.setMyName(user), {
+  const changeNickName = useMutation((username:string) => userAPi.setMyName(username), {
     onSuccess: (v) => {
       console.log(v);
       query.invalidateQueries('get_userInfo');
@@ -37,27 +41,27 @@ export default function NickNameModal({
     },
   });
   async function savebtn() {
-    if (users?.username) {
-      changeNickName.mutate(users);
-    }
+    if (Input) { changeNickName.mutate(Input); } else { changeNickName.mutate(userInfo.username); }
   }
   return (
     <div className="flex w-full h-full fixed items-center justify-center bg-black/30 z-10">
-      <div className="nickNameModal pc:max-w-[386px] pc:max-h-[494px]  max-w-[336px] pc:pt-6 pc:pb-10 px-3 pt-4 pb-10  bg-white  rounded-[16px]">
-        <button
-          type="button"
-          className="w-9 h-9 pc:w-[44px] pc:h-[44px] float-right"
-        >
-          <img src={close} className="rounded-full" alt="close" />
-        </button>
-        <div className="ml-4 pc:ml-[44px]">
-          <img src={logo} className="w-[86px] h-[19px] pc:w-[139px] pc:h-[39px] mx-auto pc:mt-6 mt-6" alt="logo" />
+      <div className="modal-contents max-w-[410px] max-h-[494px]  px-[24px] py-[26px] bg-white  rounded-[16px]">
+        <div className="modal-nav-area flex justify-end">
+          <div className="w-[139px] h-[39px] mr-[61px] object-fill">
+            <img src="logo.svg" alt="logo" />
+          </div>
+          <button
+            type="button"
+            className="w-[44px] h-[44px] m-0 p-0"
+            onClick={modalClose}
+          >
+            <GlobalIcon.Closed2 />
+          </button>
         </div>
-
-        <div className="modal-inner flex-col justify-center text-center  pc:px-[24px] mt-6 pc:mt-[30px]">
+        <div className="modal-inner flex-col justify-center text-center items-center">
           <img
             className="w-[80px] h-[80px] mx-auto rounded-full"
-            src={profile}
+            src="/profiledefault.svg"
             alt="userImage"
           />
           <p className="font-pre font-bold text-[16px] leading-[19px] pt-[15px] ">
@@ -70,9 +74,13 @@ export default function NickNameModal({
             className="w-[300px] h-[50px] mt-[12px] pl-[20px] border-2 border-[#EEEEEE] rounded-[8px] font-pre font-normal text-[18px] leading-[21px] placeholder:text-[#CCCCCC] text-black"
             type="text"
             placeholder="ex)룰루랄라조로"
-            value={users?.username}
+            value={Input}
             onChange={handleInput}
           />
+          <div className="text-red-400">
+            {nicknameCheck === false && (<span>{nicknameMessage}</span>)}
+          </div>
+
           <button
             type="button"
             value="nickBtn"

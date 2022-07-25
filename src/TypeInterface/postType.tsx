@@ -26,3 +26,24 @@ export interface IRecruitPages{
 	postPage: Array<IRecruitPost>;
 	currentPage: number;
 }
+
+export interface IRegisteredPosts{
+	id: number;
+	project_start_time : string;
+	project_end_time:string;
+	recruit_status:string;
+	title: string;
+	recruit_due_time : string;
+	capacity : string;
+	status: string;
+}
+export interface IapplyPosts{
+	id: number;
+	project_start_time : string;
+	project_end_time:string;
+	recruit_status:string;
+	title: string;
+	recruit_due_time : string;
+	capacity : string;
+	status: string;
+}

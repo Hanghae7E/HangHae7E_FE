@@ -3,13 +3,13 @@ import { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { useQuery } from 'react-query';
 import postApi from '../../Api/postApi';
-import useInfiniteScrollQuery from '../../Hooks/useInfiniteScrollQuery';
 import MainBody from './Presentaion/MainBody';
 import MainFooter from './Presentaion/MainFooter';
 import MainHeader from './Presentaion/MainHeader';
 import Portal from '../../Components/Portal';
 import NickNameModal from '../../Components/NicknameModal';
 import userGetUserInfo from '../../Hooks/userGetUserInfo';
+import useMainInfiniteScrollQuery from './hooks/useMainInfiniteScrollQuery';
 
 export default function MainPageContainer() {
   const recommendPosts = useQuery('recommend_post', postApi.getRecommendPosts);
@@ -20,7 +20,7 @@ export default function MainPageContainer() {
     getBoard, getNextPage,
     getBoardIsSuccess, getNextPageIsPossible,
     refetch,
-  } = useInfiniteScrollQuery(searchTag);
+  } = useMainInfiniteScrollQuery(searchTag);
   const [ref, isView] = useInView();
   useEffect(() => {
     if (isView && getNextPageIsPossible) {
@@ -42,7 +42,7 @@ export default function MainPageContainer() {
           />
         </Portal>
       )}
-      <MainHeader userInfo={userInfo?.data?.data} />
+      <MainHeader />
       {
         recommendPosts.isSuccess && getBoardIsSuccess && (
           <div>

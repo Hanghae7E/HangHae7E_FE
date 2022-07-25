@@ -50,6 +50,18 @@ const GlobalIcon = {
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M7 17L17 7M7 7L17 17" stroke="black" />
     </svg>
+  ),
+  Edit: () => (
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M3 17.25V21H6.75L17.81 9.94L14.06 6.19L3 17.25ZM5.92 19H5V18.08L14.06 9.02L14.98 9.94L5.92 19ZM20.71 5.63L18.37 3.29C18.17 3.09 17.92 3 17.66 3C17.4 3 17.15 3.1 16.96 3.29L15.13 5.12L18.88 8.87L20.71 7.04C21.1 6.65 21.1 6.02 20.71 5.63V5.63Z" fill="#323232" />
+    </svg>
+  ),
+  Closed2: () => (
+    <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="22" cy="22" r="22" fill="#EEEEEE" />
+      <path d="M15 15L29.5 29.5" stroke="#323232" strokeWidth="2" />
+      <path d="M29.5 15L15 29.5" stroke="#323232" strokeWidth="2" />
+    </svg>
 
   ),
   Kakao: () => (
