@@ -7,6 +7,7 @@ import Profile from './Profile';
 import Project from './Project';
 import userAPi from '../../../Api/userAPi';
 import GlobalIcon from '../../../Components/GlobalIcon';
+import TextModal from '../../../Components/TextModal';
 
 export default function MyPageBody({ profileData, tagList, currentUser }:
 {
@@ -25,6 +26,8 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
   const [nameMessage, setNameMessage] = useState('');
   const [err, setErr] = useState(false);
   const [updateErrMessage, setUpdateErrMessage] = useState('');
+  const [modalOpen, setModalOpen] = useState<boolean>(true);
+
   const queryClient = useQueryClient();
 
   const UpdateSideProfile = useMutation(
@@ -35,7 +38,6 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
         queryClient.invalidateQueries('get_profile_info');
       },
       onError: () => {
-        // TODO : 에러 모달 보여주기
         setUpdateErrMessage('에러가 발생했습니다.');
       },
     },
@@ -52,7 +54,8 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
         URL.revokeObjectURL(objectURL);
       },
       onError: () => {
-        setUpdateErrMessage('#######프로필 변경 실패########');
+        setModalOpen(true);
+        setUpdateErrMessage('프로필 사진을 다시 변경해 주세요.');
       },
     });
   };
@@ -62,7 +65,8 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
     if (nameModify) {
       UpdateSideProfile.mutate(SideProfile, {
         onError: () => {
-          setUpdateErrMessage('#######프로필 변경 실패########');
+          setModalOpen(true);
+          setUpdateErrMessage('닉네임을 다시 변경해 주세요.');
         },
       });
     }
@@ -85,8 +89,12 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
     setTab(val);
     setNameModify(false);
   };
+
   return (
     <div className="max-w-full mx-auto">
+      { modalOpen && updateErrMessage && (
+        <TextModal messages={['프로필을 변경할 수 없습니다.', updateErrMessage]} modalClose={setModalOpen} />
+      )}
       <div className="myPageBanner  bg-cover bg-center">
         <img className="w-full h-[91px] pc:h-[255px] object-cover" src="/headerimg.svg" alt="backgroundImage" />
       </div>

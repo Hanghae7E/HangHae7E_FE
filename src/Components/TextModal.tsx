@@ -3,12 +3,12 @@ import GlobalIcon from './GlobalIcon';
 type textModalType={
     messages :string[],
     messageCSS?:string,
-    modalOpen: React.Dispatch<React.SetStateAction<boolean>>
+    modalClose: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export default function TextModal(ModalData: textModalType) {
   const {
-    messages, modalOpen, messageCSS,
+    messages, modalClose, messageCSS,
   } = ModalData;
   const defaultModalCSS = 'w-1/2 h-fit pb-20 bg-white  rounded-[16px]';
   const defaultMessageCSS = messageCSS || 'font-pre font-semibold text-[22px] leading-[30px]';
@@ -18,13 +18,13 @@ export default function TextModal(ModalData: textModalType) {
         <button
           type="button"
           className="w-[44px]  h-[44px] float-right mr-3 mt-3"
-          onClick={() => (modalOpen(false))}
+          onClick={() => (modalClose(false))}
         >
           <GlobalIcon.Closed2 />
         </button>
         <div className="modalNav flex justify-around items-center py-10">
 
-          <img src="./logo" className="w-[139px] h-[39px] ml-[56px]" alt="logo" />
+          <img src="./logo.svg" className="w-[139px] h-[39px] ml-[56px]" alt="logo" />
         </div>
         <div className="modalContents flex-col justify-center text-center">
           {messages.map((messge) => (
