@@ -40,7 +40,7 @@ export default function Profile({
   const [w, t] = profileData.available_time ? profileData.available_time.split(',') : ['', ''];
   const [workDay, setWorkDay] = useState<string>(w);
   const [time, setTime] = useState<string>(t);
-  // console.log(workDay === '주 1일');
+  console.log(w === '주 2일');
   const Today = dateFormat(new Date());
   const [start, end] = profileData.available_period ? profileData.available_period.split(',') : [Today, Today];
   const [startDate, setStartDate] = useState<string>(start);
@@ -52,14 +52,15 @@ export default function Profile({
     defaultValues: {
       username,
       email,
+      available_time,
       phone_number,
       startDate,
       endDate,
       workDay,
       time,
+      test: w,
       residence,
       fields,
-      available_time,
       face_to_face,
       career_period,
       portfolio_url,
@@ -70,7 +71,7 @@ export default function Profile({
     shouldUnregister: true,
   });
   const {
-    register, formState: { errors }, reset, handleSubmit,
+    register, formState: { errors }, reset, handleSubmit, setValue,
   } = methods;
 
   useEffect(() => {
@@ -103,6 +104,8 @@ export default function Profile({
   );
 
   const onSubmit = (data: IProfileFormData) => {
+    setWorkDay(data.workDay);
+    setTime(data.time);
     profileRecruit.mutate(data, {
       onSuccess: () => {
         reset();
@@ -310,31 +313,34 @@ export default function Profile({
           <h2 className="min-w-[122px] pr-[20px] font-pre font-bold text-[18px] leading-[40px] align-middle">
             작업 가능 시간
           </h2>
-          {currentUser && modifyState
-            ? (
-              <select
-                className="border-2 mr-[8px] w-[198px] h-[36px] border-[#EEEEEE] rounded-md pl-[10px] font-pre font-normal text-[18px] leading-[21px]"
-                {...register('workDay')}
-              >
-                {workdayOptions.map((item) => (
-                  <option value={item} key={item}>{item}</option>
-                ))}
-              </select>
-            ) : (
-              <p className="font-pre font-normal text-[18px] leading-[40px]">{`${workDay === 'null' ? '' : workDay} , ${time === 'null' ? '' : time}`}</p>
-            )}
-          {currentUser && modifyState && (
           <div>
-            {timeOptions.map((item) => (
-              <label key={item} htmlFor={item} className="mt-[20px] peer border-2 border-[#CCCCC] bg-[#CCCCC] rounded-[24px] text-#6457FA px-[12px] py-[6px] mr-[8px] mb-[8px] font-pre text-[14px] leading-[16.9x]">
-                <input {...register('time')} type="radio" value={item} id={item} className="checked:bg-[#6457FA] peer-checked:bg-#6457fA" />
-                {item}
-              </label>
-            ))}
+            {currentUser && modifyState
+              ? (
+                <select
+                  defaultValue={workDay}
+                  className="border-2 mr-[8px] w-[198px] h-[36px] border-[#EEEEEE] rounded-md pl-[10px] font-pre font-normal text-[18px] leading-[21px]"
+                  {...register('workDay')}
+                >
+                  {workdayOptions.map((item) => (
+                    <option value={item} key={item}>{item}</option>
+                  ))}
+                </select>
+              ) : (
+                <p className="font-pre font-normal text-[18px] leading-[40px]">{`${workDay === 'null' ? '' : workDay} , ${time === 'null' ? '' : time}`}</p>
+              )}
           </div>
-
-          ) }
-
+          <div>
+            {currentUser && modifyState && (
+              <div>
+                {timeOptions.map((item) => (
+                  <label key={item} htmlFor={item} className="mt-[20px] peer border-2 border-[#CCCCC] bg-[#CCCCC] rounded-[24px] text-#6457FA px-[12px] py-[6px] mr-[8px] mb-[8px] font-pre text-[14px] leading-[16.9x]">
+                    <input {...register('time')} type="radio" onChange={() => setTime(item)} checked={item === time} value={item} id={time} className="checked:bg-[#6457FA] peer-checked:bg-#6457fA" />
+                    {item}
+                  </label>
+                ))}
+              </div>
+            ) }
+          </div>
         </div>
       </div>
       {currentUser && modifyState && (
