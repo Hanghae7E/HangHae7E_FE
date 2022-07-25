@@ -139,7 +139,7 @@ export default function Header({ userInfo }:{ userInfo: Iuser }) {
           </div>
         )}
       </Disclosure>
-      {modalOpen && <Login closeModal={modalClose} />}
+      {modalOpen && <Login closeModal={modalClose} titles={['사이드 프로젝트 할 사람', '여기 모여라!']} />}
     </>
   );
 }

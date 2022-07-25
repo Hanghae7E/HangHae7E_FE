@@ -85,7 +85,7 @@ export default function NickNameModal({
             type="button"
             value="nickBtn"
             onClick={savebtn}
-            className="w-[300px] h-[60px] rounded-[15px] mt-[60px] font-pre font-bold text-[20px] leading-[24px] bg-[#6457FA] text-white hover:bg-white hover:text-[#6457FA]  hover:border-2 hover:border-[#6457FA]"
+            className="w-[300px] h-[60px] rounded-[15px] pc:mt-[60px] mt-[28px] font-pre font-bold text-[20px] leading-[24px] bg-[#6457FA] text-white hover:bg-white hover:text-[#6457FA]  hover:border-2 hover:border-[#6457FA]"
           >
             이걸로 할께요!
           </button>
