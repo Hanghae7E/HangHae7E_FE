@@ -6,6 +6,7 @@ type textModalType={
   closeModal: () => void
 }
 export default function Login(data:textModalType) {
+  localStorage.setItem('token', '');
   const { titles, messages, closeModal } = data;
   const kakaoClick = () => {
     const KAKAO_AUTH_URL = 'http://huddledown.link/oauth2/authorization/kakao';
