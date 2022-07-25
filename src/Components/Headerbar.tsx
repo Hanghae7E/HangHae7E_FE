@@ -26,11 +26,15 @@ export default function Header({ userInfo }:{ userInfo: Iuser }) {
   const modalClose = () => {
     setModalOpen(!modalOpen);
   };
+  const logoClick = () => {
+    nav('/', { replace: true });
+  };
   useEffect(() => {
     if (token) {
       setIsLogin(jwtUtils.isAuth(token));
     }
   }, []);
+
   return (
     <>
       <Disclosure as="nav" className="bg-white">
@@ -38,8 +42,8 @@ export default function Header({ userInfo }:{ userInfo: Iuser }) {
           <div className="mx-auto w-full px-[2px] sm:px-6">
             <div className="relative flex items-center h-[44px] sm:h-16">
               <div className="flex flex-1 items-center">
-                <div className="flex items-center flex-1">
-                  <img className="h-[19px] sm:h-[29px] px-[10px] sm:px-0 " src="/logo.svg" alt="로고" />
+                <div className="flex items-center flex-1" onClick={logoClick}>
+                  <img className="h-[19px] sm:h-[29px] px-[10px] sm:px-0 cursor-pointer" src="/logo.svg" alt="로고" />
                 </div>
                 <div className="text-[14px] sm:text-[18px] px-5 py-2">
                   <div className="flex justify-center items-center">

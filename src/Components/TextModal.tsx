@@ -1,5 +1,4 @@
-import logo from '../img/logo.png';
-import close from '../img/close.png';
+import GlobalIcon from './GlobalIcon';
 
 type textModalType={
     messages :string[],
@@ -21,10 +20,11 @@ export default function TextModal(ModalData: textModalType) {
           className="w-[44px]  h-[44px] float-right mr-3 mt-3"
           onClick={() => (modalOpen(false))}
         >
-          <img src={close} className="rounded-full" alt="close" />
+          <GlobalIcon.Closed2 />
         </button>
         <div className="modalNav flex justify-around items-center py-10">
-          <img src={logo} className="w-[139px] h-[39px] ml-[56px]" alt="logo" />
+
+          <img src="./logo" className="w-[139px] h-[39px] ml-[56px]" alt="logo" />
         </div>
         <div className="modalContents flex-col justify-center text-center">
           {messages.map((messge) => (

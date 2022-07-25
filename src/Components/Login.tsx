@@ -29,16 +29,16 @@ export default function Login(data:textModalType) {
           <img src="/logo.svg" className="w-[86px] h-[19px] ml-[52px] sm:w-[139px] sm:h-[39px] sm:ml-[68px]" alt="logo" />
         </div>
         <div className="title-area flex flex-col items-center text-center pt-[9px]">
-          {titles && titles.length > 1 && (
+          {titles && titles.length >= 1 && (
             titles.map((title) => (
               <p key={title} className="font-pre font-bold text-[20px] leading-[30px] ">{title}</p>
             ))
           )}
-          {messages && messages.length > 1 && (
+          {messages && messages.length >= 1 && (
             messages.map((message) => (
               <p
                 key={message}
-                className="font-pre font-bold text-[20px]
+                className="font-pre font-normal text-[20px]
               leading-[30px] "
               >
                 {message}
@@ -59,7 +59,7 @@ export default function Login(data:textModalType) {
             type="button"
             name="KAKAO"
             onClick={kakaoClick}
-            className="flex sm:mt-[18px] mt-5  px-4 items-center w-80 sm:w-[300px] h-[45px] rounded-[4px]  ring-1 ring-yellow-500 bg-yellow-500 drop-shadow-xl"
+            className="flex sm:mt-[18px] mt-5  px-4 items-center w-80 sm:w-[300px] h-[45px] rounded-[4px]  ring-1 ring-[#f9e000] bg-[#f9e000] drop-shadow-xl"
           >
             <GlobalIcon.Kakao />
             <p className="w-full pr-[24px] font-pre font-normal text-[18px]">
