@@ -2,7 +2,7 @@
 /* eslint-disable camelcase */
 /* eslint-disable react/jsx-props-no-spreading */
 import { useForm, FormProvider, SubmitHandler } from 'react-hook-form';
-import { useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import React, { SetStateAction, useState } from 'react';
 import { IProfileFormData } from '../../../TypeInterface/userType';
 import TagInput from '../../../Components/TagInput';
@@ -78,7 +78,7 @@ export default function Profile({
     shouldUnregister: true,
   });
   const { register, formState: { errors } } = methods;
-
+  const query = useQueryClient();
   const profileRecruit = useMutation(
     (data: IProfileFormData) => userAPi.putUserProfile(
       data,
@@ -90,6 +90,7 @@ export default function Profile({
     ),
     {
       onSuccess: (res) => {
+        query.invalidateQueries(['get_userInfo']);
         setModify(!modify);
         console.log('응답 :', res);
       },
