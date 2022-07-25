@@ -33,6 +33,12 @@ function App() {
         <Route path="/" element={<MainPage />} />
         <Route element={<ProtectedRoute redirectPath="/" />}>
           <Route
+            path="/mypage/:id"
+            element={(
+              <MyPage />
+              )}
+          />
+          <Route
             path="/mypage"
             element={(
               <MyPage />
