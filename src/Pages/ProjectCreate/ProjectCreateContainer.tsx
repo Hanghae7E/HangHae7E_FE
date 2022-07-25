@@ -20,7 +20,6 @@ export default function ProjectCreateContainer() {
   const [startDate, setStartDate] = useState<string>(dateFormat(Today));
   const [endDate, setEndDate] = useState<string>(dateFormat(Today));
   const [dueDate, setDueDate] = useState<string>(dateFormat(Today));
-
   const {
     register,
     handleSubmit,
@@ -84,11 +83,9 @@ export default function ProjectCreateContainer() {
                 setEnd={setEndDate}
                 isRange
               />
-
             </div>
             <div className="flex min-w-min sm:w-3/4">
               <p className=" font-extrabold text-xs sm:text-lg py-3 w-32 sm:w-56 self-center">모집 마감일</p>
-
               <CustomCalinder
                 start={dueDate}
                 setStart={setDueDate}
@@ -123,7 +120,6 @@ export default function ProjectCreateContainer() {
                           )}
                         />
                         <span className="text-xs ml-1 sm:text-[18px] font-normal">명</span>
-
                       </div>
                     </div>
                     {errors.developer && <span className="text-[#ff0000] pl-24">필수 입력 값 입니다.</span>}
@@ -193,7 +189,6 @@ export default function ProjectCreateContainer() {
                 <label className="sm:whitespace-nowrap flex items-center cursor-pointer" htmlFor="imageFile">
                   <GlobalIcon.FileIcon />
                   <span className="flex font-inter text-[#6457FA] text-[18px] ml-[8.5px] ">
-
                     {imgName ? '파일변경(최대 2MB)' : '파일첨부(최대 2MB)'}
                   </span>
                 </label>
@@ -210,7 +205,6 @@ export default function ProjectCreateContainer() {
             </div>
           </div>
           <div className="mx-auto w-1/2  overflow-hidden pb-5 sm:pb-20" />
-
           {/* 프로젝트 상세내용 */}
           <div>
             <p className="font-bold text-sm sm:text-[20px] ml-16">프로젝트 상세내용</p>
@@ -225,15 +219,11 @@ export default function ProjectCreateContainer() {
                   <textarea {...field} className="w-full h-52 text-[18px] sm:h-96 p-4 border-[2px] bg-white border-[#DFE1E5]  resize-none rounded-lg" />
                 )}
               />
-
             </div>
             {errors.body && <span className="text-[#ff0000] pl-16 pt-5">상세내용을 입력 해 주세요.</span>}
             <div className="pl-16 pt-[8px]">
-
               {isSuccess && <TagSearch tagData={data.data} selected={hashTag} setHashTag={setHashTag} placeholder="해시태그를 입력해 주세요" />}
-
             </div>
-
           </div>
           <div className="m-auto max-w-2xl pl-16 pt-5 flex justify-center mt-32  mb-10">
             <button type="button" onClick={hadleCancle} className="flex w-60 border-[2px] text-[#6457FA] border-[#6457FA] py-3 rounded-xl justify-center bg-white font-semibold cursor-pointer  mr-2">취소하기</button>

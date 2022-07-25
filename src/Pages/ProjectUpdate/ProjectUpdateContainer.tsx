@@ -240,7 +240,6 @@ export default function ProjectUpdateContainer() {
                   <textarea {...field} className="w-full h-52 text-[18px] sm:h-96 p-4 border-[2px] bg-white border-[#DFE1E5]  resize-none rounded-lg" />
                 )}
               />
-
             </div>
             <div className="pl-16 pt-[8px]">
               {isSuccess && <TagSearch tagData={data.data} selected={updateData.tags} setHashTag={setHashTag} placeholder="해시태그를 입력해 주세요" />}
