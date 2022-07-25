@@ -96,7 +96,7 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
               <label className="cursor-pointer" htmlFor="file">
                 <img
                   className="w-[80px]  h-[80px] mx-auto rounded-full"
-                  src={profileData.profile_image_url || objectURL || '/profiledefault.svg'}
+                  src={objectURL || '/profiledefault.svg'}
                   alt="userImage"
                 />
                 <input className="hidden" type="file" id="file" accept="image/jpg, image/jpeg, image/png" onChange={onChangeFile} />

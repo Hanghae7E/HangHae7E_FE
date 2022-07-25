@@ -49,7 +49,7 @@ export default function ProjectCreateContainer() {
   };
 
   const onSubmit = (datas: FieldValues) => {
-    postRecruitMustation.mutate(datas);
+    if (hashTag.length > 0) { postRecruitMustation.mutate(datas); }
   };
   return (
     <>
@@ -233,6 +233,8 @@ export default function ProjectCreateContainer() {
               {isSuccess && <TagSearch tagData={data.data} selected={hashTag} setHashTag={setHashTag} placeholder="해시태그를 입력해 주세요" />}
 
             </div>
+
+            {hashTag.length < 1 && <div className="h-10 pt-5"><span className="text-[#ff0000] pl-24">태그를 추가해 주세요.</span></div>}
 
           </div>
           <div className="m-auto max-w-2xl pl-16 pt-5 flex justify-center mt-32  mb-10">

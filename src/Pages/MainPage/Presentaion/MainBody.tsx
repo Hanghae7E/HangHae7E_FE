@@ -37,6 +37,7 @@ export default function MainBody(
     const tags = tag.map((v) => v.tagId).join();
     setSearchTag(Number(tags));
   };
+
   return (
     <div className="w-full lg:w-[1280px] mx-auto mt-[40px] lg:mt-[126px] overflow-hidden">
       <div className="pt-1 pb-5 bg-white">
@@ -108,7 +109,7 @@ export default function MainBody(
         </div> */}
 
       </div>
-      <div className="pl-[5px] md:pl-[20px] lg:px-0 mx-auto w-full items-center overflow-hidden flex flex-wrap mb-5 mt-[40px] gap-[16px] md:gap-[25px] bg-white">
+      <div className="pl-[5px] md:pl-[20px] min-h-[300px] lg:px-0 mx-auto w-full items-center overflow-hidden flex flex-wrap mb-5 mt-[40px] gap-[16px] md:gap-[25px] bg-white">
         {recruitPost && recruitPost.map((pages) => pages.postPage.map((data) => (
           <PostCard
             key={data.postId}

@@ -19,17 +19,17 @@ export default function NickNameModal({
   const [Input, setInput] = useState('');
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInput(e.target.value);
     if (e.target.value.length < 2 || e.target.value.length > 5) {
       setNicknameMessage('2글자 이상 5글자 미만으로 입력해주세요.');
       setNicknameCheck(false);
     }
     if (e.target.value.length === 0) {
-      setNicknameMessage(`입력하지 않으면 ${userInfo.username}이 닉네임으로 사용됩니다.`);
+      setNicknameMessage(`입력하지 않으면 ${userInfo.username}이(가) 닉네임으로 사용됩니다.`);
       setNicknameCheck(false);
     } else {
       setNicknameMessage('환영합니다 :)');
       setNicknameCheck(true);
-      setInput(e.target.value);
     }
   };
   const query = useQueryClient();
@@ -47,7 +47,9 @@ export default function NickNameModal({
     <div className="flex w-full h-full fixed items-center justify-center bg-black/30 z-10">
       <div className="modal-contents max-w-[410px] max-h-[494px]  px-[24px] py-[26px] bg-white  rounded-[16px]">
         <div className="modal-nav-area flex justify-end">
-          <img src="/logo.svg" className="w-[139px] h-[39px] mr-[61px]" alt="logo" />
+          <div className="w-[139px] h-[39px] mr-[61px] object-fill">
+            <img src="logo.svg" alt="logo" />
+          </div>
           <button
             type="button"
             className="w-[44px] h-[44px] m-0 p-0"
@@ -56,7 +58,7 @@ export default function NickNameModal({
             <GlobalIcon.Closed2 />
           </button>
         </div>
-        <div className="modal-inner flex-col justify-center text-center">
+        <div className="modal-inner flex-col justify-center text-center items-center">
           <img
             className="w-[80px] h-[80px] mx-auto rounded-full"
             src="/profiledefault.svg"
@@ -75,7 +77,9 @@ export default function NickNameModal({
             value={Input}
             onChange={handleInput}
           />
-          {nicknameCheck === false && (<span>{nicknameMessage}</span>)}
+          <div className="text-red-400">
+            {nicknameCheck === false && (<span>{nicknameMessage}</span>)}
+          </div>
 
           <button
             type="button"
