@@ -32,11 +32,15 @@ export default function Profile({
   const fieldsOptions = ['프론트엔드', '백엔드', '모바일개발', '웹개발', '데스크탑개발'];
   const {
     username, email, phone_number, position, residence,
+    available_time,
     career_period, portfolio_url, face_to_face, fields,
   } = profileData;
   const queryClient = useQueryClient();
-  const [workDay, time] = profileData.available_time ? profileData.available_time.split(',') : ['', ''];
 
+  const [w, t] = profileData.available_time ? profileData.available_time.split(',') : ['', ''];
+  const [workDay, setWorkDay] = useState<string>(w);
+  const [time, setTime] = useState<string>(t);
+  // console.log(workDay === '주 1일');
   const Today = dateFormat(new Date());
   const [start, end] = profileData.available_period ? profileData.available_period.split(',') : [Today, Today];
   const [startDate, setStartDate] = useState<string>(start);
@@ -52,9 +56,10 @@ export default function Profile({
       startDate,
       endDate,
       workDay,
+      time,
       residence,
       fields,
-      time,
+      available_time,
       face_to_face,
       career_period,
       portfolio_url,
@@ -89,6 +94,8 @@ export default function Profile({
         setModifyState(!modifyState);
       },
       onError: (res) => {
+        queryClient.invalidateQueries('get_userInfo');
+        queryClient.invalidateQueries('get_profile_info');
         // TODO: 에러일 경우 에러 모달 추가
         console.log('putUser에러 콘솔:', res);
       },
@@ -102,7 +109,7 @@ export default function Profile({
       },
     });
   };
-  const fixInputCSS = 'font-pre font-normal text-[18px] leading-[21px]';
+  // const fixInputCSS = 'font-pre font-normal text-[18px] leading-[21px]';
   const titleCSS = 'min-w-fit pr-[22px] font-pre font-bold text-[18px] leading-[40px] align-middle ';
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -175,11 +182,7 @@ export default function Profile({
                 ))}
               </select>
             ) : (
-              <input
-                className={fixInputCSS}
-                defaultValue={profileData.career_period}
-                readOnly
-              />
+              <p className="font-pre font-normal text-[18px] leading-[40px]">{profileData.career_period}</p>
             )}
 
         </div>
@@ -260,7 +263,8 @@ export default function Profile({
                 ))}
               </select>
             ) : (
-              <input className={fixInputCSS} defaultValue={profileData.residence} readOnly />)}
+              <p className="font-pre font-normal text-[18px] leading-[40px]">{profileData.residence}</p>
+            )}
 
         </div>
         <div className="flex pt-[28px]">
@@ -280,7 +284,9 @@ export default function Profile({
                 ))}
               </select>
 
-            ) : (<input className={fixInputCSS} defaultValue={profileData.face_to_face ? '대면' : '비대면'} readOnly />)}
+            ) : (
+              <p className="font-pre font-normal text-[18px] leading-[40px]">{profileData.face_to_face ? '대면' : '비대면'}</p>
+            )}
 
         </div>
         <div className="flex pt-[28px]">
@@ -297,7 +303,7 @@ export default function Profile({
             />
           )
             : (
-              <input className={fixInputCSS} defaultValue={`${startDate} ~ ${endDate}`} readOnly />
+              <p className="font-pre font-normal text-[18px] leading-[75px]">{`${startDate} ~ ${endDate}`}</p>
             )}
         </div>
         <div className="flex pt-[28px]">
@@ -307,33 +313,16 @@ export default function Profile({
           {currentUser && modifyState
             ? (
               <select
-                className="border-2 mr-[8px] border-[#EEEEEE] rounded-md "
+                className="border-2 mr-[8px] w-[198px] h-[36px] border-[#EEEEEE] rounded-md pl-[10px] font-pre font-normal text-[18px] leading-[21px]"
                 {...register('workDay')}
               >
                 {workdayOptions.map((item) => (
-                  <option value={item} key={item}>
-                    {item}
-                  </option>
+                  <option value={item} key={item}>{item}</option>
                 ))}
               </select>
             ) : (
-              <input
-                className={fixInputCSS}
-                defaultValue={profileData.available_time}
-                readOnly
-              />
+              <p className="font-pre font-normal text-[18px] leading-[40px]">{`${workDay === 'null' ? '' : workDay} , ${time === 'null' ? '' : time}`}</p>
             )}
-
-          {/* <select
-                className="border-2 mr-[8px] border-[#EEEEEE] rounded-md "
-                {...register('time')}
-              >
-                {timeOptions.map((item) => (
-                  <option value={item} key={item}>
-                    {item}
-                  </option>
-                ))}
-              </select> */}
           {currentUser && modifyState && (
           <div>
             {timeOptions.map((item) => (

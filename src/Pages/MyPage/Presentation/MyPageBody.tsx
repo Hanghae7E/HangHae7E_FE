@@ -23,7 +23,7 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
   const [newName, setNewName] = useState(profileData.username);
   const [nameMessage, setNameMessage] = useState('');
   const [err, setErr] = useState(false);
-  const [updateErr, setUpdateErr] = useState(false);
+  const [updateErrMessage, setUpdateErrMessage] = useState('');
   const queryClient = useQueryClient();
 
   const UpdateSideProfile = useMutation(
@@ -35,7 +35,7 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
       },
       onError: () => {
         // TODO : 에러 모달 보여주기
-        setUpdateErr(true);
+        setUpdateErrMessage('에러가 발생했습니다.');
       },
     },
   );
@@ -48,12 +48,10 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
     setObjectURL(URL.createObjectURL(files));
     UpdateSideProfile.mutate(SideProfile, {
       onSuccess: () => {
-        console.log('#######프로필 변경 성공########');
         URL.revokeObjectURL(objectURL);
       },
       onError: () => {
-        console.log('#######프로필 변경 실패########');
-        setUpdateErr(true);
+        setUpdateErrMessage('#######프로필 변경 실패########');
       },
     });
   };
@@ -63,7 +61,7 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
     if (nameModify) {
       UpdateSideProfile.mutate(SideProfile, {
         onError: () => {
-          setUpdateErr(true);
+          setUpdateErrMessage('#######프로필 변경 실패########');
         },
       });
     }
@@ -89,10 +87,10 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
   return (
     <div className="max-w-full mx-auto">
       <div className="myPageBanner  bg-cover bg-center">
-        <img className="w-full h-[255px] object-cover" src="/headerimg.svg" alt="backgroundImage" />
+        <img className="w-full h-[91px] pc:h-[255px] object-cover" src="/headerimg.svg" alt="backgroundImage" />
       </div>
-      <div className="myPageContents flex max-w-[1062px] mx-auto ">
-        <div className="side relative flex-none -top-[88px] w-[300px] h-[332px] px-[20px] pb-20px max-w-[300px] bg-white border-2 border-[#EEEEEE]  rounded-2xl ">
+      <div className="myPageContents flex w-full pc:max-w-[1062px] mx-auto ">
+        <div className="side_pc  hidden  pc:block pc:relative flex-none  pc:-top-[88px]  pc:w-[300px]  pc:h-[332px]  pc:px-[20px]  pc:pb-20px  pc:max-w-[300px] bg-white border-2 border-[#EEEEEE]  rounded-2xl ">
           <div className="sideInner text-center mb-[20px]">
             <div className="userImg pt-[40px] pb-[18px]">
               <label className="cursor-pointer" htmlFor="file">
@@ -135,7 +133,7 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
             <div className="userEmail font-pre font-normal  text-[16px] leading-[19px] pb-[18px]  ">
               {profileData.email}
             </div>
-            {currentUser
+            {currentUser && Tab === 'profile'
             && (
             <button
               type="button"
@@ -145,10 +143,70 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
             >
               내 정보 수정하기
             </button>
+
             )}
+            {currentUser && Tab !== 'profile'
+            && (
+            <button
+              type="button"
+              value="profile"
+              onClick={tabClick}
+              className="w-full h-[67px] rounded-[15px] font-pre font-normal text-[16px] leading-[19px] bg-[#cccccc] text-white hover:bg-white hover:text-[#6457FA]  hover:border-2 hover:border-[#6457FA]"
+            >
+              프로필로 이동
+            </button>
+
+            )}
+
           </div>
         </div>
-        <div className="contentsArea max-w-[736px] basis-full  pl-[32px] ">
+        <div className="flex flex-col" />
+        <div className="contentsArea max-w-full pc:max-w-[736px] basis-full  pl-[32px] ">
+          <div>
+            <div className="profile_mobile pc:hidden max-w-full relative flex-none -top-[65px] ">
+              <label className="cursor-pointer" htmlFor="file">
+                <img
+                  className="w-[110px]  h-[110px] mx-auto rounded-full"
+                  src={profileData.profile_image_url || objectURL || '/profiledefault.svg'}
+                  alt="userImage"
+                />
+                <input
+                  className="hidden"
+                  type="file"
+                  id="file"
+                  accept="image/jpg, image/jpeg, image/png"
+                  onChange={onChangeFile}
+                />
+              </label>
+              <div className="flex justify-center userName font-pre font-semibold text-[22px] leading-[25px] pb-[18px]">
+                {currentUser && nameModify ? (
+                  <div className=" ">
+                    {err === true && (<span className="font-pre font-normal text-[12px] leading-[13.32px]">{nameMessage}</span>)}
+                    <input className="w-[100px] pl-[10px] shadow-lg " type="text" onChange={handleInput} />
+                    <button
+                      type="button"
+                      onClick={onChangeName}
+                      value="editName"
+                    >
+                      <GlobalIcon.Edit />
+                    </button>
+                  </div>
+                )
+                  : (
+                    <div>
+                      {profileData.username}
+                      <button
+                        type="button"
+                        onClick={() => { setNameModify(!nameModify); }}
+                        value="editName"
+                      >
+                        {currentUser && <GlobalIcon.Edit />}
+                      </button>
+                    </div>
+                  )}
+              </div>
+            </div>
+          </div>
           {currentUser && (
           <div className="tab w-full flex-none pt-[87px] pb-8 font-pre font-bold text-[28px] leading-[33px]">
             <button
