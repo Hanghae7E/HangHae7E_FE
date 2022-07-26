@@ -9,12 +9,18 @@ export default function ApplyProject({ projects }:Props) {
   const statusCheck = (status:string) => {
     let change = '';
     if (status === '대기중')change = '지원완료';
-    else if (status === '수락')change = '진행중';
-    else change = '모집중 ';
+    else if (status === '수락')change = '합격';
+    else change = '불합격 ';
     return change;
   };
+
   return (
     <div className="projectComponent flex flex-col  bg-white px-8  border-2 border-[#EEEEEE] rounded-2xl">
+      <div className="flex">
+        <div className="flex-col"><span className="">{}</span></div>
+        <div className="flex-col"><span className="">{}</span></div>
+        <div className="flex-col"><span className="">{}</span></div>
+      </div>
       {(projects.length > 0 && projects.map((prj:IapplyPosts, idx) => (
         <div key={prj.id} className="mt-10 ">
           <div className="flex-row items-start">

@@ -52,7 +52,9 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
   const onChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files === null) return;
     const files = e.target.files[0];
-    const SideProfile:IsideProfile = { file: files, username: newName };
+    const SideProfile:IsideProfile = {
+      file: files, username: newName, skills: profileData.skills, fields: profileData.fields,
+    };
 
     setObjectURL(URL.createObjectURL(files));
     UpdateSideProfile.mutate(SideProfile, {
@@ -67,7 +69,11 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
   };
 
   const onChangeName = () => {
-    const SideProfile:IsideProfile = { username: newName };
+    const SideProfile:IsideProfile = {
+      username: newName,
+      skills: profileData.skills,
+      fields: profileData.fields,
+    };
     if (nameModify) {
       UpdateSideProfile.mutate(SideProfile, {
         onError: () => {

@@ -56,7 +56,8 @@ export const setSideProfile = async (userInfo: IsideProfile) => {
   const userId = jwtUtils.getId(token || '');
   if (userInfo.username) form.append('username', userInfo.username);
   if (userInfo.file) form.append('files', userInfo.file);
-
+  if (userInfo.skills) form.append('skills', userInfo.skills.toString());
+  if (userInfo.fields) form.append('fields', userInfo.fields.toString());
   const res = await baseUrl.put(`/user/${userId}`, form, {
     headers: {
       'Content-Type': 'multipart/form-data',
