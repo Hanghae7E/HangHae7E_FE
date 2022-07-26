@@ -3,12 +3,12 @@ import React from 'react';
 import DetailIcon from './DetailIcon';
 
 interface Props {
-    isOpen: boolean
-  text?: string
-  userId:number
-    close: () => void;
-    onClickAccept: (userId?:number) => void
-  onClickReject: (userId?:number) => void
+  isOpen: boolean;
+  text?: string;
+  userId: number;
+  close: () => void;
+  onClickAccept: (userId?: number) => void;
+  onClickReject: (userId?: number) => void;
 }
 
 function ConfirmApplyModal({

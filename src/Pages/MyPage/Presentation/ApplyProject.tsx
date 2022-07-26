@@ -9,7 +9,7 @@ export default function ApplyProject({ projects }:Props) {
   const statusCheck = (status:string) => {
     let change = '';
     if (status === '대기중')change = '지원완료';
-    else if (status === '수락')change = '합격';
+    else if (status === '합격')change = '합격';
     else change = '불합격 ';
     return change;
   };
