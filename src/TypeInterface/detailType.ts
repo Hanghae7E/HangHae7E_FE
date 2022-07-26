@@ -4,7 +4,7 @@ export type Applicant = {
     username: string
     position: string
     profile_image_url: string
-    status: number
+    status: string
   }
 export interface DetailProjectData {
     userId: number, //
