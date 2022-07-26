@@ -52,12 +52,14 @@ export default function CustomCalinder({
     <div
       className={
         `flex 
-        flex-1 max-w-[282px]
-        w-[282px] h-[60px]
+        flex-1 
+        w-full h-[45px]
+        sm:w-[282px] sm:h-[60px]
         min-w-max
         my-2 
         border-[2px]
-        rounded-lg
+        rounded-[8px]
+        sm:rounded-lg
         border-[#DFE1E5]
         items-center
         ${isOpen && 'border-[#6457FA]'}
@@ -65,10 +67,24 @@ export default function CustomCalinder({
 
       }
     >
-      {isOpen ? <GlobalIcon.ActCalendar /> : <GlobalIcon.Calendar />}
+      {isOpen ? (
+        <GlobalIcon.ActCalendar
+          size={
+        window.innerWidth > 768
+          ? 24 : 16
+}
+        />
+      ) : (
+        <GlobalIcon.Calendar
+          size={
+          window.innerWidth > 768
+            ? 24 : 16
+}
+        />
+      )}
       <input
         type="button"
-        className={`ml-[8px] text-[18px] text-black ${isOpen && 'text-[#6457FA]'}  cursor-pointer`}
+        className={`ml-[8px] text-[14px] sm:text-[18px] text-black ${isOpen && 'text-[#6457FA]'}  cursor-pointer`}
         onClick={props.onClick}
         value={props.value}
         ref={ref}
@@ -85,9 +101,21 @@ export default function CustomCalinder({
         <DatePicker
           id="calendar"
           className="bg-white"
-          withPortal
-          onCalendarClose={() => setIsOpen(false)}
-          onCalendarOpen={() => setIsOpen(true)}
+          withPortal={window.innerWidth < 1280}
+          onCalendarClose={() => {
+            const scrollY = document.body.style.top;
+            document.body.style.cssText = '';
+            window.scrollTo(0, parseInt(scrollY || '0', 10) * -1);
+            setIsOpen(false);
+          }}
+          onCalendarOpen={() => {
+            document.body.style.cssText = `
+              position: fixed; 
+              top: -${window.scrollY}px;
+              overflow-y: scroll;
+              width: 100%;`;
+            setIsOpen(true);
+          }}
           renderCustomHeader={({
             monthDate, customHeaderCount, decreaseMonth, increaseMonth,
           }) => (
@@ -127,8 +155,21 @@ export default function CustomCalinder({
         />
       ) : (
         <DatePicker
-          onCalendarClose={() => setIsOpen(false)}
-          onCalendarOpen={() => setIsOpen(true)}
+          onCalendarClose={() => {
+            const scrollY = document.body.style.top;
+            document.body.style.cssText = '';
+            window.scrollTo(0, parseInt(scrollY || '0', 10) * -1);
+            setIsOpen(false);
+          }}
+          onCalendarOpen={() => {
+            document.body.style.cssText = `
+              position: fixed; 
+              top: -${window.scrollY}px;
+              overflow-y: scroll;
+              width: 100%;`;
+            setIsOpen(true);
+          }}
+          withPortal={window.innerWidth < 1280}
           renderCustomHeader={({
             monthDate, decreaseMonth, increaseMonth,
           }) => (

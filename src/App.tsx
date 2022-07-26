@@ -31,6 +31,12 @@ function App() {
       <Headerbar userInfo={userInfo?.data?.data} />
       <Routes>
         <Route path="/" element={<MainPage />} />
+        <Route
+          path="/projectcreate"
+          element={(
+            <ProjectCreate />
+            )}
+        />
         <Route element={<ProtectedRoute redirectPath="/" />}>
           <Route
             path="/mypage"
@@ -45,12 +51,7 @@ function App() {
               )}
             />
           </Route>
-          <Route
-            path="/projectcreate"
-            element={(
-              <ProjectCreate />
-            )}
-          />
+
           <Route
             path="/projectupdate"
             element={(
