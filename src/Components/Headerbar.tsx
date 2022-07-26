@@ -1,9 +1,7 @@
-/* eslint-disable no-console */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import {
-  Fragment, useContext, useEffect, useState,
+  Fragment, useEffect, useState,
 } from 'react';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { Link, useNavigate } from 'react-router-dom';
@@ -39,7 +37,7 @@ export default function Header({ userInfo }:{ userInfo: Iuser }) {
     <>
       <Disclosure as="nav" className="bg-white">
         {() => (
-          <div className="mx-auto w-full px-[2px] sm:px-6">
+          <div className="mx-auto max-w-[1280px] w-full px-[2px] sm:px-6">
             <div className="relative flex items-center h-[44px] sm:h-16">
               <div className="flex flex-1 items-center">
                 <div className="flex items-center flex-1" onClick={logoClick}>
@@ -47,14 +45,12 @@ export default function Header({ userInfo }:{ userInfo: Iuser }) {
                 </div>
                 <div className="text-[14px] sm:text-[18px] px-5 py-2">
                   <div className="flex justify-center items-center">
-
                     <div
                       onClick={goCreateProject}
                       className="no-underline font-bold cursor-pointer"
                     >
                       프로젝트 생성
                     </div>
-
                   </div>
                 </div>
               </div>
@@ -87,15 +83,15 @@ export default function Header({ userInfo }:{ userInfo: Iuser }) {
                     </div>
                   )
                   : (
-                    <Menu as="div" className="ml-3 relative">
+                    <Menu as="div" className="sm:ml-3 relative">
                       <div>
                         <Menu.Button className="flex items-center text-sm rounded-full focus:outline-none ">
                           <img
-                            className="h-8 w-8 rounded-full"
+                            className="h-[24px] w-[24px] sm:h-8 sm:w-8 rounded-full"
                             src={userInfo && userInfo.profile_image_url ? `${userInfo.profile_image_url}?${Math.random()}` : '/profiledefault.svg'}
                             alt=""
                           />
-                          <div className="text-[16px] ml-[8px]">{userInfo && userInfo.username}</div>
+                          <div className="hidden sm:block text-[16px] ml-[8px]">{userInfo && userInfo.username}</div>
                         </Menu.Button>
                       </div>
 

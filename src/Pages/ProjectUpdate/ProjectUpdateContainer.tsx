@@ -210,7 +210,16 @@ export default function ProjectUpdateContainer() {
                 )}
               <div className="flex pl-[21.5px] pr-[20px] flex-1 w-full items-center max-w-[235px] min-w-max text-xs sm:text-base py-[13px] my-2  border-[2px] rounded-2xl border-[#6457FA]">
                 <label className="sm:whitespace-nowrap flex items-center cursor-pointer" htmlFor="imageFile">
-                  <GlobalIcon.FileIcon />
+                  <GlobalIcon.FileIcon
+                    width={
+                    window.innerWidth > 768
+                      ? 23 : 18
+                    }
+                    height={
+                      window.innerWidth > 768
+                        ? 12 : 9
+                    }
+                  />
                   <span className="flex font-inter text-[#6457FA] text-[18px] ml-[8.5px] ">
                     {imgName ? '파일변경(최대 2MB)' : '파일첨부(최대 2MB)'}
                   </span>

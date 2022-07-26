@@ -55,10 +55,24 @@ my-2  border-[2px] rounded-lg border-[#DFE1E5] items-center pl-[16px] `;
     <div
       className={`${css} ${isOpen && 'border-[#6457FA]'}`}
     >
-      {isOpen ? <GlobalIcon.ActCalendar /> : <GlobalIcon.Calendar />}
+      {isOpen ? (
+        <GlobalIcon.ActCalendar
+          size={
+        window.innerWidth > 768
+          ? 24 : 16
+}
+        />
+      ) : (
+        <GlobalIcon.Calendar
+          size={
+          window.innerWidth > 768
+            ? 24 : 16
+}
+        />
+      )}
       <input
         type="button"
-        className={`ml-[8px] text-[18px] text-black ${isOpen && 'text-[#6457FA]'}  cursor-pointer`}
+        className={`ml-[8px] text-[14px] sm:text-[18px] text-black ${isOpen && 'text-[#6457FA]'}  cursor-pointer`}
         onClick={props.onClick}
         value={props.value}
         ref={ref}
@@ -75,8 +89,21 @@ my-2  border-[2px] rounded-lg border-[#DFE1E5] items-center pl-[16px] `;
         <DatePicker
           id="calendar"
           className="bg-white"
-          onCalendarClose={() => setIsOpen(false)}
-          onCalendarOpen={() => setIsOpen(true)}
+          withPortal={window.innerWidth < 1280}
+          onCalendarClose={() => {
+            const scrollY = document.body.style.top;
+            document.body.style.cssText = '';
+            window.scrollTo(0, parseInt(scrollY || '0', 10) * -1);
+            setIsOpen(false);
+          }}
+          onCalendarOpen={() => {
+            document.body.style.cssText = `
+              position: fixed; 
+              top: -${window.scrollY}px;
+              overflow-y: scroll;
+              width: 100%;`;
+            setIsOpen(true);
+          }}
           renderCustomHeader={({
             monthDate, customHeaderCount, decreaseMonth, increaseMonth,
           }) => (
@@ -116,8 +143,21 @@ my-2  border-[2px] rounded-lg border-[#DFE1E5] items-center pl-[16px] `;
         />
       ) : (
         <DatePicker
-          onCalendarClose={() => setIsOpen(false)}
-          onCalendarOpen={() => setIsOpen(true)}
+          onCalendarClose={() => {
+            const scrollY = document.body.style.top;
+            document.body.style.cssText = '';
+            window.scrollTo(0, parseInt(scrollY || '0', 10) * -1);
+            setIsOpen(false);
+          }}
+          onCalendarOpen={() => {
+            document.body.style.cssText = `
+              position: fixed; 
+              top: -${window.scrollY}px;
+              overflow-y: scroll;
+              width: 100%;`;
+            setIsOpen(true);
+          }}
+          withPortal={window.innerWidth < 1280}
           renderCustomHeader={({
             monthDate, decreaseMonth, increaseMonth,
           }) => (
