@@ -5,6 +5,7 @@ import DetailIcon from './DetailIcon';
 
 interface Props {
   data: DetailProjectData
+  isCreator: boolean
   onClickApply: () => void
   goBack: () => void
   goToEditPage: (projectData:DetailProjectData) => void
@@ -12,7 +13,12 @@ interface Props {
 
 }
 function DetailProjectInfo({
-  data, onClickApply, goBack, goToEditPage, handleDeleteProject,
+  data,
+  isCreator,
+  onClickApply,
+  goBack,
+  goToEditPage,
+  handleDeleteProject,
 }: Props) {
   const {
     title,
@@ -38,22 +44,24 @@ function DetailProjectInfo({
           </button>
           <span>돌아가기</span>
         </div>
-        <div>
-          <button
-            onClick={() => goToEditPage(data)}
-            className="underline mr-4"
-            type="button"
-          >
-            수정하기
-          </button>
-          <button
-            onClick={handleDeleteProject}
-            className="underline text-red-500"
-            type="button"
-          >
-            삭제하기
-          </button>
-        </div>
+        {isCreator && (
+          <div>
+            <button
+              onClick={() => goToEditPage(data)}
+              className="underline mr-4"
+              type="button"
+            >
+              수정하기
+            </button>
+            <button
+              onClick={handleDeleteProject}
+              className="underline text-red-500"
+              type="button"
+            >
+              삭제하기
+            </button>
+          </div>
+        )}
       </div>
       <h1 className="text-[36px] font-[600]">{title}</h1>
       <ul className="flex flex-row mt-3">

@@ -83,8 +83,12 @@ export const getRecruitPostDetails = ({ postId }: {postId: string}) => async () 
 
 // 프로젝트 신청
 export const postRecriutDetailPosts = async ({ postId }: {postId: string}) => {
-  const res = await baseUrl.post(`/recruitPost/${postId}/application`);
-  return res;
+  try {
+    const res = await baseUrl.post(`/recruitPost/${postId}/application`);
+    return res;
+  } catch (error) {
+    return error;
+  }
 };
 
 export const postRecruitDetailAccept = async ({ postId }: {postId: string}) => {
