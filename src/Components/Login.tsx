@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import GlobalIcon from './GlobalIcon';
 
 type textModalType={
@@ -15,6 +16,18 @@ export default function Login(data:textModalType) {
     const GOOGLE_AUTH_URL = 'http://huddledown.link/oauth2/authorization/google';
     window.location.replace(GOOGLE_AUTH_URL);
   };
+  useEffect(() => {
+    document.body.style.cssText = `
+    position: fixed; 
+    top: -${window.scrollY}px;
+    overflow-y: scroll;
+    width: 100%;`;
+    return () => {
+      const scrollY = document.body.style.top;
+      document.body.style.cssText = '';
+      window.scrollTo(0, parseInt(scrollY || '0', 10) * -1);
+    };
+  }, []);
   return (
     <div className="flex w-full h-full fixed items-center justify-center bg-black/30 z-10">
       <div className="max-w-[336px] max-h-[347px] rounded-lg sm:max-w-[410px] sm:max-h-[370px] w-full h-full bg-white sm:rounded-[16px]">

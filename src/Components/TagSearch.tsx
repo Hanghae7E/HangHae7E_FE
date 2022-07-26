@@ -84,17 +84,21 @@ function TagSearch(tagOption: tagOptionI) {
     setMyTags(newMyTags);
     if (setHashTag)setHashTag(newMyTags);
   };
+  const openSelectTagModal = () => {
+    if (window.innerWidth <= 768) { console.log('test'); }
+  };
   return (
     <div className="relative h-[45px] w-full border-none">
-      <div className="absolute right-[20px] top-[13px]">
+      <div className="absolute right-[5.42%] sm:right-[20px] top-[22.37%] sm:top-[13px]">
         <GlobalIcon.Search />
       </div>
       <input
         type="search"
-        className="h-[50px] w-full pl-[24px] border-2 border-[#DFE1E5] rounded-full font-pre font-normal text-[18px] leading-[21px] text-[#CCCCCC]"
+        className="h-[45px] sm:h-[50px] w-full pl-[16px] sm:pl-[24px] border-2 border-[#DFE1E5] rounded-[8px] sm:rounded-full font-pre font-normal text-[14px] sm:text-[18px] leading-[21px] text-[#CCCCCC]"
         placeholder={placeholder}
         onChange={recommendsTag}
         value={input}
+        onFocus={openSelectTagModal}
       />
       {recommends.length > 0
       && (
