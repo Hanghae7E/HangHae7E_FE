@@ -12,8 +12,8 @@ import ConfirmApplyModal from './ConfirmApplyModal';
 
 interface Props {
   applicantsStanby?: Applicant[];
-  onClickAccept: () => void
-  onClickReject: () => void
+  onClickAccept: (userId?: number) => void
+  onClickReject: (userId?: number) => void
 }
 
 function ApplicantsInfo({ onClickAccept, onClickReject, applicantsStanby }: Props) {
@@ -21,9 +21,9 @@ function ApplicantsInfo({ onClickAccept, onClickReject, applicantsStanby }: Prop
     open: openModal,
     close: closeModal,
     text: propsUsername,
+    userId: propsUserId,
     isOpen: isOpenedModal,
   } = useModalState();
-
   return (
     <div className="w-[300px] border-2 border-solid border-[#EEEEEE] py-[32px] rounded-xl mb-6">
       <h2 className="pl-6 font-bold text-[26px]">
@@ -46,7 +46,7 @@ function ApplicantsInfo({ onClickAccept, onClickReject, applicantsStanby }: Prop
             <button
               className="grid place-items-center rounded-full w-[36px] h-[36px] bg-[#EEEEEE]"
               type="button"
-              onClick={openModal({ text: username })}
+              onClick={openModal({ text: username, userId })}
             >
               <DetailIcon.AngleRight />
             </button>
@@ -59,6 +59,7 @@ function ApplicantsInfo({ onClickAccept, onClickReject, applicantsStanby }: Prop
         onClickReject={onClickReject}
         isOpen={isOpenedModal}
         text={propsUsername}
+        userId={propsUserId}
       />
     </div>
   );

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable no-tabs */
 import React, { SetStateAction, useState } from 'react';
 import { ITag } from '../TypeInterface/postType';

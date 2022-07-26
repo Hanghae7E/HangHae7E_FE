@@ -35,6 +35,7 @@ export default function DetailPageContainer() {
     ['recruit_post_details', postId],
     getRecruitPostDetails({ postId }),
   );
+  const query = useQueryClient();
 
   const postRecruitDetail = useMutation((
     { postId }: {postId: string},
@@ -44,23 +45,23 @@ export default function DetailPageContainer() {
        * 여기에 백엔드에서 오는 메시지 받아서 상태 업데이트
        * setIsApply()
        */
-      useQueryClient().invalidateQueries('recruit_apply');
+      query.invalidateQueries('recruit_apply');
     },
   });
-
+  const userId = '3';
   const postAcceptApplicant = useMutation((
-    { postId }: {postId: string},
-  ) => postRecruitDetailAccept({ postId }), {
+    { userId }: {userId: number},
+  ) => postRecruitDetailAccept({ postId, userId }), {
     onSuccess: (v) => {
-      useQueryClient().invalidateQueries('recruit_accepct_applicant');
+      query.invalidateQueries('recruit_accepct_applicant');
     },
   });
 
   const postRejectApplicant = useMutation((
-    { postId }: {postId: string},
-  ) => postRejectRecruit({ postId }), {
+    { userId }: {userId: number},
+  ) => postRejectRecruit({ postId, userId }), {
     onSuccess: (v) => {
-      useQueryClient().invalidateQueries('recruit_reject_applicant');
+      query.invalidateQueries('recruit_reject_applicant');
     },
   });
 
@@ -69,12 +70,12 @@ export default function DetailPageContainer() {
     postRecruitDetail.mutate({ postId });
   }, [postId]);
 
-  const handleAcceptApplicant = useCallback(() => {
-    postAcceptApplicant.mutate({ postId });
+  const handleAcceptApplicant = useCallback((userId?: number) => {
+    if (userId && userId !== 0)postAcceptApplicant.mutate({ userId });
   }, [postId]);
 
-  const handleRejectApplicant = useCallback(() => {
-    postRejectApplicant.mutate({ postId });
+  const handleRejectApplicant = useCallback((userId?: number) => {
+    if (userId && userId !== 0)postRejectApplicant.mutate({ userId });
   }, []);
 
   const goBack = useCallback(() => {

@@ -8,8 +8,8 @@ export interface Props {
   data: DetailProjectData
   isCreator: boolean
   userData: UserData | null
-  handleAcceptApplicant: () => void;
-  handleRejectApplicant: () => void;
+  handleAcceptApplicant: (userId?: number) => void;
+  handleRejectApplicant: (userId?: number) => void;
 }
 
 function DetailUserInfo({

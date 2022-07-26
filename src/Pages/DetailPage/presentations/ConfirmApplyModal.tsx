@@ -4,25 +4,27 @@ import DetailIcon from './DetailIcon';
 
 interface Props {
     isOpen: boolean
-    text?: string
+  text?: string
+  userId:number
     close: () => void;
-    onClickAccept: () => void
-  onClickReject: () => void
+    onClickAccept: (userId?:number) => void
+  onClickReject: (userId?:number) => void
 }
 
 function ConfirmApplyModal({
   isOpen,
   text,
+  userId,
   close,
   onClickAccept,
   onClickReject,
 }: Props) {
   const acceptApplicant = () => {
-    onClickAccept();
+    onClickAccept(userId);
     close();
   };
   const rejectApplicant = () => {
-    onClickReject();
+    onClickReject(userId);
     close();
   };
   if (isOpen) {
