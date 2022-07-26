@@ -6,13 +6,18 @@ import CreatorInfo from './CreatorInfo';
 
 export interface Props {
   data: DetailProjectData
+  isCreator: boolean
   userData: UserData | null
   handleAcceptApplicant: () => void;
   handleRejectApplicant: () => void;
 }
 
 function DetailUserInfo({
-  data, userData, handleAcceptApplicant, handleRejectApplicant,
+  data,
+  isCreator,
+  userData,
+  handleAcceptApplicant,
+  handleRejectApplicant,
 }: Props) {
   const getStanbyApplicants = () => data.applicants?.filter(({ status }) => status !== 2);
 
@@ -25,7 +30,7 @@ function DetailUserInfo({
       <CreatorInfo
         userData={userData}
       />
-      {getStanbyApplicants() && (
+      {(isCreator && getStanbyApplicants()) && (
         <>
           <ApplicantsInfo
             applicantsStanby={getStanbyApplicants()}
