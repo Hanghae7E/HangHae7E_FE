@@ -1,13 +1,15 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
+import { Portal } from '@headlessui/react';
 import { IProfileFormData, IsideProfile } from '../../../TypeInterface/userType';
 import { Itag } from '../../../TypeInterface/tagType';
 import Profile from './Profile';
-import Project from './Project';
 import userAPi from '../../../Api/userAPi';
 import GlobalIcon from '../../../Components/GlobalIcon';
 import TextModal from '../../../Components/TextModal';
+import ApplyProject from './ApplyProject';
+import RegisterProject from './RegisterProject';
 
 export default function MyPageBody({ profileData, tagList, currentUser }:
 {
@@ -98,7 +100,9 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
   return (
     <div className="max-w-full mx-auto">
       { modalOpen && updateErrMessage && (
-        <TextModal messages={['프로필을 변경할 수 없습니다.', updateErrMessage]} modalClose={setModalOpen} />
+        <Portal>
+          <TextModal messages={['프로필을 변경할 수 없습니다.', updateErrMessage]} modalClose={setModalOpen} />
+        </Portal>
       )}
       <div className="myPageBanner  bg-cover bg-center">
         <img className="w-full h-[91px] pc:h-[240px] object-cover" src="/headerimg.svg" alt="backgroundImage" />
@@ -249,7 +253,7 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
             </button>
           </div>
           )}
-          {Tab === 'profile' ? (
+          {Tab === 'profile' && (
             <Profile
               profileData={profileData}
               tagList={newTag}
@@ -257,8 +261,12 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
               modifyState={modifyState}
               setModifyState={setModifyState}
             />
-          ) : (
-            <Project type={Tab} profileData={profileData} />
+          )}
+          {Tab === 'applyPosts' && (
+            <ApplyProject projects={profileData.applyPosts} />
+          )}
+          {Tab === 'registeredPosts' && (
+          <RegisterProject projects={profileData.registeredPosts} />
           )}
         </div>
       </div>

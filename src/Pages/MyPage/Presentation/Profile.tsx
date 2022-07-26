@@ -4,7 +4,6 @@
 import { useForm } from 'react-hook-form';
 import { useMutation, useQueryClient } from 'react-query';
 import React, { SetStateAction, useEffect, useState } from 'react';
-import { watch } from 'fs';
 import { IProfileFormData } from '../../../TypeInterface/userType';
 import TagInput from '../../../Components/TagInput';
 import userAPi from '../../../Api/userAPi';
@@ -12,6 +11,7 @@ import CustomCalinder from '../../../Components/CustomCalinder';
 import { dateFormat } from '../../../util/util';
 import TextModal from '../../../Components/TextModal';
 import GlobalIcon from '../../../Components/GlobalIcon';
+import Portal from '../../../Components/Portal';
 
 export default function Profile({
   profileData,
@@ -117,11 +117,12 @@ export default function Profile({
     });
   };
   const titleCSS = 'min-w-fit pr-[22px] font-pre font-bold text-[18px] leading-[40px] align-middle ';
-  const valTextCss = 'font-pre text-[12px] text-red-400';
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       { modalOpen && updateErrMessage && (
-      <TextModal messages={['프로필을 변경할 수 없습니다.', updateErrMessage]} modalClose={setModalOpen} />
+      <Portal>
+        <TextModal messages={['프로필을 변경할 수 없습니다.', updateErrMessage]} modalClose={setModalOpen} />
+      </Portal>
       )}
       <div className="profile max-w-[736px] pl-[30px] pb-[63px] border-2 border-[#EEEEEE] rounded-2xl">
         <h2 className="prorileTitle pt-[40px] font-pre font-bold text-[28px] leading-[33px] ">
