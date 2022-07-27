@@ -34,7 +34,7 @@ function ApplyCancelModal({
             left: '50%',
             transform: 'translate(-50%, -50%)',
           }}
-          className="pt-[51px] px-[68px] pb-[50px] text-center bg-white rounded-xl w-[520px] h-[362px] z-10"
+          className="pt-[51px] px-[68px] pb-[50px] text-center bg-white rounded-xl w-[520px] h-[400px] z-10"
         >
           <button
             type="button"
@@ -44,12 +44,13 @@ function ApplyCancelModal({
             <DetailIcon.Cancel />
           </button>
           <img className="w-[110px] h-[110px] mx-auto rounded-full " alt="프로필 이미지" src={userImg || '/profiledefault.svg'} />
-          <p className="text-[24px] font-bold mt-[20px] mb-[40px]">
+          <p className="text-[24px] font-bold mt-5 mb-5">
             함께 하기로 한
             <br />
             {text}
             님을 취소 하시겠어요?
           </p>
+          <p className="text-[12px] font-bold my-5 text-red-500"> 거절된 신청자는 다시 신청 할 수 없습니다 </p>
           <div>
             <button
               onClick={ApplyCancelApplicant}

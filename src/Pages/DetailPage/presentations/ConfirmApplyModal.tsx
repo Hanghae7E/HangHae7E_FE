@@ -50,10 +50,11 @@ function ConfirmApplyModal({
             <DetailIcon.Cancel />
           </button>
           <img className="w-[110px] h-[110px] mx-auto rounded-full" alt="프로필 이미지" src={userImg || '/profiledefault.svg'} />
-          <p className="text-[24px] font-bold mt-[20px] mb-[40px]">
+          <p className="text-[24px] font-bold mt-[20px] mb-[20px]">
             {text}
             님과 프로젝트를 함께 하시겠어요?
           </p>
+          <p className="text-[12px] font-bold my-5 text-red-500"> 거절된 신청자는 다시 신청 할 수 없습니다 </p>
           <div>
             <button
               onClick={rejectApplicant}
