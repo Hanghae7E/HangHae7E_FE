@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 /* eslint-disable no-tabs */
-import React, { SetStateAction, useState } from 'react';
+import React, { SetStateAction, useEffect, useState } from 'react';
 import { ITag } from '../TypeInterface/postType';
 import GlobalIcon from './GlobalIcon';
 
@@ -39,7 +39,7 @@ function TagSearch(tagOption: tagOptionI) {
     tagData, selected, placeholder, setHashTag,
   } = tagOption;
   const [myTags, setMyTags] = useState<Array<ITag>>(selected);
-  const [recommends, setRecommends] = useState<Array<ITag>>(tagData);
+  const [recommends, setRecommends] = useState<Array<ITag>>([]);
   const [input, setInput] = useState('');
   // if (selected.length === 0) {
   //   setTagList(tagData);
@@ -73,6 +73,7 @@ function TagSearch(tagOption: tagOptionI) {
       setRecommends([]);
       setInput('');
     } else {
+      // console.log('값이 중복됨');
       setRecommends([]);
     }
   };
@@ -91,7 +92,14 @@ function TagSearch(tagOption: tagOptionI) {
     setRecommends(tagData);
     if (window.innerWidth <= 768) { console.log('test'); }
   };
-
+  useEffect(() => {
+    document.addEventListener('keydown', (event) => {
+      if (event.keyCode === 27) {
+        // event.preventDefault();
+        setRecommends([]);
+      }
+    }, true);
+  }, []);
   return (
     <div className="relative h-[45px] w-full border-none">
       <div className="absolute right-[5.42%] sm:right-[20px] top-[22.37%] sm:top-[13px]">

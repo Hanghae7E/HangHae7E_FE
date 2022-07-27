@@ -24,6 +24,8 @@ export default function ProjectCreateContainer() {
   const [dueDate, setDueDate] = useState<string>(dateFormat(Today));
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const modalClose = () => { setModalOpen(!modalOpen); };
+  const [modalOpen2, setModalOpen2] = useState<boolean>(false);
+  const modalClose2 = () => { setModalOpen2(!modalOpen2); };
 
   const {
     register,
@@ -58,12 +60,15 @@ export default function ProjectCreateContainer() {
     if (hashTag.length > 0) {
       modalClose();
       postRecruitMustation.mutate(datas);
+    } else {
+      modalClose2();
     }
   };
 
   return (
     <>
       {modalOpen && <TextModal messages={['게시글 작성이 되었습니다.']} modalClose={modalClose} replace="/" />}
+      {modalOpen2 && <TextModal messages={['태그를 추가해 주세요.']} modalClose={modalClose2} />}
       <div>
         <CreateHeader />
         <div className="max-w-6xl mx-auto px-[20px] sm:px-6 lg:px-8 pt-5 sm:pt-10 bg-white sm:mt-10 mb-8">
