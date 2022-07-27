@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { Portal } from '@headlessui/react';
@@ -106,7 +105,6 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
 
   const tabDefatult = 'pr-8 hover:text-black text-[#CCCCCC]';
   const tabClicked = 'pr-8 underline underline-offset-8 text-black';
-  const tabCss = tabDefatult;
   return (
     <div className="max-w-full mx-auto min-h-screen">
       { modalOpen && updateErrMessage && (

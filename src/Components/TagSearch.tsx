@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 /* eslint-disable no-tabs */
 import React, { SetStateAction, useEffect, useState } from 'react';
 import { ITag } from '../TypeInterface/postType';
@@ -90,7 +89,7 @@ function TagSearch(tagOption: tagOptionI) {
   const openSelectTagModal = () => {
     // setIsFocus(true);
     setRecommends(tagData);
-    if (window.innerWidth <= 768) { console.log('test'); }
+    // if (window.innerWidth <= 768) { console.log('test'); }
   };
   useEffect(() => {
     document.addEventListener('keydown', (event) => {

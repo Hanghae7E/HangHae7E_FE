@@ -1,10 +1,8 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { useQuery } from 'react-query';
 import postApi from '../../Api/postApi';
 import MainBody from './Presentaion/MainBody';
-import MainFooter from './Presentaion/MainFooter';
 import MainHeader from './Presentaion/MainHeader';
 import Portal from '../../Components/Portal';
 import NickNameModal from '../../Components/NicknameModal';

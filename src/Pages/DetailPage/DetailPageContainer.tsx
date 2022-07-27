@@ -1,5 +1,4 @@
 /* eslint-disable no-shadow */
-/* eslint-disable no-console */
 import { useCallback, useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
