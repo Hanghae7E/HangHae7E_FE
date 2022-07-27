@@ -17,13 +17,10 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
   tagList: Array<Itag>;
   currentUser:boolean;
   }) {
-  const tag = tagList.map((obj: Itag) => obj.body);
-  const newTag = tag.splice(8);
   const [Tab, setTab] = useState('profile');
   const [objectURL, setObjectURL] = useState<string>(profileData.profile_image_url);
   const [nameModify, setNameModify] = useState(false);
   const [modifyState, setModifyState] = useState(false);
-
   const [newName, setNewName] = useState(profileData.username);
   const [nameMessage, setNameMessage] = useState('');
   const [err, setErr] = useState(false);
@@ -110,7 +107,7 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
   };
 
   return (
-    <div className="max-w-full mx-auto">
+    <div className="max-w-full mx-auto min-h-screen">
       { modalOpen && updateErrMessage && (
         <Portal>
           <TextModal messages={['프로필을 변경할 수 없습니다.', updateErrMessage]} modalClose={setModalOpen} />
@@ -268,7 +265,7 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
           {Tab === 'profile' && (
             <Profile
               profileData={profileData}
-              tagList={newTag}
+              tagList={tagList}
               currentUser={currentUser}
               modifyState={modifyState}
               setModifyState={setModifyState}

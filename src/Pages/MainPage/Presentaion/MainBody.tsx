@@ -39,7 +39,7 @@ export default function MainBody(
   };
 
   return (
-    <div className="w-full lg:w-[1280px] mx-auto mt-[40px] lg:mb-[123px] lg:mt-[126px] overflow-hidden">
+    <div className="w-full lg:w-[1280px] mx-auto mt-[40px] lg:mb-[123px] lg:mt-[126px] overflow-hidden  min-h-screen">
       <div className="pt-1 pb-5 bg-white">
         <p className="font-bold text-[18px]  md:text-2xl mb-[20px] lg:mb-[32px]">마감 임박 프로젝트</p>
         <div className="px-[12px] lg:px-0 w-full items-center

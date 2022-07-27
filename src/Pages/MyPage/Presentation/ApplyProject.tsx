@@ -24,7 +24,7 @@ export default function ApplyProject({ projects }:Props) {
     nav(`/detail/${id}`);
   };
   return (
-    <div className="projectComponent">
+    <div className="projectComponent mb-[160px]">
       <div className="projectStatus flex align-middle  bg-white border-2 border-[#EEEEEE] rounded-2xl">
         <div className="flex-col text-center w-1/3 my-5 ">
           <span className="block font-pre text-[32px] font-normal">{waiting.length}</span>

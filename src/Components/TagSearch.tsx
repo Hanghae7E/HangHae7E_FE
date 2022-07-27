@@ -38,6 +38,7 @@ function TagSearch(tagOption: tagOptionI) {
   const {
     tagData, selected, placeholder, setHashTag,
   } = tagOption;
+  console.log(tagData);
   const [myTags, setMyTags] = useState<Array<ITag>>(selected);
   const [recommends, setRecommends] = useState<Array<ITag>>([]);
   const [input, setInput] = useState('');
@@ -101,7 +102,8 @@ function TagSearch(tagOption: tagOptionI) {
     }, true);
   }, []);
   return (
-    <div className="relative h-[45px] w-full border-none">
+
+    <div className="relative min-h-min w-full border-none">
       <div className="absolute right-[5.42%] sm:right-[20px] top-[22.37%] sm:top-[13px]">
         <GlobalIcon.Search />
       </div>

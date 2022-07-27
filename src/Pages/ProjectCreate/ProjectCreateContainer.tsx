@@ -3,7 +3,6 @@
 import { Controller, FieldValues, useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { useQuery } from 'react-query';
-import CreateFooter from './Presentation/CreateFooter';
 import CreateHeader from './Presentation/CreateHeader';
 import { dateFormat } from '../../util/util';
 import postApi from '../../Api/postApi';
@@ -71,7 +70,7 @@ export default function ProjectCreateContainer() {
       {modalOpen2 && <TextModal messages={['태그를 추가해 주세요.']} modalClose={modalClose2} />}
       <div>
         <CreateHeader />
-        <div className="max-w-6xl mx-auto px-[20px] sm:px-6 lg:px-8 pt-5 sm:pt-10 bg-white sm:mt-10 mb-8">
+        <div className="max-w-6xl mx-auto px-[20px] sm:px-6 lg:px-8 pt-5 sm:pt-10 bg-white sm:mt-10 mb-[145px]">
           {/* 프로젝트만들기 상단 */}
           <form className="mt-5 sm:mt-15" onSubmit={handleSubmit(onSubmit)}>
             <p className="sm:ml-16 font-extrabold text-xl sm:text-[36px] sm:text-[#6457FA]">
@@ -305,7 +304,6 @@ export default function ProjectCreateContainer() {
             </div>
           </form>
         </div>
-        <CreateFooter />
       </div>
     </>
   );
