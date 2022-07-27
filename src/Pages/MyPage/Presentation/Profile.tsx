@@ -34,7 +34,7 @@ export default function Profile({
   const careerOptions = ['1년 미만', '1-2년', '2-3년', '3-4년', '4-5년', '5년 이상', '10년 이상'];
   const meetingoptions = [{ value: 'true', label: '대면' }, { value: 'false', label: '비대면' }];
   const positionOptions = ['개발자', '디자이너', '기획자'];
-  const residenceOptions = ['서울', '부산', '대구', '제주'];
+  const residenceOptions = ['서울', '경기', '강원', '부산', '경상', '충청', '전라', '제주'];
   const fieldsOptions = ['프론트엔드', '백엔드', '모바일개발', '웹개발', '데스크탑개발'];
   const {
     username, email, phone_number, position, residence,
@@ -127,6 +127,8 @@ export default function Profile({
       <div className="profile max-w-[736px] pl-[30px] pb-[63px] border-2 border-[#EEEEEE] rounded-2xl">
         <h2 className="prorileTitle pt-[40px] font-pre font-bold text-[28px] leading-[33px] ">
           안녕하세요
+          {' '}
+
           {profileData.fields.length > 0 && (
             ` ${profileData.fields[0]} `
           ) }
