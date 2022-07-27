@@ -36,10 +36,7 @@ export default function DetailPageContainer() {
   const navigate = useNavigate();
   const postId = pathname.split('/')[2];
   const [userData, setUserData] = useState<UserData | null>(null);
-  const [isApply, setIsApply] = useState<ApplyStatus>({
-    status: false,
-    text: '',
-  });
+  const [isApply, setIsApply] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const modalClose = () => {
@@ -56,10 +53,8 @@ export default function DetailPageContainer() {
     { postId }: {postId: string},
   ) => postRecriutDetailPosts({ postId }), {
     onSuccess: (v) => {
-      /**
-       * 여기에 백엔드에서 오는 메시지 받아서 상태 업데이트
-       * setIsApply()
-       */
+      setIsApply(true);
+      modalClose();
       query.invalidateQueries('recruit_post_details');
     },
     onError: (msg:ApplyStatusInfo) => {
@@ -141,7 +136,13 @@ export default function DetailPageContainer() {
 
   return (
     <>
-      {modalOpen && <TextModal messages={[error]} modalClose={modalClose} />}
+      {modalOpen && isApply && (
+      <TextModal
+        messages={['신청 되었습니다.']}
+        modalClose={modalClose}
+      />
+      ) }
+      {modalOpen && !isApply && <TextModal messages={[error]} modalClose={modalClose} />}
       <div className="flex flex-row h-screen w-[1260px] mx-auto">
         {!isLoading && (
         <>
