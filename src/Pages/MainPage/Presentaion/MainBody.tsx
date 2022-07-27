@@ -39,9 +39,9 @@ export default function MainBody(
   };
 
   return (
-    <div className="w-full lg:w-[1280px] mx-auto mt-[40px] lg:mt-[126px] overflow-hidden">
+    <div className="w-full lg:w-[1280px] mx-auto mt-[40px] lg:mb-[123px] lg:mt-[126px] overflow-hidden">
       <div className="pt-1 pb-5 bg-white">
-        <p className="font-bold text-[18px] md:ml-[10px] md:text-2xl mb-[20px] lg:mb-[32px]">마감 임박 프로젝트</p>
+        <p className="font-bold text-[18px]  md:text-2xl mb-[20px] lg:mb-[32px]">마감 임박 프로젝트</p>
         <div className="px-[12px] lg:px-0 w-full items-center
         gap-[16px] lg:gap-[24px] flex overflow-x-auto scrollbar-hide"
         >
@@ -51,7 +51,7 @@ export default function MainBody(
         </div>
       </div>
       <div className=" w-full flex pt-5 pb-5 z-[1] sticky top-0 bg-white py-3">
-        <div className="flex flex-1 mr-5 relative items-center  md:ml-[10px]">
+        <div className="flex flex-1 mr-5 relative items-center ">
           <p className="flex font-bold text-[18px] md:text-2xl mr-5">프로젝트</p>
           <div className="flex items-center justify-center text-[14px] h-[50px]">
             <span className="pr-3">관심분야</span>

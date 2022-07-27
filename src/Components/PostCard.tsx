@@ -33,7 +33,7 @@ export default function PostCard({ data }: { data: IRecruitPost }) {
     <div className="relative md:h-[471px] w-[47%] lg:w-[410px] mb-[37px] box-border cursor-pointer" onClick={goCardDetail} onKeyPress={goCardDetail}>
       <div className="box-border ">
         <div className="bg-[#F9FBFF] rounded-[8px] md:rounded-[24px] border-[2px] border-[#EEEEEE] md:h-[254px]  lg:h-[344px] overflow-hidden box-border">
-          <img className="w-full bg-white h-[72px] md:h-[150px] lg:h-[240px] max-h-[240px] object-cover m-0" src={data.projectImage ? data.projectImage : '/defaulimg.svg'} alt="project" />
+          <img className="w-full bg-white h-[72px] md:h-[150px] lg:h-[240px] max-h-[240px] object-cover m-0" src={data.projectImage ? `${data.projectImage}?${Math.random()}` : '/defaulimg.svg'} alt="project" />
           <div className="hidden md:flex absolute flex-1 font-bold h-[46px] top-[16px] right-[16px]">
 
             {data.requiredDevelopers > 0 && <TagBox tag="2" padding="text-[12px] px-[12px] py-[6px]" margin="mx-[4px] h-[30px]" />}
@@ -43,7 +43,7 @@ export default function PostCard({ data }: { data: IRecruitPost }) {
           <div className="h-[56px] md:h-[245px]">
             <div className="flex  md:py-3">
               <div className="flex items-center mb-1 py-[10px] md:py-2 ">
-                <img className="ml-[12px] md:ml-5 w-[35px] h-[35px] md:w-[64px] md:h-[64px] rounded-full object-fill" src={data.authorImage ? data.authorImage : '/profiledefault.svg'} alt="project" />
+                <img className="ml-[12px] md:ml-5 w-[35px] h-[35px] md:w-[64px] md:h-[64px] rounded-full object-fill" src={data.authorImage ? `${data.authorImage}?${Math.random()}` : '/profiledefault.svg'} alt="project" />
                 <div className="ml-[8px] py-[2px] md:ml-[16px]">
                   <div className="justify-start py-0">
                     <p className="font-bold text-[14px] md:text-[20px]">{data.username}</p>
