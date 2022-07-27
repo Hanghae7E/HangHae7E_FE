@@ -92,6 +92,18 @@ export default function DetailPageContainer() {
     },
   });
 
+  const postApplicantCancel = useMutation((
+    { userId }: {userId: number},
+  ) => postRejectRecruit({ postId, userId }), {
+    onSuccess: (v) => {
+      query.invalidateQueries('recruit_post_details');
+    },
+    onError: (msg:ApplyStatusInfo) => {
+      setError(msg.response.data.message);
+      modalClose();
+    },
+  });
+
   const isCreator = !!data?.applicants;
   const handleApplyProject = useCallback(() => {
     postRecruitDetail.mutate({ postId });
@@ -103,6 +115,10 @@ export default function DetailPageContainer() {
 
   const handleRejectApplicant = useCallback((userId?: number) => {
     if (userId && userId !== 0)postRejectApplicant.mutate({ userId });
+  }, []);
+
+  const handleCancelApplicant = useCallback((userId?: number) => {
+    if (userId && userId !== 0)postApplicantCancel.mutate({ userId });
   }, []);
 
   const goBack = useCallback(() => {
@@ -135,6 +151,7 @@ export default function DetailPageContainer() {
             userData={userData}
             handleAcceptApplicant={handleAcceptApplicant}
             handleRejectApplicant={handleRejectApplicant}
+            handleCancelApplicant={handleCancelApplicant}
           />
           <DetailProjectInfo
             data={data}

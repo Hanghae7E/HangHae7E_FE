@@ -2,12 +2,23 @@
 /* eslint-disable camelcase */
 import React from 'react';
 import { Applicant } from '../../../TypeInterface/detailType';
+import ApplyCancelModal from './ApplyCancelModal';
+import useModalState from '../hooks/useModalState';
+import DetailIcon from './DetailIcon';
 import PositionTag from './PositionTag';
 
 interface Props {
-  applicantsAccept?: Applicant[]
+  applicantsAccept?: Applicant[];
+  onClickCancle: (userId?: number) => void;
 }
-function ConfirmedApplicants({ applicantsAccept }: Props) {
+function ConfirmedApplicants({ applicantsAccept, onClickCancle }: Props) {
+  const {
+    open: openModal,
+    close: closeModal,
+    text: propsUsername,
+    userId: propsUserId,
+    isOpen: isOpenedModal,
+  } = useModalState();
   return (
     <div className="w-[300px] border-2 border-solid border-[#EEEEEE] py-[32px] rounded-xl mb-6">
       <h2 className="pl-6 font-bold text-[26px]">
@@ -27,9 +38,23 @@ function ConfirmedApplicants({ applicantsAccept }: Props) {
               position={position}
               propsClassname="ml-2 mr-10"
             />
+            <button
+              className="grid place-items-center rounded-full w-[36px] h-[36px] bg-[#EEEEEE]"
+              type="button"
+              onClick={openModal({ text: username, userId })}
+            >
+              <DetailIcon.AngleRight />
+            </button>
           </li>
         ))}
       </ul>
+      <ApplyCancelModal
+        close={closeModal}
+        onClickCancle={onClickCancle}
+        isOpen={isOpenedModal}
+        text={propsUsername}
+        userId={propsUserId}
+      />
     </div>
   );
 }
