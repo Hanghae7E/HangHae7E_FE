@@ -13,7 +13,7 @@ import useMainInfiniteScrollQuery from './hooks/useMainInfiniteScrollQuery';
 
 export default function MainPageContainer() {
   const recommendPosts = useQuery('recommend_post', postApi.getRecommendPosts);
-  const tagList = useQuery('tag_list', postApi.getTag);
+  const { data: tagData } = useQuery('tag_list', postApi.getTag);
   const [searchTag, setSearchTag] = useState(0);
 
   const {
@@ -49,7 +49,7 @@ export default function MainPageContainer() {
             <MainBody
               recruitPost={getBoard?.pages}
               recommendPosts={recommendPosts.data.data.posts}
-              tagList={tagList.data?.data}
+              tagData={tagData?.data}
               setSearchTag={setSearchTag}
               refetch={refetch}
             />
@@ -57,7 +57,6 @@ export default function MainPageContainer() {
           </div>
         )
       }
-      <MainFooter />
     </>
   );
 }

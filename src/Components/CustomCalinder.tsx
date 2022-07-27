@@ -48,8 +48,7 @@ export default function CustomCalinder({
     setEndDate(selectEnd);
     if (setEnd) { setEnd(dateFormat(selectEnd !== null ? selectEnd : new Date())); }
   };
-  const defaultCss = `flex flex-1 max-w-[282px] w-[282px] h-[60px] min-w-max
-my-2  border-[2px] rounded-lg border-[#DFE1E5] items-center pl-[16px] `;
+  const defaultCss = 'flex flex-1 max-w-[282px] w-[282px] h-[60px] min-w-max my-2  border-[2px] rounded-lg border-[#DFE1E5] items-center pl-[16px] ';
   const css = customCss === undefined ? defaultCss : customCss;
   const ExampleCustomInput = forwardRef<HTMLInputElement, IData>((props, ref) => (
     <div

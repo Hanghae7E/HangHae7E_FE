@@ -1,3 +1,6 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+import { useNavigate } from 'react-router-dom';
 import GlobalIcon from '../../../Components/GlobalIcon';
 import { IRegisteredPosts } from '../../../TypeInterface/postType';
 import { dateFormat } from '../../../util/util';
@@ -8,10 +11,14 @@ interface Props {
   }
 export default function RegisterProject({ projects }:Props) {
   const Today = dateFormat(new Date());
+  const nav = useNavigate();
+  const goDetail = (id:number) => () => {
+    nav(`/detail/${id}`);
+  };
   return (
-    <div className="projectComponent flex flex-col  bg-white px-8  border-2 border-[#EEEEEE] rounded-2xl">
+    <div className="projectComponent flex flex-col  bg-white px-8  border-2 border-[#EEEEEE] rounded-2xl mb-[160px]">
       {(projects.length > 0 && projects.map((prj:IRegisteredPosts, idx) => (
-        <div key={prj.id} className="mt-10 ">
+        <div key={prj.id} onClick={goDetail(prj.id)} className="mt-10 cursor-pointer">
           <div className="flex-row items-start">
             <StatusTag
               status={

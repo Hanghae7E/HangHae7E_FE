@@ -5,13 +5,15 @@ import { useForm } from 'react-hook-form';
 import { useMutation, useQueryClient } from 'react-query';
 import React, { SetStateAction, useEffect, useState } from 'react';
 import { IProfileFormData } from '../../../TypeInterface/userType';
-import TagInput from '../../../Components/TagInput';
 import userAPi from '../../../Api/userAPi';
 import CustomCalinder from '../../../Components/CustomCalinder';
 import { dateFormat } from '../../../util/util';
 import TextModal from '../../../Components/TextModal';
 import GlobalIcon from '../../../Components/GlobalIcon';
 import Portal from '../../../Components/Portal';
+import TagSearch from '../../../Components/TagSearch';
+import { ITag } from '../../../TypeInterface/postType';
+import TagBox from '../../../Components/TagBox';
 
 export default function Profile({
   profileData,
@@ -21,7 +23,7 @@ export default function Profile({
   setModifyState,
 }: {
   profileData: IProfileFormData;
-  tagList: string[];
+  tagList: Array<ITag>;
   currentUser:boolean;
   modifyState:boolean;
   setModifyState :React.Dispatch<SetStateAction<boolean>>;
@@ -30,11 +32,11 @@ export default function Profile({
   const [updateErrMessage, setUpdateErrMessage] = useState('');
 
   const workdayOptions = ['주 1일', '주 2일', '주 3일', '주 4일', '주 5일'];
-  const timeOptions = ['오전', '오후', '저녁', '야간'];
+  // const timeOptions = ['오전', '오후', '저녁', '야간'];
   const careerOptions = ['1년 미만', '1-2년', '2-3년', '3-4년', '4-5년', '5년 이상', '10년 이상'];
   const meetingoptions = [{ value: 'true', label: '대면' }, { value: 'false', label: '비대면' }];
   const positionOptions = ['개발자', '디자이너', '기획자'];
-  const residenceOptions = ['서울', '부산', '대구', '제주'];
+  const residenceOptions = ['서울', '경기', '강원', '부산', '경상', '충청', '전라', '제주'];
   const fieldsOptions = ['프론트엔드', '백엔드', '모바일개발', '웹개발', '데스크탑개발'];
   const {
     username, email, phone_number, position, residence,
@@ -51,8 +53,9 @@ export default function Profile({
   const [startDate, setStartDate] = useState<string>(start);
   const [endDate, setEndDate] = useState<string>(end);
 
-  const Myskils = profileData.skills ? profileData.skills : [''];
-  const [selected, setSelected] = useState<string[]>(Myskils);
+  const [selected, setSelected] = useState<Array<ITag>>(
+    tagList.filter((v) => profileData.skills.includes(v.body)),
+  );
   const methods = useForm<IProfileFormData>({
     defaultValues: {
       username,
@@ -118,7 +121,7 @@ export default function Profile({
   };
   const titleCSS = 'min-w-fit pr-[22px] font-pre font-bold text-[18px] leading-[40px] align-middle ';
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)} className="md:mb-[160px]">
       { modalOpen && updateErrMessage && (
       <Portal>
         <TextModal messages={['프로필을 변경할 수 없습니다.', updateErrMessage]} modalClose={setModalOpen} />
@@ -127,6 +130,8 @@ export default function Profile({
       <div className="profile max-w-[736px] pl-[30px] pb-[63px] border-2 border-[#EEEEEE] rounded-2xl">
         <h2 className="prorileTitle pt-[40px] font-pre font-bold text-[28px] leading-[33px] ">
           안녕하세요
+          {' '}
+
           {profileData.fields.length > 0 && (
             ` ${profileData.fields[0]} `
           ) }
@@ -144,16 +149,21 @@ export default function Profile({
           </h2>
           {currentUser && modifyState
             ? (
-              <select
-                className="border-2 mr-[8px] w-[198px] h-12 border-[#EEEEEE] rounded-md pl-[10px] font-pre font-normal text-[18px] leading-[21px]"
-                {...register('position')}
+              <div
+                className="border-2 mr-[8px] w-[272px] h-12 border-[#EEEEEE] rounded-md pl-[10px] font-pre font-normal text-[18px] leading-[21px]"
+                style={{ backgroundImage: 'url(./dropdown.svg)', backgroundRepeat: 'no-repeat', backgroundPosition: '92% 50%' }}
               >
-                {positionOptions.map((item) => (
-                  <option value={item} key={item}>
-                    {item}
-                  </option>
-                ))}
-              </select>
+                <select
+                  className="border-0 bg-transparent appearance-none w-full h-full outline-none "
+                  {...register('position')}
+                >
+                  {positionOptions.map((item) => (
+                    <option value={item} key={item}>
+                      {item}
+                    </option>
+                  ))}
+                </select>
+              </div>
             )
             : (<p className="font-pre font-normal text-[18px] leading-[40px]">{profileData.position}</p>)}
         </div>
@@ -163,16 +173,21 @@ export default function Profile({
           </h2>
           {currentUser && modifyState
             ? (
-              <select
-                className="border-2 mr-[8px] w-[198px] h-12 border-[#EEEEEE] rounded-md pl-[10px]  font-pre font-normal text-[18px] leading-[21px]"
-                {...register('fields')}
+              <div
+                className="border-2 mr-[8px] w-[272px] h-12 border-[#EEEEEE] rounded-md pl-[10px] font-pre font-normal text-[18px] leading-[21px]"
+                style={{ backgroundImage: 'url(./dropdown.svg)', backgroundRepeat: 'no-repeat', backgroundPosition: '92% 50%' }}
               >
-                {fieldsOptions.map((item) => (
-                  <option value={item} key={item}>
-                    {item}
-                  </option>
-                ))}
-              </select>
+                <select
+                  className="border-0 bg-transparent appearance-none w-full h-full outline-none "
+                  {...register('fields')}
+                >
+                  {fieldsOptions.map((item) => (
+                    <option value={item} key={item}>
+                      {item}
+                    </option>
+                  ))}
+                </select>
+              </div>
             ) : (
               <p className="font-pre font-normal text-[18px] leading-[40px]">{profileData.fields[0]}</p>
             )}
@@ -183,41 +198,51 @@ export default function Profile({
           </h2>
           {currentUser && modifyState
             ? (
-              <select
-                className="border-2 mr-[8px] w-[198px] h-12 border-[#EEEEEE] rounded-md pl-[10px] font-pre font-normal text-[18px] leading-[21px]"
-                {...register('career_period')}
+              <div
+                className="border-2 mr-[8px] w-[272px] h-12 border-[#EEEEEE] rounded-md pl-[10px] font-pre font-normal text-[18px] leading-[21px]"
+                style={{ backgroundImage: 'url(./dropdown.svg)', backgroundRepeat: 'no-repeat', backgroundPosition: '92% 50%' }}
               >
-                {careerOptions.map((item) => (
-                  <option value={item} key={item}>
-                    {item}
-                  </option>
-                ))}
-              </select>
+                <select
+                  className="border-0 bg-transparent appearance-none w-full h-full outline-none "
+                  {...register('career_period')}
+                >
+                  {careerOptions.map((item) => (
+                    <option value={item} key={item}>
+                      {item}
+                    </option>
+                  ))}
+                </select>
+              </div>
             ) : (
               <p className="font-pre font-normal text-[18px] leading-[40px]">{profileData.career_period}</p>
             )}
 
         </div>
-        <div className="flex pt-[28px] mr-[64px] ">
-          <h2 className="min-w-fit pr-[22px] font-pre font-bold text-[18px] leading-[50px] ">
+        <div className="flex pt-[28px] mr-[64px] items-start">
+          <h2 className={`min-w-fit pr-[22px] font-pre font-bold text-[18px] ${modifyState && 'leading-[50px]'}`}>
             스킬
           </h2>
           {currentUser && modifyState
-            ? (<TagInput tags={tagList} selected={selected} setSelected={setSelected} placeholder="보유 스킬을 검색 해 주세요." />)
+            ? (<TagSearch tagData={tagList} selected={selected} setHashTag={setSelected} placeholder="보유 스킬을 검색 해 주세요." />)
             : (
-              <div className="flex items-center">
-                {selected.map((skil) => (
-                  <span className="bg-[#CCCCCC] h-[30px]  rounded-2xl text-black px-[12px] py-[2px] mr-[8px] font-pre text-[14px] leading-[15x] " key={skil}>{skil}</span>
+              <div className="flex flex-wrap gap-2 items-center">
+                {selected.map((skil, i) => (
+                  <TagBox
+                    tag={`${skil.body}`}
+                    padding="text-[12px] py-[8px] px-[12px]"
+                    margin="ml-[5px]"
+                    key={`${skil.body + i}`}
+                  />
                 ))}
               </div>
             )}
         </div>
-        <div className="flex pt-[28px]  mr-[64px]">
+        <div className="flex pt-[28px]  mr-[40px]">
           <h2 className="min-w-fit pr-[22px] font-pre font-bold text-[18px] leading-[50px]">
             링크
           </h2>
           <input
-            className="w-full h-[50px] pl-[10px] read-only:border-none  border-2 border-[#EEEEEE] rounded-2xl font-pre font-normal text-[18px] leading-[21px]  text-black placeholder:text-[#CCCCCC]"
+            className="w-full h-[50px] pl-[10px] outline-none read-only:border-none  border-2 border-[#EEEEEE] rounded-[8px] font-pre font-normal text-[18px] leading-[21px]  text-black placeholder:text-[#CCCCCC]"
             type="text"
             readOnly={!modifyState}
             placeholder="https://.."
@@ -225,38 +250,40 @@ export default function Profile({
             {...register('portfolio_url')}
           />
         </div>
+        {currentUser && modifyState && (
         <div className="flex pl-[60px] pt-[12px]">
-          <p>{errors.email?.type === 'pattern' && '유효한 이메일 주소를 입력 해 주세요'}</p>
           <p className="w-full font-pre font-normal text-[12px] leading-[14.32px]">
             깃헙, 노션으로 작성한 포트폴리오, 구글 드라이브 파일 등 본인을 보여줄 수 있는 링크를
             추가해주세요.
           </p>
         </div>
+        )}
         <hr className="mt-[40px] mr-[64px]  border-1 border-[#CCCCCC]" />
         <div className="flex flex-col pt-[40px] mr-[64px]">
-          <h2 className="font-pre font-bold text-[24px] leading-[29px]  text-black placeholder:text-[#CCCCCC]">연락처</h2>
-          <div className="float font-pre h-[20px] text-[12px] text-red-400">{errors.email?.type === 'pattern' && '유효한 이메일 주소를 입력 해 주세요'}</div>
-          <div className="relative w-0 h-0 ml-[10px] -bottom-[15px]">
+          <h2 className="font-bold text-[24px] leading-[29px]  mb-[12px] text-black placeholder:text-[#CCCCCC]">연락처</h2>
+          <div className="float h-[20px] text-[12px] text-red-400">{errors.email?.type === 'pattern' && '유효한 이메일 주소를 입력 해 주세요'}</div>
+          <div className="flex pl-[22px] read-only:border-none  border-2 border-[#EEEEEE]  rounded-[8px] items-center">
             <GlobalIcon.Email />
+            <input
+              className={`w-full  ${modifyState ? 'h-[52px]' : 'py-[10px]'}  pl-[14px] outline-none  font-normal text-[18px] leading-[21px] text-black placeholder:text-[#CCCCCC] `}
+              type="text"
+              readOnly={!modifyState}
+              placeholder="이메일"
+              {...register('email', ({ pattern: /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/ }))}
+            />
           </div>
-          <input
-            className="w-full h-[50px]  pl-[56px] read-only:border-none border-2 border-[#EEEEEE] rounded-2xl font-pre font-normal text-[18px] leading-[21px] text-black placeholder:text-[#CCCCCC] "
-            type="text"
-            readOnly={!modifyState}
-            placeholder="이메일"
-            {...register('email', ({ pattern: /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/ }))}
-          />
-          <div className=" font-pre h-[20px] text-[10px] text-red-400 ">{errors.phone_number?.type === 'pattern' && '유효한 핸드폰 번호를 입력 해 주세요'}</div>
-          <div className="relative w-0 h-0 ml-[10px] -bottom-[15px]">
+          {errors.phone_number?.type === 'pattern' && <div className=" font-pre h-[20px] text-[10px] text-red-400 ">유효한 핸드폰 번호를 입력 해 주세요</div>}
+          <div className="flex pl-[22px] read-only:border-none border-2  border-[#EEEEEE]  rounded-[8px] items-center">
             <GlobalIcon.Call />
+            <input
+              className={`w-full ${modifyState ? 'h-[52px]' : 'py-[10px]'} pl-[15px] outline-none font-normal text-[18px] leading-[21px]  text-black placeholder:text-[#CCCCCC]`}
+              type="text"
+              placeholder="연락처"
+              readOnly={!modifyState}
+              {...register('phone_number', ({ pattern: /^\d{3}-\d{3,4}-\d{4}$/ }))}
+            />
           </div>
-          <input
-            className="w-full h-[52px] pl-[56px] read-only:border-none  border-2 border-[#EEEEEE] rounded-2xl font-pre font-normal text-[18px] leading-[21px]  text-black placeholder:text-[#CCCCCC]"
-            type="text"
-            placeholder="연락처"
-            readOnly={!modifyState}
-            {...register('phone_number', ({ pattern: /^\d{3}-\d{3,4}-\d{4}$/ }))}
-          />
+
         </div>
         <hr className="mt-[40px] mr-[64px]  border-1 border-[#CCCCCC]" />
         <div className="flex pt-[40px]">
@@ -270,16 +297,21 @@ export default function Profile({
           </h2>
           {currentUser && modifyState
             ? (
-              <select
-                className="border-2 mr-[8px] w-[198px] h-12 border-[#EEEEEE] rounded-md pl-[10px] font-pre font-normal text-[18px] leading-[21px]"
-                {...register('residence')}
+              <div
+                className="border-2 mr-[8px] w-[272px] h-12 border-[#EEEEEE] rounded-md pl-[10px] font-pre font-normal text-[18px] leading-[21px]"
+                style={{ backgroundImage: 'url(./dropdown.svg)', backgroundRepeat: 'no-repeat', backgroundPosition: '92% 50%' }}
               >
-                {residenceOptions.map((item) => (
-                  <option value={item} key={item}>
-                    {item}
-                  </option>
-                ))}
-              </select>
+                <select
+                  className="border-0 bg-transparent appearance-none w-full h-full outline-none "
+                  {...register('residence')}
+                >
+                  {residenceOptions.map((item) => (
+                    <option value={item} key={item}>
+                      {item}
+                    </option>
+                  ))}
+                </select>
+              </div>
             ) : (
               <p className="font-pre font-normal text-[18px] leading-[40px]">{profileData.residence}</p>
             )}
@@ -291,17 +323,21 @@ export default function Profile({
           </h2>
           {currentUser && modifyState
             ? (
-              <select
-                className="border-2 mr-[8px] w-[198px] h-12 border-[#EEEEEE] rounded-md pl-[10px] font-pre font-normal text-[18px] leading-[21px]"
-                {...register('face_to_face')}
+              <div
+                className="border-2 mr-[8px] w-[272px] h-12 border-[#EEEEEE] rounded-md pl-[10px] font-pre font-normal text-[18px] leading-[21px]"
+                style={{ backgroundImage: 'url(./dropdown.svg)', backgroundRepeat: 'no-repeat', backgroundPosition: '92% 50%' }}
               >
-                {meetingoptions.map((item) => (
-                  <option value={item.value} key={item.value}>
-                    {item.label}
-                  </option>
-                ))}
-              </select>
-
+                <select
+                  className="border-0 bg-transparent appearance-none w-full h-full outline-none "
+                  {...register('face_to_face')}
+                >
+                  {meetingoptions.map((item) => (
+                    <option value={item.value} key={item.value}>
+                      {item.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
             ) : (
               <p className="font-pre font-normal text-[18px] leading-[40px]">{profileData.face_to_face ? '대면' : '비대면'}</p>
             )}
@@ -318,8 +354,7 @@ export default function Profile({
               setStart={setStartDate}
               setEnd={setEndDate}
               isRange
-              customCss={`flex flex-1 max-w-[282px] w-[282px] h-[48px] min-w-max
-                border-[2px] rounded-lg border-[#DFE1E5] items-center pl-[16px]`}
+              customCss="flex flex-1 max-w-[272px] w-[270px] h-[52px] min-w-max border-[2px] rounded-lg border-[#DFE1E5] items-center pl-[10px] pr-[14px]"
             />
           )
             : (
@@ -333,31 +368,55 @@ export default function Profile({
           <div>
             {currentUser && modifyState
               ? (
-                <select
-                  defaultValue={workDay}
-                  className="border-2 mr-[8px] w-[198px] h-12 border-[#EEEEEE] rounded-md pl-[10px] font-pre font-normal text-[18px] leading-[21px]"
-                  {...register('workDay')}
+                <div
+                  className="border-2 mr-[8px] w-[272px] h-12 border-[#EEEEEE] rounded-md pl-[10px] font-pre font-normal text-[18px] leading-[21px]"
+                  style={{ backgroundImage: 'url(./dropdown.svg)', backgroundRepeat: 'no-repeat', backgroundPosition: '92% 50%' }}
                 >
-                  {workdayOptions.map((item) => (
-                    <option value={item} key={item}>{item}</option>
-                  ))}
-                </select>
+                  <select
+                    defaultValue={workDay}
+                    className="border-0 bg-transparent appearance-none w-full h-full outline-none "
+                    {...register('workDay')}
+                  >
+                    {workdayOptions.map((item) => (
+                      <option value={item} key={item}>{item}</option>
+                    ))}
+                  </select>
+                  {/* {timeOptions.map((item) => (
+                    <label key={item} htmlFor={item} className="mt-[20px] peer border-2
+                    border-[#CCCCC] bg-[#CCCCC] rounded-[24px] text-#6457FA px-[12px]
+                    py-[6px] mr-[8px] mb-[8px] font-pre text-[14px] leading-[16.9x]">
+                      <input {...register('time')} type="radio" onChange={() => setTime(item)}
+                       checked={item === time} value={item} id={time}
+                       className="checked:bg-[#6457FA] peer-checked:bg-#6457fA" />
+                      {item}
+                    </label>
+                  ))} */}
+
+                </div>
               ) : (
-                <p className="font-pre font-normal text-[18px] leading-[40px]">{`${workDay === 'null' ? '' : workDay} , ${time === 'null' ? '' : time}`}</p>
+                <p className="font-pre font-normal text-[18px] leading-[40px]">{`${workDay === 'null' ? '' : workDay}`}</p>
               )}
           </div>
-          <div>
+          {/* <div>
             {currentUser && modifyState && (
               <div>
                 {timeOptions.map((item) => (
-                  <label key={item} htmlFor={item} className="mt-[20px] peer border-2 border-[#CCCCC] bg-[#CCCCC] rounded-[24px] text-#6457FA px-[12px] py-[6px] mr-[8px] mb-[8px] font-pre text-[14px] leading-[16.9x]">
-                    <input {...register('time')} type="radio" onChange={() => setTime(item)} checked={item === time} value={item} id={time} className="checked:bg-[#6457FA] peer-checked:bg-#6457fA" />
+                  <label key={item} htmlFor={item} className="mt-[20px]
+                  peer border-2 border-[#CCCCC] bg-[#CCCCC] rounded-[24px]
+                  text-#6457FA px-[12px] py-[6px] mr-[8px] mb-[8px] font-pre
+                  text-[14px] leading-[16.9x]">
+                    <input {...register('time')} type="radio" onChange={
+                      () => setTime(item)}
+                      checked={item === time}
+                      value={item}
+                      id={time}
+                      className="checked:bg-[#6457FA] peer-checked:bg-#6457fA" />
                     {item}
                   </label>
                 ))}
               </div>
             ) }
-          </div>
+          </div> */}
         </div>
       </div>
       <div className="flex justify-center">
@@ -372,7 +431,6 @@ export default function Profile({
         </button>
         )}
       </div>
-
     </form>
   );
 }

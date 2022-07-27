@@ -17,13 +17,10 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
   tagList: Array<Itag>;
   currentUser:boolean;
   }) {
-  const tag = tagList.map((obj: Itag) => obj.body);
-  const newTag = tag.splice(8);
   const [Tab, setTab] = useState('profile');
   const [objectURL, setObjectURL] = useState<string>(profileData.profile_image_url);
   const [nameModify, setNameModify] = useState(false);
   const [modifyState, setModifyState] = useState(false);
-
   const [newName, setNewName] = useState(profileData.username);
   const [nameMessage, setNameMessage] = useState('');
   const [err, setErr] = useState(false);
@@ -32,7 +29,7 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
 
   const profileChangeButtonDefault = 'w-full h-[67px] rounded-[15px] font-pre font-normal text-[16px] leading-[19px] bg-[#EEEEEE] text-[#CCCCCC]';
   const profileChangeButtonActive = 'w-full h-[67px] rounded-[15px] font-pre font-normal text-[16px] leading-[19px] bg-white border-2 text-[#6457FA] border-[#6457FA]';
-  const [buttonCss, setButtonCss] = useState(profileChangeButtonDefault);
+  const [buttonCss, setButtonCss] = useState(profileChangeButtonActive);
 
   const queryClient = useQueryClient();
 
@@ -86,15 +83,21 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
   };
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value.length < 2 || e.target.value.length > 5) {
+    if (e.target.value.length < 2) {
       setErr(true);
       setNameMessage('2글자 이상 5글자 미만으로 입력해주세요.');
-    } else { setNewName(e.target.value); }
+      setNewName(e.target.value);
+    } else if (e.target.value.length > 5) {
+      setErr(true);
+      setNameMessage('2글자 이상 5글자 미만으로 입력해주세요.');
+    } else {
+      setNewName(e.target.value);
+    }
   };
 
   const modifyUserInfo = () => {
     setModifyState(!modifyState);
-    setButtonCss(modifyState ? profileChangeButtonDefault : profileChangeButtonActive);
+    setButtonCss(modifyState ? profileChangeButtonActive : profileChangeButtonDefault);
   };
 
   const tabClick = (e:React.MouseEvent<HTMLButtonElement>) => {
@@ -103,8 +106,11 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
     setNameModify(false);
   };
 
+  const tabDefatult = 'pr-8 hover:text-black text-[#CCCCCC]';
+  const tabClicked = 'pr-8 underline underline-offset-8 text-black';
+  const tabCss = tabDefatult;
   return (
-    <div className="max-w-full mx-auto">
+    <div className="max-w-full mx-auto min-h-screen">
       { modalOpen && updateErrMessage && (
         <Portal>
           <TextModal messages={['프로필을 변경할 수 없습니다.', updateErrMessage]} modalClose={setModalOpen} />
@@ -131,7 +137,7 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
               {currentUser && nameModify ? (
                 <div className=" ">
                   {err === true && (<span className="font-pre font-normal text-[12px] leading-[13.32px]">{nameMessage}</span>)}
-                  <input className="w-[100px] pl-[10px] shadow-lg " type="text" onChange={handleInput} />
+                  <input className="w-[100px] pl-[10px] shadow-lg " type="text" onChange={handleInput} value={newName} />
                   <button
                     type="button"
                     onClick={onChangeName}
@@ -164,6 +170,7 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
               value="modifyUserInfo"
               onClick={modifyUserInfo}
               className={buttonCss}
+              disabled={modifyState}
             >
               내 정보 수정하기
             </button>
@@ -206,7 +213,7 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
                 {currentUser && nameModify ? (
                   <div className=" ">
                     {err === true && (<span className="font-pre font-normal text-[12px] leading-[13.32px]">{nameMessage}</span>)}
-                    <input className="w-[100px] pl-[10px] shadow-lg " type="text" onChange={handleInput} />
+                    <input className="w-[100px] pl-[10px] shadow-lg " type="text" onChange={handleInput} value={newName} />
                     <button
                       type="button"
                       onClick={onChangeName}
@@ -232,12 +239,12 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
             </div>
           </div>
           {currentUser && (
-          <div className="tab w-full flex-none pt-[87px] pb-8 font-pre font-bold text-[28px] leading-[33px]">
+          <div className="tab w-full pt-[87px] pb-8 font-pre font-bold text-[28px] leading-[33px] text-[#CCCCCC  ] visited:text-black">
             <button
               type="button"
               onClick={tabClick}
               value="profile"
-              className="pr-8 hover:underline hover:decoration-4"
+              className={`${Tab === 'profile' ? tabClicked : tabDefatult}`}
             >
               프로필
             </button>
@@ -245,7 +252,7 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
               type="button"
               value="registeredPosts"
               onClick={tabClick}
-              className="pr-8 hover:underline hover:decoration-4"
+              className={`${Tab === 'registeredPosts' ? tabClicked : tabDefatult}`}
             >
               등록한 프로젝트
             </button>
@@ -253,7 +260,7 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
               type="button"
               value="applyPosts"
               onClick={tabClick}
-              className="pr-8 hover:underline hover:decoration-4"
+              className={`${Tab === 'applyPosts' ? tabClicked : tabDefatult}`}
             >
               신청한 프로젝트
             </button>
@@ -262,7 +269,7 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
           {Tab === 'profile' && (
             <Profile
               profileData={profileData}
-              tagList={newTag}
+              tagList={tagList}
               currentUser={currentUser}
               modifyState={modifyState}
               setModifyState={setModifyState}

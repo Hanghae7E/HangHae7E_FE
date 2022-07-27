@@ -13,9 +13,12 @@ export default function TextModal(ModalData: textModalType) {
   const {
     messages, modalClose, messageCSS, replace,
   } = ModalData;
-  const defaultModalCSS = 'w-1/2 h-fit pb-20 bg-white  rounded-[16px]';
+  const defaultModalCSS = 'w-1/2 h-fit pb-[15px] bg-white  rounded-[16px]';
   const defaultMessageCSS = messageCSS || 'font-pre font-semibold text-[22px] leading-[30px]';
   const nav = useNavigate();
+  const goMypage = () => {
+    nav('/mypage');
+  };
   useEffect(() => {
     document.body.style.cssText = `
     position: fixed; 
@@ -52,6 +55,9 @@ export default function TextModal(ModalData: textModalType) {
             <p key={messge} className={defaultMessageCSS}>{messge}</p>
           ))}
 
+        </div>
+        <div className="w-full mt-[50px] flex justify-end items-end">
+          {messages[0].includes('마이페이지') && <button type="button" onClick={goMypage} className="flex w-60 border-[2px] text-[#6457FA] border-[#6457FA] py-3 rounded-xl justify-center bg-white font-semibold cursor-pointer  mr-2">이동하기</button>}
         </div>
       </div>
     </div>

@@ -10,17 +10,17 @@ export default function MyPageContainer() {
   const currentUserId = jwtUtils.getId(localStorage.getItem('token'));
 
   const profileId = id || currentUserId;
-  const skillTags = useQuery('tag', () => tagApi.getAllTag());
+  const { isSuccess: skillSuccess, data: skillTags } = useQuery('tag', () => tagApi.getAllTag());
   const userProfile = useQuery('get_profile_info', () => userAPi.getUserProfile(profileId));
 
   return (
     <div>
-      {userProfile?.isSuccess && skillTags.isSuccess
+      {userProfile?.isSuccess && skillSuccess
           && (
             <MyPageBody
               profileData={userProfile.data.data}
               currentUser={typeof id === 'undefined' || currentUserId === id}
-              tagList={skillTags.data.data}
+              tagList={skillTags.data}
             />
           )}
     </div>
