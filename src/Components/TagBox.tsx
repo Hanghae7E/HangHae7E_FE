@@ -36,7 +36,7 @@ export default function TagBox({
       case '1':
         return 'bg-[#74EC8B] border-[#74EC8B]';
       case '2':
-        return 'bg-[#6457FA] text-white border-[#6457FA]';
+        return 'bg-[#5177FE] text-white border-[#5177FE]';
       case '3':
         return 'bg-[#FFC700] border-[#FFC700]';
       default:

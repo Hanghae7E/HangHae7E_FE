@@ -51,12 +51,12 @@ export default function MainBody(
         </div>
       </div>
       <div className=" w-full flex pt-5 pb-5 z-[1] sticky top-0 bg-white py-3">
-        <div className="flex flex-1 mr-5 relative items-center md:ml-[10px]">
+        <div className="flex flex-1 mr-5 relative items-center  md:ml-[10px]">
           <p className="flex font-bold text-[18px] md:text-2xl mr-5">프로젝트</p>
-          <div className="flex items-end justify-center text-[14px]">
+          <div className="flex items-center justify-center text-[14px] h-[50px]">
             <span className="pr-3">관심분야</span>
             {' | '}
-            <div className="flex mx-[12px]">
+            <div className="flex mx-[12px] items-center">
               {searchTagList.length > 0 ? searchTagList.map((tag) => <TagBox key={tag.tagId} tag={tag.body} padding="text-[14px] py-[8px] px-[12px]" margin="ml-[4px] mr-[4px]" />)
                 : <span className="px-3">전체</span>}
             </div>

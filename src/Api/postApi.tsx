@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { FieldValues } from 'react-hook-form';
 import { ITag } from '../TypeInterface/postType';
 import baseUrl from './baseUrl';
@@ -82,23 +83,38 @@ export const getRecruitPostDetails = ({ postId }: {postId: string}) => async () 
 };
 
 // 프로젝트 신청
-export const postRecriutDetailPosts = async ({ postId }: { postId: string }) => {
-  const res = await baseUrl.post(`/recruitPost/${postId}/application`);
+export const postRecriutDetailPosts = async ({ postId }: {postId: string}) => {
+  const res = await baseUrl.post(`/recruitPost/${postId}/application`, {});
   return res;
 };
 
-export const postRecruitDetailAccept = async ({ postId }: {postId: string}) => {
-  const res = await baseUrl.post(`/recruitAccept/${postId}`);
+export const postRecruitDetailAccept = async (
+  { postId, userId }: {
+    postId: string,
+    userId: number
+  },
+) => {
+  const res = await baseUrl.post(`/recruitPost/${postId}/application/accepted`, {
+    userId,
+  });
   return res;
 };
 
 export const deleteRecruitDetail = async ({ postId }: {postId: string}) => {
-  const res = await baseUrl.delete(`/recruitAccept/${postId}`);
+  const res = await baseUrl.delete(`/recruitPost/${postId}`);
   return res;
 };
 
-export const postRejectRecruit = async ({ postId }: {postId: string}) => {
-  const res = await baseUrl.post(`/recruitPost/${postId}/application/denied`);
+export const postRejectRecruit = async (
+  { postId, userId }: {
+    postId: string,
+    userId: number
+  },
+) => {
+  console.log(userId);
+  const res = await baseUrl.post(`/recruitPost/${postId}/application/denied`, {
+    userId,
+  });
   return res;
 };
 

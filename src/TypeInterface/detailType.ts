@@ -3,8 +3,8 @@ export type Applicant = {
     email: string
     username: string
     position: string
-    profile_image_url: string
-    status: number
+    profileImageUrl: string
+    status: string
   }
 export interface DetailProjectData {
     userId: number, //

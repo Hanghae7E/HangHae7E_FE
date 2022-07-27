@@ -23,13 +23,14 @@ end?: string;
 setStart:React.Dispatch<SetStateAction<string>>
 setEnd?:React.Dispatch<SetStateAction<string>>
 isRange?: boolean;
+customCss?:string;
 }
 interface IData{
   value:string,
 onClick: () => void,
 }
 export default function CustomCalinder({
-  start, end, isRange = false, setStart, setEnd,
+  start, end, isRange = false, setStart, setEnd, customCss,
 }: Iprops) {
   const prvBtnClass = 'react-datepicker__navigation react-datepicker__navigation--previous';
   const prvSpanClass = 'react-datepicker__navigation-icon react-datepicker__navigation-icon--previous';
@@ -47,28 +48,31 @@ export default function CustomCalinder({
     setEndDate(selectEnd);
     if (setEnd) { setEnd(dateFormat(selectEnd !== null ? selectEnd : new Date())); }
   };
-
+  const defaultCss = `flex flex-1 max-w-[282px] w-[282px] h-[60px] min-w-max
+my-2  border-[2px] rounded-lg border-[#DFE1E5] items-center pl-[16px] `;
+  const css = customCss === undefined ? defaultCss : customCss;
   const ExampleCustomInput = forwardRef<HTMLInputElement, IData>((props, ref) => (
     <div
-      className={
-        `flex 
-        flex-1 max-w-[282px]
-        w-[282px] h-[60px]
-        min-w-max
-        my-2 
-        border-[2px]
-        rounded-lg
-        border-[#DFE1E5]
-        items-center
-        ${isOpen && 'border-[#6457FA]'}
-        pl-[16px]`
-
-      }
+      className={`${css} ${isOpen && 'border-[#6457FA]'}`}
     >
-      {isOpen ? <GlobalIcon.ActCalendar /> : <GlobalIcon.Calendar />}
+      {isOpen ? (
+        <GlobalIcon.ActCalendar
+          size={
+        window.innerWidth > 768
+          ? 24 : 16
+}
+        />
+      ) : (
+        <GlobalIcon.Calendar
+          size={
+          window.innerWidth > 768
+            ? 24 : 16
+}
+        />
+      )}
       <input
         type="button"
-        className={`ml-[8px] text-[18px] text-black ${isOpen && 'text-[#6457FA]'}  cursor-pointer`}
+        className={`ml-[8px] text-[14px] sm:text-[18px] text-black ${isOpen && 'text-[#6457FA]'}  cursor-pointer`}
         onClick={props.onClick}
         value={props.value}
         ref={ref}
@@ -85,8 +89,21 @@ export default function CustomCalinder({
         <DatePicker
           id="calendar"
           className="bg-white"
-          onCalendarClose={() => setIsOpen(false)}
-          onCalendarOpen={() => setIsOpen(true)}
+          withPortal={window.innerWidth < 1280}
+          onCalendarClose={() => {
+            const scrollY = document.body.style.top;
+            document.body.style.cssText = '';
+            window.scrollTo(0, parseInt(scrollY || '0', 10) * -1);
+            setIsOpen(false);
+          }}
+          onCalendarOpen={() => {
+            document.body.style.cssText = `
+              position: fixed; 
+              top: -${window.scrollY}px;
+              overflow-y: scroll;
+              width: 100%;`;
+            setIsOpen(true);
+          }}
           renderCustomHeader={({
             monthDate, customHeaderCount, decreaseMonth, increaseMonth,
           }) => (
@@ -126,8 +143,21 @@ export default function CustomCalinder({
         />
       ) : (
         <DatePicker
-          onCalendarClose={() => setIsOpen(false)}
-          onCalendarOpen={() => setIsOpen(true)}
+          onCalendarClose={() => {
+            const scrollY = document.body.style.top;
+            document.body.style.cssText = '';
+            window.scrollTo(0, parseInt(scrollY || '0', 10) * -1);
+            setIsOpen(false);
+          }}
+          onCalendarOpen={() => {
+            document.body.style.cssText = `
+              position: fixed; 
+              top: -${window.scrollY}px;
+              overflow-y: scroll;
+              width: 100%;`;
+            setIsOpen(true);
+          }}
+          withPortal={window.innerWidth < 1280}
           renderCustomHeader={({
             monthDate, decreaseMonth, increaseMonth,
           }) => (

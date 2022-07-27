@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import userAPi from '../Api/userAPi';
 import { Iuser } from '../TypeInterface/userType';
@@ -43,6 +43,18 @@ export default function NickNameModal({
   async function savebtn() {
     if (Input) { changeNickName.mutate(Input); } else { changeNickName.mutate(userInfo.username); }
   }
+  useEffect(() => {
+    document.body.style.cssText = `
+    position: fixed; 
+    top: -${window.scrollY}px;
+    overflow-y: scroll;
+    width: 100%;`;
+    return () => {
+      const scrollY = document.body.style.top;
+      document.body.style.cssText = '';
+      window.scrollTo(0, parseInt(scrollY || '0', 10) * -1);
+    };
+  }, []);
   return (
     <div className="flex w-full h-full fixed items-center justify-center bg-black/30 z-10">
       <div className="modal-contents max-w-[410px] max-h-[494px]  px-[24px] py-[26px] bg-white  rounded-[16px]">
@@ -85,7 +97,7 @@ export default function NickNameModal({
             type="button"
             value="nickBtn"
             onClick={savebtn}
-            className="w-[300px] h-[60px] rounded-[15px] mt-[60px] font-pre font-bold text-[20px] leading-[24px] bg-[#6457FA] text-white hover:bg-white hover:text-[#6457FA]  hover:border-2 hover:border-[#6457FA]"
+            className="w-[300px] h-[60px] rounded-[15px] pc:mt-[60px] mt-[28px] font-pre font-bold text-[20px] leading-[24px] bg-[#6457FA] text-white hover:bg-white hover:text-[#6457FA]  hover:border-2 hover:border-[#6457FA]"
           >
             이걸로 할께요!
           </button>

@@ -13,6 +13,8 @@ export interface IsideProfile {
   userId?: string|false;
   username: string;
   file?:File;
+  skills: Array<string> ;
+  fields:Array<string>
 }
 
 export interface IProfileFormData {

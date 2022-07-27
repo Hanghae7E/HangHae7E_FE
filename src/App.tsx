@@ -10,19 +10,18 @@ import ProtectedRoute from './Components/ProtectedRoute';
 import Headerbar from './Components/Headerbar';
 import userGetUserInfo from './Hooks/userGetUserInfo';
 import ProjectUpdate from './Pages/ProjectUpdate';
+import NotFound from './Components/NotFound';
 
 const GlobalStyle = createGlobalStyle`
-  *{
-    font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-  }
-  input[type='number']::-webkit-inner-spin-button,
-  input[type='number']::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-
+*{
+  font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+}
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 `;
-
 function App() {
   const userInfo = userGetUserInfo();
 
@@ -32,35 +31,44 @@ function App() {
       <Headerbar userInfo={userInfo?.data?.data} />
       <Routes>
         <Route path="/" element={<MainPage />} />
+
         <Route element={<ProtectedRoute redirectPath="/" />}>
           <Route
             path="/mypage"
             element={(
               <MyPage />
-                )}
-          />
+            )}
+          >
+            <Route
+              path=":id"
+              element={(
+                <MyPage />
+              )}
+            />
+          </Route>
           <Route
             path="/projectcreate"
             element={(
               <ProjectCreate />
-              )}
+            )}
           />
           <Route
             path="/projectupdate"
             element={(
               <ProjectUpdate />
-              )}
+            )}
           >
             <Route
               path=":postId"
               element={(
                 <ProjectUpdate />
-              )}
+            )}
             />
           </Route>
         </Route>
         <Route path="/detail/:postId" element={<DetailPage />} />
         <Route path="/login/callback" element={<SocialLogin />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );

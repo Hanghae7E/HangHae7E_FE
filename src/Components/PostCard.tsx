@@ -49,7 +49,7 @@ export default function PostCard({ data }: { data: IRecruitPost }) {
                     <p className="font-bold text-[14px] md:text-[20px]">{data.username}</p>
                   </div>
                   <div>
-                    <p className="font-normal text-[10px] md:text-[16px] text-black">{`test${data.introduce}`}</p>
+                    <p className="font-normal text-[10px] md:text-[16px] text-black">{`${data.authorFields.map((v) => v.body).join(' ')}`}</p>
                   </div>
                 </div>
               </div>

@@ -9,25 +9,19 @@ interface Props {
     userId:number;
     userImg:string;
     close: () => void;
-    onClickAccept: (userId?:number) => void
-  onClickReject: (userId?:number) => void
+    onClickCancle: (userId?:number) => void
 }
 
-function ConfirmApplyModal({
+function ApplyCancelModal({
   isOpen,
   text,
   userId,
   userImg,
   close,
-  onClickAccept,
-  onClickReject,
+  onClickCancle,
 }: Props) {
-  const acceptApplicant = () => {
-    onClickAccept(userId);
-    close();
-  };
-  const rejectApplicant = () => {
-    onClickReject(userId);
+  const ApplyCancelApplicant = () => {
+    onClickCancle(userId);
     close();
   };
   if (isOpen) {
@@ -40,7 +34,7 @@ function ConfirmApplyModal({
             left: '50%',
             transform: 'translate(-50%, -50%)',
           }}
-          className="pt-[51px] px-[68px] pb-[50px] text-center bg-white rounded-xl w-[520px] h-[362px] z-10"
+          className="pt-[51px] px-[68px] pb-[50px] text-center bg-white rounded-xl w-[520px] h-[400px] z-10"
         >
           <button
             type="button"
@@ -49,26 +43,21 @@ function ConfirmApplyModal({
           >
             <DetailIcon.Cancel />
           </button>
-          <img className="w-[110px] h-[110px] mx-auto rounded-full" alt="프로필 이미지" src={userImg || '/profiledefault.svg'} />
-          <p className="text-[24px] font-bold mt-[20px] mb-[20px]">
+          <img className="w-[110px] h-[110px] mx-auto rounded-full " alt="프로필 이미지" src={userImg || '/profiledefault.svg'} />
+          <p className="text-[24px] font-bold mt-5 mb-5">
+            함께 하기로 한
+            <br />
             {text}
-            님과 프로젝트를 함께 하시겠어요?
+            님을 취소 하시겠어요?
           </p>
           <p className="text-[12px] font-bold my-5 text-red-500"> 거절된 신청자는 다시 신청 할 수 없습니다 </p>
           <div>
             <button
-              onClick={rejectApplicant}
+              onClick={ApplyCancelApplicant}
               className="mr-4 w-[184px] border-[1px] border-solid border-[#6457FA] text-[#6457FA] font-bold rounded-lg py-4"
               type="button"
             >
-              아쉽지만, 다음에 할게요.
-            </button>
-            <button
-              onClick={acceptApplicant}
-              className="w-[184px] bg-[#6457FA] text-white text-bold rounded-lg py-4"
-              type="button"
-            >
-              좋아요, 함께 할게요!
+              네 아쉽지만, 취소 할게요.
             </button>
           </div>
         </div>
@@ -83,4 +72,4 @@ function ConfirmApplyModal({
   return null;
 }
 
-export default React.memo(ConfirmApplyModal);
+export default React.memo(ApplyCancelModal);

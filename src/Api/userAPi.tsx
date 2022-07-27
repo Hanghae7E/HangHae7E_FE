@@ -56,7 +56,8 @@ export const setSideProfile = async (userInfo: IsideProfile) => {
   const userId = jwtUtils.getId(token || '');
   if (userInfo.username) form.append('username', userInfo.username);
   if (userInfo.file) form.append('files', userInfo.file);
-
+  if (userInfo.skills) form.append('skills', userInfo.skills.toString());
+  if (userInfo.fields) form.append('fields', userInfo.fields.toString());
   const res = await baseUrl.put(`/user/${userId}`, form, {
     headers: {
       'Content-Type': 'multipart/form-data',
@@ -72,22 +73,17 @@ const putUserProfile = async (
   selected:string[],
   startDate:string,
   endDate:string,
-  userId : string|false,
-  token:string,
 ) => {
-  // console.log('리퀘스트 전 profile', profile);
-  console.log('리퀘스트 전 selected', selected);
-  // console.log('리퀘스트 전 startDate', startDate);
-  // console.log('리퀘스트 전 endDate', endDate);
-  // console.log('리퀘스트 전 userId', userId);
+  const token = localStorage.getItem('token') as string;
+  const userId = jwtUtils.getId(token || '');
   const forms = new FormData();
   const availableTime = `${profile.workDay},${profile.time}`;
   const availablePeriod = `${startDate},${endDate}`;
-  if (profile.username) forms.append('username', profile.username);
   if (profile.position) forms.append('position', profile.position);
   if (profile.fields) forms.append('fields', profile.fields.toString());
-  if (profile.career_period) forms.append('career_period', profile.career_period);
   if (selected)forms.append('skills', selected.toString());
+  if (profile.username) forms.append('username', profile.username);
+  if (profile.career_period) forms.append('career_period', profile.career_period);
   if (profile.portfolio_url) forms.append('portfolio_url', profile.portfolio_url);
   if (profile.email)forms.append('email', profile.email);
   if (profile.phone_number)forms.append('phone_number', profile.phone_number);
@@ -118,8 +114,6 @@ export default {
     selected:string[],
     startDate:string,
     endDate:string,
-    userId:string|false,
-    token:string,
 
-  ) => putUserProfile(profile, selected, startDate, endDate, userId, token),
+  ) => putUserProfile(profile, selected, startDate, endDate),
 };

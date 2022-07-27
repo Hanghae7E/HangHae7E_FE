@@ -5,6 +5,7 @@ import DetailIcon from './DetailIcon';
 
 interface Props {
   data: DetailProjectData
+  isCreator: boolean
   onClickApply: () => void
   goBack: () => void
   goToEditPage: (projectData:DetailProjectData) => void
@@ -12,7 +13,12 @@ interface Props {
 
 }
 function DetailProjectInfo({
-  data, onClickApply, goBack, goToEditPage, handleDeleteProject,
+  data,
+  isCreator,
+  onClickApply,
+  goBack,
+  goToEditPage,
+  handleDeleteProject,
 }: Props) {
   const {
     title,
@@ -20,13 +26,16 @@ function DetailProjectInfo({
     projectStartTime,
     projectEndTime,
     recruitDueTime,
+    requiredDevelopers,
+    requiredDesigners,
+    requiredProjectManagers,
     tags,
   } = data;
 
   return (
-    <section className="w-full mt-[80px] ml-[63px]">
+    <section className="w-full mt-[50px] ml-[63px]">
       <div className="flex justify-between mb-[32px]">
-        <div>
+        <div className="flex items-center">
           <button
             type="button"
             onClick={goBack}
@@ -36,26 +45,28 @@ function DetailProjectInfo({
               <path d="M20 11H7.83L13.42 5.41L12 4L4 12L12 20L13.41 18.59L7.83 13H20V11Z" fill="#323232" />
             </svg>
           </button>
-          <span>돌아가기</span>
+          <span className="font-pre text-base font-normal ">돌아가기</span>
         </div>
-        <div>
-          <button
-            onClick={() => goToEditPage(data)}
-            className="underline mr-4"
-            type="button"
-          >
-            수정하기
-          </button>
-          <button
-            onClick={handleDeleteProject}
-            className="underline text-red-500"
-            type="button"
-          >
-            삭제하기
-          </button>
-        </div>
+        {isCreator && (
+          <div>
+            <button
+              onClick={() => goToEditPage(data)}
+              className="underline mr-4"
+              type="button"
+            >
+              수정하기
+            </button>
+            <button
+              onClick={handleDeleteProject}
+              className="underline text-red-500"
+              type="button"
+            >
+              삭제하기
+            </button>
+          </div>
+        )}
       </div>
-      <h1 className="text-[36px] font-[600]">{title}</h1>
+      <h1 className="font-pre text-[36px] font-[600] leading-[56px]">{title}</h1>
       <ul className="flex flex-row mt-3">
         {tags.map((item) => (
           <li
@@ -66,10 +77,10 @@ function DetailProjectInfo({
           </li>
         ))}
       </ul>
-      <ul className="mt-[42px]">
+      <ul className="mt-[40px]">
         <li className="flex">
           <DetailIcon.Project />
-          <p className="font-bold text-base ml-[11px] mr-5">
+          <p className="font-bold min-w-[87px] text-base ml-[11px] mr-5">
             프로젝트 일정
           </p>
           <span>
@@ -80,20 +91,35 @@ function DetailProjectInfo({
         </li>
         <li className="flex my-[19px]">
           <DetailIcon.User />
-          <p className="font-bold text-base ml-[11px] mr-5">
+          <p className="font-pre font-bold min-w-[87px] text-base ml-[11px] mr-5">
             모집인원
           </p>
-          <span>
-            개발자 0명 / 디자이너 0 명
+          <span className="border-r-[1px] my-[4px] pr-3  border-[#CCCCCC]">
+            개발자
+            {' '}
+            {requiredDevelopers}
+            명
+          </span>
+          <span className="border-r-[1px] my-[4px] px-3 border-[#CCCCCC]">
+            디자이너
+            {' '}
+            {requiredDesigners}
+            명
+          </span>
+          <span className="my-[4px] pl-3">
+            기획자
+            {' '}
+            {requiredProjectManagers}
+            명
           </span>
         </li>
         <li className="flex">
           <DetailIcon.Project />
-          <p className="font-bold text-base ml-[11px] mr-5">모집마감</p>
+          <p className="font-pre font-bold min-w-[87px] text-base ml-[11px] mr-5">모집마감</p>
           <span>{recruitDueTime}</span>
         </li>
       </ul>
-      <h2 className="font-bold text-[26px] mb-6 mt-[50px]">프로젝트 소개</h2>
+      <h2 className="font-pre font-bold text-[28px] mb-6 mt-[48px]">프로젝트 소개</h2>
       <div className="bg-[#F9F9F9] border-2 border-solid border-[#DFE1E5] rounded-lg p-[28px]">
         <div>
           <span>
@@ -102,6 +128,7 @@ function DetailProjectInfo({
         </div>
       </div>
       <div className="w-full flex justify-center mt-[60px]">
+        {!isCreator && (
         <button
           type="button"
           onClick={onClickApply}
@@ -109,6 +136,7 @@ function DetailProjectInfo({
         >
           참여신청하기
         </button>
+        )}
       </div>
     </section>
   );
