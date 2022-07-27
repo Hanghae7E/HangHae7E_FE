@@ -39,7 +39,7 @@ export default function ProjectCreateContainer() {
     imgName,
   );
 
-  const { isSuccess, data } = useQuery('tagList', postApi.getTag);
+  const { isSuccess, data: tagList } = useQuery('tagList', postApi.getTag);
 
   const fileGetChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const filename = e.target.files;
@@ -54,9 +54,11 @@ export default function ProjectCreateContainer() {
   };
 
   const onSubmit = (datas: FieldValues) => {
-    modalClose();
     // console.log(modalOpen);
-    if (hashTag.length > 0) { postRecruitMustation.mutate(datas); }
+    if (hashTag.length > 0) {
+      modalClose();
+      postRecruitMustation.mutate(datas);
+    }
   };
 
   return (
@@ -285,7 +287,7 @@ export default function ProjectCreateContainer() {
               <div className="sm:pl-16 pt-[8px]">
                 {window.innerWidth <= 768 && <p className=" font-extrabold text-[13px] sm:text-lg py-[20px] sm:py-9 w-32 sm:w-56">해시태그 </p>}
 
-                {isSuccess && <TagSearch tagData={data.data} selected={hashTag} setHashTag={setHashTag} placeholder="해시태그를 입력해 주세요" />}
+                {isSuccess && <TagSearch tagData={tagList.data.slice(49)} selected={hashTag} setHashTag={setHashTag} placeholder="해시태그를 입력해 주세요" />}
 
               </div>
 

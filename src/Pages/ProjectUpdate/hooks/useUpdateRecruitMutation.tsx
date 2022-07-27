@@ -24,6 +24,7 @@ function useUpdateRecruitMutation(
   ), {
     onSuccess: () => {
       query.invalidateQueries(['recruit_posts']);
+      query.invalidateQueries('recommend_post');
     },
   });
 }

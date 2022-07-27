@@ -1,6 +1,5 @@
 /* eslint-disable no-shadow */
 /* eslint-disable no-console */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useCallback, useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
@@ -18,11 +17,6 @@ import userApi from '../../Api/userAPi';
 import { DetailProjectData, UserData } from '../../TypeInterface/detailType';
 import TextModal from '../../Components/TextModal';
 
-interface ApplyStatus {
-  status: boolean
-  text: string
-}
-
 interface ApplyStatusInfo {
   response: {
     data: {
@@ -36,7 +30,6 @@ export default function DetailPageContainer() {
   const navigate = useNavigate();
   const postId = pathname.split('/')[2];
   const [userData, setUserData] = useState<UserData | null>(null);
-  const [isApply, setIsApply] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const modalClose = () => {
@@ -53,7 +46,7 @@ export default function DetailPageContainer() {
   const postRecruitDetail = useMutation((
     { postId }: {postId: string},
   ) => postRecriutDetailPosts({ postId }), {
-    onSuccess: (v) => {
+    onSuccess: () => {
       /**
        * 여기에 백엔드에서 오는 메시지 받아서 상태 업데이트
        * setIsApply()
@@ -61,8 +54,10 @@ export default function DetailPageContainer() {
       modalClose2();
       query.invalidateQueries('recruit_post_details');
     },
-    onError: (msg:ApplyStatusInfo) => {
-      setError(msg.response.data.message);
+    onError: (msg: ApplyStatusInfo) => {
+      if (msg.response.data.message.includes('포지션')) { setError('마이페이지 에서 직무와 직군을 선택해 주세요'); } else {
+        setError(msg.response.data.message);
+      }
       modalClose();
     },
   });
@@ -70,7 +65,7 @@ export default function DetailPageContainer() {
   const postAcceptApplicant = useMutation((
     { userId }: {userId: number},
   ) => postRecruitDetailAccept({ postId, userId }), {
-    onSuccess: (v) => {
+    onSuccess: () => {
       query.invalidateQueries('recruit_post_details');
     },
     onError: (msg:ApplyStatusInfo) => {
@@ -82,7 +77,7 @@ export default function DetailPageContainer() {
   const postRejectApplicant = useMutation((
     { userId }: {userId: number},
   ) => postRejectRecruit({ postId, userId }), {
-    onSuccess: (v) => {
+    onSuccess: () => {
       query.invalidateQueries('recruit_post_details');
     },
     onError: (msg:ApplyStatusInfo) => {
@@ -94,7 +89,7 @@ export default function DetailPageContainer() {
   const postApplicantCancel = useMutation((
     { userId }: {userId: number},
   ) => postRejectRecruit({ postId, userId }), {
-    onSuccess: (v) => {
+    onSuccess: () => {
       query.invalidateQueries('recruit_post_details');
     },
     onError: (msg:ApplyStatusInfo) => {
