@@ -63,7 +63,14 @@ const updateRecruitPost = async (
   if (hashTag)forms.append('tags', hashTag.map((v) => v.tagId).join(','));
   if (imgName) forms.append('img', imgName);
   if (datas.body) forms.append('body', datas.body);
-
+  console.log(forms.get('title'));
+  console.log(forms.get('requiredDesigners'));
+  console.log(forms.get('requiredDevelopers'));
+  console.log(forms.get('requiredProjectManagers'));
+  console.log(forms.get('projectStartTime'));
+  console.log(forms.get('projectEndTime'));
+  console.log(forms.get('recruitDueTime'));
+  console.log(forms.get('tags'));
   const res = await baseUrl.put(`/recruitPost/${postId}`, forms, {
     headers: {
       'Content-Type': 'multipart/form-data',
