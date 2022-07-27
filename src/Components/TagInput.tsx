@@ -90,7 +90,7 @@ export default function TagInput(tagOption: tagOptionI) {
     setSelected(newMyTags);
   };
   return (
-    <div>
+    <div className="flex flex-col">
       <div className="prev w-full ">
         <div className="SkilList flex flex-wrap ">
           {recommends.map((tag) => (
@@ -98,7 +98,7 @@ export default function TagInput(tagOption: tagOptionI) {
           ))}
         </div>
       </div>
-      <div className="searching">
+      <div className="searching w-full">
         <input
           type="text"
           className="h-[50px] w-full pl-[10px] border-2 border-[#EEEEEE] rounded-2xl font-pre font-normal text-[18px] leading-[21px] text-[black]"

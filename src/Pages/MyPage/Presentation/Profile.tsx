@@ -32,6 +32,7 @@ export default function Profile({
   const [updateErrMessage, setUpdateErrMessage] = useState('');
 
   const workdayOptions = ['주 1일', '주 2일', '주 3일', '주 4일', '주 5일'];
+  // const timeOptions = ['오전', '오후', '저녁', '야간'];
   const careerOptions = ['1년 미만', '1-2년', '2-3년', '3-4년', '4-5년', '5년 이상', '10년 이상'];
   const meetingoptions = [{ value: 'true', label: '대면' }, { value: 'false', label: '비대면' }];
   const positionOptions = ['개발자', '디자이너', '기획자'];
@@ -148,16 +149,21 @@ export default function Profile({
           </h2>
           {currentUser && modifyState
             ? (
-              <select
-                className="border-2 mr-[8px] w-[198px] h-12 border-[#EEEEEE] rounded-md pl-[10px] font-pre font-normal text-[18px] leading-[21px]"
-                {...register('position')}
+              <div
+                className="border-2 mr-[8px] w-[272px] h-12 border-[#EEEEEE] rounded-md pl-[10px] font-pre font-normal text-[18px] leading-[21px]"
+                style={{ backgroundImage: 'url(./dropdown.svg)', backgroundRepeat: 'no-repeat', backgroundPosition: '92% 50%' }}
               >
-                {positionOptions.map((item) => (
-                  <option value={item} key={item}>
-                    {item}
-                  </option>
-                ))}
-              </select>
+                <select
+                  className="border-0 bg-transparent appearance-none w-full h-full outline-none "
+                  {...register('position')}
+                >
+                  {positionOptions.map((item) => (
+                    <option value={item} key={item}>
+                      {item}
+                    </option>
+                  ))}
+                </select>
+              </div>
             )
             : (<p className="font-pre font-normal text-[18px] leading-[40px]">{profileData.position}</p>)}
         </div>
@@ -167,16 +173,21 @@ export default function Profile({
           </h2>
           {currentUser && modifyState
             ? (
-              <select
-                className="border-2 mr-[8px] w-[198px] h-12 border-[#EEEEEE] rounded-md pl-[10px]  font-pre font-normal text-[18px] leading-[21px]"
-                {...register('fields')}
+              <div
+                className="border-2 mr-[8px] w-[272px] h-12 border-[#EEEEEE] rounded-md pl-[10px] font-pre font-normal text-[18px] leading-[21px]"
+                style={{ backgroundImage: 'url(./dropdown.svg)', backgroundRepeat: 'no-repeat', backgroundPosition: '92% 50%' }}
               >
-                {fieldsOptions.map((item) => (
-                  <option value={item} key={item}>
-                    {item}
-                  </option>
-                ))}
-              </select>
+                <select
+                  className="border-0 bg-transparent appearance-none w-full h-full outline-none "
+                  {...register('fields')}
+                >
+                  {fieldsOptions.map((item) => (
+                    <option value={item} key={item}>
+                      {item}
+                    </option>
+                  ))}
+                </select>
+              </div>
             ) : (
               <p className="font-pre font-normal text-[18px] leading-[40px]">{profileData.fields[0]}</p>
             )}
@@ -187,16 +198,21 @@ export default function Profile({
           </h2>
           {currentUser && modifyState
             ? (
-              <select
-                className="border-2 mr-[8px] w-[198px] h-12 border-[#EEEEEE] rounded-md pl-[10px] font-pre font-normal text-[18px] leading-[21px]"
-                {...register('career_period')}
+              <div
+                className="border-2 mr-[8px] w-[272px] h-12 border-[#EEEEEE] rounded-md pl-[10px] font-pre font-normal text-[18px] leading-[21px]"
+                style={{ backgroundImage: 'url(./dropdown.svg)', backgroundRepeat: 'no-repeat', backgroundPosition: '92% 50%' }}
               >
-                {careerOptions.map((item) => (
-                  <option value={item} key={item}>
-                    {item}
-                  </option>
-                ))}
-              </select>
+                <select
+                  className="border-0 bg-transparent appearance-none w-full h-full outline-none "
+                  {...register('career_period')}
+                >
+                  {careerOptions.map((item) => (
+                    <option value={item} key={item}>
+                      {item}
+                    </option>
+                  ))}
+                </select>
+              </div>
             ) : (
               <p className="font-pre font-normal text-[18px] leading-[40px]">{profileData.career_period}</p>
             )}
@@ -221,7 +237,7 @@ export default function Profile({
               </div>
             )}
         </div>
-        <div className="flex pt-[28px]  mr-[64px]">
+        <div className="flex pt-[28px]  mr-[40px]">
           <h2 className="min-w-fit pr-[22px] font-pre font-bold text-[18px] leading-[50px]">
             링크
           </h2>
@@ -236,7 +252,6 @@ export default function Profile({
         </div>
         {currentUser && modifyState && (
         <div className="flex pl-[60px] pt-[12px]">
-          <p>{errors.email?.type === 'pattern' && '유효한 이메일 주소를 입력 해 주세요'}</p>
           <p className="w-full font-pre font-normal text-[12px] leading-[14.32px]">
             깃헙, 노션으로 작성한 포트폴리오, 구글 드라이브 파일 등 본인을 보여줄 수 있는 링크를
             추가해주세요.
@@ -282,16 +297,21 @@ export default function Profile({
           </h2>
           {currentUser && modifyState
             ? (
-              <select
-                className="border-2 mr-[8px] w-[198px] h-12 border-[#EEEEEE] rounded-md pl-[10px] font-pre font-normal text-[18px] leading-[21px]"
-                {...register('residence')}
+              <div
+                className="border-2 mr-[8px] w-[272px] h-12 border-[#EEEEEE] rounded-md pl-[10px] font-pre font-normal text-[18px] leading-[21px]"
+                style={{ backgroundImage: 'url(./dropdown.svg)', backgroundRepeat: 'no-repeat', backgroundPosition: '92% 50%' }}
               >
-                {residenceOptions.map((item) => (
-                  <option value={item} key={item}>
-                    {item}
-                  </option>
-                ))}
-              </select>
+                <select
+                  className="border-0 bg-transparent appearance-none w-full h-full outline-none "
+                  {...register('residence')}
+                >
+                  {residenceOptions.map((item) => (
+                    <option value={item} key={item}>
+                      {item}
+                    </option>
+                  ))}
+                </select>
+              </div>
             ) : (
               <p className="font-pre font-normal text-[18px] leading-[40px]">{profileData.residence}</p>
             )}
@@ -303,17 +323,21 @@ export default function Profile({
           </h2>
           {currentUser && modifyState
             ? (
-              <select
-                className="border-2 mr-[8px] w-[198px] h-12 border-[#EEEEEE] rounded-md pl-[10px] font-pre font-normal text-[18px] leading-[21px]"
-                {...register('face_to_face')}
+              <div
+                className="border-2 mr-[8px] w-[272px] h-12 border-[#EEEEEE] rounded-md pl-[10px] font-pre font-normal text-[18px] leading-[21px]"
+                style={{ backgroundImage: 'url(./dropdown.svg)', backgroundRepeat: 'no-repeat', backgroundPosition: '92% 50%' }}
               >
-                {meetingoptions.map((item) => (
-                  <option value={item.value} key={item.value}>
-                    {item.label}
-                  </option>
-                ))}
-              </select>
-
+                <select
+                  className="border-0 bg-transparent appearance-none w-full h-full outline-none "
+                  {...register('face_to_face')}
+                >
+                  {meetingoptions.map((item) => (
+                    <option value={item.value} key={item.value}>
+                      {item.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
             ) : (
               <p className="font-pre font-normal text-[18px] leading-[40px]">{profileData.face_to_face ? '대면' : '비대면'}</p>
             )}
@@ -330,8 +354,7 @@ export default function Profile({
               setStart={setStartDate}
               setEnd={setEndDate}
               isRange
-              customCss={`flex flex-1 max-w-[282px] w-[282px] h-[48px] min-w-max
-                border-[2px] rounded-lg border-[#DFE1E5] items-center pl-[16px]`}
+              customCss="flex flex-1 max-w-[272px] w-[270px] h-[52px] min-w-max border-[2px] rounded-lg border-[#DFE1E5] items-center pl-[10px] pr-[14px]"
             />
           )
             : (
@@ -345,15 +368,31 @@ export default function Profile({
           <div>
             {currentUser && modifyState
               ? (
-                <select
-                  defaultValue={workDay}
-                  className="border-2 mr-[8px] w-[198px] h-12 border-[#EEEEEE] rounded-md pl-[10px] font-pre font-normal text-[18px] leading-[21px]"
-                  {...register('workDay')}
+                <div
+                  className="border-2 mr-[8px] w-[272px] h-12 border-[#EEEEEE] rounded-md pl-[10px] font-pre font-normal text-[18px] leading-[21px]"
+                  style={{ backgroundImage: 'url(./dropdown.svg)', backgroundRepeat: 'no-repeat', backgroundPosition: '92% 50%' }}
                 >
-                  {workdayOptions.map((item) => (
-                    <option value={item} key={item}>{item}</option>
-                  ))}
-                </select>
+                  <select
+                    defaultValue={workDay}
+                    className="border-0 bg-transparent appearance-none w-full h-full outline-none "
+                    {...register('workDay')}
+                  >
+                    {workdayOptions.map((item) => (
+                      <option value={item} key={item}>{item}</option>
+                    ))}
+                  </select>
+                  {/* {timeOptions.map((item) => (
+                    <label key={item} htmlFor={item} className="mt-[20px] peer border-2
+                    border-[#CCCCC] bg-[#CCCCC] rounded-[24px] text-#6457FA px-[12px]
+                    py-[6px] mr-[8px] mb-[8px] font-pre text-[14px] leading-[16.9x]">
+                      <input {...register('time')} type="radio" onChange={() => setTime(item)}
+                       checked={item === time} value={item} id={time}
+                       className="checked:bg-[#6457FA] peer-checked:bg-#6457fA" />
+                      {item}
+                    </label>
+                  ))} */}
+
+                </div>
               ) : (
                 <p className="font-pre font-normal text-[18px] leading-[40px]">{`${workDay === 'null' ? '' : workDay}`}</p>
               )}
@@ -392,7 +431,6 @@ export default function Profile({
         </button>
         )}
       </div>
-
     </form>
   );
 }
