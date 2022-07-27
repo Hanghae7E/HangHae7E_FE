@@ -19,15 +19,21 @@ export default function NickNameModal({
   const [Input, setInput] = useState('');
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value.length < 2 || e.target.value.length > 5) {
+    if (e.target.value.length < 2) {
       setNicknameMessage('2글자 이상 5글자 미만으로 입력해주세요.');
       setNicknameCheck(false);
+      setInput(e.target.value);
+    } else if (e.target.value.length > 5) {
+      setNicknameMessage('2글자 이상 5글자 미만으로 입력해주세요.');
+      setNicknameCheck(false);
+    } else {
+      setInput(e.target.value);
     }
     if (e.target.value.length === 0) {
       setNicknameMessage(`입력하지 않으면 ${userInfo.username}이(가) 닉네임으로 사용됩니다.`);
       setNicknameCheck(false);
     }
-    setInput(e.target.value);
+
     setNicknameMessage('환영합니다 :)');
     setNicknameCheck(true);
   };
