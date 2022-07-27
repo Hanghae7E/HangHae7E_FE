@@ -1,11 +1,12 @@
+/* eslint-disable camelcase */
 /* eslint-disable react/require-default-props */
 import React from 'react';
 import DetailIcon from './DetailIcon';
 
 interface Props {
     isOpen: boolean
-  text?: string
-  userId:number
+    text?: string
+    userId:number
     close: () => void;
     onClickAccept: (userId?:number) => void
   onClickReject: (userId?:number) => void
@@ -46,7 +47,7 @@ function ConfirmApplyModal({
           >
             <DetailIcon.Cancel />
           </button>
-          <img className="w-[110px] h-[110px] mx-auto" alt="프로필 이미지" src="" />
+          <img className="w-[110px] h-[110px] mx-auto" alt="프로필 이미지" src="/profiledefault.svg" />
           <p className="text-[24px] font-bold mt-[20px] mb-[40px]">
             {text}
             님과 프로젝트를 함께 하시겠어요?

@@ -29,15 +29,15 @@ function ApplicantsInfo({ onClickAccept, onClickReject, applicantsStanby }: Prop
       <h2 className="pl-6 font-bold text-[26px]">
         신청자 리스트
       </h2>
-      <ul className="w-[300px]">
+      <ul className="w-[300px] mt-5">
         {applicantsStanby?.map(({
           username, userId, position, profile_image_url,
         }) => (
           <li
             key={userId}
-            className="flex items-center w-[255px] border-b-[1px] border-b-solid border-b-[#EEEEEE] mx-auto pb-[10px]"
+            className="flex items-center w-[255px] border-b-[1px] border-b-solid border-b-[#EEEEEE] mx-auto pb-3"
           >
-            <img alt="신청자이미지" className="bg-black w-[51px] h-[51px] rounded-full" src={profile_image_url} />
+            <img alt="신청자이미지" className="w-12 h-12" src="/profiledefault.svg" />
             <h5 className="ml-[10px] text-xl font-bold">{username}</h5>
             <PositionTag
               position={position}
