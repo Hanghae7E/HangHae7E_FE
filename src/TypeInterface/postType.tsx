@@ -36,6 +36,9 @@ export interface IRegisteredPosts{
 	recruit_due_time : string;
 	capacity : string;
 	status: string;
+	required_developers:string;
+	required_project_managers:string;
+	required_designers:string;
 }
 export interface IapplyPosts{
 	id: number;
@@ -46,4 +49,7 @@ export interface IapplyPosts{
 	recruit_due_time : string;
 	capacity : string;
 	status: string;
+	required_developers:string;
+	required_project_managers:string;
+	required_designers:string;
 }
