@@ -31,8 +31,8 @@ function ApplicantsInfo({ onClickAccept, onClickReject, applicantsStanby }: Prop
       </h2>
       <ul className="w-[300px]">
         {applicantsStanby?.map(({
-          username, userId, position, profile_image_url,
-        }) => (
+          username, userId, position, profile_image_url, status,
+        }) => status === '대기중' && (
           <li
             key={userId}
             className="flex items-center w-[255px] border-b-[1px] border-b-solid border-b-[#EEEEEE] mx-auto pb-[10px]"

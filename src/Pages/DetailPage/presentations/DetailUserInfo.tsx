@@ -19,9 +19,9 @@ function DetailUserInfo({
   handleAcceptApplicant,
   handleRejectApplicant,
 }: Props) {
-  const getStanbyApplicants = () => data.applicants?.filter(({ status }) => status !== 2);
+  const getStanbyApplicants = () => data.applicants?.filter(({ status }) => status !== '불합격');
 
-  const getAcceptApplicants = () => data.applicants?.filter(({ status }) => status === 0);
+  const getAcceptApplicants = () => data.applicants?.filter(({ status }) => status === '합격');
 
   if (userData === null) return null;
 

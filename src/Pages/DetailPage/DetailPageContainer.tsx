@@ -16,10 +16,20 @@ import {
 } from '../../Api/postApi';
 import userApi from '../../Api/userAPi';
 import { DetailProjectData, UserData } from '../../TypeInterface/detailType';
+import TextModal from '../../Components/TextModal';
 
 interface ApplyStatus {
   status: boolean
   text: string
+}
+
+interface ApplyStatusInfo {
+  response: {
+    data: {
+      message: string,
+      status:string
+    }
+  }
 }
 export default function DetailPageContainer() {
   const { pathname } = useLocation();
@@ -30,6 +40,11 @@ export default function DetailPageContainer() {
     status: false,
     text: '',
   });
+  const [error, setError] = useState<string>('');
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const modalClose = () => {
+    setModalOpen(!modalOpen);
+  };
 
   const { isLoading, data } = useQuery(
     ['recruit_post_details', postId],
@@ -45,15 +60,23 @@ export default function DetailPageContainer() {
        * 여기에 백엔드에서 오는 메시지 받아서 상태 업데이트
        * setIsApply()
        */
-      query.invalidateQueries('recruit_apply');
+      query.invalidateQueries('recruit_post_details');
+    },
+    onError: (msg:ApplyStatusInfo) => {
+      setError(msg.response.data.message);
+      modalClose();
     },
   });
-  const userId = '3';
+
   const postAcceptApplicant = useMutation((
     { userId }: {userId: number},
   ) => postRecruitDetailAccept({ postId, userId }), {
     onSuccess: (v) => {
-      query.invalidateQueries('recruit_accepct_applicant');
+      query.invalidateQueries('recruit_post_details');
+    },
+    onError: (msg:ApplyStatusInfo) => {
+      setError(msg.response.data.message);
+      modalClose();
     },
   });
 
@@ -61,7 +84,11 @@ export default function DetailPageContainer() {
     { userId }: {userId: number},
   ) => postRejectRecruit({ postId, userId }), {
     onSuccess: (v) => {
-      query.invalidateQueries('recruit_reject_applicant');
+      query.invalidateQueries('recruit_post_details');
+    },
+    onError: (msg:ApplyStatusInfo) => {
+      setError(msg.response.data.message);
+      modalClose();
     },
   });
 
@@ -97,8 +124,10 @@ export default function DetailPageContainer() {
   }, [data]);
 
   return (
-    <div className="flex flex-row h-screen w-[1260px] mx-auto">
-      {!isLoading && (
+    <>
+      {modalOpen && <TextModal messages={[error]} modalClose={modalClose} />}
+      <div className="flex flex-row h-screen w-[1260px] mx-auto">
+        {!isLoading && (
         <>
           <DetailUserInfo
             data={data}
@@ -116,7 +145,8 @@ export default function DetailPageContainer() {
             handleDeleteProject={handleDeleteProject}
           />
         </>
-      )}
-    </div>
+        )}
+      </div>
+    </>
   );
 }
