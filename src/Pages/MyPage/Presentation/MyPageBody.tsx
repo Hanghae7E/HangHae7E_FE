@@ -111,7 +111,7 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
         </Portal>
       )}
       <div className="myPageBanner  bg-cover bg-center">
-        <img className="w-full h-[91px] pc:h-[240px] object-cover" src="/headerimg.svg" alt="backgroundImage" />
+        <img className="w-full h-[91px] pc:h-[240px] object-cover" src="headerimg.svg" alt="backgroundImage" />
       </div>
       <div className="myPageContents flex w-full pc:max-w-[1062px] mx-auto ">
         <div className="side_pc  hidden  pc:block pc:relative flex-none  pc:-top-[90px]  pc:w-[300px]  pc:h-[332px]  pc:px-[20px]  pc:pb-20px  pc:max-w-[300px] bg-white border-2 border-[#EEEEEE]  rounded-2xl ">
