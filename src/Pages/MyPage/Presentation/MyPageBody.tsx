@@ -121,12 +121,15 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
         <div className="side_pc  hidden  pc:block pc:relative flex-none  pc:-top-[90px]  pc:w-[300px]  pc:h-[332px]  pc:px-[20px]  pc:pb-20px  pc:max-w-[300px] bg-white border-2 border-[#EEEEEE]  rounded-2xl ">
           <div className="sideInner text-center mb-[20px]">
             <div className="userImg pt-[40px] pb-[18px]">
-              <label className="cursor-pointer" htmlFor="file">
+              <label className="cursor-pointer relative " htmlFor="file">
                 <img
-                  className="w-[80px]  h-[80px] mx-auto rounded-full"
+                  className="w-[80px]  h-[80px] mx-auto rounded-full "
                   src={objectURL || '/profiledefault.svg'}
                   alt="userImage"
                 />
+                <div className="absolute bottom-0 left-2 ">
+                  <GlobalIcon.Camera />
+                </div>
                 <input className="hidden" type="file" id="file" accept="image/jpg, image/jpeg, image/png" onChange={onChangeFile} />
               </label>
 
@@ -140,6 +143,7 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
                     type="button"
                     onClick={onChangeName}
                     value="editName"
+                    className="ml-[4px]"
                   >
                     <GlobalIcon.Edit />
                   </button>
@@ -152,6 +156,7 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
                       type="button"
                       onClick={() => { setNameModify(!nameModify); }}
                       value="editName"
+                      className="ml-[4px]"
                     >
                       {currentUser && <GlobalIcon.Edit />}
                     </button>
