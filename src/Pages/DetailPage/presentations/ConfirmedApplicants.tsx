@@ -1,11 +1,11 @@
 /* eslint-disable react/require-default-props */
 /* eslint-disable camelcase */
 import React from 'react';
-import { Applicant } from '../../../TypeInterface/detailType';
 import ApplyCancelModal from './ApplyCancelModal';
 import useModalState from '../hooks/useModalState';
 import DetailIcon from './DetailIcon';
 import PositionTag from './PositionTag';
+import { Applicant } from '../../../TypeInterface/detailType';
 
 interface Props {
   applicantsAccept?: Applicant[];
@@ -31,21 +31,24 @@ function ConfirmedApplicants({ applicantsAccept, onClickCancle }: Props) {
         }) => (
           <li
             key={userId}
-            className="flex items-center w-[255px] border-b-[1px] border-b-solid border-b-[#EEEEEE] mx-auto pb-[10px]"
+            className="flex items-center w-[255px] border-b-[1px] border-b-solid border-b-[#EEEEEE] mx-auto pb-3"
           >
-            <img alt="확정자이미지" className="w-[48px] h-[48px] rounded-full " src={profileImageUrl || '/profiledefault.svg'} />
-            <h5 className="ml-[10px] text-xl font-bold">{username}</h5>
-            <PositionTag
-              position={position}
-              propsClassname="ml-2 mr-10"
-            />
-            <button
-              className="grid place-items-center rounded-full w-[36px] h-[36px] bg-[#EEEEEE]"
-              type="button"
-              onClick={openModal({ text: username, userId, userImg: profileImageUrl })}
-            >
-              <DetailIcon.AngleRight />
-            </button>
+            <img alt="신청자이미지" className="w-[44px] h-[44px] rounded-full " src={profileImageUrl || '/profiledefault.svg'} />
+            <h5 className="ml-[8px] w-[94px] text-[18px] font-bold whitespace-nowrap">{username}</h5>
+            <div className="flex flex-1 items-center justify-between">
+              <PositionTag
+                position={position}
+                propsClassname="ml-[8px]"
+              />
+              <button
+                className="grid place-items-center rounded-full w-[36px] h-[36px] bg-[#EEEEEE]"
+                type="button"
+                onClick={openModal({ text: username, userId, userImg: profileImageUrl })}
+              >
+
+                <DetailIcon.AngleRight />
+              </button>
+            </div>
           </li>
         ))}
       </ul>
