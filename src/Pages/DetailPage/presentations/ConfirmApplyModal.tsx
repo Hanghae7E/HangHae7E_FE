@@ -40,7 +40,7 @@ function ConfirmApplyModal({
             left: '50%',
             transform: 'translate(-50%, -50%)',
           }}
-          className="pt-[51px] px-[68px] pb-[50px] text-center bg-white rounded-xl w-[520px] h-[362px] z-10"
+          className="pt-[51px] px-[68px] pb-[50px] text-center bg-white rounded-xl w-[520px]  min-h-min z-10"
         >
           <button
             type="button"
