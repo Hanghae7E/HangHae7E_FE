@@ -7,7 +7,7 @@ export interface IRecruitPost{
 	postId: number;
 	username : string;
 	userPosition:string;
-	introduce:string;
+	authorFields:Array<ITag>;
 	authorImage : string;
 	title: string;
 	projectImage : string;

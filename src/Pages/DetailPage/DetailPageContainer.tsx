@@ -36,16 +36,14 @@ export default function DetailPageContainer() {
   const navigate = useNavigate();
   const postId = pathname.split('/')[2];
   const [userData, setUserData] = useState<UserData | null>(null);
-  const [isApply, setIsApply] = useState<ApplyStatus>({
-    status: false,
-    text: '',
-  });
+  const [isApply, setIsApply] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const modalClose = () => {
     setModalOpen(!modalOpen);
   };
-
+  const [modalOpen2, setModalOpen2] = useState<boolean>(false);
+  const modalClose2 = () => { setModalOpen2(!modalOpen2); };
   const { isLoading, data } = useQuery(
     ['recruit_post_details', postId],
     getRecruitPostDetails({ postId }),
@@ -60,6 +58,7 @@ export default function DetailPageContainer() {
        * 여기에 백엔드에서 오는 메시지 받아서 상태 업데이트
        * setIsApply()
        */
+      modalClose2();
       query.invalidateQueries('recruit_post_details');
     },
     onError: (msg:ApplyStatusInfo) => {
@@ -92,6 +91,18 @@ export default function DetailPageContainer() {
     },
   });
 
+  const postApplicantCancel = useMutation((
+    { userId }: {userId: number},
+  ) => postRejectRecruit({ postId, userId }), {
+    onSuccess: (v) => {
+      query.invalidateQueries('recruit_post_details');
+    },
+    onError: (msg:ApplyStatusInfo) => {
+      setError(msg.response.data.message);
+      modalClose();
+    },
+  });
+
   const isCreator = !!data?.applicants;
   const handleApplyProject = useCallback(() => {
     postRecruitDetail.mutate({ postId });
@@ -103,6 +114,10 @@ export default function DetailPageContainer() {
 
   const handleRejectApplicant = useCallback((userId?: number) => {
     if (userId && userId !== 0)postRejectApplicant.mutate({ userId });
+  }, []);
+
+  const handleCancelApplicant = useCallback((userId?: number) => {
+    if (userId && userId !== 0)postApplicantCancel.mutate({ userId });
   }, []);
 
   const goBack = useCallback(() => {
@@ -126,6 +141,8 @@ export default function DetailPageContainer() {
   return (
     <>
       {modalOpen && <TextModal messages={[error]} modalClose={modalClose} />}
+      {modalOpen2 && <TextModal messages={['참가신청이 완료 되었습니다.']} modalClose={modalClose2} />}
+
       <div className="flex flex-row h-screen w-[1260px] mx-auto">
         {!isLoading && (
         <>
@@ -135,6 +152,7 @@ export default function DetailPageContainer() {
             userData={userData}
             handleAcceptApplicant={handleAcceptApplicant}
             handleRejectApplicant={handleRejectApplicant}
+            handleCancelApplicant={handleCancelApplicant}
           />
           <DetailProjectInfo
             data={data}

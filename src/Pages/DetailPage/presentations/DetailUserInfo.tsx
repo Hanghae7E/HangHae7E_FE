@@ -10,6 +10,7 @@ export interface Props {
   userData: UserData | null
   handleAcceptApplicant: (userId?: number) => void;
   handleRejectApplicant: (userId?: number) => void;
+  handleCancelApplicant: (userId?: number) => void;
 }
 
 function DetailUserInfo({
@@ -18,13 +19,12 @@ function DetailUserInfo({
   userData,
   handleAcceptApplicant,
   handleRejectApplicant,
+  handleCancelApplicant,
 }: Props) {
-  const getStanbyApplicants = () => data.applicants?.filter(({ status }) => status !== '불합격');
-
+  const getStanbyApplicants = () => data.applicants?.filter(({ status }) => status === '대기중');
   const getAcceptApplicants = () => data.applicants?.filter(({ status }) => status === '합격');
 
   if (userData === null) return null;
-
   return (
     <aside className="w-[300px] mt-[30px]">
       <CreatorInfo
@@ -39,6 +39,7 @@ function DetailUserInfo({
           />
           <ConfirmedApplicants
             applicantsAccept={getAcceptApplicants()}
+            onClickCancle={handleCancelApplicant}
           />
         </>
       )}

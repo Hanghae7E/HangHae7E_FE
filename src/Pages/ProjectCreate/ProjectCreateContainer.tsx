@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable react/jsx-props-no-spreading */
 import { Controller, FieldValues, useForm } from 'react-hook-form';
 import { useState } from 'react';
@@ -126,8 +127,21 @@ export default function ProjectCreateContainer() {
                               <input
                                 {...field}
                                 type="number"
+                                min={0}
+                                max={10}
                                 className="text-right sm:text-[18px] w-[60px] sm:w-[85px] h-[45px] sm:h-[60px] pr-2 py-2 my-2 border-[2px] rounded-xl border-[#DFE1E5] box-border text-[14px]"
-                                onChange={(e) => field.onChange(e.target.value.substring(0, 2))}
+                                onChange={(e) => {
+                                  const { value } = e.target;
+                                  field.onChange(
+                                    Number(value) > 10
+                                      ? 10
+                                      : Number(value) < 0
+                                        ? 0
+                                        : Number(value)
+                                          ? value
+                                          : 0,
+                                  );
+                                }}
                               />
                             )}
                           />
@@ -151,8 +165,19 @@ export default function ProjectCreateContainer() {
                               <input
                                 {...field}
                                 type="number"
+                                min={0}
+                                max={10}
                                 className="text-right sm:text-[18px] w-[60px] sm:w-[85px] h-[45px] sm:h-[60px] pr-2 py-2 my-2 border-[2px] rounded-xl border-[#DFE1E5] box-border text-[14px]"
-                                onChange={(e) => field.onChange(e.target.value.substring(0, 2))}
+                                onChange={(e) => {
+                                  const { value } = e.target;
+                                  field.onChange(
+                                    Number(value) > 10
+                                      ? 10
+                                      : Number(value) < 0
+                                        ? 0
+                                        : value.substring(0, 2),
+                                  );
+                                }}
                               />
                             )}
                           />
@@ -175,8 +200,19 @@ export default function ProjectCreateContainer() {
                               <input
                                 {...field}
                                 type="number"
+                                min={0}
+                                max={10}
                                 className="text-right sm:text-[18px] w-[60px] sm:w-[85px] h-[45px] sm:h-[60px] pr-2 py-2 my-2 border-[2px] rounded-xl border-[#DFE1E5] box-border text-[14px]"
-                                onChange={(e) => field.onChange(e.target.value.substring(0, 2))}
+                                onChange={(e) => {
+                                  const { value } = e.target;
+                                  field.onChange(
+                                    Number(value) > 10
+                                      ? 10
+                                      : Number(value) < 0
+                                        ? 0
+                                        : value.substring(0, 2),
+                                  );
+                                }}
                               />
                             )}
                           />
