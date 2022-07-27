@@ -42,7 +42,8 @@ export default function DetailPageContainer() {
   const modalClose = () => {
     setModalOpen(!modalOpen);
   };
-
+  const [modalOpen2, setModalOpen2] = useState<boolean>(false);
+  const modalClose2 = () => { setModalOpen2(!modalOpen2); };
   const { isLoading, data } = useQuery(
     ['recruit_post_details', postId],
     getRecruitPostDetails({ postId }),
@@ -53,6 +54,11 @@ export default function DetailPageContainer() {
     { postId }: {postId: string},
   ) => postRecriutDetailPosts({ postId }), {
     onSuccess: (v) => {
+      /**
+       * 여기에 백엔드에서 오는 메시지 받아서 상태 업데이트
+       * setIsApply()
+       */
+      modalClose2();
       query.invalidateQueries('recruit_post_details');
     },
     onError: (msg:ApplyStatusInfo) => {
@@ -134,7 +140,9 @@ export default function DetailPageContainer() {
 
   return (
     <>
-      {modalOpen && !isApply && <TextModal messages={[error]} modalClose={modalClose} />}
+      {modalOpen && <TextModal messages={[error]} modalClose={modalClose} />}
+      {modalOpen2 && <TextModal messages={['참가신청이 완료 되었습니다.']} modalClose={modalClose2} />}
+
       <div className="flex flex-row h-screen w-[1260px] mx-auto">
         {!isLoading && (
         <>

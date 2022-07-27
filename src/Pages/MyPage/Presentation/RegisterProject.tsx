@@ -26,12 +26,28 @@ export default function RegisterProject({ projects }:Props) {
             </div>
           </div>
           <h2 className="mt-4 font-pre font-bold text-[24px] ">{prj.title}</h2>
-          <div className="mt-4 inline-flex">
+          <div className="mt-4 inline-flex mb-7">
             <GlobalIcon.Persons />
-            <span>
-              (모집 | 총 인원)
+            <span className="border-r-[1px] px-3 ml-3  border-[#CCCCCC] font-pre text-base font-medium">
               {' '}
-              {prj.capacity}
+              개발자
+              {' '}
+              {prj.required_developers}
+              명
+            </span>
+            <span className="border-r-[1px] px-3 ml-3 border-[#CCCCCC] font-pre text-base font-medium">
+              {' '}
+              디자이너
+              {' '}
+              {prj.required_designers}
+              명
+            </span>
+            <span className=" px-3 font-pre text-base font-medium">
+              {' '}
+              기획자
+              {' '}
+              {prj.required_project_managers}
+              명
             </span>
           </div>
           {/* <div className="tags flex items-center">
