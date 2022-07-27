@@ -29,7 +29,6 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
 
   const profileChangeButtonDefault = 'w-full h-[67px] rounded-[15px] font-pre font-normal text-[16px] leading-[19px] bg-[#EEEEEE] text-[#CCCCCC]';
   const profileChangeButtonActive = 'w-full h-[67px] rounded-[15px] font-pre font-normal text-[16px] leading-[19px] bg-white border-2 text-[#6457FA] border-[#6457FA]';
-  const [buttonCss, setButtonCss] = useState(profileChangeButtonActive);
 
   const queryClient = useQueryClient();
 
@@ -97,7 +96,6 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
 
   const modifyUserInfo = () => {
     setModifyState(!modifyState);
-    setButtonCss(modifyState ? profileChangeButtonActive : profileChangeButtonDefault);
   };
 
   const tabClick = (e:React.MouseEvent<HTMLButtonElement>) => {
@@ -123,12 +121,15 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
         <div className="side_pc  hidden  pc:block pc:relative flex-none  pc:-top-[90px]  pc:w-[300px]  pc:h-[332px]  pc:px-[20px]  pc:pb-20px  pc:max-w-[300px] bg-white border-2 border-[#EEEEEE]  rounded-2xl ">
           <div className="sideInner text-center mb-[20px]">
             <div className="userImg pt-[40px] pb-[18px]">
-              <label className="cursor-pointer" htmlFor="file">
+              <label className="cursor-pointer relative " htmlFor="file">
                 <img
-                  className="w-[80px]  h-[80px] mx-auto rounded-full"
+                  className="w-[80px]  h-[80px] mx-auto rounded-full "
                   src={objectURL || '/profiledefault.svg'}
                   alt="userImage"
                 />
+                <div className="absolute bottom-0 left-2 ">
+                  <GlobalIcon.Camera />
+                </div>
                 <input className="hidden" type="file" id="file" accept="image/jpg, image/jpeg, image/png" onChange={onChangeFile} />
               </label>
 
@@ -142,6 +143,7 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
                     type="button"
                     onClick={onChangeName}
                     value="editName"
+                    className="ml-[4px]"
                   >
                     <GlobalIcon.Edit />
                   </button>
@@ -154,6 +156,7 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
                       type="button"
                       onClick={() => { setNameModify(!nameModify); }}
                       value="editName"
+                      className="ml-[4px]"
                     >
                       {currentUser && <GlobalIcon.Edit />}
                     </button>
@@ -169,7 +172,7 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
               type="button"
               value="modifyUserInfo"
               onClick={modifyUserInfo}
-              className={buttonCss}
+              className={!modifyState ? profileChangeButtonActive : profileChangeButtonDefault}
               disabled={modifyState}
             >
               내 정보 수정하기
