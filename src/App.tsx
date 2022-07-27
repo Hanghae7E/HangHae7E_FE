@@ -11,6 +11,7 @@ import Headerbar from './Components/Headerbar';
 import userGetUserInfo from './Hooks/userGetUserInfo';
 import ProjectUpdate from './Pages/ProjectUpdate';
 import NotFound from './Components/NotFound';
+import MainFooter from './Pages/MainPage/Presentaion/MainFooter';
 
 const GlobalStyle = createGlobalStyle`
 *{
@@ -31,7 +32,6 @@ function App() {
       <Headerbar userInfo={userInfo?.data?.data} />
       <Routes>
         <Route path="/" element={<MainPage />} />
-
         <Route element={<ProtectedRoute redirectPath="/" />}>
           <Route
             path="/mypage"
@@ -70,6 +70,7 @@ function App() {
         <Route path="/login/callback" element={<SocialLogin />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
+      <MainFooter />
     </BrowserRouter>
   );
 }
