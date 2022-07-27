@@ -4,9 +4,10 @@ import React from 'react';
 import DetailIcon from './DetailIcon';
 
 interface Props {
-    isOpen: boolean
-    text?: string
-    userId:number
+    isOpen: boolean;
+    text?: string;
+    userId:number;
+    userImg:string;
     close: () => void;
     onClickAccept: (userId?:number) => void
   onClickReject: (userId?:number) => void
@@ -16,6 +17,7 @@ function ConfirmApplyModal({
   isOpen,
   text,
   userId,
+  userImg,
   close,
   onClickAccept,
   onClickReject,
@@ -47,7 +49,7 @@ function ConfirmApplyModal({
           >
             <DetailIcon.Cancel />
           </button>
-          <img className="w-[110px] h-[110px] mx-auto" alt="프로필 이미지" src="/profiledefault.svg" />
+          <img className="w-[110px] h-[110px] mx-auto rounded-full" alt="프로필 이미지" src={userImg || '/profiledefault.svg'} />
           <p className="text-[24px] font-bold mt-[20px] mb-[40px]">
             {text}
             님과 프로젝트를 함께 하시겠어요?

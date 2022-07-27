@@ -4,9 +4,10 @@ import React from 'react';
 import DetailIcon from './DetailIcon';
 
 interface Props {
-    isOpen: boolean
-    text?: string
-    userId:number
+    isOpen: boolean;
+    text?: string;
+    userId:number;
+    userImg:string;
     close: () => void;
     onClickCancle: (userId?:number) => void
 }
@@ -15,6 +16,7 @@ function ApplyCancelModal({
   isOpen,
   text,
   userId,
+  userImg,
   close,
   onClickCancle,
 }: Props) {
@@ -41,9 +43,10 @@ function ApplyCancelModal({
           >
             <DetailIcon.Cancel />
           </button>
-          <img className="w-[110px] h-[110px] mx-auto" alt="프로필 이미지" src="/profiledefault.svg" />
+          <img className="w-[110px] h-[110px] mx-auto rounded-full " alt="프로필 이미지" src={userImg || '/profiledefault.svg'} />
           <p className="text-[24px] font-bold mt-[20px] mb-[40px]">
             함께 하기로 한
+            <br />
             {text}
             님을 취소 하시겠어요?
           </p>

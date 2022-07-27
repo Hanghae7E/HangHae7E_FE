@@ -22,6 +22,7 @@ function ApplicantsInfo({ onClickAccept, onClickReject, applicantsStanby }: Prop
     close: closeModal,
     text: propsUsername,
     userId: propsUserId,
+    userImg: propsImg,
     isOpen: isOpenedModal,
   } = useModalState();
   return (
@@ -31,13 +32,13 @@ function ApplicantsInfo({ onClickAccept, onClickReject, applicantsStanby }: Prop
       </h2>
       <ul className="w-[300px] mt-5">
         {applicantsStanby?.map(({
-          username, userId, position, profile_image_url, status,
+          username, userId, position, profileImageUrl, status,
         }) => status === '대기중' && (
           <li
             key={userId}
             className="flex items-center w-[255px] border-b-[1px] border-b-solid border-b-[#EEEEEE] mx-auto pb-3"
           >
-            <img alt="신청자이미지" className="w-12 h-12" src="/profiledefault.svg" />
+            <img alt="신청자이미지" className="w-[48px] h-[48px] rounded-full " src={profileImageUrl || '/profiledefault.svg'} />
             <h5 className="ml-[10px] text-xl font-bold">{username}</h5>
             <PositionTag
               position={position}
@@ -46,7 +47,7 @@ function ApplicantsInfo({ onClickAccept, onClickReject, applicantsStanby }: Prop
             <button
               className="grid place-items-center rounded-full w-[36px] h-[36px] bg-[#EEEEEE]"
               type="button"
-              onClick={openModal({ text: username, userId })}
+              onClick={openModal({ text: username, userId, userImg: profileImageUrl })}
             >
               <DetailIcon.AngleRight />
             </button>
@@ -58,6 +59,7 @@ function ApplicantsInfo({ onClickAccept, onClickReject, applicantsStanby }: Prop
         onClickAccept={onClickAccept}
         onClickReject={onClickReject}
         isOpen={isOpenedModal}
+        userImg={propsImg}
         text={propsUsername}
         userId={propsUserId}
       />
