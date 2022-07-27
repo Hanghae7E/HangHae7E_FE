@@ -38,7 +38,7 @@ export function register(config?: Config) {
     }
 
     window.addEventListener('load', () => {
-      const swUrl = `http://huddleup.shop/worker.js`;
+      const swUrl = `/worker.js`;
       if (isLocalhost) {
         
       
