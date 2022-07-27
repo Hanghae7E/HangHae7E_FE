@@ -170,6 +170,7 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
               value="modifyUserInfo"
               onClick={modifyUserInfo}
               className={buttonCss}
+              disabled={modifyState}
             >
               내 정보 수정하기
             </button>
