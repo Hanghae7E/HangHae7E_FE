@@ -30,7 +30,7 @@ export default function Profile({
   const [updateErrMessage, setUpdateErrMessage] = useState('');
 
   const workdayOptions = ['주 1일', '주 2일', '주 3일', '주 4일', '주 5일'];
-  const timeOptions = ['오전', '오후', '저녁', '야간'];
+  // const timeOptions = ['오전', '오후', '저녁', '야간'];
   const careerOptions = ['1년 미만', '1-2년', '2-3년', '3-4년', '4-5년', '5년 이상', '10년 이상'];
   const meetingoptions = [{ value: 'true', label: '대면' }, { value: 'false', label: '비대면' }];
   const positionOptions = ['개발자', '디자이너', '기획자'];
@@ -361,9 +361,7 @@ export default function Profile({
               ) : (
                 <p className="font-pre font-normal text-[18px] leading-[40px]">{`${workDay === 'null' ? '' : workDay} `}</p>
               )}
-
           </div>
-
         </div>
       </div>
       <div className="flex justify-center">
@@ -378,7 +376,6 @@ export default function Profile({
         </button>
         )}
       </div>
-
     </form>
   );
 }
