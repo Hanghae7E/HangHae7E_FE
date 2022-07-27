@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 /* eslint-disable no-tabs */
-import React, { SetStateAction, useState } from 'react';
+import React, { SetStateAction, useEffect, useState } from 'react';
 import { ITag } from '../TypeInterface/postType';
 import GlobalIcon from './GlobalIcon';
 
@@ -51,6 +51,7 @@ function TagSearch(tagOption: tagOptionI) {
   //     .filter((item) => !tagData.includes(item) || !selected.includes(item));
   //   return newData;
   // };
+
   const tagSelct = 'h-[50px] text-start  w-full pl-[20px] border-2 border-[#EEEEEE] bg-white float-left  font-pre font-normal text-[18px] leading-[21px] text-black';
 
   const recommendsTag = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -60,20 +61,21 @@ function TagSearch(tagOption: tagOptionI) {
       (tag: ITag) => tag.body.toString().toLowerCase().includes(userInput),
     );
     if (e.target.value.length === 0) {
-      filterData = [];
+      filterData = tagData;
     }
     setRecommends(filterData);
   };
 
-  const selectedTag = (tagName:ITag) => {
-    const clickedValue = tagName;
-    const tagCopy = [...myTags];
-    tagCopy.push(clickedValue);
-    tagCopy.filter((tag) => tag !== clickedValue);
-    setMyTags(tagCopy);
-    if (setHashTag)setHashTag(tagCopy);
-    setRecommends([]);
-    setInput('');
+  const selectedTag = (tagName: ITag) => {
+    if (!myTags.includes(tagName)) {
+      setMyTags([...myTags, tagName]);
+      if (setHashTag) setHashTag([...myTags, tagName]);
+      setRecommends([]);
+      setInput('');
+    } else {
+      // console.log('값이 중복됨');
+      setRecommends([]);
+    }
   };
 
   const selectedTagRemove = (tagName:ITag) => {
@@ -86,8 +88,18 @@ function TagSearch(tagOption: tagOptionI) {
     if (setHashTag)setHashTag(newMyTags);
   };
   const openSelectTagModal = () => {
+    // setIsFocus(true);
+    setRecommends(tagData);
     if (window.innerWidth <= 768) { console.log('test'); }
   };
+  useEffect(() => {
+    document.addEventListener('keydown', (event) => {
+      if (event.keyCode === 27) {
+        // event.preventDefault();
+        setRecommends([]);
+      }
+    }, true);
+  }, []);
   return (
     <div className="relative h-[45px] w-full border-none">
       <div className="absolute right-[5.42%] sm:right-[20px] top-[22.37%] sm:top-[13px]">

@@ -86,10 +86,16 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
   };
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value.length < 2 || e.target.value.length > 5) {
+    if (e.target.value.length < 2) {
       setErr(true);
       setNameMessage('2글자 이상 5글자 미만으로 입력해주세요.');
-    } else { setNewName(e.target.value); }
+      setNewName(e.target.value);
+    } else if (e.target.value.length > 5) {
+      setErr(true);
+      setNameMessage('2글자 이상 5글자 미만으로 입력해주세요.');
+    } else {
+      setNewName(e.target.value);
+    }
   };
 
   const modifyUserInfo = () => {
@@ -131,7 +137,7 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
               {currentUser && nameModify ? (
                 <div className=" ">
                   {err === true && (<span className="font-pre font-normal text-[12px] leading-[13.32px]">{nameMessage}</span>)}
-                  <input className="w-[100px] pl-[10px] shadow-lg " type="text" onChange={handleInput} />
+                  <input className="w-[100px] pl-[10px] shadow-lg " type="text" onChange={handleInput} value={newName} />
                   <button
                     type="button"
                     onClick={onChangeName}
@@ -206,7 +212,7 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
                 {currentUser && nameModify ? (
                   <div className=" ">
                     {err === true && (<span className="font-pre font-normal text-[12px] leading-[13.32px]">{nameMessage}</span>)}
-                    <input className="w-[100px] pl-[10px] shadow-lg " type="text" onChange={handleInput} />
+                    <input className="w-[100px] pl-[10px] shadow-lg " type="text" onChange={handleInput} value={newName} />
                     <button
                       type="button"
                       onClick={onChangeName}

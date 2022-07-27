@@ -11,20 +11,20 @@ export default function MainBody(
   {
     recruitPost,
     recommendPosts,
-    tagList,
+    tagData,
     setSearchTag,
     refetch,
   }: {
       recruitPost: Array<IRecruitPages> | undefined,
       recommendPosts: Array<IRecruitPost>,
-      tagList: Array<ITag>,
+      tagData: Array<ITag>,
       setSearchTag: React.Dispatch<SetStateAction<number>>,
       refetch: Function,
   },
 ) {
   const [open, setOpen] = useState(false);
   const [searchTagList, setSearchTagList] = useState<Array<ITag>>([]);
-
+  const tagList = tagData.slice(49);
   const adTag = (tag: ITag) => {
     // if (searchTagList.includes(tag)) {
     //   setSearchTagList(searchTagList.filter((data) => data.body !== tag.body));

@@ -78,7 +78,7 @@ function DetailProjectInfo({
         ))}
       </ul>
       <ul className="mt-[40px]">
-        <li className="flex">
+        <li className="flex items-center ">
           <DetailIcon.Project />
           <p className="font-bold min-w-[87px] text-base ml-[11px] mr-5">
             프로젝트 일정
@@ -89,7 +89,7 @@ function DetailProjectInfo({
             {projectEndTime}
           </span>
         </li>
-        <li className="flex my-[19px]">
+        <li className="flex my-[19px] items-center">
           <DetailIcon.User />
           <p className="font-pre font-bold min-w-[87px] text-base ml-[11px] mr-5">
             모집인원
@@ -113,7 +113,7 @@ function DetailProjectInfo({
             명
           </span>
         </li>
-        <li className="flex">
+        <li className="flex items-center">
           <DetailIcon.Project />
           <p className="font-pre font-bold min-w-[87px] text-base ml-[11px] mr-5">모집마감</p>
           <span>{recruitDueTime}</span>
