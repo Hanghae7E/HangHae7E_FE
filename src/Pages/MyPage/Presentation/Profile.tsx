@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable no-console */
 /* eslint-disable camelcase */
 /* eslint-disable react/jsx-props-no-spreading */
@@ -35,9 +36,18 @@ export default function Profile({
   // const timeOptions = ['오전', '오후', '저녁', '야간'];
   const careerOptions = ['1년 미만', '1-2년', '2-3년', '3-4년', '4-5년', '5년 이상', '10년 이상'];
   const meetingoptions = [{ value: 'true', label: '대면' }, { value: 'false', label: '비대면' }];
-  const positionOptions = ['개발자', '디자이너', '기획자'];
+  const positionOptions = tagList.slice(0, 3);
+  const [selectPosition, setSelectPositionOptions] = useState<string>(
+    profileData.position ? profileData.position : positionOptions[0].body,
+  );
   const residenceOptions = ['서울', '경기', '강원', '부산', '경상', '충청', '전라', '제주'];
-  const fieldsOptions = ['프론트엔드', '백엔드', '모바일개발', '웹개발', '데스크탑개발'];
+  const [fieldsOptions, setFieldsOptions] = useState<Array<ITag>>(
+    selectPosition === '개발자'
+      ? tagList.slice(3, 8)
+      : selectPosition === '디자이너'
+        ? tagList.slice(8, 30)
+        : [],
+  );
   const {
     username, email, phone_number, position, residence,
     available_time,
@@ -143,6 +153,7 @@ export default function Profile({
           만나서 반갑습니다! 잘 부탁 드려요!
         </h2>
         <hr className="mt-[40px] mr-[64px]  border-1 border-[#CCCCCC]" />
+
         <div className="flex pt-[40px] text-center ">
           <h2 className={titleCSS}>
             직군
@@ -156,17 +167,30 @@ export default function Profile({
                 <select
                   className="border-0 bg-transparent appearance-none w-full h-full outline-none "
                   {...register('position')}
+                  onChange={(e) => {
+                    setSelectPositionOptions(e.target.value);
+                    if (e.target.value === '개발자') {
+                      setFieldsOptions(tagList.slice(3, 8));
+                    } else if (e.target.value === '디자이너') {
+                      setFieldsOptions(tagList.slice(8, 30));
+                    } else {
+                      setFieldsOptions([]);
+                    }
+                  }}
                 >
                   {positionOptions.map((item) => (
-                    <option value={item} key={item}>
-                      {item}
+                    <option value={item.body} key={item.tagId}>
+                      {item.body}
                     </option>
                   ))}
                 </select>
               </div>
             )
             : (<p className="font-pre font-normal text-[18px] leading-[40px]">{profileData.position}</p>)}
+
         </div>
+
+        {fieldsOptions.length > 0 && (
         <div className="flex pt-[28px] ">
           <h2 className={titleCSS}>
             직무
@@ -182,8 +206,8 @@ export default function Profile({
                   {...register('fields')}
                 >
                   {fieldsOptions.map((item) => (
-                    <option value={item} key={item}>
-                      {item}
+                    <option value={item.body} key={item.tagId}>
+                      {item.body}
                     </option>
                   ))}
                 </select>
@@ -192,6 +216,7 @@ export default function Profile({
               <p className="font-pre font-normal text-[18px] leading-[40px]">{profileData.fields[0]}</p>
             )}
         </div>
+        )}
         <div className="flex pt-[28px]">
           <h2 className={titleCSS}>
             경력
@@ -223,7 +248,7 @@ export default function Profile({
             스킬
           </h2>
           {currentUser && modifyState
-            ? (<TagSearch tagData={tagList} selected={selected} setHashTag={setSelected} placeholder="보유 스킬을 검색 해 주세요." />)
+            ? (<TagSearch tagData={tagList.slice(30, 49)} selected={selected} setHashTag={setSelected} placeholder="보유 스킬을 검색 해 주세요." />)
             : (
               <div className="flex flex-wrap gap-2 items-center">
                 {selected.map((skil, i) => (

@@ -38,7 +38,6 @@ function TagSearch(tagOption: tagOptionI) {
   const {
     tagData, selected, placeholder, setHashTag,
   } = tagOption;
-  console.log(tagData);
   const [myTags, setMyTags] = useState<Array<ITag>>(selected);
   const [recommends, setRecommends] = useState<Array<ITag>>([]);
   const [input, setInput] = useState('');

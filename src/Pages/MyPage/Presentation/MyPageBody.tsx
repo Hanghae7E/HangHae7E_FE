@@ -29,7 +29,6 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
 
   const profileChangeButtonDefault = 'w-full h-[67px] rounded-[15px] font-pre font-normal text-[16px] leading-[19px] bg-[#EEEEEE] text-[#CCCCCC]';
   const profileChangeButtonActive = 'w-full h-[67px] rounded-[15px] font-pre font-normal text-[16px] leading-[19px] bg-white border-2 text-[#6457FA] border-[#6457FA]';
-  const [buttonCss, setButtonCss] = useState(profileChangeButtonActive);
 
   const queryClient = useQueryClient();
 
@@ -97,7 +96,6 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
 
   const modifyUserInfo = () => {
     setModifyState(!modifyState);
-    setButtonCss(modifyState ? profileChangeButtonActive : profileChangeButtonDefault);
   };
 
   const tabClick = (e:React.MouseEvent<HTMLButtonElement>) => {
@@ -169,7 +167,7 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
               type="button"
               value="modifyUserInfo"
               onClick={modifyUserInfo}
-              className={buttonCss}
+              className={!modifyState ? profileChangeButtonActive : profileChangeButtonDefault}
               disabled={modifyState}
             >
               내 정보 수정하기
