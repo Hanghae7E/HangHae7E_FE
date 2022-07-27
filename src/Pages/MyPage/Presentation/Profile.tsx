@@ -200,8 +200,8 @@ export default function Profile({
             )}
 
         </div>
-        <div className="flex pt-[28px] mr-[64px] ">
-          <h2 className="min-w-fit pr-[22px] font-pre font-bold text-[18px] leading-[50px] ">
+        <div className="flex w-full pt-[28px] pr-[40px] ">
+          <h2 className="min-w-fit  pr-[22px] font-pre font-bold text-[18px] leading-[50px] ">
             스킬
           </h2>
           {currentUser && modifyState
@@ -214,7 +214,7 @@ export default function Profile({
               </div>
             )}
         </div>
-        <div className="flex pt-[28px]  mr-[64px]">
+        <div className="flex pt-[28px]  mr-[40px]">
           <h2 className="min-w-fit pr-[22px] font-pre font-bold text-[18px] leading-[50px]">
             링크
           </h2>
@@ -228,37 +228,38 @@ export default function Profile({
           />
         </div>
         <div className="flex pl-[60px] pt-[12px]">
-          <p>{errors.email?.type === 'pattern' && '유효한 이메일 주소를 입력 해 주세요'}</p>
           <p className="w-full font-pre font-normal text-[12px] leading-[14.32px]">
             깃헙, 노션으로 작성한 포트폴리오, 구글 드라이브 파일 등 본인을 보여줄 수 있는 링크를
             추가해주세요.
           </p>
         </div>
-        <hr className="mt-[40px] mr-[64px]  border-1 border-[#CCCCCC]" />
-        <div className="flex flex-col pt-[40px] mr-[64px]">
-          <h2 className="font-pre font-bold text-[24px] leading-[29px]  text-black placeholder:text-[#CCCCCC]">연락처</h2>
-          <div className="float font-pre h-[20px] text-[12px] text-red-400">{errors.email?.type === 'pattern' && '유효한 이메일 주소를 입력 해 주세요'}</div>
-          <div className="relative w-0 h-0 ml-[10px] -bottom-[15px]">
+        <hr className="mt-[40px] mr-[32px]  border-1 border-[#CCCCCC]" />
+        <div className="flex flex-col pt-[40px] mr-[42px]">
+          <h2 className="font-pre font-bold text-[24px] mb-5 leading-[29px]  text-black placeholder:text-[#CCCCCC]">연락처</h2>
+          <div className="relative w-0 h-0 ml-[20px] -bottom-[13px]">
             <GlobalIcon.Email />
           </div>
           <input
-            className="w-full h-[50px]  pl-[56px] read-only:border-none border-2 border-[#EEEEEE] rounded-2xl font-pre font-normal text-[18px] leading-[21px] text-black placeholder:text-[#CCCCCC] "
+            className="w-full h-[50px]  pl-[56px] mb-5 read-only:border-none border-2 border-[#EEEEEE] rounded-2xl font-pre font-normal text-[18px] leading-[21px] text-black placeholder:text-[#CCCCCC] "
             type="text"
             readOnly={!modifyState}
             placeholder="이메일"
             {...register('email', ({ pattern: /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/ }))}
           />
-          <div className=" font-pre h-[20px] text-[10px] text-red-400 ">{errors.phone_number?.type === 'pattern' && '유효한 핸드폰 번호를 입력 해 주세요'}</div>
-          <div className="relative w-0 h-0 ml-[10px] -bottom-[15px]">
+          {errors.email?.type === 'pattern' && (<div className="float font-pre h-[20px] text-4 my-[5x] text-red-400">유효한 이메일 주소를 입력 해 주세요</div>)}
+
+          <div className="relative w-0 h-0 ml-[20px] -bottom-[13px]">
             <GlobalIcon.Call />
           </div>
           <input
-            className="w-full h-[52px] pl-[56px] read-only:border-none  border-2 border-[#EEEEEE] rounded-2xl font-pre font-normal text-[18px] leading-[21px]  text-black placeholder:text-[#CCCCCC]"
+            className="w-full h-[52px] pl-[56px] read-only:border-none border-2 border-[#EEEEEE] rounded-2xl font-pre font-normal text-[18px] leading-[21px]  text-black placeholder:text-[#CCCCCC]"
             type="text"
             placeholder="연락처"
             readOnly={!modifyState}
             {...register('phone_number', ({ pattern: /^\d{3}-\d{3,4}-\d{4}$/ }))}
           />
+          {errors.phone_number?.type === 'pattern' && (<div className=" font-pre h-[20px] text-4 my-[5px] text-red-400 ">유효한 핸드폰 번호를 입력 해 주세요</div>)}
+
         </div>
         <hr className="mt-[40px] mr-[64px]  border-1 border-[#CCCCCC]" />
         <div className="flex pt-[40px]">
@@ -273,7 +274,7 @@ export default function Profile({
           {currentUser && modifyState
             ? (
               <select
-                className="border-2 mr-[8px] w-[198px] h-12 border-[#EEEEEE] rounded-md pl-[10px] font-pre font-normal text-[18px] leading-[21px]"
+                className="border-2 mr-[8px] sm:w-[272px] h-12 border-[#EEEEEE] rounded-md pl-[10px] font-pre font-normal text-[18px] leading-[21px]"
                 {...register('residence')}
               >
                 {residenceOptions.map((item) => (
@@ -294,7 +295,7 @@ export default function Profile({
           {currentUser && modifyState
             ? (
               <select
-                className="border-2 mr-[8px] w-[198px] h-12 border-[#EEEEEE] rounded-md pl-[10px] font-pre font-normal text-[18px] leading-[21px]"
+                className="border-2 mr-[8px] sm:w-[272px]   h-12 border-[#EEEEEE] rounded-md pl-[10px] font-pre font-normal text-[18px] leading-[21px]"
                 {...register('face_to_face')}
               >
                 {meetingoptions.map((item) => (
@@ -320,8 +321,8 @@ export default function Profile({
               setStart={setStartDate}
               setEnd={setEndDate}
               isRange
-              customCss={`flex flex-1 max-w-[282px] w-[282px] h-[48px] min-w-max
-                border-[2px] rounded-lg border-[#DFE1E5] items-center pl-[16px]`}
+              customCss={`flex flex-1 max-w-[260px] w-[260px] h-[52px] min-w-max
+                border-[2px] rounded-lg border-[#DFE1E5] items-center px-[16px]`}
             />
           )
             : (
@@ -335,31 +336,34 @@ export default function Profile({
           <div>
             {currentUser && modifyState
               ? (
-                <select
-                  defaultValue={workDay}
-                  className="border-2 mr-[8px] w-[198px] h-12 border-[#EEEEEE] rounded-md pl-[10px] font-pre font-normal text-[18px] leading-[21px]"
-                  {...register('workDay')}
-                >
-                  {workdayOptions.map((item) => (
-                    <option value={item} key={item}>{item}</option>
-                  ))}
-                </select>
+                <div className="flex flex-wrap">
+                  <select
+                    defaultValue={workDay}
+                    className="border-2 mr-[8px] sm:w-[272px] h-12 border-[#EEEEEE] rounded-md pl-[10px] font-pre font-normal text-[18px] leading-[21px]"
+                    {...register('workDay')}
+                  >
+                    {workdayOptions.map((item) => (
+                      <option value={item} key={item}>{item}</option>
+                    ))}
+                  </select>
+                  {/* {timeOptions.map((item) => (
+                    <label key={item} htmlFor={item} className="mt-[20px] peer border-2
+                    border-[#CCCCC] bg-[#CCCCC] rounded-[24px] text-#6457FA px-[12px]
+                    py-[6px] mr-[8px] mb-[8px] font-pre text-[14px] leading-[16.9x]">
+                      <input {...register('time')} type="radio" onChange={() => setTime(item)}
+                       checked={item === time} value={item} id={time}
+                       className="checked:bg-[#6457FA] peer-checked:bg-#6457fA" />
+                      {item}
+                    </label>
+                  ))} */}
+
+                </div>
               ) : (
-                <p className="font-pre font-normal text-[18px] leading-[40px]">{`${workDay === 'null' ? '' : workDay} , ${time === 'null' ? '' : time}`}</p>
+                <p className="font-pre font-normal text-[18px] leading-[40px]">{`${workDay === 'null' ? '' : workDay} `}</p>
               )}
+
           </div>
-          <div>
-            {currentUser && modifyState && (
-              <div>
-                {timeOptions.map((item) => (
-                  <label key={item} htmlFor={item} className="mt-[20px] peer border-2 border-[#CCCCC] bg-[#CCCCC] rounded-[24px] text-#6457FA px-[12px] py-[6px] mr-[8px] mb-[8px] font-pre text-[14px] leading-[16.9x]">
-                    <input {...register('time')} type="radio" onChange={() => setTime(item)} checked={item === time} value={item} id={time} className="checked:bg-[#6457FA] peer-checked:bg-#6457fA" />
-                    {item}
-                  </label>
-                ))}
-              </div>
-            ) }
-          </div>
+
         </div>
       </div>
       <div className="flex justify-center">
