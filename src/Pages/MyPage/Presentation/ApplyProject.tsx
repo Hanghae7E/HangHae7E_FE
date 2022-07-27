@@ -1,3 +1,6 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+import { useNavigate } from 'react-router-dom';
 import GlobalIcon from '../../../Components/GlobalIcon';
 import { IapplyPosts } from '../../../TypeInterface/postType';
 import StatusTag from './StatusTag';
@@ -16,9 +19,12 @@ export default function ApplyProject({ projects }:Props) {
     else change = '불합격 ';
     return change;
   };
-
+  const nav = useNavigate();
+  const goDetail = (id:number) => () => {
+    nav(`/detail/${id}`);
+  };
   return (
-    <div className="projectComponent">
+    <div className="projectComponent mb-[160px]">
       <div className="projectStatus flex align-middle  bg-white border-2 border-[#EEEEEE] rounded-2xl">
         <div className="flex-col text-center w-1/3 my-5 ">
           <span className="block font-pre text-[32px] font-normal">{waiting.length}</span>
@@ -35,7 +41,7 @@ export default function ApplyProject({ projects }:Props) {
       </div>
       <div className="projectContents flex flex-col  mt-5 bg-white px-8  border-2 border-[#EEEEEE] rounded-2xl">
         {(projects.length > 0 && projects.map((prj:IapplyPosts, idx) => (
-          <div key={prj.id} className="mt-10 ">
+          <div key={prj.id} onClick={goDetail(prj.id)} className="mt-10 cursor-pointer">
             <div className="flex-row items-start">
               <StatusTag
                 status={statusCheck(prj.status)}

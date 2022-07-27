@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { ITag } from '../TypeInterface/postType';
 import { IProfileFormData, IsideProfile } from '../TypeInterface/userType';
 import jwtUtils from '../util/JwtUtil';
 import baseUrl from './baseUrl';
@@ -70,7 +71,7 @@ export const setSideProfile = async (userInfo: IsideProfile) => {
 // 유저 프로필 수정
 const putUserProfile = async (
   profile: IProfileFormData,
-  selected:string[],
+  selected:Array<ITag>,
   startDate:string,
   endDate:string,
 ) => {
@@ -81,7 +82,7 @@ const putUserProfile = async (
   const availablePeriod = `${startDate},${endDate}`;
   if (profile.position) forms.append('position', profile.position);
   if (profile.fields) forms.append('fields', profile.fields.toString());
-  if (selected)forms.append('skills', selected.toString());
+  if (selected)forms.append('skills', selected.map((v) => v.body).toString());
   if (profile.username) forms.append('username', profile.username);
   if (profile.career_period) forms.append('career_period', profile.career_period);
   if (profile.portfolio_url) forms.append('portfolio_url', profile.portfolio_url);
@@ -111,7 +112,7 @@ export default {
   getUserProfile: (id: string | false) => getUserProfile(id),
   putUserProfile: (
     profile: IProfileFormData,
-    selected:string[],
+    selected:Array<ITag>,
     startDate:string,
     endDate:string,
 

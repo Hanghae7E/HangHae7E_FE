@@ -75,8 +75,10 @@ export default function ProjectUpdateContainer() {
   };
 
   const onSubmit = (datas: FieldValues) => {
-    modalClose();
-    postRecruitMustation.mutate(datas);
+    if (hashTag.length > 0) {
+      modalClose();
+      postRecruitMustation.mutate(datas);
+    }
   };
 
   return (
