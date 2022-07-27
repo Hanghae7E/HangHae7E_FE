@@ -32,7 +32,7 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
 
   const profileChangeButtonDefault = 'w-full h-[67px] rounded-[15px] font-pre font-normal text-[16px] leading-[19px] bg-[#EEEEEE] text-[#CCCCCC]';
   const profileChangeButtonActive = 'w-full h-[67px] rounded-[15px] font-pre font-normal text-[16px] leading-[19px] bg-white border-2 text-[#6457FA] border-[#6457FA]';
-  const [buttonCss, setButtonCss] = useState(profileChangeButtonDefault);
+  const [buttonCss, setButtonCss] = useState(profileChangeButtonActive);
 
   const queryClient = useQueryClient();
 
@@ -94,7 +94,7 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
 
   const modifyUserInfo = () => {
     setModifyState(!modifyState);
-    setButtonCss(modifyState ? profileChangeButtonDefault : profileChangeButtonActive);
+    setButtonCss(modifyState ? profileChangeButtonActive : profileChangeButtonDefault);
   };
 
   const tabClick = (e:React.MouseEvent<HTMLButtonElement>) => {
@@ -103,8 +103,11 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
     setNameModify(false);
   };
 
+  const tabDefatult = 'pr-8 hover:text-black text-[#CCCCCC]';
+  const tabClicked = 'pr-8 underline underline-offset-8 text-black';
+  const tabCss = tabDefatult;
   return (
-    <div className="max-w-full mx-auto">
+    <div className="max-w-full mx-auto mb-[106px]">
       { modalOpen && updateErrMessage && (
         <Portal>
           <TextModal messages={['프로필을 변경할 수 없습니다.', updateErrMessage]} modalClose={setModalOpen} />
@@ -232,12 +235,12 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
             </div>
           </div>
           {currentUser && (
-          <div className="tab w-full flex-none pt-[87px] pb-8 font-pre font-bold text-[28px] leading-[33px]">
+          <div className="tab w-full pt-[87px] pb-8 font-pre font-bold text-[28px] leading-[33px] text-[#CCCCCC  ] visited:text-black">
             <button
               type="button"
               onClick={tabClick}
               value="profile"
-              className="pr-8 hover:underline hover:decoration-4"
+              className={`${Tab === 'profile' ? tabClicked : tabDefatult}`}
             >
               프로필
             </button>
@@ -245,7 +248,7 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
               type="button"
               value="registeredPosts"
               onClick={tabClick}
-              className="pr-8 hover:underline hover:decoration-4"
+              className={`${Tab === 'registeredPosts' ? tabClicked : tabDefatult}`}
             >
               등록한 프로젝트
             </button>
@@ -253,7 +256,7 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
               type="button"
               value="applyPosts"
               onClick={tabClick}
-              className="pr-8 hover:underline hover:decoration-4"
+              className={`${Tab === 'applyPosts' ? tabClicked : tabDefatult}`}
             >
               신청한 프로젝트
             </button>
