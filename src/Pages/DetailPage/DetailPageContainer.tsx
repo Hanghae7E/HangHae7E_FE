@@ -53,8 +53,6 @@ export default function DetailPageContainer() {
     { postId }: {postId: string},
   ) => postRecriutDetailPosts({ postId }), {
     onSuccess: (v) => {
-      setIsApply(true);
-      modalClose();
       query.invalidateQueries('recruit_post_details');
     },
     onError: (msg:ApplyStatusInfo) => {
@@ -136,12 +134,6 @@ export default function DetailPageContainer() {
 
   return (
     <>
-      {modalOpen && isApply && (
-      <TextModal
-        messages={['신청 되었습니다.']}
-        modalClose={modalClose}
-      />
-      ) }
       {modalOpen && !isApply && <TextModal messages={[error]} modalClose={modalClose} />}
       <div className="flex flex-row h-screen w-[1260px] mx-auto">
         {!isLoading && (
