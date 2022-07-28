@@ -142,9 +142,10 @@ function DetailProjectInfo({
               type="button"
               onClick={onClickApply}
               disabled
-              className="w-[290px] font-bold bg-[#6457FA] mx-auto text-white h-[72px] rounded-2xl"
+              className="w-[290px] font-bold bg-[#6457FA] disabled:bg-[#cccccc] mx-auto text-white h-[72px] rounded-2xl"
             >
               모집마감
+              <span className="text-[12px]">(아직 미구현)</span>
             </button>
           )}
       </div>

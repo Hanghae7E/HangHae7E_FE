@@ -3,11 +3,14 @@ import GlobalIcon from './GlobalIcon';
 
 type textModalType={
   titles?:string[],
-  messages?:string[],
+  messages?: string[],
+  isProtected?:boolean
   closeModal: () => void
 }
 export default function Login(data:textModalType) {
-  const { titles, messages, closeModal } = data;
+  const {
+    titles, messages, closeModal, isProtected,
+  } = data;
   const kakaoClick = () => {
     const KAKAO_AUTH_URL = 'http://huddledown.link/oauth2/authorization/kakao';
     window.location.replace(KAKAO_AUTH_URL);
@@ -29,7 +32,7 @@ export default function Login(data:textModalType) {
     };
   }, []);
   return (
-    <div className="flex w-full h-full fixed items-center justify-center bg-black/30 z-10">
+    <div className={`flex w-full h-full fixed items-center justify-center ${isProtected ? 'bg-[#f5f5f5]' : 'bg-black/30'} z-10`}>
       <div className="max-w-[336px] max-h-[347px] rounded-lg sm:max-w-[410px] sm:max-h-[370px] w-full h-full bg-white sm:rounded-[16px]">
         <button
           type="button"
