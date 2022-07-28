@@ -17,6 +17,7 @@ import TextModal from '../../Components/TextModal';
 export default function ProjectCreateContainer() {
   const [hashTag, setHashTag] = useState<Array<ITag>>([]);
   const [imgName, setImageName] = useState<File>();
+  const [doubleSubmitFlag, setDoubleSubmitFlag] = useState(false);
   const Today = new Date();
   const [startDate, setStartDate] = useState<string>(dateFormat(Today));
   const [endDate, setEndDate] = useState<string>(dateFormat(Today));
@@ -24,7 +25,11 @@ export default function ProjectCreateContainer() {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const modalClose = () => { setModalOpen(!modalOpen); };
   const [modalOpen2, setModalOpen2] = useState<boolean>(false);
-  const modalClose2 = () => { setModalOpen2(!modalOpen2); };
+  const [error, setError] = useState<string>('');
+  const modalClose2 = () => {
+    setModalOpen2(!modalOpen2);
+    setDoubleSubmitFlag(false);
+  };
 
   const {
     register,
@@ -38,6 +43,11 @@ export default function ProjectCreateContainer() {
     endDate,
     dueDate,
     imgName,
+    setDoubleSubmitFlag,
+    modalClose,
+    modalClose2,
+    setError,
+
   );
 
   const { isSuccess, data: tagList } = useQuery('tagList', postApi.getTag);
@@ -53,21 +63,32 @@ export default function ProjectCreateContainer() {
   const hadleCancle = () => {
     window.history.back();
   };
-
-  const onSubmit = (datas: FieldValues) => {
-    // console.log(modalOpen);
-    if (hashTag.length > 0) {
-      modalClose();
-      postRecruitMustation.mutate(datas);
-    } else {
-      modalClose2();
+  function doubleSubmitCheck() {
+    if (doubleSubmitFlag) {
+      return doubleSubmitFlag;
     }
+    setDoubleSubmitFlag(true);
+    return false;
+  }
+  const onSubmit = (datas: FieldValues) => {
+    if (doubleSubmitCheck()) return;
+    postRecruitMustation.mutate(datas);
+    // if (hashTag.length > 0) {
+
+    // } else {
+    //   modalClose2();
+    // }
   };
 
   return (
     <>
       {modalOpen && <TextModal messages={['게시글 작성이 되었습니다.']} modalClose={modalClose} replace="/" />}
-      {modalOpen2 && <TextModal messages={['태그를 추가해 주세요.']} modalClose={modalClose2} />}
+      {modalOpen2 && (
+      <TextModal
+        messages={[error]}
+        modalClose={modalClose2}
+      />
+      )}
       <div>
         <CreateHeader />
         <div className="max-w-6xl mx-auto px-[20px] sm:px-6 lg:px-8 pt-5 sm:pt-10 bg-white sm:mt-10 mb-[145px]">
@@ -80,17 +101,34 @@ export default function ProjectCreateContainer() {
               <div className="sm:flex w-full items-center py-[20px]">
                 <p className="font-extrabold text-[13px] sm:text-lg pb-[12px] sm:py-3 w-32 sm:w-56 self-center  min-w-max">제목</p>
                 <div className="flex flex-1 w-full border-[2px] h-[45px] sm:h-[60px]  border-[#DFE1E5] my-1 rounded-[8px] sm:rounded-xl overflow-hidden max-w-[600px]">
-                  <input
-                    className="flex-1 w-full text-[14px] pl-[16px] py-[14px]
-              sm:text-[20px] sm:pl-3 sm:py-3 rounded-xl outline-none
-              outline-[#DFE1E5] bg-white font-inter
-              box-border resize-none"
-                    placeholder="000 프로젝트에 함께할 팀원을 모집합니다."
-                    {...register('title', { required: true })}
+                  <Controller
+                    control={control}
+                    name="title"
+                    rules={{
+                      maxLength: 20,
+                      required: true,
+                    }}
+                    defaultValue=""
+                    render={({ field }) => (
+                      <input
+                        {...field}
+                        type="text"
+                        className="flex-1 w-full text-[14px] pl-[16px] py-[14px]
+                          sm:text-[20px] sm:pl-3 sm:py-3 rounded-xl outline-none
+                          outline-[#DFE1E5] bg-white font-inter
+                          box-border resize-none"
+                        onChange={(e) => {
+                          const { value } = e.target;
+                          if (value.length > 20) return;
+                          field.onChange(value.substring(0, 20));
+                        }}
+                        placeholder="000 프로젝트에 함께할 팀원을 모집합니다."
+                      />
+                    )}
                   />
                 </div>
               </div>
-              {errors.title && <div className=" w-full items-end justify-center flex"><span className="text-[#ff0000] float-right">제목을 입력 해 주세요.</span></div>}
+              {errors.title && errors.title.type && errors.title?.type.toString() === 'required' && <div className="items-end justify-center flex"><span className="text-[#ff0000]">제목을 입력 해 주세요.</span></div>}
               <div className="sm:flex min-w-min sm:w-3/4  py-[20px]">
                 <p className="font-extrabold text-[13px] sm:text-lg pb-[12px] sm:py-3 w-32 sm:w-56 self-center  min-w-max">프로젝트 기간</p>
                 <CustomCalinder
@@ -128,7 +166,7 @@ export default function ProjectCreateContainer() {
                               maxLength: 2,
                               required: true,
                             }}
-                            defaultValue=""
+                            defaultValue="0"
                             render={({ field }) => (
                               <input
                                 {...field}
@@ -138,6 +176,7 @@ export default function ProjectCreateContainer() {
                                 className="text-right sm:text-[18px] w-[60px] sm:w-[85px] h-[45px] sm:h-[60px] pr-2 py-2 my-2 border-[2px] rounded-xl border-[#DFE1E5] box-border text-[14px]"
                                 onChange={(e) => {
                                   const { value } = e.target;
+                                  if (value === '/[0-9]/') return;
                                   field.onChange(
                                     Number(value) > 10
                                       ? 10
@@ -166,7 +205,7 @@ export default function ProjectCreateContainer() {
                               maxLength: 2,
                               required: true,
                             }}
-                            defaultValue=""
+                            defaultValue="0"
                             render={({ field }) => (
                               <input
                                 {...field}
@@ -176,12 +215,15 @@ export default function ProjectCreateContainer() {
                                 className="text-right sm:text-[18px] w-[60px] sm:w-[85px] h-[45px] sm:h-[60px] pr-2 py-2 my-2 border-[2px] rounded-xl border-[#DFE1E5] box-border text-[14px]"
                                 onChange={(e) => {
                                   const { value } = e.target;
+                                  if (value === '/[0-9]/') return;
                                   field.onChange(
                                     Number(value) > 10
                                       ? 10
                                       : Number(value) < 0
                                         ? 0
-                                        : value.substring(0, 2),
+                                        : Number(value)
+                                          ? value
+                                          : 0,
                                   );
                                 }}
                               />
@@ -201,7 +243,7 @@ export default function ProjectCreateContainer() {
                               maxLength: 2,
                               required: true,
                             }}
-                            defaultValue=""
+                            defaultValue="0"
                             render={({ field }) => (
                               <input
                                 {...field}
@@ -211,12 +253,15 @@ export default function ProjectCreateContainer() {
                                 className="text-right sm:text-[18px] w-[60px] sm:w-[85px] h-[45px] sm:h-[60px] pr-2 py-2 my-2 border-[2px] rounded-xl border-[#DFE1E5] box-border text-[14px]"
                                 onChange={(e) => {
                                   const { value } = e.target;
+                                  if (value === '/[0-9]/') return;
                                   field.onChange(
                                     Number(value) > 10
                                       ? 10
                                       : Number(value) < 0
                                         ? 0
-                                        : value.substring(0, 2),
+                                        : Number(value)
+                                          ? value
+                                          : 0,
                                   );
                                 }}
                               />
@@ -280,14 +325,24 @@ export default function ProjectCreateContainer() {
                   name="body"
                   rules={{
                     required: true,
+                    maxLength: 200,
                   }}
                   render={({ field }) => (
-                    <textarea {...field} className="w-full h-52 text-[18px] sm:h-96 p-4 border-[2px] bg-white border-[#DFE1E5]  resize-none rounded-lg" />
+                    <textarea
+                      {...field}
+                      onChange={(e) => {
+                        const { value } = e.target;
+                        if (value.length > 200) return;
+                        field.onChange(value.substring(0, 200));
+                      }}
+                      className="w-full h-52 text-[18px] sm:h-96 p-4 border-[2px] bg-white border-[#DFE1E5]  resize-none rounded-lg"
+                    />
                   )}
                 />
 
               </div>
-              {errors.body && <span className="text-[#ff0000] pl-16 pt-5">상세내용을 입력 해 주세요.</span>}
+              {errors.body && errors.body.type && errors.body.type.toString() === 'maxLength' && <span className="text-[#ff0000] pl-16 pt-5">글자수는 200글자 미만으로 해주세요.</span>}
+              {errors.body && errors.body.type && errors.body.type.toString() === 'required' && <span className="text-[#ff0000] pl-16 pt-5">상세내용을 입력 해 주세요.</span>}
               <div className="sm:pl-16 pt-[8px]">
                 {window.innerWidth <= 768 && <p className=" font-extrabold text-[13px] sm:text-lg py-[20px] sm:py-9 w-32 sm:w-56">해시태그 </p>}
 
@@ -295,12 +350,10 @@ export default function ProjectCreateContainer() {
 
               </div>
 
-              {hashTag.length < 1 && <div className="h-10 pt-2 sm:pt-5"><span className="text-[#ff0000] pl-3 sm:pl-24">태그를 추가해 주세요.</span></div>}
-
             </div>
             <div className="m-auto max-w-2xl pl-16 pt-5 flex justify-center mt-32  mb-10">
               <button type="button" onClick={hadleCancle} className="flex w-60 border-[2px] text-[#6457FA] border-[#6457FA] py-3 rounded-xl justify-center bg-white font-semibold cursor-pointer  mr-2">취소하기</button>
-              <input type="submit" className="flex w-60 border-[2px] border-[#6457FA] py-3 rounded-xl justify-center bg-[#6457FA] text-white font-semibold cursor-pointer ml-2" value="프로젝트 생성하기" />
+              <input type="submit" className={`flex w-60 border-[2px] py-3 rounded-xl justify-center  text-white font-semibold ${doubleSubmitFlag ? 'bg-[#cccccc] border-[#cccccc]' : 'bg-[#6457FA] border-[#6457FA]  cursor-pointer'} ml-2"`} value={`${doubleSubmitFlag ? '프로젝트 생성중..' : '프로젝트 생성하기'}`} disabled={doubleSubmitFlag} />
             </div>
           </form>
         </div>

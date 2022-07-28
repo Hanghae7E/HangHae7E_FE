@@ -128,15 +128,25 @@ function DetailProjectInfo({
         </div>
       </div>
       <div className="w-full flex justify-center mt-[60px]">
-        {!isCreator && (
-        <button
-          type="button"
-          onClick={onClickApply}
-          className="w-[290px] font-bold bg-[#6457FA] mx-auto text-white h-[72px] rounded-2xl"
-        >
-          참여신청하기
-        </button>
-        )}
+        {!isCreator ? (
+          <button
+            type="button"
+            onClick={onClickApply}
+            className="w-[290px] font-bold bg-[#6457FA] mx-auto text-white h-[72px] rounded-2xl"
+          >
+            참여신청하기
+          </button>
+        )
+          : (
+            <button
+              type="button"
+              onClick={onClickApply}
+              disabled
+              className="w-[290px] font-bold bg-[#6457FA] mx-auto text-white h-[72px] rounded-2xl"
+            >
+              모집마감
+            </button>
+          )}
       </div>
     </section>
   );

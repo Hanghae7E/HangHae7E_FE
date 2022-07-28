@@ -53,3 +53,11 @@ export interface IapplyPosts{
 	required_project_managers:string;
 	required_designers:string;
 }
+export interface ErrorStatusInfo {
+  response: {
+    data: {
+      message: string,
+      status:string
+    }
+  }
+}

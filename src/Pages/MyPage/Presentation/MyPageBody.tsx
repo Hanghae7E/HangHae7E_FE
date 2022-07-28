@@ -24,7 +24,7 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
   const [nameMessage, setNameMessage] = useState('');
   const [err, setErr] = useState(false);
   const [updateErrMessage, setUpdateErrMessage] = useState('');
-  const [modalOpen, setModalOpen] = useState<boolean>(true);
+  const [modalOpen, setModalOpen] = useState<boolean | number>(true);
 
   const profileChangeButtonDefault = 'w-full h-[67px] rounded-[15px] font-pre font-normal text-[16px] leading-[19px] bg-[#EEEEEE] text-[#CCCCCC]';
   const profileChangeButtonActive = 'w-full h-[67px] rounded-[15px] font-pre font-normal text-[16px] leading-[19px] bg-white border-2 text-[#6457FA] border-[#6457FA]';
@@ -136,15 +136,19 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
               {currentUser && nameModify ? (
                 <div className=" ">
                   {err === true && (<span className="font-pre font-normal text-[12px] leading-[13.32px]">{nameMessage}</span>)}
-                  <input className="w-[100px] pl-[10px] shadow-lg " type="text" onChange={handleInput} value={newName} />
-                  <button
-                    type="button"
-                    onClick={onChangeName}
-                    value="editName"
-                    className="ml-[4px]"
-                  >
-                    <GlobalIcon.Edit />
-                  </button>
+                  <div className=" flex">
+                    <form onSubmit={onChangeName}>
+                      <input className="w-[100px] pl-[10px] shadow-lg " type="text" onChange={handleInput} value={newName} />
+                    </form>
+                    <button
+                      type="button"
+                      onClick={onChangeName}
+                      value="editName"
+                      className="ml-[4px]"
+                    >
+                      <GlobalIcon.Edit />
+                    </button>
+                  </div>
                 </div>
               )
                 : (

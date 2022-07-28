@@ -50,7 +50,7 @@ export default function MainBody(
           )}
         </div>
       </div>
-      <div className=" w-full flex pt-5 pb-5 z-[1] sticky top-0 bg-white py-3">
+      <div className=" w-full flex pt-5 pb-5 z-10 sticky top-0 bg-white py-3">
         <div className="flex flex-1 mr-5 relative items-center ">
           <p className="flex font-bold text-[18px] md:text-2xl mr-5">프로젝트</p>
           <div className="flex items-center justify-center text-[14px] h-[50px]">

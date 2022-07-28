@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { useQuery } from 'react-query';
@@ -29,6 +31,9 @@ export default function MainPageContainer() {
   const modalClose = () => { setModalOpen(!modalOpen); };
 
   const userInfo = userGetUserInfo();
+  const goSurvey = () => {
+    window.location.href = 'https://docs.google.com/forms/d/e/1FAIpQLSeopdWhMbZymQKEZK5CvrQzcZJLo868fXScua22gKZqSFwtPg/viewform';
+  };
 
   return (
     <>
@@ -55,6 +60,9 @@ export default function MainPageContainer() {
           </div>
         )
       }
+      <div onClick={goSurvey} className="w-full cursor-pointer sticky bottom-0 z-50">
+        <img src="/survey.svg" alt="설문으로가기" />
+      </div>
     </>
   );
 }

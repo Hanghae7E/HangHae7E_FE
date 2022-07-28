@@ -23,7 +23,7 @@ function useUpdateRecruitMutation(
     imgName,
   ), {
     onSuccess: () => {
-      query.invalidateQueries(['recruit_posts']);
+      query.invalidateQueries('recruit_posts');
       query.invalidateQueries('recommend_post');
     },
   });

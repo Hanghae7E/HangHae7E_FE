@@ -4,7 +4,7 @@ import { ITag } from '../TypeInterface/postType';
 import baseUrl from './baseUrl';
 
 const getRecruitPosts = async (pageParam: number, tag:number) => {
-  const res = await baseUrl.get(`/main?size=3&sort=new&page=${pageParam}&tags=${tag !== 0 ? tag : ''}`);
+  const res = await baseUrl.get(`/main?size=6&sort=new&page=${pageParam}&tags=${tag !== 0 ? tag : ''}`);
   return res;
 };
 

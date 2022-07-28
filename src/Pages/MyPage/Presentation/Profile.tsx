@@ -29,7 +29,7 @@ export default function Profile({
   modifyState:boolean;
   setModifyState :React.Dispatch<SetStateAction<boolean>>;
 }) {
-  const [modalOpen, setModalOpen] = useState<boolean>(true);
+  const [modalOpen, setModalOpen] = useState<boolean |number>(true);
   const [updateErrMessage, setUpdateErrMessage] = useState('');
 
   const workdayOptions = ['주 1일', '주 2일', '주 3일', '주 4일', '주 5일'];
@@ -287,7 +287,7 @@ export default function Profile({
         <div className="flex flex-col pt-[40px] mr-[64px]">
           <h2 className="font-bold text-[24px] leading-[29px]  mb-[12px] text-black placeholder:text-[#CCCCCC]">연락처</h2>
           <div className="float h-[20px] text-[12px] text-red-400">{errors.email?.type === 'pattern' && '유효한 이메일 주소를 입력 해 주세요'}</div>
-          <div className="flex pl-[22px] read-only:border-none  border-2 border-[#EEEEEE]  rounded-[8px] items-center">
+          <div className={`flex pl-[22px] ${modifyState && 'border-2 border-[#EEEEEE] my-[6px]'}  rounded-[8px] items-center`}>
             <GlobalIcon.Email />
             <input
               className={`w-full  ${modifyState ? 'h-[52px]' : 'py-[10px]'}  pl-[14px] outline-none  font-normal text-[18px] leading-[21px] text-black placeholder:text-[#CCCCCC] `}
@@ -298,7 +298,7 @@ export default function Profile({
             />
           </div>
           {errors.phone_number?.type === 'pattern' && <div className=" font-pre h-[20px] text-[10px] text-red-400 ">유효한 핸드폰 번호를 입력 해 주세요</div>}
-          <div className="flex pl-[22px] read-only:border-none border-2  border-[#EEEEEE]  rounded-[8px] items-center">
+          <div className={`flex pl-[22px] ${modifyState && 'border-2 border-[#EEEEEE]  my-[6px]'}  rounded-[8px] items-center`}>
             <GlobalIcon.Call />
             <input
               className={`w-full ${modifyState ? 'h-[52px]' : 'py-[10px]'} pl-[15px] outline-none font-normal text-[18px] leading-[21px]  text-black placeholder:text-[#CCCCCC]`}
