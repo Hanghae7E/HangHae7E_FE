@@ -294,7 +294,7 @@ export default function Profile({
               backgroundImage: 'url(./email.svg)',
               backgroundRepeat: 'no-repeat',
               backgroundPosition: '20px 50%',
-              border: errors.phone_number ? '2px solid #FF1D1D' : '',
+              border: errors.email ? '2px solid #FF1D1D' : '',
             }}
             {...register('email', ({ pattern: /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/ }))}
           />
