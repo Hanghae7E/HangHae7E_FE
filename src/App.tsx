@@ -4,6 +4,7 @@ import { createGlobalStyle } from 'styled-components';
 import DetailPage from './Pages/DetailPage';
 import MainPage from './Pages/MainPage';
 import MyPage from './Pages/MyPage';
+import WorkSpace from './Pages/WorkSpace';
 import ProjectCreate from './Pages/ProjectCreate';
 import SocialLogin from './Components/SocialLogin';
 import ProtectedRoute from './Components/ProtectedRoute';
@@ -65,6 +66,10 @@ function App() {
             )}
             />
           </Route>
+          <Route path="/workSpace" element={(<WorkSpace />)}>
+            <Route path=":projectId" element={(<WorkSpace />)} />
+          </Route>
+
         </Route>
         <Route path="/detail/:postId" element={<DetailPage />} />
         <Route path="/login/callback" element={<SocialLogin />} />
