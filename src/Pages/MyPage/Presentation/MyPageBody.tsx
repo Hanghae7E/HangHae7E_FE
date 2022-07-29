@@ -103,8 +103,8 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
     setNameModify(false);
   };
 
-  const tabDefatult = 'pr-8 hover:text-black text-[#CCCCCC]';
-  const tabClicked = 'pr-8 underline underline-offset-8 text-black';
+  const tabDefatult = 'flex  hover:text-black text-[#CCCCCC]';
+  const tabClicked = 'flex  underline underline-offset-8 text-black';
   return (
     <div className="max-w-full mx-auto min-h-screen">
       { modalOpen && updateErrMessage && (
@@ -197,7 +197,7 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
           </div>
         </div>
         <div className="flex flex-col" />
-        <div className="contentsArea max-w-full pc:max-w-[736px] basis-full  pl-[32px] ">
+        <div className="contentsArea max-w-full pc:max-w-[736px] basis-full px-[32px] sm:px-[18px]">
           <div>
             <div className="profile_mobile pc:hidden max-w-full relative flex-none -top-[65px] ">
               <label className="cursor-pointer" htmlFor="file">
@@ -244,7 +244,7 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
             </div>
           </div>
           {currentUser && (
-          <div className="tab w-full pt-[87px] pb-8 font-pre font-bold text-[28px] leading-[33px] text-[#CCCCCC  ] visited:text-black">
+          <div className="tab flex w-full justify-evenly  pc:pt-[87px] pb-8 font-pre font-bold sm:text-base md:text-[28px] text-sm leading-[33px] text-[#CCCCCC  ]">
             <button
               type="button"
               onClick={tabClick}

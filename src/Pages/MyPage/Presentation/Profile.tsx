@@ -136,8 +136,8 @@ export default function Profile({
         <TextModal messages={['프로필을 변경할 수 없습니다.', updateErrMessage]} modalClose={setModalOpen} />
       </Portal>
       )}
-      <div className="profile max-w-[736px] pl-[30px] pb-[63px] border-2 border-[#EEEEEE] rounded-2xl">
-        <h2 className="prorileTitle pt-[40px] font-pre font-bold text-[28px] leading-[33px] ">
+      <div className="profile max-w-[736px] px-2 pc:pl-[30px] pc:pb-[63px] border-2 border-[#EEEEEE] rounded-2xl">
+        <h2 className="prorileTitle pt-[40px] font-pre font-bold text-base pc:text-[28px] leading-[33px] ">
           안녕하세요
           {' '}
 
@@ -151,9 +151,8 @@ export default function Profile({
           <br />
           만나서 반갑습니다! 잘 부탁 드려요!
         </h2>
-        <hr className="mt-[40px] mr-[64px]  border-1 border-[#CCCCCC]" />
-
-        <div className="flex pt-[40px] text-center ">
+        <hr className="mt-[40px]  mr-[34px]  border-1 border-[#CCCCCC]" />
+        <div className="flex pc:pt-[40px] pt-5 text-center ">
           <h2 className={titleCSS}>
             직군
           </h2>
@@ -190,7 +189,7 @@ export default function Profile({
         </div>
 
         {fieldsOptions.length > 0 && (
-        <div className="flex pt-[28px] ">
+        <div className="flex pt-5 pc:pt-[28px] ">
           <h2 className={titleCSS}>
             직무
           </h2>
@@ -216,7 +215,7 @@ export default function Profile({
             )}
         </div>
         )}
-        <div className="flex pt-[28px]">
+        <div className="flex pt-5 pc:pt-[28px]">
           <h2 className={titleCSS}>
             경력
           </h2>
@@ -242,7 +241,7 @@ export default function Profile({
             )}
 
         </div>
-        <div className="flex pt-[28px] mr-[64px] items-start">
+        <div className="flex pt-5 pc:pt-[28px] mr-[64px] items-start">
           <h2 className={`min-w-fit pr-[22px] font-pre font-bold text-[18px] ${modifyState && 'leading-[50px]'}`}>
             스킬
           </h2>
@@ -261,7 +260,7 @@ export default function Profile({
               </div>
             )}
         </div>
-        <div className="flex pt-[28px]  mr-[40px]">
+        <div className="flex pt-5 pc:pt-[28px]  mr-[40px]">
           <h2 className="min-w-fit pr-[22px] font-pre font-bold text-[18px] leading-[50px]">
             링크
           </h2>
@@ -275,14 +274,14 @@ export default function Profile({
           />
         </div>
         {currentUser && modifyState && (
-        <div className="flex pl-[60px] pt-[12px]">
+        <div className="flex  pc:pl-[60px] pt-[12px]">
           <p className="w-full font-pre font-normal text-[12px] leading-[14.32px]">
             깃헙, 노션으로 작성한 포트폴리오, 구글 드라이브 파일 등 본인을 보여줄 수 있는 링크를
             추가해주세요.
           </p>
         </div>
         )}
-        <hr className="mt-[40px] mr-[64px]  border-1 border-[#CCCCCC]" />
+        <hr className="mt-[40px] mr-[34px]  border-1 border-[#CCCCCC]" />
         <div className="flex flex-col pt-[40px] mr-[64px]">
           <h2 className="font-bold text-[24px] leading-[29px]  mb-[12px] text-black placeholder:text-[#CCCCCC]">연락처</h2>
           <input
@@ -323,7 +322,7 @@ export default function Profile({
         </div>
         )}
 
-        <hr className="mt-[40px] mr-[64px]  border-1 border-[#CCCCCC]" />
+        <hr className="mt-[40px]  mr-[34px]   border-1 border-[#CCCCCC]" />
         <div className="flex pt-[40px]">
           <h2 className="flex-none w-full font-pre font-bold text-[24px] leading-[29px]">
             협업 사항
