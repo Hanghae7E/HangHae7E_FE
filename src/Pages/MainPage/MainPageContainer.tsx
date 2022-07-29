@@ -36,7 +36,7 @@ export default function MainPageContainer() {
 
   const userInfo = userGetUserInfo();
   const goSurvey = () => {
-    window.location.href = 'https://docs.google.com/forms/d/e/1FAIpQLSeopdWhMbZymQKEZK5CvrQzcZJLo868fXScua22gKZqSFwtPg/viewform';
+    if (!isDown) { window.location.href = 'https://docs.google.com/forms/d/e/1FAIpQLSeopdWhMbZymQKEZK5CvrQzcZJLo868fXScua22gKZqSFwtPg/viewform'; }
   };
   useEffect(() => {
     window.addEventListener('scroll', () => {
@@ -74,7 +74,7 @@ export default function MainPageContainer() {
           </div>
         )
       }
-      <div onClick={goSurvey} className={`w-full  cursor-pointer opacity-0 ${!isDown && 'sticky bottom-0 z-50   translate-y-0 transition-opacity  opacity-100 duration-700'}`}>
+      <div onClick={goSurvey} className={`w-full   opacity-0  ${!isDown && 'sticky bottom-0 z-50 cursor-pointer translate-y-0 transition-opacity  opacity-100 duration-700'}`}>
         <img src="/survey.svg" alt="설문으로가기" />
       </div>
     </>
