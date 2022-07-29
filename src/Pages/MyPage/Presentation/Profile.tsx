@@ -286,30 +286,44 @@ export default function Profile({
         <hr className="mt-[40px] mr-[64px]  border-1 border-[#CCCCCC]" />
         <div className="flex flex-col pt-[40px] mr-[64px]">
           <h2 className="font-bold text-[24px] leading-[29px]  mb-[12px] text-black placeholder:text-[#CCCCCC]">연락처</h2>
-          <div className="float h-[20px] text-[12px] text-red-400">{errors.email?.type === 'pattern' && '유효한 이메일 주소를 입력 해 주세요'}</div>
-          <div className={`flex pl-[22px] ${modifyState && 'border-2 border-[#EEEEEE] my-[6px]'}  rounded-[8px] items-center`}>
-            <GlobalIcon.Email />
-            <input
-              className={`w-full  ${modifyState ? 'h-[52px]' : 'py-[10px]'}  pl-[14px] outline-none  font-normal text-[18px] leading-[21px] text-black placeholder:text-[#CCCCCC] `}
-              type="text"
-              readOnly={!modifyState}
-              placeholder="이메일"
-              {...register('email', ({ pattern: /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/ }))}
-            />
-          </div>
-          {errors.phone_number?.type === 'pattern' && <div className=" font-pre h-[20px] text-[10px] text-red-400 ">유효한 핸드폰 번호를 입력 해 주세요</div>}
-          <div className={`flex pl-[22px] ${modifyState && 'border-2 border-[#EEEEEE]  my-[6px]'}  rounded-[8px] items-center`}>
-            <GlobalIcon.Call />
-            <input
-              className={`w-full ${modifyState ? 'h-[52px]' : 'py-[10px]'} pl-[15px] outline-none font-normal text-[18px] leading-[21px]  text-black placeholder:text-[#CCCCCC]`}
-              type="text"
-              placeholder="연락처"
-              readOnly={!modifyState}
-              {...register('phone_number', ({ pattern: /^\d{3}-\d{3,4}-\d{4}$/ }))}
-            />
-          </div>
-
+          <input
+            className={`w-full ${modifyState ? 'h-[52px] border-2 border-[#EEEEEE] rounded-[8px]' : 'py-[10px] border-none'} mt-5 pl-[56px] outline-none font-normal text-[18px] leading-[21px]  text-black placeholder:text-[#CCCCCC]`}
+            type="text"
+            readOnly={!modifyState}
+            placeholder="이메일"
+            style={{
+              backgroundImage: 'url(./email.svg)',
+              backgroundRepeat: 'no-repeat',
+              backgroundPosition: '20px 50%',
+              border: errors.phone_number ? '2px solid #FF1D1D' : '',
+            }}
+            {...register('email', ({ pattern: /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/ }))}
+          />
+          {errors.email?.type === 'pattern' && (
+            <div className="block h-[20px] text-[16px] font-normal  text-[#FF1D1D] mt-[6px] pl-6" style={{ backgroundImage: 'url(./exclamation.svg)', backgroundRepeat: 'no-repeat', backgroundPosition: '0 50%' }}>
+              정확한 메일을 입력해주세요.
+            </div>
+          )}
+          <input
+            className={`w-full ${modifyState ? 'h-[52px] border-2 border-[#EEEEEE] rounded-[8px]' : 'py-[10px] border-none'} mt-3 pl-[56px] outline-none font-normal text-[18px] leading-[21px]  text-black placeholder:text-[#CCCCCC]`}
+            type="text"
+            placeholder="연락처"
+            style={{
+              backgroundImage: 'url(./call.svg)',
+              backgroundRepeat: 'no-repeat',
+              backgroundPosition: '20px 50%',
+              border: errors.phone_number ? '2px solid #FF1D1D' : '',
+            }}
+            readOnly={!modifyState}
+            {...register('phone_number', ({ pattern: /^\d{3}-\d{3,4}-\d{4}$/ }))}
+          />
         </div>
+        {errors.phone_number?.type === 'pattern' && (
+        <div className="block h-[20px] text-[16px] font-normal  text-[#FF1D1D] mt-[6px] pl-6" style={{ backgroundImage: 'url(./exclamation.svg)', backgroundRepeat: 'no-repeat', backgroundPosition: '0 50%' }}>
+          숫자만 입력해주세요.
+        </div>
+        )}
+
         <hr className="mt-[40px] mr-[64px]  border-1 border-[#CCCCCC]" />
         <div className="flex pt-[40px]">
           <h2 className="flex-none w-full font-pre font-bold text-[24px] leading-[29px]">
