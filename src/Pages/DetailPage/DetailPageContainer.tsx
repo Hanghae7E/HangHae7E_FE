@@ -11,6 +11,7 @@ import {
   postRecruitDetailAccept,
   deleteRecruitDetail,
   postRejectRecruit,
+  postRecriutClosedPosts,
 } from '../../Api/postApi';
 import userApi from '../../Api/userAPi';
 import { DetailProjectData, UserData } from '../../TypeInterface/detailType';
@@ -23,13 +24,14 @@ export default function DetailPageContainer() {
   const postId = pathname.split('/')[2];
   const [userData, setUserData] = useState<UserData | null>(null);
   const [error, setError] = useState<string>('');
-  const [modalOpen, setModalOpen] = useState<boolean>(false);
-  const modalClose = () => {
-    setModalOpen(!modalOpen);
+  const [errorModalOpen, setErrorModalOpen] = useState<boolean>(false);
+  const errorModalClose = () => {
+    setErrorModalOpen(!errorModalOpen);
   };
-  const [modalOpen2, setModalOpen2] = useState<boolean>(false);
-  const modalClose2 = () => { setModalOpen2(!modalOpen2); };
-  const [modalOpen3, setModalOpen3] = useState<boolean>(false);
+  const [applyModalOpen, setApplyModalOpen] = useState<boolean>(false);
+  const applyModalClose = () => { setApplyModalOpen(!applyModalOpen); };
+  const [delModalOpen, setDelModalOpen] = useState<boolean>(false);
+  const [closedModalOpen, setClosedDelModalOpen] = useState<boolean>(false);
   const [deleteStatus, setDeleteStatus] = useState<boolean>(false);
   const { isSuccess, data } = useQuery(
     ['recruit_post_details', postId],
@@ -45,14 +47,14 @@ export default function DetailPageContainer() {
        * 여기에 백엔드에서 오는 메시지 받아서 상태 업데이트
        * setIsApply()
        */
-      modalClose2();
+      applyModalClose();
       query.invalidateQueries('recruit_post_details');
     },
     onError: (msg: ErrorStatusInfo) => {
       if (msg.response.data.message.includes('포지션')) { setError('마이페이지 에서 직무와 직군을 선택해 주세요'); } else {
         setError(msg.response.data.message);
       }
-      modalClose();
+      errorModalClose();
     },
   });
   const postDelete = useMutation((
@@ -60,23 +62,46 @@ export default function DetailPageContainer() {
   ) => deleteRecruitDetail({ postId }), {
     onSuccess: () => {
       query.invalidateQueries(['recruit_posts', 'recommend_post']);
-      setModalOpen3(!modalOpen3);
+      setDelModalOpen(!delModalOpen);
       navigate('/');
       setDeleteStatus(false);
     },
     onError: (msg:ErrorStatusInfo) => {
       setError(msg.response.data.message);
-      modalClose();
+      errorModalClose();
     },
   });
-  const modalClose3 = () => {
-    setModalOpen3(!modalOpen3);
+
+  const postClosed = useMutation((
+    { postId }: {postId: string},
+  ) => postRecriutClosedPosts({ postId }), {
+    onSuccess: () => {
+      query.invalidateQueries(['recruit_posts', 'recommend_post']);
+      setClosedDelModalOpen(!closedModalOpen);
+      navigate('/');
+      setDeleteStatus(false);
+    },
+    onError: (msg:ErrorStatusInfo) => {
+      setError(msg.response.data.message);
+      errorModalClose();
+    },
+  });
+
+  const delModalClose = () => {
+    setDelModalOpen(!delModalOpen);
   };
-  const modalClose4 = () => {
+  const delComplateModal = () => {
     setDeleteStatus(true);
     postDelete.mutate({ postId });
   };
 
+  const closedComplate = () => {
+    setDeleteStatus(true);
+    postClosed.mutate({ postId });
+  };
+  const closedModalClose = () => {
+    setClosedDelModalOpen(!closedModalOpen);
+  };
   const postAcceptApplicant = useMutation((
     { userId }: {userId: number},
   ) => postRecruitDetailAccept({ postId, userId }), {
@@ -85,7 +110,7 @@ export default function DetailPageContainer() {
     },
     onError: (msg:ErrorStatusInfo) => {
       setError(msg.response.data.message);
-      modalClose();
+      errorModalClose();
     },
   });
 
@@ -97,7 +122,7 @@ export default function DetailPageContainer() {
     },
     onError: (msg:ErrorStatusInfo) => {
       setError(msg.response.data.message);
-      modalClose();
+      errorModalClose();
     },
   });
 
@@ -109,7 +134,7 @@ export default function DetailPageContainer() {
     },
     onError: (msg:ErrorStatusInfo) => {
       setError(msg.response.data.message);
-      modalClose();
+      errorModalClose();
     },
   });
 
@@ -139,10 +164,11 @@ export default function DetailPageContainer() {
   }, []);
 
   const handleDeleteProject = useCallback(() => {
-    modalClose3();
+    delModalClose();
   }, []);
 
   useEffect(() => {
+    console.log(data);
     if (data) {
       userApi.getUserProfile(data?.userId).then((item) => setUserData(item.data));
     }
@@ -151,9 +177,10 @@ export default function DetailPageContainer() {
 
   return (
     <>
-      {modalOpen && <TextModal messages={[error]} modalClose={modalClose} />}
-      {modalOpen2 && <TextModal messages={['참가신청이 완료 되었습니다.']} modalClose={modalClose2} />}
-      {modalOpen3 && <TextModal messages={['게시글을 삭제 하시겠습니까?.']} modalClose={modalClose3} modalClose2={modalClose4} deleteStatus={deleteStatus} />}
+      {errorModalOpen && <TextModal messages={[error]} modalClose={errorModalClose} />}
+      {applyModalOpen && <TextModal messages={['참가신청이 완료 되었습니다.']} modalClose={applyModalClose} />}
+      {delModalOpen && <TextModal messages={['게시글을 삭제 하시겠습니까?.']} modalClose={delModalClose} modalClose2={delComplateModal} deleteStatus={deleteStatus} />}
+      {closedModalOpen && <TextModal messages={['모집을 마감 하시겠습니까?.']} modalClose={closedModalClose} modalClose2={closedComplate} deleteStatus={deleteStatus} />}
 
       <div className="flex flex-row h-screen w-[1260px] mx-auto mb-[160px] min-h-screen">
         {isSuccess && (
@@ -170,6 +197,7 @@ export default function DetailPageContainer() {
             data={data}
             isCreator={isCreator}
             onClickApply={handleApplyProject}
+            onClosed={closedModalClose}
             goBack={goBack}
             goToEditPage={goToEditPage}
             handleDeleteProject={handleDeleteProject}

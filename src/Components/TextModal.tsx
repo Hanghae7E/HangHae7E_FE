@@ -43,7 +43,7 @@ export default function TextModal(ModalData: textModalType) {
             onClick={() => {
               modalClose(false);
               if (replace) {
-                nav(replace);
+                window.location.replace(replace);
               }
             }}
           >
@@ -72,9 +72,9 @@ export default function TextModal(ModalData: textModalType) {
             type="button"
             onClick={() => {
               if (modalClose2) {
-                modalClose2(3);
+                modalClose2(false);
                 if (replace) {
-                  nav(replace);
+                  window.location.replace(replace);
                 }
               }
             }}
@@ -91,7 +91,25 @@ export default function TextModal(ModalData: textModalType) {
             onClick={() => {
               modalClose(false);
               if (replace) {
-                nav(replace);
+                window.location.replace(replace);
+              }
+            }}
+            className="flex w-60 border-[2px] text-white border-[#6457FA]  bg-[#6457FA] py-5 rounded-xl justify-center font-semibold cursor-pointer  self-center"
+          >
+            확인
+          </button>
+        </div>
+        )}
+        {messages[0].includes('마감') && (
+        <div className="w-full mt-[50px] flex justify-center items-end">
+          <button
+            type="button"
+            onClick={() => {
+              if (modalClose2) {
+                modalClose2(false);
+                if (replace) {
+                  window.location.replace(replace);
+                }
               }
             }}
             className="flex w-60 border-[2px] text-white border-[#6457FA]  bg-[#6457FA] py-5 rounded-xl justify-center font-semibold cursor-pointer  self-center"

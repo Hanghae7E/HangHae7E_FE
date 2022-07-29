@@ -7,15 +7,16 @@ interface Props {
   data: DetailProjectData
   isCreator: boolean
   onClickApply: () => void
+  onClosed:()=>void
   goBack: () => void
   goToEditPage: (projectData:DetailProjectData) => void
   handleDeleteProject: () => void
-
 }
 function DetailProjectInfo({
   data,
   isCreator,
   onClickApply,
+  onClosed,
   goBack,
   goToEditPage,
   handleDeleteProject,
@@ -26,6 +27,7 @@ function DetailProjectInfo({
     projectStartTime,
     projectEndTime,
     recruitDueTime,
+    recruitStatus,
     requiredDevelopers,
     requiredDesigners,
     requiredProjectManagers,
@@ -140,12 +142,11 @@ function DetailProjectInfo({
           : (
             <button
               type="button"
-              onClick={onClickApply}
-              disabled
+              onClick={() => onClosed()}
+              disabled={!recruitStatus}
               className="w-[290px] font-bold bg-[#6457FA] disabled:bg-[#cccccc] mx-auto text-white h-[72px] rounded-2xl"
             >
-              모집마감
-              <span className="text-[12px]">(아직 미구현)</span>
+              {recruitStatus ? '모집마감하기' : '마감되었습니다.'}
             </button>
           )}
       </div>

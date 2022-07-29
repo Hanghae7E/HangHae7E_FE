@@ -13,6 +13,7 @@ export interface DetailProjectData {
     projectStartTime: string //
     projectEndTime: string //
     recruitDueTime: string //
+    recruitStatus:string;
     requiredDesigners: number; //
     requiredDevelopers: number; //
     requiredProjectManagers: number; //

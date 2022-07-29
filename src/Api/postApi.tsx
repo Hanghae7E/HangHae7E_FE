@@ -96,6 +96,11 @@ export const postRecriutDetailPosts = async ({ postId }: {postId: string}) => {
   return res;
 };
 
+export const postRecriutClosedPosts = async ({ postId }: {postId: string}) => {
+  const res = await baseUrl.post(`/recruitPost/${postId}/closed`);
+  return res;
+};
+
 export const postRecruitDetailAccept = async (
   { postId, userId }: {
     postId: string,

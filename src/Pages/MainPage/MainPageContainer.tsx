@@ -74,7 +74,7 @@ export default function MainPageContainer() {
           </div>
         )
       }
-      <div onClick={goSurvey} className={`w-full transition-opacity opacity-0 cursor-pointer translate-y-0 ${!isDown && 'sticky bottom-0 z-50 opacity-100 duration-700'}`}>
+      <div onClick={goSurvey} className={`w-full  cursor-pointer opacity-0 ${!isDown && 'sticky bottom-0 z-50   translate-y-0 transition-opacity  opacity-100 duration-700'}`}>
         <img src="/survey.svg" alt="설문으로가기" />
       </div>
     </>

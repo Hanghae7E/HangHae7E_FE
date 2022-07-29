@@ -27,8 +27,7 @@ function usePostRecruitMutation(
   ), {
     onSuccess: () => {
       modalClose(true);
-      query.invalidateQueries('recruit_posts');
-      query.invalidateQueries('recommend_post');
+      query.invalidateQueries(['recruit_posts', 'recommend_post']);
     },
     onError: (msg:ErrorStatusInfo) => {
       if (setError && modalClose2) {

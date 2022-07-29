@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { useNavigate } from 'react-router-dom';
@@ -15,15 +16,19 @@ export default function RegisterProject({ projects }:Props) {
   const goDetail = (id:number) => () => {
     nav(`/detail/${id}`);
   };
+  const statusCheck = (status: string, time: string) => {
+    let change = '';
+    if (status === 'true') change = time < Today ? '진행중' : '모집중';
+    else change = '마감';
+    return change;
+  };
   return (
     <div className="projectComponent flex flex-col  bg-white px-8  border-2 border-[#EEEEEE] rounded-2xl mb-[160px]">
-      {(projects.length > 0 && projects.map((prj:IRegisteredPosts, idx) => (
+      {(projects.length > 0 && projects.map((prj: IRegisteredPosts, idx) => (
         <div key={prj.id} onClick={goDetail(prj.id)} className="mt-10 cursor-pointer">
           <div className="flex-row items-start">
             <StatusTag
-              status={
-                !prj.status && '마감' && prj.recruit_due_time < Today ? '진행중' : '모집중'
-            }
+              status={statusCheck(prj.recruit_status, prj.recruit_due_time)}
               propsClassname=" h-[35px] inline-flex"
             />
             <div className="inline-flex h-[35px] px-2 py-3 ml-2 font-pre
