@@ -10,7 +10,6 @@ import userAPi from '../../../Api/userAPi';
 import CustomCalinder from '../../../Components/CustomCalinder';
 import { dateFormat } from '../../../util/util';
 import TextModal from '../../../Components/TextModal';
-import GlobalIcon from '../../../Components/GlobalIcon';
 import Portal from '../../../Components/Portal';
 import TagSearch from '../../../Components/TagSearch';
 import { ITag } from '../../../TypeInterface/postType';
