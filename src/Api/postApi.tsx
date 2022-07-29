@@ -4,7 +4,7 @@ import { ITag } from '../TypeInterface/postType';
 import baseUrl from './baseUrl';
 
 const getRecruitPosts = async (pageParam: number, tag:number) => {
-  const res = await baseUrl.get(`/main?size=3&sort=new&page=${pageParam}&tags=${tag !== 0 ? tag : ''}`);
+  const res = await baseUrl.get(`/main?size=6&sort=new&page=${pageParam}&tags=${tag !== 0 ? tag : ''}`);
   return res;
 };
 
@@ -93,6 +93,11 @@ export const getRecruitPostDetails = ({ postId }: {postId: string}) => async () 
 // 프로젝트 신청
 export const postRecriutDetailPosts = async ({ postId }: {postId: string}) => {
   const res = await baseUrl.post(`/recruitPost/${postId}/application`, {});
+  return res;
+};
+
+export const postRecriutClosedPosts = async ({ postId }: {postId: string}) => {
+  const res = await baseUrl.post(`/recruitPost/${postId}/closed`);
   return res;
 };
 

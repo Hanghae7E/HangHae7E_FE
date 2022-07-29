@@ -9,7 +9,7 @@ export enum Color {
 }
 
 const TAG_COLOR: Record<string, string> = {
-  [Color.개발자]: 'bg-[#6457FA] text-white',
+  [Color.개발자]: 'bg-[#5177FE] text-white',
   [Color.기획자]: 'bg-[#FFC700]',
   [Color.디자이너]: 'bg-[#74EC8B]',
 };

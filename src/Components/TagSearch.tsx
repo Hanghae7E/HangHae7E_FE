@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 /* eslint-disable no-tabs */
 import React, { SetStateAction, useEffect, useState } from 'react';
 import { ITag } from '../TypeInterface/postType';
@@ -38,7 +37,6 @@ function TagSearch(tagOption: tagOptionI) {
   const {
     tagData, selected, placeholder, setHashTag,
   } = tagOption;
-  console.log(tagData);
   const [myTags, setMyTags] = useState<Array<ITag>>(selected);
   const [recommends, setRecommends] = useState<Array<ITag>>([]);
   const [input, setInput] = useState('');
@@ -53,18 +51,26 @@ function TagSearch(tagOption: tagOptionI) {
   //   return newData;
   // };
 
-  const tagSelct = 'h-[50px] text-start  w-full pl-[20px] border-2 border-[#EEEEEE] bg-white float-left  font-pre font-normal text-[18px] leading-[21px] text-black';
+  const tagSelct = 'h-[50px] text-start  w-full pl-[20px] hover:bg-slate-300 border-2 border-[#EEEEEE] bg-white float-left  font-pre font-normal text-[18px] leading-[21px] text-black';
 
   const recommendsTag = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const userInput = e.target.value.toLowerCase();
-    setInput(userInput);
-    let filterData = tagData.filter(
-      (tag: ITag) => tag.body.toString().toLowerCase().includes(userInput),
-    );
-    if (e.target.value.length === 0) {
-      filterData = tagData;
+    if (myTags.length < 4) {
+      const userInput = e.target.value.toLowerCase();
+      let filterData = tagData;
+      setInput(userInput);
+      filterData = tagData.filter(
+        (tag: ITag) => tag.body.toString().toLowerCase().includes(userInput),
+      );
+      if (e.target.value.length === 0) {
+        myTags.forEach((tag) => {
+          const index = tagData.indexOf(tag);
+          if (index !== -1) {
+            filterData.splice(index, 1);
+          }
+        });
+      }
+      setRecommends(filterData);
     }
-    setRecommends(filterData);
   };
 
   const selectedTag = (tagName: ITag) => {
@@ -90,8 +96,18 @@ function TagSearch(tagOption: tagOptionI) {
   };
   const openSelectTagModal = () => {
     // setIsFocus(true);
-    setRecommends(tagData);
-    if (window.innerWidth <= 768) { console.log('test'); }
+    if (myTags.length < 4) {
+      setInput('');
+      const filterData = tagData;
+      myTags.forEach((tag) => {
+        const index = tagData.indexOf(tag);
+        if (index !== -1) {
+          filterData.splice(index, 1);
+        }
+      });
+      setRecommends(filterData);
+    }
+    // if (window.innerWidth <= 768) { console.log('test'); }
   };
   useEffect(() => {
     document.addEventListener('keydown', (event) => {
@@ -109,15 +125,16 @@ function TagSearch(tagOption: tagOptionI) {
       </div>
       <input
         type="search"
-        className="h-[45px] sm:h-[50px] w-full pl-[16px] sm:pl-[24px] border-2 border-[#DFE1E5] rounded-[8px] sm:rounded-full font-pre font-normal text-[14px] sm:text-[18px] leading-[21px] text-[#CCCCCC]"
-        placeholder={placeholder}
+        className="h-[45px] sm:h-[50px] w-full pl-[16px] sm:pl-[24px]  border-2 border-[#DFE1E5] rounded-[8px] sm:rounded-full font-pre font-normal text-[14px] sm:text-[18px] leading-[21px] text-[#CCCCCC]"
+        placeholder={myTags.length >= 4 ? '태그는 4개까지 입력 가능합니다.' : placeholder}
         onChange={recommendsTag}
         value={input}
+        disabled={myTags.length >= 4}
         onFocus={openSelectTagModal}
       />
       {recommends.length > 0
       && (
-      <div className="absolute z-30 w-full t-[45px] max-h-[200px] overflow-hidden overflow-y-auto scrollbar-hide">
+      <div className="absolute z-[1] w-full t-[45px] max-h-[200px] overflow-hidden overflow-y-auto scrollbar-hide">
           {recommends.map((tag, i) => (
             <button className={tagSelct} type="button" value={tag.body} key={`${tag.body + i}`} onClick={() => selectedTag(tag)}>
               {tag.body}

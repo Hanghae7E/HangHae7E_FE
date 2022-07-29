@@ -38,7 +38,7 @@ export function register(config?: Config) {
     }
 
     window.addEventListener('load', () => {
-      const swUrl = `http://huddleup.shop/worker.js`;
+      const swUrl = `/worker.js`;
       if (isLocalhost) {
         
       
@@ -65,7 +65,7 @@ export function register(config?: Config) {
 function registerValidSW(swUrl: string, config?: Config) {
  
   navigator.serviceWorker
-    .register(swUrl)
+    .register('worker.js')
     .then((registration) => {
       registration.onupdatefound = () => {
         const installingWorker = registration.installing;

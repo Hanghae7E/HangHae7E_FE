@@ -15,10 +15,10 @@ function ProtectedRoute({ redirectPath = '/' }: { redirectPath: string }) {
   };
 
   if (!token) {
-    return (<Login closeModal={modalClose} titles={['로그인이 필요한 페이지 입니다.']} messages={['로그인 후 다양한 서비스를 이용해보세요.']} />);
+    return (<Login closeModal={modalClose} titles={['로그인이 필요한 페이지 입니다.']} messages={['로그인 후 다양한 서비스를 이용해보세요.']} isProtected />);
   }
   if (!jwtUtils.isAuth(token)) {
-    return (<Login closeModal={modalClose} titles={['로그인이 필요한 페이지 입니다.']} messages={['로그인 후 다양한 서비스를 이용해보세요.']} />);
+    return (<Login closeModal={modalClose} titles={['로그인이 필요한 페이지 입니다.']} messages={['로그인 후 다양한 서비스를 이용해보세요.']} isProtected />);
   }
 
   return <Outlet />;

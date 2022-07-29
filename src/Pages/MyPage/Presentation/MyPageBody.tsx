@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { Portal } from '@headlessui/react';
@@ -25,11 +24,10 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
   const [nameMessage, setNameMessage] = useState('');
   const [err, setErr] = useState(false);
   const [updateErrMessage, setUpdateErrMessage] = useState('');
-  const [modalOpen, setModalOpen] = useState<boolean>(true);
+  const [modalOpen, setModalOpen] = useState<boolean | number>(true);
 
   const profileChangeButtonDefault = 'w-full h-[67px] rounded-[15px] font-pre font-normal text-[16px] leading-[19px] bg-[#EEEEEE] text-[#CCCCCC]';
   const profileChangeButtonActive = 'w-full h-[67px] rounded-[15px] font-pre font-normal text-[16px] leading-[19px] bg-white border-2 text-[#6457FA] border-[#6457FA]';
-  const [buttonCss, setButtonCss] = useState(profileChangeButtonActive);
 
   const queryClient = useQueryClient();
 
@@ -97,7 +95,6 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
 
   const modifyUserInfo = () => {
     setModifyState(!modifyState);
-    setButtonCss(modifyState ? profileChangeButtonActive : profileChangeButtonDefault);
   };
 
   const tabClick = (e:React.MouseEvent<HTMLButtonElement>) => {
@@ -108,7 +105,6 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
 
   const tabDefatult = 'pr-8 hover:text-black text-[#CCCCCC]';
   const tabClicked = 'pr-8 underline underline-offset-8 text-black';
-  const tabCss = tabDefatult;
   return (
     <div className="max-w-full mx-auto min-h-screen">
       { modalOpen && updateErrMessage && (
@@ -123,12 +119,15 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
         <div className="side_pc  hidden  pc:block pc:relative flex-none  pc:-top-[90px]  pc:w-[300px]  pc:h-[332px]  pc:px-[20px]  pc:pb-20px  pc:max-w-[300px] bg-white border-2 border-[#EEEEEE]  rounded-2xl ">
           <div className="sideInner text-center mb-[20px]">
             <div className="userImg pt-[40px] pb-[18px]">
-              <label className="cursor-pointer" htmlFor="file">
+              <label className="cursor-pointer relative " htmlFor="file">
                 <img
-                  className="w-[80px]  h-[80px] mx-auto rounded-full"
+                  className="w-[80px]  h-[80px] mx-auto rounded-full "
                   src={objectURL || '/profiledefault.svg'}
                   alt="userImage"
                 />
+                <div className="absolute bottom-0 left-2 ">
+                  <GlobalIcon.Camera />
+                </div>
                 <input className="hidden" type="file" id="file" accept="image/jpg, image/jpeg, image/png" onChange={onChangeFile} />
               </label>
 
@@ -137,14 +136,19 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
               {currentUser && nameModify ? (
                 <div className=" ">
                   {err === true && (<span className="font-pre font-normal text-[12px] leading-[13.32px]">{nameMessage}</span>)}
-                  <input className="w-[100px] pl-[10px] shadow-lg " type="text" onChange={handleInput} value={newName} />
-                  <button
-                    type="button"
-                    onClick={onChangeName}
-                    value="editName"
-                  >
-                    <GlobalIcon.Edit />
-                  </button>
+                  <div className=" flex">
+                    <form onSubmit={onChangeName}>
+                      <input className="w-[100px] pl-[10px] shadow-lg " type="text" onChange={handleInput} value={newName} />
+                    </form>
+                    <button
+                      type="button"
+                      onClick={onChangeName}
+                      value="editName"
+                      className="ml-[4px]"
+                    >
+                      <GlobalIcon.Edit />
+                    </button>
+                  </div>
                 </div>
               )
                 : (
@@ -154,6 +158,7 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
                       type="button"
                       onClick={() => { setNameModify(!nameModify); }}
                       value="editName"
+                      className="ml-[4px]"
                     >
                       {currentUser && <GlobalIcon.Edit />}
                     </button>
@@ -169,7 +174,8 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
               type="button"
               value="modifyUserInfo"
               onClick={modifyUserInfo}
-              className={buttonCss}
+              className={!modifyState ? profileChangeButtonActive : profileChangeButtonDefault}
+              disabled={modifyState}
             >
               내 정보 수정하기
             </button>

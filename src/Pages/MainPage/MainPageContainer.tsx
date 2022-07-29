@@ -1,10 +1,12 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { useEffect, useState } from 'react';
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+import {
+  useEffect, useState,
+} from 'react';
 import { useInView } from 'react-intersection-observer';
 import { useQuery } from 'react-query';
 import postApi from '../../Api/postApi';
 import MainBody from './Presentaion/MainBody';
-import MainFooter from './Presentaion/MainFooter';
 import MainHeader from './Presentaion/MainHeader';
 import Portal from '../../Components/Portal';
 import NickNameModal from '../../Components/NicknameModal';
@@ -15,7 +17,9 @@ export default function MainPageContainer() {
   const recommendPosts = useQuery('recommend_post', postApi.getRecommendPosts);
   const { data: tagData } = useQuery('tag_list', postApi.getTag);
   const [searchTag, setSearchTag] = useState(0);
-
+  const [isDown, setIsDown] = useState<boolean>(true);
+  // eslint-disable-next-line prefer-const
+  let lastScrollY = 0;
   const {
     getBoard, getNextPage,
     getBoardIsSuccess, getNextPageIsPossible,
@@ -31,7 +35,20 @@ export default function MainPageContainer() {
   const modalClose = () => { setModalOpen(!modalOpen); };
 
   const userInfo = userGetUserInfo();
+  const goSurvey = () => {
+    window.location.href = 'https://docs.google.com/forms/d/e/1FAIpQLSeopdWhMbZymQKEZK5CvrQzcZJLo868fXScua22gKZqSFwtPg/viewform';
+  };
+  useEffect(() => {
+    window.addEventListener('scroll', () => {
+      const { scrollY } = window;
 
+      // 이전의 스크롤 위치와 비교하기
+      setIsDown(scrollY > lastScrollY);
+      lastScrollY = scrollY;
+      // 현재의 스크롤 값을 저장
+      // setLastScrollY(scrollY);
+    });
+  }, []);
   return (
     <>
       {userInfo && modalOpen && userInfo.isSuccess && !userInfo.data.data.phone_number && (
@@ -57,6 +74,9 @@ export default function MainPageContainer() {
           </div>
         )
       }
+      <div onClick={goSurvey} className={`w-full  cursor-pointer opacity-0 ${!isDown && 'sticky bottom-0 z-50   translate-y-0 transition-opacity  opacity-100 duration-700'}`}>
+        <img src="/survey.svg" alt="설문으로가기" />
+      </div>
     </>
   );
 }

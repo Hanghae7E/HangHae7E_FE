@@ -20,11 +20,11 @@ export default function NickNameModal({
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value.length < 2) {
-      setNicknameMessage('2글자 이상 5글자 미만으로 입력해주세요.');
+      setNicknameMessage('2글자 이상 6글자 이하으로 입력해주세요.');
       setNicknameCheck(false);
       setInput(e.target.value);
-    } else if (e.target.value.length > 5) {
-      setNicknameMessage('2글자 이상 5글자 미만으로 입력해주세요.');
+    } else if (e.target.value.length > 6) {
+      setNicknameMessage('2글자 이상 6글자 이하으로 입력해주세요.');
       setNicknameCheck(false);
     } else {
       setInput(e.target.value);
@@ -87,13 +87,15 @@ export default function NickNameModal({
           <p className="font-pre font-normal text-[18px] leading-[21px] pt-[40px] ">
             허들업에서 사용할 닉네임을 알려주세요.
           </p>
-          <input
-            className="w-[300px] h-[50px] mt-[12px] pl-[20px] border-2 border-[#EEEEEE] rounded-[8px] font-pre font-normal text-[18px] leading-[21px] placeholder:text-[#CCCCCC] text-black"
-            type="text"
-            placeholder="ex)룰루랄라조로"
-            value={Input}
-            onChange={handleInput}
-          />
+          <form onSubmit={savebtn}>
+            <input
+              className="w-[300px] h-[50px] mt-[12px] pl-[20px] border-2 border-[#EEEEEE] rounded-[8px] font-pre font-normal text-[18px] leading-[21px] placeholder:text-[#CCCCCC] text-black"
+              type="text"
+              placeholder="ex)룰루랄라조로"
+              value={Input}
+              onChange={handleInput}
+            />
+          </form>
           <div className="text-red-400">
             {nicknameCheck === false && (<span>{nicknameMessage}</span>)}
           </div>
