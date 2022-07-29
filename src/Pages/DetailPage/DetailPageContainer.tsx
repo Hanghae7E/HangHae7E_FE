@@ -168,7 +168,6 @@ export default function DetailPageContainer() {
   }, []);
 
   useEffect(() => {
-    console.log(data);
     if (data) {
       userApi.getUserProfile(data?.userId).then((item) => setUserData(item.data));
     }
