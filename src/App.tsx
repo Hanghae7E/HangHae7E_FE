@@ -13,6 +13,7 @@ import userGetUserInfo from './Hooks/userGetUserInfo';
 import ProjectUpdate from './Pages/ProjectUpdate';
 import NotFound from './Components/NotFound';
 import MainFooter from './Pages/MainPage/Presentaion/MainFooter';
+import ChattingPage from './Pages/ChattingPage';
 
 const GlobalStyle = createGlobalStyle`
 *{
@@ -70,6 +71,7 @@ function App() {
             <Route path=":projectId" element={(<WorkSpace />)} />
           </Route>
 
+          <Route path="/chatt" element={<ChattingPage />} />
         </Route>
         <Route path="/detail/:postId" element={<DetailPage />} />
         <Route path="/login/callback" element={<SocialLogin />} />
