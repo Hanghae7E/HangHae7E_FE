@@ -166,7 +166,7 @@ export default function ProjectCreateContainer() {
                               maxLength: 2,
                               required: true,
                             }}
-                            defaultValue="0"
+                            defaultValue=""
                             render={({ field }) => (
                               <input
                                 {...field}
@@ -194,7 +194,7 @@ export default function ProjectCreateContainer() {
 
                         </div>
                       </div>
-                      {errors.developer && <span className="text-[#ff0000] pl-24">필수 입력 값 입니다.</span>}
+                      {errors.developer && <span className="text-[#ff0000] pl-24">필수 입력 값 입니다. 모집 인원이 없는 경우 0 을 입력해 주세요.</span>}
                       <div className="flex w-full box-border justify-between min-w-max items-center">
                         <TagBox tag="1" padding="text-[12px] sm:text-[18px] px-[8px] sm:px-[12px] py-[6px] font-bold" />
                         <div className="flex items-center ml-[16px] sm:ml-[40px]">
@@ -205,7 +205,7 @@ export default function ProjectCreateContainer() {
                               maxLength: 2,
                               required: true,
                             }}
-                            defaultValue="0"
+                            defaultValue=""
                             render={({ field }) => (
                               <input
                                 {...field}
@@ -232,7 +232,7 @@ export default function ProjectCreateContainer() {
                           <span className="text-[14px] ml-1 sm:text-[18px] font-normal self-end mb-2 sm:self-center sm:mb-0">명</span>
                         </div>
                       </div>
-                      {errors.designer && <div><span className="text-[#ff0000] pl-24">필수 입력 값 입니다.</span></div>}
+                      {errors.designer && <div><span className="text-[#ff0000] pl-24">필수 입력 값 입니다. 모집 인원이 없는 경우 0 을 입력해 주세요.</span></div>}
                       <div className="flex w-full box-border justify-between min-w-max items-center">
                         <TagBox tag="3" padding="text-[12px] sm:text-[18px] px-[8px] sm:px-[12px] py-[6px] font-bold" />
                         <div className="flex items-center">
@@ -243,7 +243,7 @@ export default function ProjectCreateContainer() {
                               maxLength: 2,
                               required: true,
                             }}
-                            defaultValue="0"
+                            defaultValue=""
                             render={({ field }) => (
                               <input
                                 {...field}
@@ -271,7 +271,7 @@ export default function ProjectCreateContainer() {
 
                         </div>
                       </div>
-                      {errors.pmanager && <span className="text-[#ff0000] pl-24">필수 입력 값 입니다.</span>}
+                      {errors.pmanager && <span className="text-[#ff0000] pl-24">필수 입력 값 입니다. 모집 인원이 없는 경우 0 을 입력해 주세요.</span>}
                     </div>
                   </div>
                   {/* 경력 */}
