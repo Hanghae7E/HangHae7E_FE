@@ -24,6 +24,7 @@ export default function RegisterProject({ projects }:Props) {
   };
   return (
     <div className="projectComponent flex flex-col  bg-white px-8  border-2 border-[#EEEEEE] rounded-2xl mb-[160px]">
+      {projects.length === 0 && (<div className="my-5"> 등록한 프로젝트가 없습니다. </div>)}
       {(projects.length > 0 && projects.map((prj: IRegisteredPosts, idx) => (
         <div key={prj.id} onClick={goDetail(prj.id)} className="mt-10 cursor-pointer">
           <div className="flex-row items-start">

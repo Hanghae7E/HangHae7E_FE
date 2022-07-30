@@ -40,6 +40,7 @@ export default function ApplyProject({ projects }:Props) {
         </div>
       </div>
       <div className="projectContents flex flex-col  mt-5 bg-white px-8  border-2 border-[#EEEEEE] rounded-2xl">
+        {projects.length === 0 && (<div className="my-5"> 신청한 프로젝트가 없습니다. </div>)}
         {(projects.length > 0 && projects.map((prj:IapplyPosts, idx) => (
           <div key={prj.id} onClick={goDetail(prj.id)} className="mt-10 cursor-pointer">
             <div className="flex-row items-start">
@@ -95,6 +96,7 @@ export default function ApplyProject({ projects }:Props) {
             )}
           </div>
         )))}
+
       </div>
     </div>
   );
