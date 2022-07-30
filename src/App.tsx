@@ -13,7 +13,6 @@ import userGetUserInfo from './Hooks/userGetUserInfo';
 import ProjectUpdate from './Pages/ProjectUpdate';
 import NotFound from './Components/NotFound';
 import MainFooter from './Pages/MainPage/Presentaion/MainFooter';
-import ChattingPage from './Pages/ChattingPage';
 
 const GlobalStyle = createGlobalStyle`
 *{
@@ -71,7 +70,6 @@ function App() {
 
           <Route path="/workSpace" element={(<WorkSpace />)}>
             <Route path=":projectId" element={(<WorkSpace />)} />
-            <Route path=":projectId/edit" element={<ChattingPage />} />
           </Route>
 
         </Route>
