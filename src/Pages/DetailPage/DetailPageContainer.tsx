@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable no-shadow */
 import { useCallback, useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -168,6 +169,7 @@ export default function DetailPageContainer() {
   }, []);
 
   useEffect(() => {
+    console.log(data);
     if (data) {
       userApi.getUserProfile(data?.userId).then((item) => setUserData(item.data));
     }

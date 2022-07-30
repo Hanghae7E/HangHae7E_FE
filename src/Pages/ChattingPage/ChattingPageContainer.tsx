@@ -1,15 +1,13 @@
+/* eslint-disable no-use-before-define */
 /* eslint-disable no-console */
 /* eslint-disable react/no-array-index-key */
 import { useEffect, useState } from 'react';
 import SockJS from 'sockjs-client';
 import { Client } from '@stomp/stompjs';
+import { useLocation } from 'react-router-dom';
+import useInterval from './hooks/useInterval';
 
-interface IChat {
-  sender: string;
-  message: string | '';
-  type:string
-}
-interface ITeamPage{
+interface ITeamPageSub{
     workStatus: string,
     username: string,
     content: string,
@@ -17,58 +15,23 @@ interface ITeamPage{
     title: string,
     workSpaceId: number,
 }
-
-interface ITeamPageSub{
-    workStatus: string,
-    username: string,
-    content: string,
-    title: string,
-    workSpaceId: number,
+interface ISate{
+  client:Client;
 }
-
-let client: Client | null = null;
 export default function ChattingPageContainer() {
-  const [chatMessages, setChatMessages] = useState<Array<string>>([]);
+  const [chatMessages, setChatMessages] = useState<string>();
   const [messageq, setMessageq] = useState<string>('');
+  const [sendTime, setSendTime] = useState<number>(0);
 
-  const subscribe = () => {
-    if (client != null) {
-      client.subscribe('/sub/workspace/test', ({ body }:{body:string}) => {
-        console.log(body);
-        const newMessage: ITeamPageSub = JSON.parse(body) as ITeamPageSub;
-        console.log(newMessage);
-        setChatMessages((chat) => [...chat, newMessage.content]);
-      });
-    }
-  };
-  const connect = () => {
-    client = new Client({
-      // brokerURL: 'ws://localhost:8080/moyobar/websocket',
-      webSocketFactory() {
-        return new SockJS('http://southoftheriver.iptime.org:8080/websocket');
-      },
-      debug(str) {
-        console.log(str);
-      },
-      onConnect: () => {
-        subscribe();
-      },
-    });
+  const loaction = useLocation();
+  const client = loaction.state as ISate;
 
-    client.activate();
-  };
-  const disConnect = () => {
+  const handler = (message: string, status:string) => {
     if (client != null) {
-      if (client.connected) client.deactivate();
-    }
-  };
-
-  const handler = (message: string) => {
-    if (client != null) {
-      if (!client.connected) return;
+      if (!client.client.connected) return;
       console.log(message);
       const chatMessage = {
-        workStatus: 'ENTER',
+        workStatus: status,
         username: '장경태',
         content: message,
         contentType: 'application/json',
@@ -76,36 +39,30 @@ export default function ChattingPageContainer() {
         title: 'test',
         workSpaceId: 0,
       };
-      client.publish({
+      client.client.publish({
         destination: '/pub/workspace',
         body: JSON.stringify(chatMessage),
       });
-      setMessageq('');
     }
   };
-  useEffect(() => {
-    connect();
-    return () => disConnect();
-  }, []);
 
   return (
     <div>
       {chatMessages && chatMessages.length > 0 && (
       <ul>
-        {chatMessages.map((_chatMessage, index) => (
-          <li key={index}>{_chatMessage}</li>
-        ))}
+        {chatMessages}
+
       </ul>
       )}
       <div>
-        <input
-          type="text"
+        <textarea
           placeholder="message"
           value={messageq}
-          onChange={(e) => setMessageq(e.target.value)}
-          onKeyPress={(e) => e.which === 13 && handler(messageq)}
+          onChange={(e) => {
+            setMessageq(e.target.value);
+          }}
         />
-        <button type="button" onClick={() => handler(messageq)}>send</button>
+        <button type="button" onClick={() => handler(messageq, 'EDITING')}>send</button>
       </div>
     </div>
   );

@@ -26,7 +26,6 @@ export default function PositionTag({
   return (
     <p className={cn(
       TAG_COLOR[Color[position]],
-      'py-1 px-3 rounded-3xl text-[10px]',
       propsClassname,
 
     )}

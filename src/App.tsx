@@ -25,6 +25,7 @@ input[type='number']::-webkit-outer-spin-button {
   margin: 0;
 }
 `;
+
 function App() {
   const userInfo = userGetUserInfo();
 
@@ -67,11 +68,12 @@ function App() {
             )}
             />
           </Route>
+
           <Route path="/workSpace" element={(<WorkSpace />)}>
             <Route path=":projectId" element={(<WorkSpace />)} />
+            <Route path=":projectId/edit" element={<ChattingPage />} />
           </Route>
 
-          <Route path="/chatt" element={<ChattingPage />} />
         </Route>
         <Route path="/detail/:postId" element={<DetailPage />} />
         <Route path="/login/callback" element={<SocialLogin />} />

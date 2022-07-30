@@ -43,7 +43,7 @@ function ApplicantsInfo({ onClickAccept, onClickReject, applicantsStanby }: Prop
             <div className="flex flex-1 items-center justify-between">
               <PositionTag
                 position={position}
-                propsClassname="ml-[8px]"
+                propsClassname="ml-[8px]  text-[10px] py-1 px-3 rounded-3xl"
               />
               <button
                 className="grid place-items-center rounded-full w-[36px] h-[36px] bg-[#EEEEEE]"
