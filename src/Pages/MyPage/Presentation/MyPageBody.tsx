@@ -103,8 +103,8 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
     setNameModify(false);
   };
 
-  const tabDefatult = 'pr-8 hover:text-black text-[#CCCCCC]';
-  const tabClicked = 'pr-8 underline underline-offset-8 text-black';
+  const tabDefatult = 'flex  hover:text-black text-[#CCCCCC]';
+  const tabClicked = 'flex  underline underline-offset-8 text-black';
   return (
     <div className="max-w-full mx-auto min-h-screen">
       { modalOpen && updateErrMessage && (
@@ -119,18 +119,26 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
         <div className="side_pc  hidden  pc:block pc:relative flex-none  pc:-top-[90px]  pc:w-[300px]  pc:h-[332px]  pc:px-[20px]  pc:pb-20px  pc:max-w-[300px] bg-white border-2 border-[#EEEEEE]  rounded-2xl ">
           <div className="sideInner text-center mb-[20px]">
             <div className="userImg pt-[40px] pb-[18px]">
-              <label className="cursor-pointer relative " htmlFor="file">
-                <img
-                  className="w-[80px]  h-[80px] mx-auto rounded-full "
-                  src={objectURL || '/profiledefault.svg'}
-                  alt="userImage"
-                />
-                <div className="absolute bottom-0 left-2 ">
-                  <GlobalIcon.Camera />
-                </div>
-                <input className="hidden" type="file" id="file" accept="image/jpg, image/jpeg, image/png" onChange={onChangeFile} />
-              </label>
-
+              {currentUser
+                ? (
+                  <label className="cursor-pointer relative " htmlFor="file">
+                    <img
+                      className="w-[80px]  h-[80px] mx-auto rounded-full "
+                      src={objectURL || '/profiledefault.svg'}
+                      alt="userImage"
+                    />
+                    <div className="absolute bottom-0 left-2 ">
+                      <GlobalIcon.Camera />
+                    </div>
+                    <input className="hidden" type="file" id="file" accept="image/jpg, image/jpeg, image/png" onChange={onChangeFile} />
+                  </label>
+                ) : (
+                  <img
+                    className="w-[80px]  h-[80px] mx-auto rounded-full "
+                    src={objectURL || '/profiledefault.svg'}
+                    alt="userImage"
+                  />
+                )}
             </div>
             <div className="flex justify-center userName font-pre font-semibold text-[22px] leading-[25px] pb-[18px]">
               {currentUser && nameModify ? (
@@ -197,24 +205,32 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
           </div>
         </div>
         <div className="flex flex-col" />
-        <div className="contentsArea max-w-full pc:max-w-[736px] basis-full  pl-[32px] ">
-          <div>
-            <div className="profile_mobile pc:hidden max-w-full relative flex-none -top-[65px] ">
-              <label className="cursor-pointer" htmlFor="file">
+        <div className="contentsArea max-w-full pc:max-w-[736px] basis-full px-[32px] sm:px-[18px]">
+          <div className="relavive">
+            <div className="profile_mobile pc:hidden max-w-full absolute top-[65px] left-1/2 -translate-x-1/2">
+              {currentUser ? (
+                <label className="cursor-pointer" htmlFor="file">
+                  <img
+                    className="w-[110px]  h-[110px] mx-auto rounded-full"
+                    src={profileData.profile_image_url || objectURL || '/profiledefault.svg'}
+                    alt="userImage"
+                  />
+                  <input
+                    className="hidden"
+                    type="file"
+                    id="file"
+                    accept="image/jpg, image/jpeg, image/png"
+                    onChange={onChangeFile}
+                  />
+                </label>
+              ) : (
                 <img
                   className="w-[110px]  h-[110px] mx-auto rounded-full"
                   src={profileData.profile_image_url || objectURL || '/profiledefault.svg'}
                   alt="userImage"
                 />
-                <input
-                  className="hidden"
-                  type="file"
-                  id="file"
-                  accept="image/jpg, image/jpeg, image/png"
-                  onChange={onChangeFile}
-                />
-              </label>
-              <div className="flex justify-center userName font-pre font-semibold text-[22px] leading-[25px] pb-[18px]">
+              )}
+              <div className="flex justify-center userName font-pre font-semibold text-[22px] leading-[25px] pt-3 pb-5">
                 {currentUser && nameModify ? (
                   <div className=" ">
                     {err === true && (<span className="font-pre font-normal text-[12px] leading-[13.32px]">{nameMessage}</span>)}
@@ -241,36 +257,62 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
                     </div>
                   )}
               </div>
+              {currentUser && Tab === 'profile'
+            && (
+            <button
+              type="button"
+              value="modifyUserInfo"
+              onClick={modifyUserInfo}
+              className={!modifyState ? profileChangeButtonActive : profileChangeButtonDefault}
+              disabled={modifyState}
+            >
+              내 정보 수정하기
+            </button>
+
+            )}
+              {currentUser && Tab !== 'profile'
+            && (
+            <button
+              type="button"
+              value="profile"
+              onClick={tabClick}
+              className="w-full h-[67px] rounded-[15px] font-pre font-normal text-[16px] leading-[19px] bg-[#EEEEEE] text-[#CCCCCC] hover:bg-white hover:text-[#6457FA]  hover:border-2 hover:border-[#6457FA]"
+            >
+              프로필로 이동
+            </button>
+
+            )}
+
             </div>
           </div>
-          {currentUser && (
-          <div className="tab w-full pt-[87px] pb-8 font-pre font-bold text-[28px] leading-[33px] text-[#CCCCCC  ] visited:text-black">
-            <button
-              type="button"
-              onClick={tabClick}
-              value="profile"
-              className={`${Tab === 'profile' ? tabClicked : tabDefatult}`}
-            >
-              프로필
-            </button>
-            <button
-              type="button"
-              value="registeredPosts"
-              onClick={tabClick}
-              className={`${Tab === 'registeredPosts' ? tabClicked : tabDefatult}`}
-            >
-              등록한 프로젝트
-            </button>
-            <button
-              type="button"
-              value="applyPosts"
-              onClick={tabClick}
-              className={`${Tab === 'applyPosts' ? tabClicked : tabDefatult}`}
-            >
-              신청한 프로젝트
-            </button>
-          </div>
-          )}
+          {currentUser ? (
+            <div className="tab w-full flex justify-evenly pt-[52px] pc:pt-[87px] pb-8 font-pre font-bold sm:text-base md:text-[28px] text-sm leading-[33px] text-[#CCCCCC  ]">
+              <button
+                type="button"
+                onClick={tabClick}
+                value="profile"
+                className={`${Tab === 'profile' ? tabClicked : tabDefatult}`}
+              >
+                프로필
+              </button>
+              <button
+                type="button"
+                value="registeredPosts"
+                onClick={tabClick}
+                className={`${Tab === 'registeredPosts' ? tabClicked : tabDefatult}`}
+              >
+                등록한 프로젝트
+              </button>
+              <button
+                type="button"
+                value="applyPosts"
+                onClick={tabClick}
+                className={`${Tab === 'applyPosts' ? tabClicked : tabDefatult}`}
+              >
+                신청한 프로젝트
+              </button>
+            </div>
+          ) : (<div className="test">gl</div>)}
           {Tab === 'profile' && (
             <Profile
               profileData={profileData}
