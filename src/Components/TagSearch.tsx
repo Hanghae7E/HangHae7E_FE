@@ -120,7 +120,7 @@ function TagSearch(tagOption: tagOptionI) {
   return (
 
     <div className="relative min-h-min w-full border-none">
-      <div className="absolute right-[5.42%] sm:right-[20px] top-[22.37%] sm:top-[13px]">
+      <div className="absolute right-[5.42%] sm:right-[20px] top-[20.37%] ">
         <GlobalIcon.Search />
       </div>
       <input
