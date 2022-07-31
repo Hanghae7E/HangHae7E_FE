@@ -4,7 +4,7 @@ import { Controller, FieldValues, useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { useQuery } from 'react-query';
 import CreateHeader from './Presentation/CreateHeader';
-import { dateFormat } from '../../util/util';
+import { dateFormat, doubleSubmitCheck } from '../../util/util';
 import postApi from '../../Api/postApi';
 import { ITag } from '../../TypeInterface/postType';
 import TagBox from '../../Components/TagBox';
@@ -63,15 +63,9 @@ export default function ProjectCreateContainer() {
   const hadleCancle = () => {
     window.history.back();
   };
-  function doubleSubmitCheck() {
-    if (doubleSubmitFlag) {
-      return doubleSubmitFlag;
-    }
-    setDoubleSubmitFlag(true);
-    return false;
-  }
+
   const onSubmit = (datas: FieldValues) => {
-    if (doubleSubmitCheck()) return;
+    if (doubleSubmitCheck({ doubleSubmitFlag, setDoubleSubmitFlag })) return;
     postRecruitMustation.mutate(datas);
     // if (hashTag.length > 0) {
 

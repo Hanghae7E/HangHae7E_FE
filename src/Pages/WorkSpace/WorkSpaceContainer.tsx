@@ -6,12 +6,30 @@ import { useEffect, useState } from 'react';
 import jwtUtils from '../../util/JwtUtil';
 import WorkSpaceMain from './Presentation/Main/WorkSpaceMain';
 import AddWorkSpace from './Presentation/AddWorkSpace/AddWorkSpace';
+import CreateWorkContent from './Presentation/WorkContent/CreateWorkContent';
+import WorkDetailModal from './Presentation/WorkContent/WorkDetailModal';
+import useWorkModalSate from './hooks/useWorkModalSate';
+import WorkLinkModal from './Presentation/WorkContent/WorkLinkModal';
 
 let client: Client | null = null;
 export default function WorkSpaceContainer() {
   const token = localStorage.getItem('token');
   const userId = jwtUtils.getId(token);
   const [page, setPage] = useState<string>('main');
+  const [workSpaceId, setWorkSpaceId] = useState<number>(0);
+  const [isEdit, setIsEdit] = useState < boolean>(false);
+  const {
+    open: openDetailModal,
+    close: closeModal,
+    data: propsUsername,
+    isOpen: isOpenedModal,
+  } = useWorkModalSate();
+  const {
+    open: openLinkModal,
+    close: closeLinkModal,
+    data: propsLinkUsername,
+    isOpen: isOpenedLinkModal,
+  } = useWorkModalSate();
   const subscribe = () => {
     if (client != null) {
       client.subscribe('/sub/workspace/test', ({ body }) => {
@@ -76,10 +94,33 @@ export default function WorkSpaceContainer() {
 
   return (
     <div className="workSpaceComponent flex flex-col max-w-7xl mx-auto w-full ">
-      {page === 'main' && <WorkSpaceMain setPage={setPage} />}
-      {page === '회의록' && <AddWorkSpace client={client} setPage={setPage} userId={userId} />}
-      {page === '작업' && <div />}
-      <div />
+      {page === 'main' && (
+      <WorkSpaceMain
+        client={client}
+        setPage={setPage}
+        setWorkSpaceId={setWorkSpaceId}
+        setIsEdit={setIsEdit}
+        openDetailModal={openDetailModal}
+        openLinkModal={openLinkModal}
+      />
+      )}
+      {page === '회의록' && <AddWorkSpace client={client} setPage={setPage} userId={userId} workSpaceId={workSpaceId} isEdit={isEdit} setIsEdit={setIsEdit} />}
+      {page === '작업' && <CreateWorkContent setPage={setPage} />}
+      {isOpenedModal && (
+      <WorkDetailModal
+        close={closeModal}
+        isOpen={isOpenedModal}
+        data={propsUsername}
+      />
+      )}
+      {isOpenedLinkModal
+      && (
+      <WorkLinkModal
+        close={closeLinkModal}
+        isOpen={isOpenedLinkModal}
+        data={propsLinkUsername}
+      />
+      )}
     </div>
   );
 }

@@ -1,8 +1,17 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import PositionTag from '../../../DetailPage/presentations/PositionTag';
 
-export default function WorkContent() {
+export default function WorkContent({
+  openModal,
+}:
+{
+  openModal: ({ data }: {
+    data: string;
+}) => () => void
+}) {
   return (
-    <li>
+    <li onClick={openModal({ data: 'test' })} className=" cursor-pointer">
       <div className="flex items-center max-w-[399px] p-[20px] border-[2px] border-[#EEEEEE] rounded-[8px] mt-[24px] ">
         <PositionTag
           position="진행중"

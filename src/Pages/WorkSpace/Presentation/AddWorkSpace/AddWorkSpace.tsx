@@ -5,24 +5,31 @@
 import { SetStateAction, useEffect, useState } from 'react';
 import MDEditor from '@uiw/react-md-editor';
 import { Client } from '@stomp/stompjs';
-import useInterval from '../../../ChattingPage/hooks/useInterval';
+import useInterval from '../../hooks/useInterval';
 
 function AddWorkSpace({
   client,
   setPage,
   userId,
+  isEdit,
+  workSpaceId,
+  setIsEdit,
 } : {
     client:Client | null
     setPage :React.Dispatch<SetStateAction<string>>
-    userId:string | false
+    userId:string | false,
+    isEdit:boolean,
+    workSpaceId:number,
+    setIsEdit:React.Dispatch<SetStateAction<boolean>>
   }) {
   const [markdown, setMarkdown] = useState<string>('');
   const [markEdit, setMarkEdit] = useState<string>('');
-  const [isEdit, setIsEdit] = useState < boolean>(true);
   const [sendTime, setSendTime] = useState<number>(0);
+  const subUrl = '/sub/workspace/test/0';
   const subscribe = () => {
     if (client != null) {
-      client.subscribe('/sub/workspace/test/0', ({ body }) => {
+      console.log(workSpaceId);
+      client.subscribe(subUrl, ({ body }) => {
         const { username, content, workStatus } = JSON.parse(body);
         console.log(workStatus);
         if (workStatus === 'ENTER' || workStatus === 'LEAVE') {
@@ -32,6 +39,12 @@ function AddWorkSpace({
           setMarkdown(content);
         }
       });
+    }
+  };
+  const unsubscribe = () => {
+    if (client != null) {
+      console.log(workSpaceId);
+      client.unsubscribe(subUrl);
     }
   };
   const handler = (message: string, status:string) => {
@@ -55,6 +68,10 @@ function AddWorkSpace({
   };
   useEffect(() => {
     subscribe();
+    window.scrollTo(0, 0);
+    return () => {
+      unsubscribe();
+    };
   }, []);
   useInterval(() => {
     const sec = new Date().getTime();
@@ -68,17 +85,19 @@ function AddWorkSpace({
   return (
     <article className="relative flex w-full pt-20 pl-10  min-h-screen">
       <button type="button" className="px-[12px] py-[8px] bg-slate-400 rounded-[8px] text-white absolute top-5 right-6" onClick={() => setPage('main')}>메인으로</button>
-      <button type="button" className="px-[12px] py-[8px] bg-slate-400 rounded-[8px] text-white absolute top-5 right-28" onClick={() => setIsEdit(!isEdit)}>{isEdit ? '수정완료' : '수정하기'}</button>
+
       {isEdit ? (
-        <div className="flex justify-center items-center w-[95%]">
+        <div className="flex flex-col justify-center w-[95%]">
           <MDEditor
-            className="w-full mb-[160px] min-h-screen border"
+            className="w-full min-h-[600px] border"
             value={markEdit}
             onChange={(e) => {
               setMarkEdit(e || '');
             }}
           />
+          <button type="button" className="px-[12px] py-[8px] bg-slate-400 rounded-[8px] text-white mb-[160px] " onClick={() => setIsEdit(!isEdit)}>{isEdit ? '수정완료' : '수정하기'}</button>
         </div>
+
       )
         : <div><MDEditor.Markdown source={markdown} /></div>}
 

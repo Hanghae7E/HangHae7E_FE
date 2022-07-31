@@ -6,8 +6,8 @@ import DetailIcon from './DetailIcon';
 interface Props {
     isOpen: boolean;
     text?: string;
-    userId:number;
-    userImg:string;
+    userId?:number;
+    userImg?:string;
     close: () => void;
     onClickAccept: (userId?:number) => void
   onClickReject: (userId?:number) => void
