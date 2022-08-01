@@ -121,6 +121,8 @@ format :
 <h4>메인 페이지</h4>
 <span>토큰 정보 decode 를 통해 user 정보 확인. </span>
 <span>포스트 정보, 태그 정보 확인 </span>
+</div>
+</details>
 
 ### 토큰 타입
 ![image](https://user-images.githubusercontent.com/60000653/182155672-2c981fda-a4b8-4945-b049-73e3dc68cfc8.png)
@@ -158,6 +160,5 @@ format :
 ![image](https://user-images.githubusercontent.com/60000653/182157889-3988197b-0387-4732-9a7c-0b1feefcb4b8.png)
 ![image](https://user-images.githubusercontent.com/60000653/182157946-ac3e2267-318d-41df-aecd-03119a174a87.png)
 
-</div>
-</details>
+
 
