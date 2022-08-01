@@ -3,6 +3,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
+import { useNavigate } from 'react-router-dom';
 import userAPi from '../Api/userAPi';
 import { Iuser } from '../TypeInterface/userType';
 import GlobalIcon from './GlobalIcon';
@@ -17,7 +18,7 @@ export default function NickNameModal({
   const [nicknameCheck, setNicknameCheck] = useState(false);
   const [nicknameMessage, setNicknameMessage] = useState('');
   const [Input, setInput] = useState('');
-
+  const navigator = useNavigate();
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value.length < 2) {
       setNicknameMessage('2글자 이상 6글자 이하으로 입력해주세요.');
@@ -45,6 +46,10 @@ export default function NickNameModal({
       modalClose(false);
     },
   });
+
+  const goToProfile = () => {
+    navigator('/mypage', { replace: true });
+  };
   async function savebtn() {
     if (Input) { changeNickName.mutate(Input); } else { changeNickName.mutate(userInfo.username); }
   }
@@ -99,15 +104,24 @@ export default function NickNameModal({
           <div className="text-red-400">
             {nicknameCheck === false && (<span>{nicknameMessage}</span>)}
           </div>
+          <div>
 
-          <button
-            type="button"
-            value="nickBtn"
-            onClick={savebtn}
-            className="w-[300px] h-[60px] rounded-[15px] pc:mt-[60px] mt-[28px] font-pre font-bold text-[20px] leading-[24px] bg-[#6457FA] text-white hover:bg-white hover:text-[#6457FA]  hover:border-2 hover:border-[#6457FA]"
-          >
-            이걸로 할께요!
-          </button>
+            <button
+              type="button"
+              value="nickBtn"
+              onClick={savebtn}
+              className="min-w-[140px] h-[60px] rounded-[15px] w-full pc:mt-5 mt-6 font-pre font-bold text-[20px] leading-[24px] bg-[#6457FA] text-white hover:bg-white hover:text-[#6457FA]  hover:border-2 hover:border-[#6457FA]"
+            >
+              이걸로 할께요!
+            </button>
+            <button
+              type="button"
+              onClick={goToProfile}
+              className="min-w-[140px] h-[60px] rounded-[15px] w-full pc:mt-2 mt-2 mb-2px font-pre font-bold text-[20px] leading-[24px] bg-white text-[#6457FA] hover:bg-text hover:border-2 border-1 border-[#6457FA]"
+            >
+              프로필 수정하러 가기
+            </button>
+          </div>
         </div>
       </div>
     </div>
