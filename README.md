@@ -116,49 +116,81 @@ format :
 </ol>
 <h4>해결방법</h4>
 <h5>페이지 이동을 라우팅 시키는 방법이 아닌 해당 페이지 에서 컴포넌트로 구분해서 보여주게끔 개선 이후 기능은 잘 동작 하지만 뒤로가기 사용시 해당 페이지를 벗어나며 소켓연결이 끊기기 때문에 해당 방법은 추후에 개선이 필요할 것 같다.</h5>
-
-## 페이지 별 타입 
-<h4>메인 페이지</h4>
-<span>토큰 정보 decode 를 통해 user 정보 확인. </span>
-<span>포스트 정보, 태그 정보 확인 </span>
 </div>
 </details>
 
-### 토큰 타입
-![image](https://user-images.githubusercontent.com/60000653/182155672-2c981fda-a4b8-4945-b049-73e3dc68cfc8.png)
-![image](https://user-images.githubusercontent.com/60000653/182155833-6d2666c3-1e93-4283-85b5-1123a99ab7ff.png)
 
-### 포스트,태그 타입
-![image](https://user-images.githubusercontent.com/60000653/182156256-0d2f7893-d9b0-49d5-bfd1-08e8ecbda65a.png)
-![image](https://user-images.githubusercontent.com/60000653/182156568-aa6e0887-c8c3-463d-aa79-0e5ec28efde6.png)
+## 📑페이지 별 데이터 타입 
+<details>
+<summary><h3> 메인 페이지</h3></summary>
+<div>
 
-### 로그인 페이지
-![image](https://user-images.githubusercontent.com/60000653/182156891-5b771860-8261-431d-ac53-20d39fc419f3.png)
+> 백엔드에서 넘겨준 토큰을 decode해 user의 정보를 확인합니다. <br/> 
+> 작성한 포스트를 태그별로 필터링 합니다. 
+> 메인 페이지 에서 태그를 선택해 원하는 태그를 가진 프로젝트를 보여 줍니다.<br/> 
 
-<h4>마이 페이지</h4>
+1. 토큰 
+<img src="https://user-images.githubusercontent.com/60000653/182155672-2c981fda-a4b8-4945-b049-73e3dc68cfc8.png" height="100px" width="200px">
+<img src="https://user-images.githubusercontent.com/60000653/182155833-6d2666c3-1e93-4283-85b5-1123a99ab7ff.png" height="100px" width="200px">
 
-### 마이페이지 프로필 데이터
-![image](https://user-images.githubusercontent.com/60000653/182157065-735db3f2-4d5d-48dc-bd59-87a2db3e38f9.png)
+2. 포스트, 태그  
+<img src="https://user-images.githubusercontent.com/60000653/182156568-aa6e0887-c8c3-463d-aa79-0e5ec28efde6.png" height="250px" width="200px">
+<img src="https://user-images.githubusercontent.com/60000653/182156256-0d2f7893-d9b0-49d5-bfd1-08e8ecbda65a.png" height="100px" width="200px">
 
-### 등록한 프로젝트 
-![image](https://user-images.githubusercontent.com/60000653/182157253-92b93d49-e6da-4d8d-b8e8-ad4d2e3b7a2f.png)
 
-### 신청한 프로젝트
-![image](https://user-images.githubusercontent.com/60000653/182157268-866c7439-2e38-4dfc-a7fb-bcb48a672c42.png)
+</div>
+</details>
 
-<h4>프로젝트 등록/수정/상세 페이지</h4>
+<details>
+<summary><h3>마이 페이지| 유저 데이터</h3></summary>
+<div>
 
-### 프로젝트 데이터 
-![image](https://user-images.githubusercontent.com/60000653/182157520-313d103f-8d35-493e-84ec-f1255a61ff18.png)
+> 로그인, 회원가입은 소셜을 통해 처리하고 있으며 <br/>
+> 마이 페이지에서 유저 프로필 정보, 등록/신청한 프로젝트 정보를 확인 합니다.<br/>
 
-### 프로젝트 PM인 경우, 신청자 데이터 
-![image](https://user-images.githubusercontent.com/60000653/182157583-3ade3300-c5f8-4e8d-a3c3-d25e4a2d72cd.png)
+1. 유저 정보,  마이 페이지 데이터 
+<img src="https://user-images.githubusercontent.com/60000653/182156891-5b771860-8261-431d-ac53-20d39fc419f3.png" height="180px" width="200px"> 
+<img src="https://user-images.githubusercontent.com/60000653/182157065-735db3f2-4d5d-48dc-bd59-87a2db3e38f9.png" height="330px" width="200px">
 
-<h4>공통 컴포넌트 타입</h4>
+</div>
+</details>
 
-### 에러 타입, 태그 타입 
-![image](https://user-images.githubusercontent.com/60000653/182157889-3988197b-0387-4732-9a7c-0b1feefcb4b8.png)
-![image](https://user-images.githubusercontent.com/60000653/182157946-ac3e2267-318d-41df-aecd-03119a174a87.png)
+<details>
+<summary><h3>프로젝트 페이지| 프로젝트 데이터</h3></summary>
+<div>
+
+> 프로젝트 등록,수정 <br/> 
+> PM인 경우 프로젝트 수정/상세보기 시 프로젝트에 참여를 원하는 신청자들을 볼 수 있습니다.<br/> 
+
+1. 프로젝트 등록/ 수정
+<img src="https://user-images.githubusercontent.com/60000653/182157253-92b93d49-e6da-4d8d-b8e8-ad4d2e3b7a2f.png" height="300px" width="200px">
+
+2. 프로젝트 신청 
+<img src="https://user-images.githubusercontent.com/60000653/182157268-866c7439-2e38-4dfc-a7fb-bcb48a672c42.png" height="300px" width="200px">
+
+3. 프로젝트 상세보기 
+<img src="https://user-images.githubusercontent.com/60000653/182157520-313d103f-8d35-493e-84ec-f1255a61ff18.png" height="300px" width="200px">
+
+4. PM의 경우 신청자 데이터 
+<img src="https://user-images.githubusercontent.com/60000653/182157583-3ade3300-c5f8-4e8d-a3c3-d25e4a2d72cd.png" height="250px" width="200px">
+</div>
+</details>
+
+<details>
+<summary><h3>공통 컴포넌트</h3></summary>
+<div>
+
+> 에러 타입, 태그 타입 <br/> 
+
+<img src="https://user-images.githubusercontent.com/60000653/182157889-3988197b-0387-4732-9a7c-0b1feefcb4b8.png" height="100px" width="200px">
+<img src="https://user-images.githubusercontent.com/60000653/182157946-ac3e2267-318d-41df-aecd-03119a174a87.png" height="250px" width="200px">
+
+</div>
+</details>
+
+
+
+
 
 
 
