@@ -9,6 +9,7 @@ import GlobalIcon from '../../../Components/GlobalIcon';
 import TextModal from '../../../Components/TextModal';
 import ApplyProject from './ApplyProject';
 import RegisterProject from './RegisterProject';
+import OnGoingPorject from './OnGoingProject';
 
 export default function MyPageBody({ profileData, tagList, currentUser }:
 {
@@ -103,8 +104,8 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
     setNameModify(false);
   };
 
-  const tabDefatult = 'flex  hover:text-black text-[#CCCCCC] sm:mr-4 mg:mr-6 lg:mr-8';
-  const tabClicked = 'flex  underline underline-offset-8 text-black sm:mr-4 mg:mr-6 lg:mr-8';
+  const tabDefatult = 'flex hover:text-black text-[#CCCCCC] pc:mr-1 sm:mr-2 md:mr-3 lg:mr-4';
+  const tabClicked = 'flex underline underline-offset-8 text-black pc:mr-1 sm:mr-2 md:mr-3 lg:mr-4';
   return (
     <div className="max-w-full mx-auto min-h-screen">
       { modalOpen && updateErrMessage && (
@@ -116,7 +117,7 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
         <img className="w-full h-[91px] pc:h-[240px] object-cover" src="/myPageBackground.svg" alt="backgroundImage" />
       </div>
       <div className="myPageContents flex w-full pc:max-w-[1062px] mx-auto ">
-        <div className="side_pc hidden pc:block pc:relative flex-none  pc:-top-[90px]  pc:w-[300px]  pc:h-[332px]  pc:px-[20px]  pc:pb-20px  pc:max-w-[300px] bg-white border-2 border-[#EEEEEE]  rounded-2xl ">
+        <div className="side_pc hidden pc:block pc:relative flex-none pc:-top-[90px] pc:max-w-[210px] pc:w-[210px] pc:h-[332px] pc:px-[20px] pc:pb-20px sm:max-w-[270px] sm:w-[270px] bg-white border-2 border-[#EEEEEE]  rounded-2xl ">
           <div className="sideInner text-center mb-[20px]">
             <div className="userImg pt-[40px] pb-[18px]">
               {currentUser
@@ -282,7 +283,7 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
             </div>
           </div>
           {currentUser && (
-            <div className="ta b w-full flex  justify-evenly pt-[200px] pc:pt-[87px] pb-8 font-pre font-bold text-sm pc:justify-between  sm:justify-start pc:text-[12px] sm:text-sm md:text-[21px] lg:text-[28px]  leading-[33px] text-[#CCCCCC  ]">
+            <div className="tab w-full flex  justify-evenly pt-[200px] pc:pt-[87px] pb-8 font-pre font-bold text-sm pc:justify-between  sm:justify-start pc:text-[12px] sm:text-[14px] md:text-[18px] lg:text-[20px] xl:text-[28px]  leading-[28px] text-[#CCCCCC  ]">
               <button
                 type="button"
                 onClick={tabClick}
@@ -307,6 +308,14 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
               >
                 신청한 프로젝트
               </button>
+              <button
+                type="button"
+                value="onGoiongPoject"
+                onClick={tabClick}
+                className={`${Tab === 'onGoiongPoject' ? tabClicked : tabDefatult}`}
+              >
+                진행중 프로젝트
+              </button>
             </div>
           ) }
           {Tab === 'profile' && (
@@ -323,6 +332,14 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
           )}
           {Tab === 'registeredPosts' && (
           <RegisterProject projects={profileData.registeredPosts} />
+          )}
+          {Tab === 'onGoiongPoject' && (
+          <OnGoingPorject
+            registerProjects={
+            profileData.registeredPosts
+            }
+            applyPojects={profileData.applyPosts}
+          />
           )}
         </div>
       </div>
