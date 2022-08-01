@@ -3,12 +3,12 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { useNavigate } from 'react-router-dom';
 import GlobalIcon from '../../../Components/GlobalIcon';
-import { IapplyPosts, IRegisteredPosts } from '../../../TypeInterface/postType';
+import { IApplyPosts, IRegisteredPosts } from '../../../TypeInterface/postType';
 import { dateFormat } from '../../../util/util';
 import StatusTag from './StatusTag';
 
 interface Props {
-    applyPojects: IapplyPosts[],
+    applyPojects: IApplyPosts[],
     registerProjects: IRegisteredPosts[],
   }
 export default function OnGoingPorject({ applyPojects, registerProjects }:Props) {
@@ -26,7 +26,7 @@ export default function OnGoingPorject({ applyPojects, registerProjects }:Props)
     <div className="projectComponent mb-[160px]">
       <div className="onGoingProjectContents flex flex-col  mt-5 bg-white px-8  border-2 border-[#EEEEEE] rounded-2xl">
         {pass.length === 0 && going.length === 0 && (<div className="my-5"> 진행중인 프로젝트가 없습니다. </div>)}
-        {(pass.length > 0 && pass.map((prj:IapplyPosts, idx) => (
+        {(pass.length > 0 && pass.map((prj:IApplyPosts) => (
           <div key={prj.id} onClick={goDetail(prj.id)} className="mt-10 cursor-pointer">
             <div className="flex-row items-start">
               <StatusTag
@@ -74,7 +74,7 @@ export default function OnGoingPorject({ applyPojects, registerProjects }:Props)
             )}
           </div>
         )))}
-        {(going.length > 0 && going.map((prj:IapplyPosts, idx) => (
+        {(going.length > 0 && going.map((prj:IApplyPosts, idx) => (
           <div key={prj.id} onClick={goDetail(prj.id)} className="mt-10 cursor-pointer">
             <div className="flex-row items-start">
               <StatusTag

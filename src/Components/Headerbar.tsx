@@ -7,13 +7,13 @@ import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { Link, useNavigate } from 'react-router-dom';
 import Login from './Login';
 import jwtUtils from '../util/JwtUtil';
-import { Iuser } from '../TypeInterface/userType';
+import { IUser } from '../TypeInterface/userType';
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
 }
 
-export default function Header({ userInfo }:{ userInfo: Iuser }) {
+export default function Header({ userInfo }:{ userInfo: IUser }) {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const nav = useNavigate();
   const token = localStorage.getItem('token');

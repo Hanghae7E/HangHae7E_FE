@@ -2,11 +2,11 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { useNavigate } from 'react-router-dom';
 import GlobalIcon from '../../../Components/GlobalIcon';
-import { IapplyPosts } from '../../../TypeInterface/postType';
+import { IApplyPosts } from '../../../TypeInterface/postType';
 import StatusTag from './StatusTag';
 
 interface Props {
-    projects: IapplyPosts[]
+    projects: IApplyPosts[]
   }
 export default function ApplyProject({ projects }:Props) {
   const pass = projects.filter((p) => p.status === '합격');
@@ -41,7 +41,7 @@ export default function ApplyProject({ projects }:Props) {
       </div>
       <div className="projectContents flex flex-col  mt-5 bg-white px-8  border-2 border-[#EEEEEE] rounded-2xl">
         {projects.length === 0 && (<div className="my-5"> 신청한 프로젝트가 없습니다. </div>)}
-        {(projects.length > 0 && projects.map((prj:IapplyPosts, idx) => (
+        {(projects.length > 0 && projects.map((prj:IApplyPosts, idx) => (
           <div key={prj.id} onClick={goDetail(prj.id)} className="mt-10 cursor-pointer">
             <div className="flex-row items-start">
               <StatusTag

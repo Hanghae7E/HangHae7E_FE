@@ -3,6 +3,7 @@ export interface ITag {
 	body: string;
 	tagId: number
 }
+
 export interface IRecruitPost{
 	postId: number;
 	username : string;
@@ -19,7 +20,6 @@ export interface IRecruitPost{
 	requiredProjectManagers:number,
 	tags: Array<ITag>;
 	last:boolean
-
 }
 
 export interface IRecruitPages{
@@ -40,7 +40,7 @@ export interface IRegisteredPosts{
 	required_project_managers:string;
 	required_designers:string;
 }
-export interface IapplyPosts{
+export interface IApplyPosts{
 	id: number;
 	project_start_time : string;
 	project_end_time:string;

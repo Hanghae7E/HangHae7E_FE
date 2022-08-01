@@ -6,13 +6,13 @@ import { useForm } from 'react-hook-form';
 import { useMutation, useQueryClient } from 'react-query';
 import React, { SetStateAction, useEffect, useState } from 'react';
 import { IProfileFormData } from '../../../TypeInterface/userType';
+import { ITag } from '../../../TypeInterface/postType';
 import userAPi from '../../../Api/userAPi';
 import CustomCalinder from '../../../Components/CustomCalinder';
 import { dateFormat } from '../../../util/util';
 import TextModal from '../../../Components/TextModal';
 import Portal from '../../../Components/Portal';
 import TagSearch from '../../../Components/TagSearch';
-import { ITag } from '../../../TypeInterface/postType';
 import TagBox from '../../../Components/TagBox';
 
 export default function Profile({

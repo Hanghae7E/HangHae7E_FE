@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ITag } from '../TypeInterface/postType';
-import { IProfileFormData, IsideProfile } from '../TypeInterface/userType';
+import { IProfileFormData, ISideProfile } from '../TypeInterface/userType';
 import jwtUtils from '../util/JwtUtil';
 import baseUrl from './baseUrl';
 
@@ -50,7 +50,7 @@ const getUserProfile = async (id: string | false) => {
 };
 
 // 프로필 사이드 데이터 변경
-export const setSideProfile = async (userInfo: IsideProfile) => {
+export const setSideProfile = async (userInfo: ISideProfile) => {
   console.log('사이드 프로필 수정', userInfo);
   const form = new FormData();
   const token = localStorage.getItem('token') as string;
@@ -106,7 +106,7 @@ const putUserProfile = async (
 export default {
   getMyInfo: (id: string |false) => getMyInfo(id),
   setMyName: (username: string) => setMyName(username),
-  setSideProfile: (userInfo: IsideProfile) => setSideProfile(userInfo),
+  setSideProfile: (userInfo: ISideProfile) => setSideProfile(userInfo),
   getAllUser: () => getAllUser(),
   postUser: () => postUser(),
   getUserProfile: (id: string | false) => getUserProfile(id),

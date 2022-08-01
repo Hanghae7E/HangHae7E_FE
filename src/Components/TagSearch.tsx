@@ -2,10 +2,9 @@
 import React, { SetStateAction, useEffect, useState } from 'react';
 import { ITag } from '../TypeInterface/postType';
 import GlobalIcon from './GlobalIcon';
-
 import TagBox from './TagBox';
 
-interface tagOptionI {
+interface ITagOption {
   tagData: Array<ITag>;
   selected: Array<ITag>;
   placeholder: string;
@@ -33,7 +32,7 @@ interface tagOptionI {
     };
   };
 }
-function TagSearch(tagOption: tagOptionI) {
+function TagSearch(tagOption: ITagOption) {
   const {
     tagData, selected, placeholder, setHashTag,
   } = tagOption;

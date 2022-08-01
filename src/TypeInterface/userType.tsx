@@ -1,6 +1,6 @@
-import { IapplyPosts, IRegisteredPosts } from './postType';
+import { IApplyPosts, IRegisteredPosts } from './postType';
 
-export interface Iuser {
+export interface IUser {
   id: string;
   username: string;
   email: string;
@@ -9,7 +9,7 @@ export interface Iuser {
   socialType: string,
 }
 
-export interface IsideProfile {
+export interface ISideProfile {
   userId?: string|false;
   username: string;
   file?:File;
@@ -39,5 +39,5 @@ export interface IProfileFormData {
   time: string ;
   test : string ;
   registeredPosts: Array<IRegisteredPosts>;
-  applyPosts:Array<IapplyPosts>;
+  applyPosts:Array<IApplyPosts>;
   }

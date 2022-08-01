@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import userAPi from '../Api/userAPi';
-import { Iuser } from '../TypeInterface/userType';
+import { IUser } from '../TypeInterface/userType';
 import GlobalIcon from './GlobalIcon';
 
 export default function NickNameModal({
@@ -13,7 +13,7 @@ export default function NickNameModal({
   userInfo,
 }: {
     modalClose: any,
-    userInfo: Iuser,
+    userInfo: IUser,
 }) {
   const [nicknameCheck, setNicknameCheck] = useState(false);
   const [nicknameMessage, setNicknameMessage] = useState('');

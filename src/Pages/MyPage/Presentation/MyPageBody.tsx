@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { Portal } from '@headlessui/react';
-import { IProfileFormData, IsideProfile } from '../../../TypeInterface/userType';
-import { Itag } from '../../../TypeInterface/tagType';
+import { IProfileFormData, ISideProfile } from '../../../TypeInterface/userType';
+import { ITag } from '../../../TypeInterface/postType';
 import Profile from './Profile';
 import userAPi from '../../../Api/userAPi';
 import GlobalIcon from '../../../Components/GlobalIcon';
@@ -14,7 +14,7 @@ import OnGoingPorject from './OnGoingProject';
 export default function MyPageBody({ profileData, tagList, currentUser }:
 {
   profileData: IProfileFormData;
-  tagList: Array<Itag>;
+  tagList: Array<ITag>;
   currentUser:boolean;
   }) {
   const [Tab, setTab] = useState('profile');
@@ -33,7 +33,7 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
   const queryClient = useQueryClient();
 
   const UpdateSideProfile = useMutation(
-    (data: IsideProfile) => userAPi.setSideProfile(data),
+    (data: ISideProfile) => userAPi.setSideProfile(data),
     {
       onSuccess: () => {
         queryClient.invalidateQueries('get_userInfo');
@@ -48,7 +48,7 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
   const onChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files === null) return;
     const files = e.target.files[0];
-    const SideProfile:IsideProfile = {
+    const SideProfile:ISideProfile = {
       file: files, username: newName, skills: profileData.skills, fields: profileData.fields,
     };
 
@@ -65,7 +65,7 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
   };
 
   const onChangeName = () => {
-    const SideProfile:IsideProfile = {
+    const SideProfile:ISideProfile = {
       username: newName,
       skills: profileData.skills,
       fields: profileData.fields,
