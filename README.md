@@ -5,7 +5,7 @@
 
 
 사용한 기술 스택
-<img alt="React" src ="https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=React&logoColor=white"/> <img alt="TypeScript" src ="https://img.shields.io/badge/TypeScript-3178C6?&style=for-the-badge&logo=TypeScript&logoColor=white"/> <img alt="ReactQuery" src ="https://img.shields.io/badge/ReactQuery-3178C6?&style=for-the-badge&logo=ReactQuery&logoColor=white"/> 
+<img alt="React" src ="https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=React&logoColor=white"/> <img alt="TypeScript" src ="https://img.shields.io/badge/TypeScript-3178C6?&style=for-the-badge&logo=TypeScript&logoColor=white"/> <img alt="ReactQuery" src ="https://img.shields.io/badge/ReactQuery-FF4154?&style=for-the-badge&logo=ReactQuery&logoColor=white"/> 
 
 format : 
 
