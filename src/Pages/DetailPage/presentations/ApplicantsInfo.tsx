@@ -4,6 +4,7 @@
 /* eslint-disable array-callback-return */
 /* eslint-disable no-unused-expressions */
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Applicant } from '../../../TypeInterface/detailType';
 import DetailIcon from './DetailIcon';
 import PositionTag from './PositionTag';
@@ -25,6 +26,11 @@ function ApplicantsInfo({ onClickAccept, onClickReject, applicantsStanby }: Prop
     userImg: propsImg,
     isOpen: isOpenedModal,
   } = useModalState();
+
+  const navigate = useNavigate();
+  const goToUserPage = (userId:number) => {
+    navigate(`/mypage/${userId}`);
+  };
   return (
     <div className="w-[300px] border-2 border-solid border-[#EEEEEE] py-[32px] rounded-xl mb-6">
       <h2 className="pl-6 font-bold text-[26px]">
@@ -38,7 +44,13 @@ function ApplicantsInfo({ onClickAccept, onClickReject, applicantsStanby }: Prop
             key={userId}
             className="flex items-center w-[255px] border-b-[1px] border-b-solid border-b-[#EEEEEE] mx-auto pb-3"
           >
-            <img alt="신청자이미지" className="w-[44px] h-[44px] rounded-full " src={profileImageUrl || '/profiledefault.svg'} />
+            <input
+              type="image"
+              alt="신청자이미지"
+              className="w-[44px] h-[44px] rounded-full "
+              src={profileImageUrl || '/profiledefault.svg'}
+              onClick={() => { goToUserPage(userId); }}
+            />
             <h5 className="ml-[8px] w-[94px] text-[18px] font-bold whitespace-nowrap">{username}</h5>
             <div className="flex flex-1 items-center justify-between">
               <PositionTag

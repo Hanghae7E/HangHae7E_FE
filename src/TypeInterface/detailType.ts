@@ -27,6 +27,7 @@ export interface DetailProjectData {
   }
 
 export interface UserData {
+    userId: string;
     username: string;
     email: string;
     phone_number: string;
