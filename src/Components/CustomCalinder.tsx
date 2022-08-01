@@ -15,7 +15,7 @@ import { ko } from 'date-fns/locale';
 import 'react-datepicker/dist/react-datepicker.css';
 import './datePicker.css';
 import GlobalIcon from './GlobalIcon';
-import { dateFormat } from '../util/util';
+import { dateFormat, addMonths } from '../util/util';
 
 interface Iprops {
 start?: string;
@@ -138,6 +138,7 @@ export default function CustomCalinder({
           customInput={createElement(ExampleCustomInput)}
           monthsShown={2}
           minDate={new Date()}
+          maxDate={addMonths(6)}
           showDisabledMonthNavigation
         />
       ) : (
@@ -182,6 +183,7 @@ export default function CustomCalinder({
             setStartDate(date);
           }}
           minDate={new Date()}
+          maxDate={addMonths(6)}
           showDisabledMonthNavigation
           disabledKeyboardNavigation
           customInput={createElement(ExampleCustomInput)}
