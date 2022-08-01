@@ -17,10 +17,16 @@ export default function NickNameModal({
 }) {
   const [nicknameCheck, setNicknameCheck] = useState(false);
   const [nicknameMessage, setNicknameMessage] = useState('');
+  const [enterPress, setEnterPress] = useState(false);
   const [Input, setInput] = useState('');
   const navigator = useNavigate();
+
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value.length < 2) {
+    if (e.target.value === '') {
+      setNicknameMessage(`입력하지 않으면 ${userInfo.username}이(가) 닉네임으로 사용됩니다.`);
+      setNicknameCheck(false);
+      setInput(e.target.value);
+    } else if (e.target.value.length < 2) {
       setNicknameMessage('2글자 이상 6글자 이하으로 입력해주세요.');
       setNicknameCheck(false);
       setInput(e.target.value);
@@ -29,15 +35,11 @@ export default function NickNameModal({
       setNicknameCheck(false);
     } else {
       setInput(e.target.value);
+      setNicknameMessage(` ${e.target.value}님 환영합니다 :)`);
+      setNicknameCheck(true);
     }
-    if (e.target.value.length === 0) {
-      setNicknameMessage(`입력하지 않으면 ${userInfo.username}이(가) 닉네임으로 사용됩니다.`);
-      setNicknameCheck(false);
-    }
-
-    setNicknameMessage('환영합니다 :)');
-    setNicknameCheck(true);
   };
+
   const query = useQueryClient();
   const changeNickName = useMutation((username:string) => userAPi.setMyName(username), {
     onSuccess: (v) => {
@@ -51,8 +53,35 @@ export default function NickNameModal({
     navigator('/mypage', { replace: true });
   };
   async function savebtn() {
-    if (Input) { changeNickName.mutate(Input); } else { changeNickName.mutate(userInfo.username); }
+    if (nicknameCheck) {
+      changeNickName.mutate(Input);
+    } else if (Input === '') { changeNickName.mutate(userInfo.username); }
   }
+  const onKeyUp = (e:React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      if (e.currentTarget.value.length === 0) {
+        setNicknameMessage(`입력하지 않으면 ${userInfo.username}이(가) 닉네임으로 사용됩니다.`);
+        setInput(e.currentTarget.value);
+        setEnterPress(true);
+        setNicknameCheck(false);
+      } else if (e.currentTarget.value.length < 2) {
+        setNicknameMessage('2글자 이상 6글자 이하으로 입력해주세요.');
+        setNicknameCheck(false);
+        setInput(e.currentTarget.value);
+      } else if (e.currentTarget.value.length > 6) {
+        setNicknameMessage('2글자 이상 6글자 이하으로 입력해주세요.');
+        setNicknameCheck(false);
+      } else {
+        setInput(e.currentTarget.value);
+        setNicknameMessage(` ${e.currentTarget.value}님 환영합니다 :)`);
+        setNicknameCheck(true);
+        setEnterPress(true);
+      }
+    }
+    if (e.key === 'Enter' && enterPress) {
+      savebtn();
+    }
+  };
   useEffect(() => {
     document.body.style.cssText = `
     position: fixed; 
@@ -94,30 +123,29 @@ export default function NickNameModal({
           </p>
           <form onSubmit={savebtn}>
             <input
-              className="w-[300px] h-[50px] mt-[12px] pl-[20px] border-2 border-[#EEEEEE] rounded-[8px] font-pre font-normal text-[18px] leading-[21px] placeholder:text-[#CCCCCC] text-black"
+              className="w-[300px] h-[50px]  mt-[12px] pl-[20px] border-2 border-[#EEEEEE] rounded-[8px] font-pre font-normal text-[18px] leading-[21px] placeholder:text-[#CCCCCC] text-black"
               type="text"
               placeholder="ex)룰루랄라조로"
+              onKeyUp={onKeyUp}
               value={Input}
               onChange={handleInput}
             />
+            <input type="text" hidden />
           </form>
-          <div className="text-red-400">
-            {nicknameCheck === false && (<span>{nicknameMessage}</span>)}
-          </div>
+          {nicknameCheck === false && (<span className="text-red-400 text-sm">{nicknameMessage}</span>)}
           <div>
-
             <button
               type="button"
               value="nickBtn"
               onClick={savebtn}
-              className="min-w-[140px] h-[60px] rounded-[15px] w-full pc:mt-5 mt-6 font-pre font-bold text-[20px] leading-[24px] bg-[#6457FA] text-white hover:bg-white hover:text-[#6457FA]  hover:border-2 hover:border-[#6457FA]"
+              className="min-w-[140px] h-[60px] rounded-[15px] w-full pc:mt-5 mt-6 font-pre font-bold text-[20px] leading-[24px]  bg-white text-[#6457FA]  border-2 border-1 border-[#6457FA] hover:bg-[#6457FA] hover:text-white "
             >
               이걸로 할께요!
             </button>
             <button
               type="button"
               onClick={goToProfile}
-              className="min-w-[140px] h-[60px] rounded-[15px] w-full pc:mt-2 mt-2 mb-2px font-pre font-bold text-[20px] leading-[24px] bg-white text-[#6457FA] hover:bg-text hover:border-2 border-1 border-[#6457FA]"
+              className="min-w-[140px] h-[60px] rounded-[15px] w-full pc:mt-2 mt-2 mb-2px font-pre font-bold text-[20px] leading-[24px] bg-[#eeeeee] text-[#cccccc]  hover:bg-[#6457FA] hover:text-white "
             >
               프로필 수정하러 가기
             </button>
