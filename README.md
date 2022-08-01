@@ -38,7 +38,7 @@
 
 ### FrontEnd
 
-<img alt="장경태" src ="https://img.shields.io/badge/REACT-%EC%9E%A5%EA%B2%BD%ED%83%9C-61DAFB?style=for-the-badge&logo=React&logoColor=white"/> <img alt="이은지" src ="https://img.shields.io/badge/REACT-이은지-61DAFB?style=for-the-badge&logo=React&logoColor=white"/>> <img alt="원동환" src ="https://img.shields.io/badge/REACT-원동환-61DAFB?style=for-the-badge&logo=React&logoColor=white"/>
+<img alt="장경태" src ="https://img.shields.io/badge/REACT-%EC%9E%A5%EA%B2%BD%ED%83%9C-61DAFB?style=for-the-badge&logo=React&logoColor=white"/> <img alt="이은지" src ="https://img.shields.io/badge/REACT-이은지-61DAFB?style=for-the-badge&logo=React&logoColor=white"/> <img alt="원동환" src ="https://img.shields.io/badge/REACT-원동환-61DAFB?style=for-the-badge&logo=React&logoColor=white"/>
 <br />
 <br />
 ### BackEnd
