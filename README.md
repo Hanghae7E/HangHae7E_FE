@@ -119,7 +119,36 @@ format :
 
 ## : 페이지 별 타입 
 <h4>메인 페이지</h4>
+-토큰 정보 decode 를 통해 user 정보 확인. 
+-포스트 정보, 태그 정보 확인 
+<h5> 토큰 타입 </h5>
+![image](https://user-images.githubusercontent.com/60000653/182155672-2c981fda-a4b8-4945-b049-73e3dc68cfc8.png)
+![image](https://user-images.githubusercontent.com/60000653/182155833-6d2666c3-1e93-4283-85b5-1123a99ab7ff.png)
+<h5> 포스트,태그 타입 </h5>
+![image](https://user-images.githubusercontent.com/60000653/182156256-0d2f7893-d9b0-49d5-bfd1-08e8ecbda65a.png)
+![image](https://user-images.githubusercontent.com/60000653/182156568-aa6e0887-c8c3-463d-aa79-0e5ec28efde6.png)
 
+<h4>로그인 페이지</h4>
+![image](https://user-images.githubusercontent.com/60000653/182156891-5b771860-8261-431d-ac53-20d39fc419f3.png)
+
+<h4>마이 페이지</h4>
+-마이페이지 프로필 데이터
+![image](https://user-images.githubusercontent.com/60000653/182157065-735db3f2-4d5d-48dc-bd59-87a2db3e38f9.png)
+-등록한 프로젝트 
+![image](https://user-images.githubusercontent.com/60000653/182157253-92b93d49-e6da-4d8d-b8e8-ad4d2e3b7a2f.png)
+-신청한 프로젝트
+![image](https://user-images.githubusercontent.com/60000653/182157268-866c7439-2e38-4dfc-a7fb-bcb48a672c42.png)
+
+<h4>프로젝트 등록/수정/상세 페이지</h4>
+-프로젝트 데이터 
+![image](https://user-images.githubusercontent.com/60000653/182157520-313d103f-8d35-493e-84ec-f1255a61ff18.png)
+-프로젝트 PM인 경우, 신청자 데이터 
+![image](https://user-images.githubusercontent.com/60000653/182157583-3ade3300-c5f8-4e8d-a3c3-d25e4a2d72cd.png)
+
+<h4>공통 컴포넌트 타입</h4>
+-에러 타입, 태그 타입 
+![image](https://user-images.githubusercontent.com/60000653/182157889-3988197b-0387-4732-9a7c-0b1feefcb4b8.png)
+![image](https://user-images.githubusercontent.com/60000653/182157946-ac3e2267-318d-41df-aecd-03119a174a87.png)
 
 </div>
 </details>
