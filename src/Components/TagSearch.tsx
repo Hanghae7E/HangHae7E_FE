@@ -38,6 +38,7 @@ function TagSearch(tagOption: ITagOption) {
   } = tagOption;
   const [myTags, setMyTags] = useState<Array<ITag>>(selected);
   const [recommends, setRecommends] = useState<Array<ITag>>([]);
+  const [recommendShow, setRecommendShow] = useState(true);
   const [input, setInput] = useState('');
   // if (selected.length === 0) {
   //   setTagList(tagData);
@@ -105,6 +106,7 @@ function TagSearch(tagOption: ITagOption) {
         }
       });
       setRecommends(filterData);
+      setRecommendShow(true);
     }
     // if (window.innerWidth <= 768) { console.log('test'); }
   };
@@ -118,7 +120,7 @@ function TagSearch(tagOption: ITagOption) {
   }, []);
   return (
 
-    <div className="relative min-h-min w-full border-none">
+    <div className="relative min-h-min w-full border-none " onBlur={() => { setRecommendShow(!recommendShow); }}>
       <div className="absolute right-[5.42%] sm:right-[20px] top-[20.37%] ">
         <GlobalIcon.Search />
       </div>
@@ -130,10 +132,11 @@ function TagSearch(tagOption: ITagOption) {
         value={input}
         disabled={myTags.length >= 4}
         onFocus={openSelectTagModal}
+
       />
-      {recommends.length > 0
+      {recommends.length > 0 && recommendShow
       && (
-      <div className="absolute z-[1] w-full t-[45px] max-h-[200px] overflow-hidden overflow-y-auto scrollbar-hide">
+      <div className="absolute z-[1] w-full t-[45px] max-h-[200px] overflow-hidden overflow-y-auto scrollbar-hide ">
           {recommends.map((tag, i) => (
             <button className={tagSelct} type="button" value={tag.body} key={`${tag.body + i}`} onClick={() => selectedTag(tag)}>
               {tag.body}
