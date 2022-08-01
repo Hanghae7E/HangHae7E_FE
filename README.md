@@ -77,6 +77,10 @@ format :
 [Set]    세팅 관련 작업
 [Test]   테스트 관련 작업
 ```
+## 아키텍쳐
+![image](https://user-images.githubusercontent.com/49186181/182147162-2bcba417-409a-4a5f-b6b5-75874b569a81.png)
+![image](https://user-images.githubusercontent.com/49186181/182147086-fbb0656d-0334-46b7-b47b-d71506d0b9b9.png)
+
 
 
 ## :boom:트러블슈팅
