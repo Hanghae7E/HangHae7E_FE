@@ -5,7 +5,7 @@ import { Controller, FieldValues, useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { useQuery } from 'react-query';
 import { useLocation, useParams } from 'react-router-dom';
-import UpdateFooter from './Presentation/UpdateFooter';
+// import UpdateFooter from './Presentation/UpdateFooter';
 import UpdateHeader from './Presentation/UpdateHeader';
 import postApi from '../../Api/postApi';
 import TagBox from '../../Components/TagBox';

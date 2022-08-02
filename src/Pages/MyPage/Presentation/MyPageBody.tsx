@@ -125,7 +125,7 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
                 ? (
                   <label className="cursor-pointer relative " htmlFor="file">
                     <img
-                      className="w-[200px] h-[200px] mx-auto rounded-full "
+                      className="w-[100px] h-[100px] mx-auto rounded-full "
                       src={objectURL || '/profiledefault.svg'}
                       alt="userImage"
                     />
@@ -142,10 +142,10 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
                   />
                 )}
             </div>
-            <div className="userName flex justify-center font-pre font-semibold text-[22px] leading-[33px] mt-3">
+            <div className="userName flex flex-wrap justify-center font-pre font-semibold text-[22px] leading-[33px] mt-3">
               {currentUser && nameModify ? (
                 <>
-                  {err === true && (<span className="font-pre font-normal text-[12px] leading-[13.32px]">{nameMessage}</span>)}
+                  {err === true && (<div className="mb-2 min-w-full font-pre font-normal text-[14px] leading-[13.32px]">{nameMessage}</div>)}
                   <div className=" flex">
                     <form onSubmit={onChangeName}>
                       <input className="w-[100px] pl-[10px] shadow-lg " type="text" onChange={handleInput} value={newName} />
@@ -231,10 +231,10 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
                   alt="userImage"
                 />
               )}
-              <div className="userName flex justify-center pt-3 pb-5 font-pre font-bold text-5 leading-[23.87px] pc:font-semibold pc:text-[22px] pc:leading-[33px] pc:pb-5 ">
+              <div className="userName flex flex-wrap justify-center text-center pt-3 pb-5 font-pre font-bold text-5 leading-[23.87px] pc:font-semibold pc:text-[22px] pc:leading-[33px] pc:pb-5 ">
                 {currentUser && nameModify ? (
                   <div>
-                    {err === true && (<span className="font-pre font-normal text-[12px] leading-[13.32px]">{nameMessage}</span>)}
+                    {err === true && (<span className="min-w-full font-pre font-normal text-[14px] leading-[13.32px]">{nameMessage}</span>)}
                     <input className="w-[100px] pl-[10px] shadow-lg " type="text" onChange={handleInput} value={newName} />
                     <button
                       type="button"
