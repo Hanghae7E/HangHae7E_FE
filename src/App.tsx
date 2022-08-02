@@ -68,10 +68,9 @@ function App() {
             />
           </Route>
 
-          <Route path="/workSpace" element={(<WorkSpace />)}>
-            <Route path=":projectId" element={(<WorkSpace />)} />
-          </Route>
-
+        </Route>
+        <Route path="/workSpace" element={(<WorkSpace />)}>
+          <Route path=":projectId" element={(<WorkSpace />)} />
         </Route>
         <Route path="/detail/:postId" element={<DetailPage />} />
         <Route path="/login/callback" element={<SocialLogin />} />

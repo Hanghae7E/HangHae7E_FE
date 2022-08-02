@@ -2,7 +2,6 @@
 /* eslint-disable react/require-default-props */
 import React, { useEffect } from 'react';
 import GlobalIcon from '../../../../Components/GlobalIcon';
-import PositionTag from '../../../DetailPage/presentations/PositionTag';
 
 interface Props {
     isOpen: boolean;

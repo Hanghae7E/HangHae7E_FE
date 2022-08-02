@@ -5,6 +5,8 @@
 import { SetStateAction, useEffect, useState } from 'react';
 import MDEditor from '@uiw/react-md-editor';
 import { Client } from '@stomp/stompjs';
+import remarkGfm from 'remark-gfm';
+import rehypeSanitize from 'rehype-sanitize';
 import useInterval from '../../hooks/useInterval';
 
 function AddWorkSpace({
@@ -22,8 +24,8 @@ function AddWorkSpace({
     workSpaceId:number,
     setIsEdit:React.Dispatch<SetStateAction<boolean>>
   }) {
-  const [markdown, setMarkdown] = useState<string>('');
-  const [markEdit, setMarkEdit] = useState<string>('');
+  const [markdown, setMarkdown] = useState<string>();
+  const [markEdit, setMarkEdit] = useState<string>();
   const [sendTime, setSendTime] = useState<number>(0);
   const subUrl = '/sub/workspace/test/0';
   const subscribe = () => {
@@ -76,15 +78,23 @@ function AddWorkSpace({
   useInterval(() => {
     const sec = new Date().getTime();
     if (sendTime + 500 < sec && isEdit) {
-      if (markEdit !== markdown) {
-        handler(markEdit, 'EDITING');
-        setSendTime(sec);
+      if (markEdit) {
+        if (markEdit !== markdown) {
+          handler(markEdit, 'EDITING');
+          setSendTime(sec);
+        }
       }
     }
   }, 500);
   return (
     <article className="relative flex w-full pt-20 pl-10  min-h-screen">
-      <button type="button" className="px-[12px] py-[8px] bg-slate-400 rounded-[8px] text-white absolute top-5 right-6" onClick={() => setPage('main')}>메인으로</button>
+      <button
+        type="button"
+        className="px-[12px] py-[8px] bg-slate-400 rounded-[8px] text-white absolute top-5 right-6"
+        onClick={() => setPage('main')}
+      >
+        메인으로
+      </button>
 
       {isEdit ? (
         <div className="flex flex-col justify-center w-[95%]">
@@ -94,12 +104,34 @@ function AddWorkSpace({
             onChange={(e) => {
               setMarkEdit(e || '');
             }}
+            inputMode="text"
+            previewOptions={
+              {
+                rehypePlugins: [rehypeSanitize],
+                remarkPlugins: [remarkGfm],
+              }
+            }
           />
-          <button type="button" className="px-[12px] py-[8px] bg-slate-400 rounded-[8px] text-white mb-[160px] " onClick={() => setIsEdit(!isEdit)}>{isEdit ? '수정완료' : '수정하기'}</button>
+          <button
+            type="button"
+            className="px-[12px] py-[8px] bg-slate-400 rounded-[8px] text-white mb-[160px] "
+            onClick={() => setIsEdit(!isEdit)}
+          >
+            {isEdit ? '수정완료' : '수정하기'}
+
+          </button>
         </div>
 
       )
-        : <div><MDEditor.Markdown source={markdown} /></div>}
+        : (
+          <div>
+            <MDEditor.Markdown
+              rehypePlugins={[rehypeSanitize]}
+              remarkPlugins={[remarkGfm]}
+              source={markdown}
+            />
+          </div>
+        )}
 
     </article>
   );
