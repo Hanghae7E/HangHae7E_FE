@@ -125,7 +125,7 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
                 ? (
                   <label className="cursor-pointer relative " htmlFor="file">
                     <img
-                      className="w-50 h-50 mx-auto rounded-full "
+                      className="w-[200px] h-[200px] mx-auto rounded-full "
                       src={objectURL || '/profiledefault.svg'}
                       alt="userImage"
                     />
