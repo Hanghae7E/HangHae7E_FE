@@ -8,10 +8,10 @@ import Login from './Login';
 function ProtectedRoute({ redirectPath = '/' }: { redirectPath: string }) {
   const token = localStorage.getItem('token');
   const [modalOpen, setModalOpen] = useState<boolean>(false);
-  const navgate = useNavigate();
+  const navigate = useNavigate();
   const modalClose = () => {
     setModalOpen(!modalOpen);
-    navgate(redirectPath, { replace: true });
+    navigate(redirectPath, { replace: true });
   };
 
   if (!token) {

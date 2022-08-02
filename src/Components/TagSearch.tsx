@@ -2,10 +2,9 @@
 import React, { SetStateAction, useEffect, useState } from 'react';
 import { ITag } from '../TypeInterface/postType';
 import GlobalIcon from './GlobalIcon';
-
 import TagBox from './TagBox';
 
-interface tagOptionI {
+interface ITagOption {
   tagData: Array<ITag>;
   selected: Array<ITag>;
   placeholder: string;
@@ -33,12 +32,13 @@ interface tagOptionI {
     };
   };
 }
-function TagSearch(tagOption: tagOptionI) {
+function TagSearch(tagOption: ITagOption) {
   const {
     tagData, selected, placeholder, setHashTag,
   } = tagOption;
   const [myTags, setMyTags] = useState<Array<ITag>>(selected);
   const [recommends, setRecommends] = useState<Array<ITag>>([]);
+  const [recommendShow, setRecommendShow] = useState(true);
   const [input, setInput] = useState('');
   // if (selected.length === 0) {
   //   setTagList(tagData);
@@ -106,12 +106,13 @@ function TagSearch(tagOption: tagOptionI) {
         }
       });
       setRecommends(filterData);
+      setRecommendShow(true);
     }
     // if (window.innerWidth <= 768) { console.log('test'); }
   };
   useEffect(() => {
     document.addEventListener('keydown', (event) => {
-      if (event.keyCode === 27) {
+      if (event.key === 'Esc' || event.keyCode === 27) {
         // event.preventDefault();
         setRecommends([]);
       }
@@ -119,7 +120,7 @@ function TagSearch(tagOption: tagOptionI) {
   }, []);
   return (
 
-    <div className="relative min-h-min w-full border-none">
+    <div className="relative min-h-min w-full border-none " onBlur={() => { setRecommendShow(!recommendShow); }}>
       <div className="absolute right-[5.42%] sm:right-[20px] top-[22.37%] sm:top-[13px]">
         <GlobalIcon.Search />
       </div>
@@ -131,10 +132,11 @@ function TagSearch(tagOption: tagOptionI) {
         value={input}
         disabled={myTags.length >= 4}
         onFocus={openSelectTagModal}
+
       />
-      {recommends.length > 0
+      {recommends.length > 0 && recommendShow
       && (
-      <div className="absolute z-[1] w-full t-[45px] max-h-[200px] overflow-hidden overflow-y-auto scrollbar-hide">
+      <div className="absolute z-[1] w-full t-[45px] max-h-[200px] overflow-hidden overflow-y-auto scrollbar-hide ">
           {recommends.map((tag, i) => (
             <button className={tagSelct} type="button" value={tag.body} key={`${tag.body + i}`} onClick={() => selectedTag(tag)}>
               {tag.body}

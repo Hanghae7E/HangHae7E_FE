@@ -50,7 +50,7 @@ export default function MainPageContainer() {
     });
   }, []);
   return (
-    <>
+    <div className="opacity-1">
       {userInfo && modalOpen && userInfo.isSuccess && !userInfo.data.data.phone_number && (
         <Portal>
           <NickNameModal
@@ -77,6 +77,6 @@ export default function MainPageContainer() {
       <div onClick={goSurvey} className={`w-full   opacity-0  ${!isDown && 'sticky bottom-0 z-50 cursor-pointer translate-y-0 transition-opacity  opacity-100 duration-700'}`}>
         <img src="/survey.svg" alt="설문으로가기" />
       </div>
-    </>
+    </div>
   );
 }

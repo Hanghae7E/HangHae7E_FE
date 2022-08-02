@@ -16,7 +16,8 @@ import {
 } from '../../Api/postApi';
 import { DetailProjectData, UserData } from '../../TypeInterface/detailType';
 import TextModal from '../../Components/TextModal';
-import { ErrorStatusInfo } from '../../TypeInterface/postType';
+import { ErrorStatusInfo, IApplyPosts } from '../../TypeInterface/postType';
+import jwtUtils from '../../util/JwtUtil';
 
 interface Props {
   userInfo: UserData
@@ -32,10 +33,24 @@ export default function DetailPageContainer({ userInfo }: Props) {
   const [delModalOpen, setDelModalOpen] = useState<boolean>(false);
   const [closedModalOpen, setClosedDelModalOpen] = useState<boolean>(false);
   const [deleteStatus, setDeleteStatus] = useState<boolean>(false);
+  let isApply = false;
   const { isSuccess, data } = useQuery(
     ['recruit_post_details', postId],
     getRecruitPostDetails({ postId }),
   );
+
+  const token = localStorage.getItem('token');
+
+  if (token) {
+    const currentUserId = jwtUtils.getId(token);
+    const userProfile = useQuery('get_profile_info', () => userApi.getUserProfile(currentUserId));
+    const posts:Array<IApplyPosts> = userProfile.data?.data.applyPosts;
+    const isApplyedPost = posts?.filter(({ id, status }) => id.toString() === postId && status === '대기중').length;
+    if (isApplyedPost === 1) {
+      isApply = true;
+    } else isApply = false;
+  }
+
   const query = useQueryClient();
 
   const errorModalClose = () => {
@@ -204,6 +219,7 @@ export default function DetailPageContainer({ userInfo }: Props) {
             goBack={goBack}
             goToEditPage={goToEditPage}
             handleDeleteProject={handleDeleteProject}
+            isApply={isApply}
           />
         </>
         )}

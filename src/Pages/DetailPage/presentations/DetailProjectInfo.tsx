@@ -6,6 +6,7 @@ import DetailIcon from './DetailIcon';
 interface Props {
   data: DetailProjectData
   isCreator: boolean
+  isApply:boolean
   onClickApply: () => void
   onClosed:()=>void
   goBack: () => void
@@ -15,6 +16,7 @@ interface Props {
 function DetailProjectInfo({
   data,
   isCreator,
+  isApply,
   onClickApply,
   onClosed,
   goBack,
@@ -134,9 +136,10 @@ function DetailProjectInfo({
           <button
             type="button"
             onClick={onClickApply}
+            disabled={isApply}
             className="w-[290px] font-bold bg-[#6457FA] mx-auto text-white h-[72px] rounded-2xl"
           >
-            참여신청하기
+            {isApply ? '신청한 게시글 입니다' : '신청 하기'}
           </button>
         )
           : (

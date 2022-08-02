@@ -29,6 +29,7 @@ function DetailUserInfo({
     <aside className="w-[300px] mt-[30px]">
       <CreatorInfo
         userData={userData}
+        creatorId={data.userId}
       />
       {(isCreator && getStanbyApplicants()) && (
         <>
