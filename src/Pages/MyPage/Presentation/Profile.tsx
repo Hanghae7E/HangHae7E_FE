@@ -7,7 +7,7 @@ import { useMutation, useQueryClient } from 'react-query';
 import React, { SetStateAction, useEffect, useState } from 'react';
 import { IProfileFormData } from '../../../TypeInterface/userType';
 import { ITag } from '../../../TypeInterface/postType';
-import userAPi from '../../../Api/userAPi';
+import userApi from '../../../Api/userApi';
 import CustomCalinder from '../../../Components/CustomCalinder';
 import { dateFormat } from '../../../util/util';
 import TextModal from '../../../Components/TextModal';
@@ -98,7 +98,7 @@ export default function Profile({
   }, [profileData]);
 
   const profileRecruit = useMutation(
-    (data: IProfileFormData) => userAPi.putUserProfile(
+    (data: IProfileFormData) => userApi.putUserProfile(
       data,
       selected,
       startDate,

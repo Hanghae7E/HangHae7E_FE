@@ -4,7 +4,7 @@
 import React, { useEffect, useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
-import userAPi from '../Api/userAPi';
+import userApi from '../Api/userApi';
 import { IUser } from '../TypeInterface/userType';
 import GlobalIcon from './GlobalIcon';
 
@@ -41,7 +41,7 @@ export default function NickNameModal({
   };
 
   const query = useQueryClient();
-  const changeNickName = useMutation((username:string) => userAPi.setMyName(username), {
+  const changeNickName = useMutation((username:string) => userApi.setMyName(username), {
     onSuccess: (v) => {
       console.log(v);
       query.invalidateQueries('get_userInfo');

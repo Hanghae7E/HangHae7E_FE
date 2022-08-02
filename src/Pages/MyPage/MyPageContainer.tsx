@@ -2,7 +2,7 @@ import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
 import tagApi from '../../Api/tagApi';
 import MyPageBody from './Presentation/MyPageBody';
-import userAPi from '../../Api/userAPi';
+import userApi from '../../Api/userApi';
 import jwtUtils from '../../util/JwtUtil';
 
 export default function MyPageContainer() {
@@ -11,7 +11,7 @@ export default function MyPageContainer() {
 
   const profileId = id || currentUserId;
   const { isSuccess: skillSuccess, data: skillTags } = useQuery('tag', () => tagApi.getAllTag());
-  const userProfile = useQuery('get_profile_info', () => userAPi.getUserProfile(profileId));
+  const userProfile = useQuery('get_profile_info', () => userApi.getUserProfile(profileId));
 
   return (
     <div>
