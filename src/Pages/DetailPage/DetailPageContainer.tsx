@@ -18,6 +18,7 @@ import { DetailProjectData, UserData } from '../../TypeInterface/detailType';
 import TextModal from '../../Components/TextModal';
 import { ErrorStatusInfo, IApplyPosts } from '../../TypeInterface/postType';
 import jwtUtils from '../../util/JwtUtil';
+import userAPi from '../../Api/userAPi';
 
 interface Props {
   userInfo: UserData
@@ -43,7 +44,7 @@ export default function DetailPageContainer({ userInfo }: Props) {
 
   if (token) {
     const currentUserId = jwtUtils.getId(token);
-    const userProfile = useQuery('get_profile_info', () => userApi.getUserProfile(currentUserId));
+    const userProfile = useQuery('get_profile_info', () => userAPi.getUserProfile(currentUserId));
     const posts:Array<IApplyPosts> = userProfile.data?.data.applyPosts;
     const isApplyedPost = posts?.filter(({ id, status }) => id.toString() === postId && status === '대기중').length;
     if (isApplyedPost === 1) {
