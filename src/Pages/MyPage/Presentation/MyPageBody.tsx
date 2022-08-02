@@ -17,18 +17,15 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
   tagList: Array<ITag>;
   currentUser:boolean;
   }) {
-  const [Tab, setTab] = useState('profile');
   const [objectURL, setObjectURL] = useState<string>(profileData.profile_image_url);
-  const [nameModify, setNameModify] = useState(false);
   const [modifyState, setModifyState] = useState(false);
+  const [nameModify, setNameModify] = useState(false);
   const [newName, setNewName] = useState(profileData.username);
   const [nameMessage, setNameMessage] = useState('');
   const [err, setErr] = useState(false);
   const [updateErrMessage, setUpdateErrMessage] = useState('');
   const [modalOpen, setModalOpen] = useState<boolean | number>(true);
-
-  const profileChangeButtonDefault = 'w-full h-[67px] rounded-[15px] font-pre font-normal text-[16px] leading-[19px] bg-[#EEEEEE] text-[#CCCCCC]';
-  const profileChangeButtonActive = 'w-full h-[67px] rounded-[15px] font-pre font-normal text-[16px] leading-[19px] bg-white border-2 text-[#6457FA] border-[#6457FA]';
+  const [Tab, setTab] = useState('profile');
 
   const queryClient = useQueryClient();
 
@@ -104,8 +101,12 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
     setNameModify(false);
   };
 
+  const profileChangeButtonDefault = 'w-full h-[67px] rounded-[15px] font-pre font-normal text-[16px] leading-[19px] bg-[#EEEEEE] text-[#CCCCCC]';
+  const profileChangeButtonActive = 'w-full h-[67px] rounded-[15px] font-pre font-normal text-[16px] leading-[19px] bg-white border-2 text-[#6457FA] border-[#6457FA]';
+
   const tabDefatult = 'flex hover:text-black text-[#CCCCCC] pc:mr-1 sm:mr-2 md:mr-3 lg:mr-4';
   const tabClicked = 'flex underline underline-offset-8 text-black pc:mr-1 sm:mr-2 md:mr-3 lg:mr-4';
+
   return (
     <div className="max-w-full mx-auto min-h-screen">
       { modalOpen && updateErrMessage && (
@@ -117,14 +118,14 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
         <img className="w-full h-[91px] pc:h-[240px] object-cover" src="/myPageBackground.svg" alt="backgroundImage" />
       </div>
       <div className="myPageContents flex w-full pc:max-w-[1062px] mx-auto ">
-        <div className="side_pc hidden pc:block pc:relative flex-none pc:-top-[90px] pc:max-w-[210px] pc:w-[210px] pc:h-[332px] pc:px-[20px] pc:pb-20px sm:max-w-[270px] sm:w-[270px] bg-white border-2 border-[#EEEEEE]  rounded-2xl ">
+        <div className="side_pc hidden pc:block pc:relative flex-none pc:-top-[90px] pc:w-[195px] pc:px-2 pc:pt-12 pc:h-[359px] sm:w-[242px] sm:px-3 md:w-[272px] md:px-4 lg:w-[302px] lg:px-8 bg-white border-2 border-[#EEEEEE] rounded-2xl ">
           <div className="sideInner text-center mb-[20px]">
-            <div className="userImg pt-[40px] pb-[18px]">
+            <div className="userImg">
               {currentUser
                 ? (
                   <label className="cursor-pointer relative " htmlFor="file">
                     <img
-                      className="w-[80px]  h-[80px] mx-auto rounded-full "
+                      className="w-50 h-50 mx-auto rounded-full "
                       src={objectURL || '/profiledefault.svg'}
                       alt="userImage"
                     />
@@ -135,15 +136,15 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
                   </label>
                 ) : (
                   <img
-                    className="w-[80px]  h-[80px] mx-auto rounded-full "
+                    className="w-[80px] h-[80px] mx-auto rounded-full "
                     src={objectURL || '/profiledefault.svg'}
                     alt="userImage"
                   />
                 )}
             </div>
-            <div className="flex justify-center userName font-pre font-semibold text-[22px] leading-[25px] pb-[18px]">
+            <div className="userName flex justify-center font-pre font-semibold text-[22px] leading-[33px] mt-3">
               {currentUser && nameModify ? (
-                <div className=" ">
+                <>
                   {err === true && (<span className="font-pre font-normal text-[12px] leading-[13.32px]">{nameMessage}</span>)}
                   <div className=" flex">
                     <form onSubmit={onChangeName}>
@@ -158,7 +159,7 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
                       <GlobalIcon.Edit />
                     </button>
                   </div>
-                </div>
+                </>
               )
                 : (
                   <div>
@@ -174,7 +175,7 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
                   </div>
                 )}
             </div>
-            <div className="userEmail font-pre font-normal  text-[16px] leading-[19px] pb-[18px]  ">
+            <div className="userEmail font-pre font-normal text-[16px] leading-[19px] mt-3 pc:mb-8 md:mb-10 lg:mb-12">
               {profileData.email}
             </div>
             {currentUser && Tab === 'profile'
@@ -205,14 +206,13 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
 
           </div>
         </div>
-        <div className="flex flex-col" />
-        <div className="contentsArea max-w-full pc:max-w-[736px] px-8  basis-full pc:px-2 sm:px-[18px] md:px-8">
+        <div className="contentsArea max-w-full basis-full pc:px-2 sm:px-3 md:px-4 lg:px-[23px] lg:max-w-[736px]">
           <div className="relavive">
-            <div className="profile_mobile pc:hidden max-w-full min-w-[312px] h-160px absolute top-[65px] left-1/2 -translate-x-1/2 bg-whtie ">
+            <div className="side_mobile pc:hidden min-w-[360px] px-6 h-160px absolute top-[65px] left-1/2 -translate-x-1/2">
               {currentUser ? (
                 <label className="cursor-pointer" htmlFor="file">
                   <img
-                    className="w-[110px]  h-[110px] mx-auto rounded-full"
+                    className="w-[110px] h-[110px] mx-auto rounded-full"
                     src={profileData.profile_image_url || objectURL || '/profiledefault.svg'}
                     alt="userImage"
                   />
@@ -226,20 +226,21 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
                 </label>
               ) : (
                 <img
-                  className="w-[110px]  h-[110px] mx-auto rounded-full"
+                  className="w-[110px] h-[110px] mx-auto rounded-full"
                   src={profileData.profile_image_url || objectURL || '/profiledefault.svg'}
                   alt="userImage"
                 />
               )}
-              <div className="flex justify-center userName font-pre font-semibold text-[22px] leading-[25px] pt-3 pb-5">
+              <div className="userName flex justify-center pt-3 pb-5 font-pre font-bold text-5 leading-[23.87px] pc:font-semibold pc:text-[22px] pc:leading-[33px] pc:pb-5 ">
                 {currentUser && nameModify ? (
-                  <div className=" ">
+                  <div>
                     {err === true && (<span className="font-pre font-normal text-[12px] leading-[13.32px]">{nameMessage}</span>)}
                     <input className="w-[100px] pl-[10px] shadow-lg " type="text" onChange={handleInput} value={newName} />
                     <button
                       type="button"
                       onClick={onChangeName}
                       value="editName"
+                      className="ml-1"
                     >
                       <GlobalIcon.Edit />
                     </button>
@@ -252,6 +253,7 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
                         type="button"
                         onClick={() => { setNameModify(!nameModify); }}
                         value="editName"
+                        className="ml-1"
                       >
                         {currentUser && <GlobalIcon.Edit />}
                       </button>
@@ -283,7 +285,7 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
             </div>
           </div>
           {currentUser && (
-            <div className="tab w-full flex  justify-evenly pt-[200px] pc:pt-[87px] pb-8 font-pre font-bold text-sm pc:justify-between  sm:justify-start pc:text-[12px] sm:text-[14px] md:text-[18px] lg:text-[20px] xl:text-[28px]  leading-[28px] text-[#CCCCCC  ]">
+            <div className="myPageTab flex w-full pt-[200px] justify-around pc:pt-[50px] pc:mb-10 font-pre font-bold text-sm  pc:text-xs pc:justify-between sm:justify-start sm:text-[14px] sm:mr-2  md:text-[18px] md:mr-4  lg:text-[28px] lg:mr-8 text-[#CCCCCC  ]">
               <button
                 type="button"
                 onClick={tabClick}

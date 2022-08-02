@@ -23,20 +23,20 @@ export default function RegisterProject({ projects }:Props) {
     return change;
   };
   return (
-    <div className="projectComponent flex flex-col  bg-white px-8  border-2 border-[#EEEEEE] rounded-2xl mb-[160px]">
+    <div className="projectComponent flex flex-col  bg-white px-8  pc:border-2 pc:border-[#EEEEEE] pc:rounded-2xl mb-[160px]">
       {projects.length === 0 && (<div className="my-5"> 등록한 프로젝트가 없습니다. </div>)}
       {(projects.length > 0 && projects.map((prj: IRegisteredPosts, idx) => (
         <div key={prj.id} onClick={goDetail(prj.id)} className="mt-10 cursor-pointer">
-          <div className="flex-row items-start">
+          <div className="flex-col sm:flex-row items-start">
             <StatusTag
               status={statusCheck(prj.recruit_status, prj.recruit_due_time)}
               propsClassname=" h-[35px] inline-flex"
             />
-            <div className="inline-flex h-[35px] px-2 py-3 ml-2 font-pre
-            font-medium text-[16px] rounded-lg bg-[#F0F0F0] items-center justify-center "
+            <span className="mt-2 ml-0 flex w-fit items-center sm:inline-flex h-[35px] px-2 py-3 sm:ml-2 font-pre
+            font-medium text-[16px] rounded-lg bg-[#F0F0F0] r sm:justify-center "
             >
               {`${prj.project_start_time}~${prj.project_end_time}`}
-            </div>
+            </span>
           </div>
           <h2 className="mt-4 font-pre font-bold text-[24px] ">{prj.title}</h2>
           <div className="mt-4 inline-flex mb-7">

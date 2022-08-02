@@ -136,7 +136,7 @@ export default function Profile({
         <TextModal messages={['프로필을 변경할 수 없습니다.', updateErrMessage]} modalClose={setModalOpen} />
       </Portal>
       )}
-      <div className="profile max-w-[736px] px-2 pc:pl-[30px] pc:pb-[63px] pc:border-2 pc:border-[#EEEEEE] pc:rounded-2xl">
+      <div className="profile lg:max-w-[736px] px-5 lg:px-8 mb-[97px] pc:pb-10 pc:border-2 pc:border-[#EEEEEE] pc:rounded-2xl ">
         <div className="profileTitle pt-[40px] ">
           <h3 className="messageHello font-pre font-bold text-base md:text-[28px] md:leading-tight md:inline-block pr-1 ">
             안녕하세요
@@ -333,11 +333,11 @@ export default function Profile({
 
         <hr className="mt-[40px]  mr-[34px]   border-1 border-[#CCCCCC]" />
         <div className="flex pt-[40px]">
-          <h2 className="flex-none w-full font-pre font-bold text-[24px] leading-[29px]">
+          <h2 className="flex w-full font-pre font-bold text-[24px] leading-[29px]">
             협업 사항
           </h2>
         </div>
-        <div className="flex pt-[20px]">
+        <div className="flex flex-row pc:flex-col md:flex-row align-middle pc:pt-6 pt-5 items-center pc:items-start md:items-center ">
           <h2 className="min-w-[122px] pr-[20px] font-pre font-bold text-[18px]  leading-[40px] align-middle ">
             거주지역
           </h2>
@@ -363,7 +363,7 @@ export default function Profile({
             )}
 
         </div>
-        <div className="flex pt-[28px]">
+        <div className="flex flex-row pc:flex-col md:flex-row align-middle pc:pt-6 pt-5 items-center pc:items-start md:items-center ">
           <h2 className="min-w-[122px] pr-[20px] font-pre font-bold text-[18px] leading-[40px] align-middle">
             미팅방식
           </h2>
@@ -389,7 +389,7 @@ export default function Profile({
             )}
 
         </div>
-        <div className="flex pt-10 pc:pt-[28px] flex-wrap">
+        <div className="flex flex-row pc:flex-col md:flex-row align-middle pc:pt-6 pt-5 items-center pc:items-start md:items-center ">
           <h2 className="min-w-[102px] pr-[20px] font-pre font-bold text-[18px] leading-[50px] align-middle ">
             작업 가능 기간
           </h2>
