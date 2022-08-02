@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 /* eslint-disable no-shadow */
 import { useCallback, useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -13,24 +14,22 @@ import {
   postRejectRecruit,
   postRecriutClosedPosts,
 } from '../../Api/postApi';
-import userApi from '../../Api/userAPi';
 import { DetailProjectData, UserData } from '../../TypeInterface/detailType';
 import TextModal from '../../Components/TextModal';
 import { ErrorStatusInfo, IApplyPosts } from '../../TypeInterface/postType';
 import jwtUtils from '../../util/JwtUtil';
 
-export default function DetailPageContainer() {
+interface Props {
+  userInfo: UserData
+}
+
+export default function DetailPageContainer({ userInfo }: Props) {
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const postId = pathname.split('/')[2];
-  const [userData, setUserData] = useState<UserData | null>(null);
   const [error, setError] = useState<string>('');
   const [errorModalOpen, setErrorModalOpen] = useState<boolean>(false);
-  const errorModalClose = () => {
-    setErrorModalOpen(!errorModalOpen);
-  };
   const [applyModalOpen, setApplyModalOpen] = useState<boolean>(false);
-  const applyModalClose = () => { setApplyModalOpen(!applyModalOpen); };
   const [delModalOpen, setDelModalOpen] = useState<boolean>(false);
   const [closedModalOpen, setClosedDelModalOpen] = useState<boolean>(false);
   const [deleteStatus, setDeleteStatus] = useState<boolean>(false);
@@ -53,6 +52,14 @@ export default function DetailPageContainer() {
   }
 
   const query = useQueryClient();
+
+  const errorModalClose = () => {
+    setErrorModalOpen(!errorModalOpen);
+  };
+
+  const applyModalClose = () => {
+    setApplyModalOpen(!applyModalOpen);
+  };
 
   const postRecruitDetail = useMutation((
     { postId }: {postId: string},
@@ -183,11 +190,8 @@ export default function DetailPageContainer() {
   }, []);
 
   useEffect(() => {
-    if (data) {
-      userApi.getUserProfile(data?.userId).then((item) => setUserData(item.data));
-    }
     window.scrollTo(0, 0);
-  }, [data]);
+  }, []);
 
   return (
     <>
@@ -202,7 +206,7 @@ export default function DetailPageContainer() {
           <DetailUserInfo
             data={data}
             isCreator={isCreator}
-            userData={userData}
+            userData={userInfo}
             handleAcceptApplicant={handleAcceptApplicant}
             handleRejectApplicant={handleRejectApplicant}
             handleCancelApplicant={handleCancelApplicant}
