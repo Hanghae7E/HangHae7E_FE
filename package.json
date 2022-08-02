@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@craco/craco": "^6.4.5",
     "@headlessui/react": "^1.6.6",
     "@heroicons/react": "^1.0.6",
     "@testing-library/jest-dom": "^5.16.4",
@@ -53,10 +54,10 @@
     "workbox-streams": "^6.5.3"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test",
+    "eject": "craco eject",
     "lint": "eslint \"./src/**/*.{ts,tsx,js,jsx}\"",
     "lint:fix": "eslint --fix \"./src/**/*.{ts,tsx,js,jsx}\"",
     "jsonServer": "json-server --watch db.json --port 3001 --routes routes.json"
@@ -87,6 +88,7 @@
     "@typescript-eslint/eslint-plugin": "^5.30.0",
     "@typescript-eslint/parser": "^5.30.0",
     "autoprefixer": "^10.4.7",
+    "craco-alias": "^3.0.1",
     "eslint": "^8.18.0",
     "eslint-config-airbnb": "19.0.4",
     "eslint-config-prettier": "^8.5.0",

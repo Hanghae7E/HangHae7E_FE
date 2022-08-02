@@ -32,13 +32,76 @@ module.exports = {
             version: 'detect',
         },
     },
-    ignorePatterns: ['.eslintrc.js'],
+    ignorePatterns: ['.eslintrc.js', 'craco.config.js'],
     rules: {
         "react/react-in-jsx-scope": "off",
         "react/jsx-filename-extension": "off",
         "import/no-unresolved": "off",
         "import/extensions": "off",
         "linebreak-style": "off",
+        "import/order": [
+            "error",
+            {
+                groups: [
+                    "builtin",
+                    "external",
+                    "internal",
+                    [
+                        "parent",
+                        "sibling"
+                    ],
+                    "index"
+                ],
+                pathGroups: [
+                    {
+                        pattern: "react",
+                        group: "external",
+                        position: "before"
+                    },
+                    {
+                        pattern: "@/Api/**",
+                        group: "internal",
+                        position: "after"
+                    },
+                    {
+                        pattern: "@/assets/**",
+                        group: "internal",
+                        position: "after"
+                    },
+                    {
+                        pattern: "@/Components/**",
+                        group: "internal",
+                        position: "after"
+                    },
+                    {
+                        pattern: "@/Hooks/**",
+                        group: "internal",
+                        position: "after"
+                    },
+                    {
+                        pattern: "@/Pages/**",
+                        group: "internal",
+                        position: "after"
+                    },
+                    {
+                        pattern: "@/TypeInterface/**",
+                        group: "internal",
+                        position: "after"
+                    },
+                    {
+                        pattern: "@/util/**",
+                        group: "internal",
+                        position: "after"
+                    },
+                ],
+                pathGroupsExcludedImportTypes: ["react"],
+                alphabetize: {
+                    order: 'asc',
+                    caseInsensitive: true
+                },
+                "newlines-between": "always",
+            }
+        ]
     }
 }
 
