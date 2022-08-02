@@ -1,18 +1,24 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable react/jsx-props-no-spreading */
-import { Controller, FieldValues, useForm } from 'react-hook-form';
 import { useState } from 'react';
+
+import { Controller, FieldValues, useForm } from 'react-hook-form';
 import { useQuery } from 'react-query';
-import CreateHeader from './Presentation/CreateHeader';
-import { dateFormat } from '../../util/util';
-import postApi from '../../Api/postApi';
-import { ITag } from '../../TypeInterface/postType';
-import TagBox from '../../Components/TagBox';
-import CustomCalinder from '../../Components/CustomCalinder';
-import GlobalIcon from '../../Components/GlobalIcon';
-import TagSearch from '../../Components/TagSearch';
+
+import postApi from '@/Api/postApi';
+
+import CustomCalinder from '@/Components/CustomCalinder';
+import GlobalIcon from '@/Components/GlobalIcon';
+import TagBox from '@/Components/TagBox';
+import TagSearch from '@/Components/TagSearch';
+import TextModal from '@/Components/TextModal';
+
+import { ITag } from '@/TypeInterface/postType';
+
+import { dateFormat } from '@/util/util';
+
 import usePostRecruitMutation from './hooks/usePostRecruitMutation';
-import TextModal from '../../Components/TextModal';
+import CreateHeader from './Presentation/CreateHeader';
 
 export default function ProjectCreateContainer() {
   const [hashTag, setHashTag] = useState<Array<ITag>>([]);
