@@ -66,7 +66,7 @@ function App() {
             />
           </Route>
         </Route>
-        <Route path="/detail/:postId" element={<DetailPage />} />
+        <Route path="/detail/:postId" element={<DetailPage userInfo={userInfo?.data?.data} />} />
         <Route path="/login/callback" element={<SocialLogin />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
