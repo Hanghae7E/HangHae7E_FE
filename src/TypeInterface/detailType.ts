@@ -1,4 +1,4 @@
-import { IRegisteredPosts } from './postType';
+import { IApplyPosts, IRegisteredPosts } from './postType';
 
 export type Applicant = {
     userId: number
@@ -41,7 +41,7 @@ export interface UserData {
     skills: string[] ;
     career_period: string ;
     portfolio_url: string ;
-    applyPosts: string[] ;
+    applyPosts: IApplyPosts[] ;
     registeredPosts: IRegisteredPosts[] ;
 
   }

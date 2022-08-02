@@ -4,7 +4,7 @@ import { Portal } from '@headlessui/react';
 import { IProfileFormData, ISideProfile } from '../../../TypeInterface/userType';
 import { ITag } from '../../../TypeInterface/postType';
 import Profile from './Profile';
-import userAPi from '../../../Api/userAPi';
+import userApi from '../../../Api/userApi';
 import GlobalIcon from '../../../Components/GlobalIcon';
 import TextModal from '../../../Components/TextModal';
 import ApplyProject from './ApplyProject';
@@ -30,7 +30,7 @@ export default function MyPageBody({ profileData, tagList, currentUser }:
   const queryClient = useQueryClient();
 
   const UpdateSideProfile = useMutation(
-    (data: ISideProfile) => userAPi.setSideProfile(data),
+    (data: ISideProfile) => userApi.setSideProfile(data),
     {
       onSuccess: () => {
         queryClient.invalidateQueries('get_userInfo');

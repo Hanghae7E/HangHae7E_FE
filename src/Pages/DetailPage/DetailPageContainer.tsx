@@ -3,7 +3,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-
 import DetailProjectInfo from './presentations/DetailProjectInfo';
 import DetailUserInfo from './presentations/DetailUserInfo';
 import {
@@ -16,9 +15,8 @@ import {
 } from '../../Api/postApi';
 import { DetailProjectData, UserData } from '../../TypeInterface/detailType';
 import TextModal from '../../Components/TextModal';
-import { ErrorStatusInfo, IApplyPosts } from '../../TypeInterface/postType';
-import jwtUtils from '../../util/JwtUtil';
-import userAPi from '../../Api/userAPi';
+import { ErrorStatusInfo } from '../../TypeInterface/postType';
+import userApi from '../../Api/userApi';
 
 interface Props {
   userInfo: UserData
@@ -34,23 +32,25 @@ export default function DetailPageContainer({ userInfo }: Props) {
   const [delModalOpen, setDelModalOpen] = useState<boolean>(false);
   const [closedModalOpen, setClosedDelModalOpen] = useState<boolean>(false);
   const [deleteStatus, setDeleteStatus] = useState<boolean>(false);
+  const [creatorInfo, setCreatorInfo] = useState<UserData | null>(null);
   let isApply = false;
+
   const { isSuccess, data } = useQuery(
     ['recruit_post_details', postId],
     getRecruitPostDetails({ postId }),
   );
 
-  const token = localStorage.getItem('token');
-
-  if (token) {
-    const currentUserId = jwtUtils.getId(token);
-    const userProfile = useQuery('get_profile_info', () => userAPi.getUserProfile(currentUserId));
-    const posts:Array<IApplyPosts> = userProfile.data?.data.applyPosts;
-    const isApplyedPost = posts?.filter(({ id, status }) => id.toString() === postId && status === '대기중').length;
-    if (isApplyedPost === 1) {
-      isApply = true;
-    } else isApply = false;
+  // 프로젝트 생성자 정보(프로필/닉네임)필요해서 추가
+  if (data) {
+    userApi.getUserProfile(data?.userId).then((item) => setCreatorInfo(item.data));
   }
+
+  // 상세 페이지에 접속한 유저가 해당 프로젝트에 참여신청했는지 확인
+  const curruntUserApplyPosts = userInfo.applyPosts;
+  const isApplyedPost = curruntUserApplyPosts.filter(({ id, status }) => id.toString() === postId && status === '대기중').length;
+  if (isApplyedPost === 1) {
+    isApply = true;
+  } else isApply = false;
 
   const query = useQueryClient();
 
@@ -207,7 +207,7 @@ export default function DetailPageContainer({ userInfo }: Props) {
           <DetailUserInfo
             data={data}
             isCreator={isCreator}
-            userData={userInfo}
+            userData={creatorInfo}
             handleAcceptApplicant={handleAcceptApplicant}
             handleRejectApplicant={handleRejectApplicant}
             handleCancelApplicant={handleCancelApplicant}
