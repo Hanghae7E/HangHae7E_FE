@@ -112,7 +112,7 @@ function TagSearch(tagOption: ITagOption) {
   };
   useEffect(() => {
     document.addEventListener('keydown', (event) => {
-      if (event.keyCode === 27) {
+      if (event.key === 'Esc' || event.keyCode === 27) {
         // event.preventDefault();
         setRecommends([]);
       }
@@ -121,7 +121,7 @@ function TagSearch(tagOption: ITagOption) {
   return (
 
     <div className="relative min-h-min w-full border-none " onBlur={() => { setRecommendShow(!recommendShow); }}>
-      <div className="absolute right-[5.42%] sm:right-[20px] top-[20.37%] ">
+      <div className="absolute right-[5.42%] sm:right-[20px] top-[22.37%] sm:top-[13px]">
         <GlobalIcon.Search />
       </div>
       <input
