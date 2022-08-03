@@ -4,7 +4,6 @@
 import { useNavigate } from 'react-router-dom';
 import GlobalIcon from '../../../Components/GlobalIcon';
 import { IApplyPosts, IRegisteredPosts } from '../../../TypeInterface/postType';
-import { dateFormat } from '../../../util/util';
 import StatusTag from './StatusTag';
 
 interface Props {
