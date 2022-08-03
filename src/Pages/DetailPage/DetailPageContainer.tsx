@@ -212,6 +212,8 @@ export default function DetailPageContainer({ userInfo }: Props) {
     setIsApply(applyCheck());
   }, [userInfo]);
 
+  //  isCreator={!!data?.applyPosts} 는 왜 안될까...?
+  const isCreator = !!data?.applicants;
   return (
     <>
       {errorModalOpen && <TextModal messages={[error]} modalClose={errorModalClose} />}
@@ -224,7 +226,7 @@ export default function DetailPageContainer({ userInfo }: Props) {
         <>
           <DetailUserInfo
             data={data}
-            isCreator={!!data.applyPosts}
+            isCreator={isCreator}
             userData={creatorInfo}
             handleAcceptApplicant={handleAcceptApplicant}
             handleRejectApplicant={handleRejectApplicant}
@@ -232,7 +234,7 @@ export default function DetailPageContainer({ userInfo }: Props) {
           />
           <DetailProjectInfo
             data={data}
-            isCreator={!!data.applyPosts}
+            isCreator={isCreator}
             onClickApply={handleApplyProject}
             onClosed={closedModalClose}
             goBack={goBack}
