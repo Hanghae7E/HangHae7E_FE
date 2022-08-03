@@ -13,7 +13,6 @@ interface Props {
   }
 export default function OnGoingPorject({ applyPojects, registerProjects }:Props) {
   const nav = useNavigate();
-  const Today = dateFormat(new Date());
   const goDetail = (id:number) => () => {
     nav(`/detail/${id}`);
   };
