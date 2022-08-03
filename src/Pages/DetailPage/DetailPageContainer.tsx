@@ -38,7 +38,7 @@ export default function DetailPageContainer({ userInfo }: Props) {
   function applyCheck() {
     if (!userInfo) return false;
     const check = userInfo.applyPosts?.filter(
-      ({ id, status }) => id.toString() === postId && status === '대기중',
+      ({ id, status }) => id.toString() === postId && (status === '합격' || '대기중'),
     );
     return check.length === 1;
   }
