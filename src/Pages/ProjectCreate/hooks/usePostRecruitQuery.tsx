@@ -1,4 +1,5 @@
 import { useQuery } from 'react-query';
+
 import postApi from '../../../Api/postApi';
 
 export default function usePostRecruitQuery(postId: string) {

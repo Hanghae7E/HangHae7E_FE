@@ -1,6 +1,7 @@
 /* eslint-disable consistent-return */
 /* eslint-disable no-return-assign */
 import { useQuery } from 'react-query';
+
 import userApi from '../Api/userApi';
 import jwtUtils from '../util/JwtUtil';
 

@@ -2,6 +2,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { useNavigate } from 'react-router-dom';
+
 import GlobalIcon from '../../../Components/GlobalIcon';
 import { IApplyPosts, IRegisteredPosts } from '../../../TypeInterface/postType';
 import { dateFormat } from '../../../util/util';

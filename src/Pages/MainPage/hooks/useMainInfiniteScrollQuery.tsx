@@ -1,4 +1,5 @@
 import { useInfiniteQuery } from 'react-query';
+
 import postApi from '../../../Api/postApi';
 
 export default function useMainInfiniteScrollQuery(searchTag: number) {

@@ -1,11 +1,15 @@
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
+
+import { ITag } from '@/TypeInterface/postType';
+import { IProfileFormData } from '@/TypeInterface/userType';
+
 import tagApi from '../../Api/tagApi';
-import MyPageBody from './Presentation/MyPageBody';
 import userApi from '../../Api/userApi';
 import jwtUtils from '../../util/JwtUtil';
+import MyPageBody from './Presentation/MyPageBody';
 
-export default function MyPageContainer() {
+export default function MyPageContainer({ userInfo }: {userInfo: IProfileFormData}) {
   const { id } = useParams();
   const currentUserId = jwtUtils.getId(localStorage.getItem('token'));
 
@@ -20,7 +24,7 @@ export default function MyPageContainer() {
             <MyPageBody
               profileData={userProfile.data.data}
               currentUser={typeof id === 'undefined' || currentUserId === id}
-              tagList={skillTags.data}
+              tagList={skillTags?.data}
             />
           )}
     </div>

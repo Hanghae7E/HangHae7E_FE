@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
 /* eslint-disable react/require-default-props */
 import React from 'react';
+
 import DetailIcon from './DetailIcon';
 
 interface Props {

@@ -1,7 +1,8 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import { Menu } from '@headlessui/react';
 import React from 'react';
+
+import { Menu } from '@headlessui/react';
 
 export default function DropDownItem(
   {
