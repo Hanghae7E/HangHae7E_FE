@@ -17,10 +17,10 @@ export default function OnGoingPorject({ applyPojects, registerProjects }:Props)
   const goDetail = (id:number) => () => {
     nav(`/detail/${id}`);
   };
-  const pass = applyPojects.filter((p) => p.status === '합격');
+  const pass = applyPojects.filter((p) => p.status === '합격' && p.recruit_status === 'false');
   const going = registerProjects.filter((
-    { status, recruit_due_time },
-  ) => status === 'true' && recruit_due_time < Today);
+    { recruit_status },
+  ) => recruit_status === 'false');
 
   return (
     <div className="projectComponent mb-[160px]">
