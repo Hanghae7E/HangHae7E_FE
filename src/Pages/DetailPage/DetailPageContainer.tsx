@@ -33,24 +33,32 @@ export default function DetailPageContainer({ userInfo }: Props) {
   const [closedModalOpen, setClosedDelModalOpen] = useState<boolean>(false);
   const [deleteStatus, setDeleteStatus] = useState<boolean>(false);
   const [creatorInfo, setCreatorInfo] = useState<UserData | null>(null);
-  let isApply = false;
+  const [isApply, setIsApply] = useState<boolean>(false);
+
+  function applyCheck() {
+    if (!userInfo) return false;
+    const check = userInfo.applyPosts?.filter(
+      ({ id, status }) => id.toString() === postId && status === '대기중',
+    );
+    return check.length === 1;
+  }
+  // const [isApply, setIsApply] = useState<boolean>(() => {
+  //   const check = userInfo.applyPosts?.filter(
+  //     ({ id, status }) => id.toString() === postId && status === '대기중',
+  //   );
+  //   return check.length === 1;
+  // });
+  // const [isApply, setIsApply] = useState<boolean>(userInfo.applyPosts ? () => {
+  //   const check = userInfo.applyPosts?.filter(
+  //     ({ id, status }) => id.toString() === postId && status === '대기중',
+  //   );
+  //   return check.length === 1;
+  // } : false);
 
   const { isSuccess, data } = useQuery(
     ['recruit_post_details', postId],
     getRecruitPostDetails({ postId }),
   );
-
-  // 프로젝트 생성자 정보(프로필/닉네임)필요해서 추가
-  if (data) {
-    userApi.getUserProfile(data?.userId).then((item) => setCreatorInfo(item.data));
-  }
-
-  // 상세 페이지에 접속한 유저가 해당 프로젝트에 참여신청했는지 확인
-  const curruntUserApplyPosts = userInfo.applyPosts;
-  const isApplyedPost = curruntUserApplyPosts.filter(({ id, status }) => id.toString() === postId && status === '대기중').length;
-  if (isApplyedPost === 1) {
-    isApply = true;
-  } else isApply = false;
 
   const query = useQueryClient();
 
@@ -70,6 +78,7 @@ export default function DetailPageContainer({ userInfo }: Props) {
        * 여기에 백엔드에서 오는 메시지 받아서 상태 업데이트
        * setIsApply()
        */
+      setIsApply(true);
       applyModalClose();
       query.invalidateQueries('recruit_post_details');
     },
@@ -161,7 +170,6 @@ export default function DetailPageContainer({ userInfo }: Props) {
     },
   });
 
-  const isCreator = !!data?.applicants;
   const handleApplyProject = useCallback(() => {
     postRecruitDetail.mutate({ postId });
   }, [postId]);
@@ -194,6 +202,16 @@ export default function DetailPageContainer({ userInfo }: Props) {
     window.scrollTo(0, 0);
   }, []);
 
+  useEffect(() => {
+    if (data) {
+      userApi.getUserProfile(data?.userId).then((item) => setCreatorInfo(item.data));
+    }
+  }, [data]);
+
+  useEffect(() => {
+    setIsApply(applyCheck());
+  }, [userInfo]);
+
   return (
     <>
       {errorModalOpen && <TextModal messages={[error]} modalClose={errorModalClose} />}
@@ -206,7 +224,7 @@ export default function DetailPageContainer({ userInfo }: Props) {
         <>
           <DetailUserInfo
             data={data}
-            isCreator={isCreator}
+            isCreator={!!data.applyPosts}
             userData={creatorInfo}
             handleAcceptApplicant={handleAcceptApplicant}
             handleRejectApplicant={handleRejectApplicant}
@@ -214,7 +232,7 @@ export default function DetailPageContainer({ userInfo }: Props) {
           />
           <DetailProjectInfo
             data={data}
-            isCreator={isCreator}
+            isCreator={!!data.applyPosts}
             onClickApply={handleApplyProject}
             onClosed={closedModalClose}
             goBack={goBack}
