@@ -27,6 +27,18 @@ input[type='number']::-webkit-outer-spin-button {
 
 function App() {
   const userInfo = userGetUserInfo();
+  // const userInfo = {
+  //   data: {
+  //     data: {
+  //       id: '0',
+  //       username: '장경태',
+  //       email: 'asd',
+  //       phone_number: 'asdads',
+  //       profile_image_url: 'asdasdsadasdas',
+  //       socialType: 'ture',
+  //     },
+  //   },
+  // };
 
   return (
     <BrowserRouter>

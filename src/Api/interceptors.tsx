@@ -11,6 +11,7 @@ const onRequest = (config: AxiosRequestConfig): AxiosRequestConfig => {
   if (token) {
     config.headers = {
       Authorization: token,
+      Credential: true,
     };
   }
 

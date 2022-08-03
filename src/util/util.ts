@@ -1,12 +1,17 @@
 import React, { SetStateAction } from 'react';
 
-export const dateFormat = (date: Date) => {
+export const dateFormat = (date: Date, type = 1) => {
   const month = date.getMonth() + 1;
   const day = date.getDate();
+  const hours = date.getHours();
+  const minutes = date.getMinutes();
 
   const months = Number(month >= 10) ? month : `0${month}`;
   const days = Number(date.getDate() >= 10) ? day : `0${day}`;
-  return `${date.getFullYear()}-${months}-${days}`;
+  const hour = Number(date.getHours() >= 10) ? hours : `0${hours}`;
+  const minute = Number(date.getMinutes() >= 10) ? minutes : `0${minutes}`;
+  if (type === 1) { return `${date.getFullYear()}-${months}-${days}`; }
+  return `${date.getFullYear()}-${months}-${days} ${hour}:${minute}`;
 };
 
 export function doubleSubmitCheck({

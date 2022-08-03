@@ -3,6 +3,7 @@
 import React, { useEffect } from 'react';
 import GlobalIcon from '../../../../Components/GlobalIcon';
 import PositionTag from '../../../DetailPage/presentations/PositionTag';
+import WorkSpaceTag from '../../../DetailPage/presentations/WorkSpaceTag';
 
 interface Props {
     isOpen: boolean;
@@ -60,6 +61,10 @@ function WorkDetailModal({
             <div className="flex items-center gap-[6px]">
               <img className="w-8 h-8" src="/profiledefault.svg" alt="작성자프로필" />
               <p className="text-sm font-normal">룰루랄라조로</p>
+              <WorkSpaceTag
+                position="개발자"
+                propsClassname="bg-[#ffffff] border border-[#333333]  font-medium text-[10px] text-[#333333] rounded-[4px] px-[8px] py-[4px] whitespace-nowrap mx-[8px] leading-[11.93px}"
+              />
             </div>
           </div>
           <div className="flex items-center my-6">
@@ -67,6 +72,10 @@ function WorkDetailModal({
             <div className="flex items-center gap-[6px]">
               <img className="w-8 h-8" src="/profiledefault.svg" alt="작성자프로필" />
               <p className="text-sm font-normal">룰루랄라조로</p>
+              <WorkSpaceTag
+                position="개발자"
+                propsClassname="bg-[#ffffff] border border-[#333333]  font-medium text-[10px] text-[#333333] rounded-[4px] px-[8px] py-[4px] whitespace-nowrap mx-[8px] leading-[11.93px}"
+              />
             </div>
           </div>
           <div className="flex items-center my-6">
