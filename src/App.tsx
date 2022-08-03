@@ -39,13 +39,13 @@ function App() {
           <Route
             path="/mypage"
             element={(
-              <MyPage userInfo={userInfo?.data?.data} />
+              <MyPage />
             )}
           >
             <Route
               path=":id"
               element={(
-                <MyPage userInfo={userInfo?.data?.data} />
+                <MyPage />
               )}
             />
           </Route>
