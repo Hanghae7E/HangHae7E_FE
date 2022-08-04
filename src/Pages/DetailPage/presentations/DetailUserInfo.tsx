@@ -24,7 +24,6 @@ function DetailUserInfo({
 }: Props) {
   const getStanbyApplicants = () => data.applicants?.filter(({ status }) => status === '대기중');
   const getAcceptApplicants = () => data.applicants?.filter(({ status }) => status === '합격');
-
   if (userData === null) return null;
   return (
     <aside className="w-[300px] mt-[30px]">

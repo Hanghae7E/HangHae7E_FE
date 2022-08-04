@@ -28,13 +28,13 @@ input[type='number']::-webkit-outer-spin-button {
 `;
 function App() {
   const userInfo = userGetUserInfo();
-
+  if (userInfo?.status === 'loading') { return (<div>loading...</div>); }
   return (
     <BrowserRouter>
       <GlobalStyle />
       <Headerbar userInfo={userInfo?.data?.data} />
       <Routes>
-        <Route path="/" element={<MainPage />} />
+        <Route path="/" element={<MainPage userInfo={userInfo?.data?.data} />} />
         <Route element={<ProtectedRoute redirectPath="/" />}>
           <Route
             path="/mypage"

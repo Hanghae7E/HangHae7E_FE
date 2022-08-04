@@ -138,7 +138,7 @@ function DetailProjectInfo({
             type="button"
             onClick={onClickApply}
             disabled={isApply}
-            className="w-[290px] font-bold bg-[#6457FA] mx-auto text-white h-[72px] rounded-2xl"
+            className={`w-[290px] font-bold  mx-auto ${isApply ? 'bg-[#cccccc]' : 'bg-[#6457FA]'} text-white h-[72px] rounded-2xl`}
           >
             {isApply ? '신청한 게시글 입니다' : '신청 하기'}
           </button>
