@@ -17,7 +17,7 @@ export default function Header({ userInfo }:{ userInfo: IUser }) {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const nav = useNavigate();
   const token = localStorage.getItem('token');
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLogin, setIsLogin] = useState(() => (!!userInfo));
   const goCreateProject = () => {
     if (!window.location.pathname.includes('/projectcreate')) { nav('/projectcreate'); }
   };
@@ -27,11 +27,12 @@ export default function Header({ userInfo }:{ userInfo: IUser }) {
   const logoClick = () => {
     nav('/', { replace: true });
   };
-  useEffect(() => {
-    if (token) {
-      setIsLogin(jwtUtils.isAuth(token));
-    }
-  }, []);
+
+  // useEffect(() => {
+  //   if (token) {
+  //     setIsLogin(jwtUtils.isAuth(token));
+  //   }
+  // }, []);
 
   return (
     <>

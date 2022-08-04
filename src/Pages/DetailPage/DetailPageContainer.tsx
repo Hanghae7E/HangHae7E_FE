@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { stringify } from 'querystring';
 import DetailProjectInfo from './presentations/DetailProjectInfo';
 import DetailUserInfo from './presentations/DetailUserInfo';
 import {
@@ -16,7 +17,7 @@ import {
 import { DetailProjectData, UserData } from '../../TypeInterface/detailType';
 import TextModal from '../../Components/TextModal';
 import { ErrorStatusInfo } from '../../TypeInterface/postType';
-import userApi from '../../Api/userApi';
+import { getUserProfile } from '../../Api/userApi';
 
 interface Props {
   userInfo: UserData
@@ -33,7 +34,6 @@ export default function DetailPageContainer({ userInfo }: Props) {
   const [closedModalOpen, setClosedDelModalOpen] = useState<boolean>(false);
   const [deleteStatus, setDeleteStatus] = useState<boolean>(false);
   const [creatorInfo, setCreatorInfo] = useState<UserData | null>(null);
-  const [isApply, setIsApply] = useState<boolean>(false);
 
   function applyCheck() {
     if (!userInfo) return false;
@@ -42,22 +42,16 @@ export default function DetailPageContainer({ userInfo }: Props) {
     );
     return check.length === 1;
   }
-  // const [isApply, setIsApply] = useState<boolean>(() => {
-  //   const check = userInfo.applyPosts?.filter(
-  //     ({ id, status }) => id.toString() === postId && status === '대기중',
-  //   );
-  //   return check.length === 1;
-  // });
-  // const [isApply, setIsApply] = useState<boolean>(userInfo.applyPosts ? () => {
-  //   const check = userInfo.applyPosts?.filter(
-  //     ({ id, status }) => id.toString() === postId && status === '대기중',
-  //   );
-  //   return check.length === 1;
-  // } : false);
 
-  const { isSuccess, data } = useQuery(
+  const [isApply, setIsApply] = useState<boolean>(() => (applyCheck()));
+
+  const { isSuccess, data } = useQuery<DetailProjectData, Error>(
     ['recruit_post_details', postId],
     getRecruitPostDetails({ postId }),
+    {
+      onSuccess: ({ userId }) => (getUserProfile((userId).toString())
+        .then((item) => setCreatorInfo(item.data))),
+    },
   );
 
   const query = useQueryClient();
@@ -202,18 +196,17 @@ export default function DetailPageContainer({ userInfo }: Props) {
     window.scrollTo(0, 0);
   }, []);
 
-  useEffect(() => {
-    if (data) {
-      userApi.getUserProfile(data?.userId).then((item) => setCreatorInfo(item.data));
-    }
-  }, [data]);
+  // useEffect(() => {
+  //   if (data) {
+  //     userApi.getUserProfile(data?.userId).then((item) => setCreatorInfo(item.data));
+  //   }
+  // }, [data]);
 
-  useEffect(() => {
-    setIsApply(applyCheck());
-  }, [userInfo]);
+  // useEffect(() => {
+  //   setIsApply(applyCheck());
+  // }, [userInfo]);
 
-  //  isCreator={!!data?.applyPosts} 는 왜 안될까...?
-  const isCreator = !!data?.applicants;
+  // const isCreator = !!data?.applicants;
   return (
     <>
       {errorModalOpen && <TextModal messages={[error]} modalClose={errorModalClose} />}
@@ -222,11 +215,11 @@ export default function DetailPageContainer({ userInfo }: Props) {
       {closedModalOpen && <TextModal messages={['모집을 마감 하시겠습니까?.']} modalClose={closedModalClose} modalClose2={closedComplate} deleteStatus={deleteStatus} />}
 
       <div className="flex flex-row h-screen w-[1260px] mx-auto mb-[160px] min-h-screen">
-        {isSuccess && (
+        {isSuccess && creatorInfo && (
         <>
           <DetailUserInfo
             data={data}
-            isCreator={isCreator}
+            isCreator={!!data?.applicants}
             userData={creatorInfo}
             handleAcceptApplicant={handleAcceptApplicant}
             handleRejectApplicant={handleRejectApplicant}
@@ -234,7 +227,7 @@ export default function DetailPageContainer({ userInfo }: Props) {
           />
           <DetailProjectInfo
             data={data}
-            isCreator={isCreator}
+            isCreator={!!data?.applicants}
             onClickApply={handleApplyProject}
             onClosed={closedModalClose}
             goBack={goBack}

@@ -6,8 +6,8 @@ import { IProfileFormData, ISideProfile } from '../TypeInterface/userType';
 import jwtUtils from '../util/JwtUtil';
 import baseUrl from './baseUrl';
 
-export const getMyInfo = (id: string| false) => {
-  const res = baseUrl.get(`/user/${id}`);
+export const getMyInfo = async (id: string| false) => {
+  const res = await baseUrl.get(`/user/${id}`);
   return res;
 };
 
@@ -44,7 +44,7 @@ const deleteUser = async (email: string) => {
   return res;
 };
 // 유저 프로필 조회
-const getUserProfile = async (id: string | false) => {
+export const getUserProfile = async (id: string | false) => {
   const res = await baseUrl.get(`/user/${id}`);
   return res;
 };
