@@ -200,8 +200,6 @@ export default function DetailPageContainer({ userInfo }: Props) {
     }
   }, [data]);
 
-  console.log(creatorInfo, userInfo);
-
   return (
     <>
       {errorModalOpen && <TextModal messages={[error]} modalClose={errorModalClose} />}

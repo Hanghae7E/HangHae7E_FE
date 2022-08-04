@@ -7,10 +7,13 @@ import {
 import { useInView } from 'react-intersection-observer';
 import { useQuery } from 'react-query';
 
-import postApi from '../../Api/postApi';
-import NickNameModal from '../../Components/NicknameModal';
-import Portal from '../../Components/Portal';
-import userGetUserInfo from '../../Hooks/userGetUserInfo';
+import postApi from '@/Api/postApi';
+
+import NickNameModal from '@/Components/NicknameModal';
+import Portal from '@/Components/Portal';
+
+import userGetUserInfo from '@/Hooks/userGetUserInfo';
+
 import useMainInfiniteScrollQuery from './hooks/useMainInfiniteScrollQuery';
 import MainBody from './Presentaion/MainBody';
 import MainHeader from './Presentaion/MainHeader';

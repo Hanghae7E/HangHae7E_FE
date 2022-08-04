@@ -1,9 +1,11 @@
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
 
-import tagApi from '../../Api/tagApi';
-import userApi from '../../Api/userApi';
-import jwtUtils from '../../util/JwtUtil';
+import tagApi from '@/Api/tagApi';
+import userApi from '@/Api/userApi';
+
+import jwtUtils from '@/util/JwtUtil';
+
 import MyPageBody from './Presentation/MyPageBody';
 
 export default function MyPageContainer() {

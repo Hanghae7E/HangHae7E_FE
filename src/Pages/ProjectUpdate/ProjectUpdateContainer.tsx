@@ -8,13 +8,16 @@ import { useQuery } from 'react-query';
 import { useLocation, useParams } from 'react-router-dom';
 
 // import UpdateFooter from './Presentation/UpdateFooter';
-import postApi from '../../Api/postApi';
-import CustomCalinder from '../../Components/CustomCalinder';
-import GlobalIcon from '../../Components/GlobalIcon';
-import TagBox from '../../Components/TagBox';
-import TagSearch from '../../Components/TagSearch';
-import TextModal from '../../Components/TextModal';
-import { ITag } from '../../TypeInterface/postType';
+import postApi from '@/Api/postApi';
+
+import CustomCalinder from '@/Components/CustomCalinder';
+import GlobalIcon from '@/Components/GlobalIcon';
+import TagBox from '@/Components/TagBox';
+import TagSearch from '@/Components/TagSearch';
+import TextModal from '@/Components/TextModal';
+
+import { ITag } from '@/TypeInterface/postType';
+
 import useUpdateRecruitMutation from './hooks/useUpdateRecruitMutation';
 import UpdateHeader from './Presentation/UpdateHeader';
 
