@@ -3,7 +3,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { stringify } from 'querystring';
 import DetailProjectInfo from './presentations/DetailProjectInfo';
 import DetailUserInfo from './presentations/DetailUserInfo';
 import {

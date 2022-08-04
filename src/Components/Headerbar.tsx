@@ -1,22 +1,23 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import {
-  Fragment, useEffect, useState,
+  Fragment, useState,
 } from 'react';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { Link, useNavigate } from 'react-router-dom';
 import Login from './Login';
-import jwtUtils from '../util/JwtUtil';
-import { IUser } from '../TypeInterface/userType';
+import { UserData } from '../TypeInterface/detailType';
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
 }
 
-export default function Header({ userInfo }:{ userInfo: IUser }) {
+export default function Header({ userInfo }:{ userInfo: UserData }) {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const nav = useNavigate();
-  const token = localStorage.getItem('token');
+  // const token = localStorage.getItem('token');
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isLogin, setIsLogin] = useState(() => (!!userInfo));
   const goCreateProject = () => {
     if (!window.location.pathname.includes('/projectcreate')) { nav('/projectcreate'); }
