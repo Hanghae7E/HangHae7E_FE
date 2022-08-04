@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 
 import GlobalIcon from '../../../Components/GlobalIcon';
 import { IApplyPosts, IRegisteredPosts } from '../../../TypeInterface/postType';
-import { dateFormat } from '../../../util/util';
 import StatusTag from './StatusTag';
 
 interface Props {
@@ -14,14 +13,13 @@ interface Props {
   }
 export default function OnGoingPorject({ applyPojects, registerProjects }:Props) {
   const nav = useNavigate();
-  const Today = dateFormat(new Date());
   const goDetail = (id:number) => () => {
     nav(`/detail/${id}`);
   };
-  const pass = applyPojects.filter((p) => p.status === '합격');
+  const pass = applyPojects.filter((p) => p.status === '합격' && p.recruit_status === 'false');
   const going = registerProjects.filter((
-    { status, recruit_due_time },
-  ) => status === 'true' && recruit_due_time < Today);
+    { recruit_status },
+  ) => recruit_status === 'false');
 
   return (
     <div className="projectComponent mb-[160px]">

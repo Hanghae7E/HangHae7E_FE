@@ -12,13 +12,16 @@ import postApi from '@/Api/postApi';
 import NickNameModal from '@/Components/NicknameModal';
 import Portal from '@/Components/Portal';
 
-import userGetUserInfo from '@/Hooks/userGetUserInfo';
-
+import { UserData } from '../../TypeInterface/detailType';
 import useMainInfiniteScrollQuery from './hooks/useMainInfiniteScrollQuery';
 import MainBody from './Presentaion/MainBody';
 import MainHeader from './Presentaion/MainHeader';
 
-export default function MainPageContainer() {
+interface Props {
+  userInfo: UserData
+}
+
+export default function MainPageContainer({ userInfo }: Props) {
   const recommendPosts = useQuery('recommend_post', postApi.getRecommendPosts);
   const { data: tagData } = useQuery('tag_list', postApi.getTag);
   const [searchTag, setSearchTag] = useState(0);
@@ -39,7 +42,7 @@ export default function MainPageContainer() {
   const [modalOpen, setModalOpen] = useState<boolean>(true);
   const modalClose = () => { setModalOpen(!modalOpen); };
 
-  const userInfo = userGetUserInfo();
+  // const userInfo = userGetUserInfo();
   const goSurvey = () => {
     if (!isDown) { window.location.href = 'https://docs.google.com/forms/d/e/1FAIpQLSeopdWhMbZymQKEZK5CvrQzcZJLo868fXScua22gKZqSFwtPg/viewform'; }
   };
@@ -56,11 +59,11 @@ export default function MainPageContainer() {
   }, []);
   return (
     <div className="opacity-1">
-      {userInfo && modalOpen && userInfo.isSuccess && !userInfo.data.data.phone_number && (
+      {userInfo && modalOpen && !userInfo.phone_number && (
         <Portal>
           <NickNameModal
             modalClose={modalClose}
-            userInfo={userInfo.data.data}
+            userInfo={userInfo}
           />
         </Portal>
       )}
