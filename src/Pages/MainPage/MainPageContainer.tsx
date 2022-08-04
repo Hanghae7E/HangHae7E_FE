@@ -3,15 +3,17 @@
 import {
   useEffect, useState,
 } from 'react';
+
 import { useInView } from 'react-intersection-observer';
 import { useQuery } from 'react-query';
+
 import postApi from '../../Api/postApi';
-import MainBody from './Presentaion/MainBody';
-import MainHeader from './Presentaion/MainHeader';
-import Portal from '../../Components/Portal';
 import NickNameModal from '../../Components/NicknameModal';
+import Portal from '../../Components/Portal';
 import userGetUserInfo from '../../Hooks/userGetUserInfo';
 import useMainInfiniteScrollQuery from './hooks/useMainInfiniteScrollQuery';
+import MainBody from './Presentaion/MainBody';
+import MainHeader from './Presentaion/MainHeader';
 
 export default function MainPageContainer() {
   const recommendPosts = useQuery('recommend_post', postApi.getRecommendPosts);

@@ -2,18 +2,20 @@
 /* eslint-disable no-console */
 /* eslint-disable camelcase */
 /* eslint-disable react/jsx-props-no-spreading */
+import React, { SetStateAction, useEffect, useState } from 'react';
+
 import { useForm } from 'react-hook-form';
 import { useMutation, useQueryClient } from 'react-query';
-import React, { SetStateAction, useEffect, useState } from 'react';
-import { IProfileFormData } from '../../../TypeInterface/userType';
-import { ITag } from '../../../TypeInterface/postType';
+
 import userApi from '../../../Api/userApi';
 import CustomCalinder from '../../../Components/CustomCalinder';
-import { dateFormat } from '../../../util/util';
-import TextModal from '../../../Components/TextModal';
 import Portal from '../../../Components/Portal';
-import TagSearch from '../../../Components/TagSearch';
 import TagBox from '../../../Components/TagBox';
+import TagSearch from '../../../Components/TagSearch';
+import TextModal from '../../../Components/TextModal';
+import { ITag } from '../../../TypeInterface/postType';
+import { IProfileFormData } from '../../../TypeInterface/userType';
+import { dateFormat } from '../../../util/util';
 
 export default function Profile({
   profileData,

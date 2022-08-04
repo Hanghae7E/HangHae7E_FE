@@ -1,10 +1,10 @@
 /* eslint-disable react/require-default-props */
 /* eslint-disable no-shadow */
 import { useCallback, useEffect, useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import DetailProjectInfo from './presentations/DetailProjectInfo';
-import DetailUserInfo from './presentations/DetailUserInfo';
+import { useNavigate, useLocation } from 'react-router-dom';
+
 import {
   getRecruitPostDetails,
   postRecriutDetailPosts,
@@ -12,11 +12,16 @@ import {
   deleteRecruitDetail,
   postRejectRecruit,
   postRecriutClosedPosts,
-} from '../../Api/postApi';
-import { DetailProjectData, UserData } from '../../TypeInterface/detailType';
-import TextModal from '../../Components/TextModal';
-import { ErrorStatusInfo } from '../../TypeInterface/postType';
-import userApi from '../../Api/userApi';
+} from '@/Api/postApi';
+import userApi from '@/Api/userApi';
+
+import TextModal from '@/Components/TextModal';
+
+import { DetailProjectData, UserData } from '@/TypeInterface/detailType';
+import { ErrorStatusInfo } from '@/TypeInterface/postType';
+
+import DetailProjectInfo from './presentations/DetailProjectInfo';
+import DetailUserInfo from './presentations/DetailUserInfo';
 
 interface Props {
   userInfo: UserData
@@ -39,11 +44,6 @@ export default function DetailPageContainer({ userInfo }: Props) {
     ['recruit_post_details', postId],
     getRecruitPostDetails({ postId }),
   );
-
-  // 프로젝트 생성자 정보(프로필/닉네임)필요해서 추가
-  if (data) {
-    userApi.getUserProfile(data?.userId).then((item) => setCreatorInfo(item.data));
-  }
 
   // 상세 페이지에 접속한 유저가 해당 프로젝트에 참여신청했는지 확인
   const curruntUserApplyPosts = userInfo.applyPosts;
@@ -194,6 +194,14 @@ export default function DetailPageContainer({ userInfo }: Props) {
     window.scrollTo(0, 0);
   }, []);
 
+  useEffect(() => {
+    if (data) {
+      userApi.getUserProfile(data?.userId).then((item) => setCreatorInfo(item.data));
+    }
+  }, [data]);
+
+  console.log(creatorInfo, userInfo);
+
   return (
     <>
       {errorModalOpen && <TextModal messages={[error]} modalClose={errorModalClose} />}
@@ -202,7 +210,7 @@ export default function DetailPageContainer({ userInfo }: Props) {
       {closedModalOpen && <TextModal messages={['모집을 마감 하시겠습니까?.']} modalClose={closedModalClose} modalClose2={closedComplate} deleteStatus={deleteStatus} />}
 
       <div className="flex flex-row h-screen w-[1260px] mx-auto mb-[160px] min-h-screen">
-        {isSuccess && (
+        {(isSuccess && creatorInfo) && (
         <>
           <DetailUserInfo
             data={data}

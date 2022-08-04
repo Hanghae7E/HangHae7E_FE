@@ -1,6 +1,8 @@
 /* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { AxiosResponse } from 'axios';
+
 import { ITag } from '../TypeInterface/postType';
 import { IProfileFormData, ISideProfile } from '../TypeInterface/userType';
 import jwtUtils from '../util/JwtUtil';

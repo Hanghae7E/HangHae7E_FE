@@ -1,9 +1,10 @@
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
+
 import tagApi from '../../Api/tagApi';
-import MyPageBody from './Presentation/MyPageBody';
 import userApi from '../../Api/userApi';
 import jwtUtils from '../../util/JwtUtil';
+import MyPageBody from './Presentation/MyPageBody';
 
 export default function MyPageContainer() {
   const { id } = useParams();
@@ -20,7 +21,7 @@ export default function MyPageContainer() {
             <MyPageBody
               profileData={userProfile.data.data}
               currentUser={typeof id === 'undefined' || currentUserId === id}
-              tagList={skillTags.data}
+              tagList={skillTags?.data}
             />
           )}
     </div>

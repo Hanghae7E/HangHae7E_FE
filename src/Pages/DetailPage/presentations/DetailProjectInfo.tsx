@@ -1,5 +1,6 @@
 /* eslint-disable max-len */
 import React from 'react';
+
 import { DetailProjectData } from '../../../TypeInterface/detailType';
 import DetailIcon from './DetailIcon';
 

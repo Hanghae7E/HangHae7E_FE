@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { useNavigate } from 'react-router-dom';
+
 import { IRecruitPost, ITag } from '../TypeInterface/postType';
 import TagBox from './TagBox';
 

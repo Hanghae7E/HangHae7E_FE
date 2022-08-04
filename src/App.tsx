@@ -1,17 +1,20 @@
 /* eslint-disable implicit-arrow-linebreak */
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { createGlobalStyle } from 'styled-components';
-import DetailPage from './Pages/DetailPage';
-import MainPage from './Pages/MainPage';
-import MyPage from './Pages/MyPage';
-import ProjectCreate from './Pages/ProjectCreate';
-import SocialLogin from './Components/SocialLogin';
-import ProtectedRoute from './Components/ProtectedRoute';
-import Headerbar from './Components/Headerbar';
-import userGetUserInfo from './Hooks/userGetUserInfo';
-import ProjectUpdate from './Pages/ProjectUpdate';
-import NotFound from './Components/NotFound';
-import MainFooter from './Pages/MainPage/Presentaion/MainFooter';
+
+import Headerbar from '@/Components/Headerbar';
+import NotFound from '@/Components/NotFound';
+import ProtectedRoute from '@/Components/ProtectedRoute';
+import SocialLogin from '@/Components/SocialLogin';
+
+import userGetUserInfo from '@/Hooks/userGetUserInfo';
+
+import DetailPage from '@/Pages/DetailPage';
+import MainPage from '@/Pages/MainPage';
+import MainFooter from '@/Pages/MainPage/Presentaion/MainFooter';
+import MyPage from '@/Pages/MyPage';
+import ProjectCreate from '@/Pages/ProjectCreate';
+import ProjectUpdate from '@/Pages/ProjectUpdate';
 
 const GlobalStyle = createGlobalStyle`
 *{

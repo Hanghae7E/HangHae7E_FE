@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
-import { useMutation, useQueryClient } from 'react-query';
+
 import { Portal } from '@headlessui/react';
-import { IProfileFormData, ISideProfile } from '../../../TypeInterface/userType';
-import { ITag } from '../../../TypeInterface/postType';
-import Profile from './Profile';
+import { useMutation, useQueryClient } from 'react-query';
+
 import userApi from '../../../Api/userApi';
 import GlobalIcon from '../../../Components/GlobalIcon';
 import TextModal from '../../../Components/TextModal';
+import { ITag } from '../../../TypeInterface/postType';
+import { IProfileFormData, ISideProfile } from '../../../TypeInterface/userType';
 import ApplyProject from './ApplyProject';
-import RegisterProject from './RegisterProject';
 import OnGoingPorject from './OnGoingProject';
+import Profile from './Profile';
+import RegisterProject from './RegisterProject';
 
 export default function MyPageBody({ profileData, tagList, currentUser }:
 {

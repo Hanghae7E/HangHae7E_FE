@@ -1,6 +1,8 @@
 /* eslint-disable camelcase */
 import React from 'react';
+
 import { useNavigate } from 'react-router-dom';
+
 import { UserData } from '../../../TypeInterface/detailType';
 
 interface Props {

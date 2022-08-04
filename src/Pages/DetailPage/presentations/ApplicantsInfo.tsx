@@ -4,12 +4,14 @@
 /* eslint-disable array-callback-return */
 /* eslint-disable no-unused-expressions */
 import React from 'react';
+
 import { useNavigate } from 'react-router-dom';
+
 import { Applicant } from '../../../TypeInterface/detailType';
-import DetailIcon from './DetailIcon';
-import PositionTag from './PositionTag';
 import useModalState from '../hooks/useModalState';
 import ConfirmApplyModal from './ConfirmApplyModal';
+import DetailIcon from './DetailIcon';
+import PositionTag from './PositionTag';
 
 interface Props {
   applicantsStanby?: Applicant[];

@@ -1,12 +1,14 @@
 /* eslint-disable react/require-default-props */
 /* eslint-disable camelcase */
 import React from 'react';
+
 import { useNavigate } from 'react-router-dom';
-import ApplyCancelModal from './ApplyCancelModal';
+
+import { Applicant } from '../../../TypeInterface/detailType';
 import useModalState from '../hooks/useModalState';
+import ApplyCancelModal from './ApplyCancelModal';
 import DetailIcon from './DetailIcon';
 import PositionTag from './PositionTag';
-import { Applicant } from '../../../TypeInterface/detailType';
 
 interface Props {
   applicantsAccept?: Applicant[];

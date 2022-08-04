@@ -1,4 +1,5 @@
 import axios from 'axios';
+
 import setupInterceptorsTo from './interceptors';
 
 const baseUrl = axios.create({

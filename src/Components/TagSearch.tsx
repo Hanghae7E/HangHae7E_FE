@@ -1,5 +1,6 @@
 /* eslint-disable no-tabs */
 import React, { SetStateAction, useEffect, useState } from 'react';
+
 import { ITag } from '../TypeInterface/postType';
 import GlobalIcon from './GlobalIcon';
 import TagBox from './TagBox';
