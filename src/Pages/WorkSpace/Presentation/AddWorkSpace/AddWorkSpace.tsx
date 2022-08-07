@@ -158,7 +158,17 @@ function AddWorkSpace({
             }
             />
             <div className="flex w-full justify-center items-center gap-5 mt-16">
-              <button type="button" className="flex w-60 border-[2px] text-[#6457FA] border-[#6457FA] py-3 rounded-xl justify-center bg-white font-semibold cursor-pointer">뒤로가기</button>
+              <button
+                type="button"
+                onClick={() => {
+                  handler('FINISH', '수정을 종료하였습니다.', '수정종료');
+                  setIsEdit(!isEdit);
+                }}
+                className="flex w-60 border-[2px] text-[#6457FA] border-[#6457FA] py-3 rounded-xl justify-center bg-white font-semibold cursor-pointer"
+              >
+                뒤로가기
+
+              </button>
               <button
                 type="button"
                 onClick={() => {
@@ -200,7 +210,7 @@ function AddWorkSpace({
                 type="button"
                 onClick={() => {
                   handler('FINISH', '수정을 종료하였습니다.', '수정종료');
-                // setIsEdit(!isEdit);
+                  setIsEdit(!isEdit);
                 }}
                 className="flex w-60 border-[2px] text-[#6457FA] border-[#6457FA] py-3 rounded-xl justify-center bg-white font-semibold cursor-pointer"
               >

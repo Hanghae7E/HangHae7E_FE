@@ -2,7 +2,6 @@
 /* eslint-disable no-use-before-define */
 import SockJS from 'sockjs-client';
 import { Client } from '@stomp/stompjs';
-
 import { useEffect, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useInView } from 'react-intersection-observer';
