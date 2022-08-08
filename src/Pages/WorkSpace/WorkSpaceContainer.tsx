@@ -39,6 +39,9 @@ export default function WorkSpaceContainer() {
           debug(str) {
             console.log(str);
           },
+          connectHeaders: {
+            Authorization: token || '',
+          },
           onConnect: () => {
             subscribe(v.data.uuid);
             setUuid(v.data.uuid);
