@@ -39,9 +39,6 @@ export default function WorkSpaceContainer() {
           debug(str) {
             console.log(str);
           },
-          connectHeaders: {
-            Authorization: token || '',
-          },
           onConnect: () => {
             subscribe(v.data.uuid);
             setUuid(v.data.uuid);
@@ -101,6 +98,7 @@ export default function WorkSpaceContainer() {
         uuid: uuids,
         title: 'test',
         workSpaceId: 0,
+        Authorization: token || '',
       };
       client.publish({
         destination: '/pub/workspace',
