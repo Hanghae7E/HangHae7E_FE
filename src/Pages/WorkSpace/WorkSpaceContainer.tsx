@@ -173,6 +173,7 @@ export default function WorkSpaceContainer() {
             workSpaceId={searchParams}
             isEdit={isEdit}
             setIsEdit={setIsEdit}
+            token={token}
           />
           )}
           {page === '작업' && <CreateWorkContent setPage={setPage} />}

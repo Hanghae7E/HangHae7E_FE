@@ -23,6 +23,7 @@ export default function WorkSpaceMain({
   nav,
   openDetailModal,
   openLinkModal,
+
 } : {
     workSpaceInfo:IWorkSpaceInfo,
     getWorkSpace:Array<IWorkSpacePages>| null,
@@ -30,6 +31,7 @@ export default function WorkSpaceMain({
     client:Client | null,
     setIsEdit:React.Dispatch<SetStateAction<boolean>>
     nav:NavigateFunction
+
     openDetailModal: ({ data }: {
       data: string;
   }) => () => void

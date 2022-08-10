@@ -18,6 +18,7 @@ function AddWorkSpace({
   userId,
   uuid,
   isEdit,
+  token,
   workSpaceId,
   updateWorkSpace,
   setIsEdit,
@@ -26,6 +27,7 @@ function AddWorkSpace({
     userId:string | false,
     uuid:string
     isEdit:boolean,
+    token:string | null,
     workSpaceId:URLSearchParams,
     updateWorkSpace:UseMutationResult<AxiosResponse<any, any>, unknown, {
       projectId: number;
@@ -87,6 +89,7 @@ function AddWorkSpace({
         uuid,
         title,
         workSpaceId: nowWorkSpaceId,
+        Authorization: token || '',
       };
       console.log(chatMessage);
       client.publish({
