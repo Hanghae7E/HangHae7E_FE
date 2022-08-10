@@ -13,11 +13,11 @@ export default function Login(data:textModalType) {
     titles, messages, closeModal, isProtected,
   } = data;
   const kakaoClick = () => {
-    const KAKAO_AUTH_URL = 'http://huddledown.link/oauth2/authorization/kakao';
+    const KAKAO_AUTH_URL = 'https://huddledown.link/oauth2/authorization/kakao';
     window.location.replace(KAKAO_AUTH_URL);
   };
   const googleClick = () => {
-    const GOOGLE_AUTH_URL = 'http://huddledown.link/oauth2/authorization/google';
+    const GOOGLE_AUTH_URL = 'https://huddledown.link/oauth2/authorization/google';
     window.location.replace(GOOGLE_AUTH_URL);
   };
   useEffect(() => {
