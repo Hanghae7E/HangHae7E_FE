@@ -3,8 +3,10 @@ import Member from './Member';
 
 export default function TeamMembers({
   team,
+  userStatus,
 }:{
   team:Array<ITeam>
+  userStatus:Array<number>
 }) {
   return (
     <section className="leftSide flex-col w-full min-w-[158px] max-w-[218px] relative">
@@ -16,7 +18,13 @@ export default function TeamMembers({
           {team.length}
         </h2>
         <ul className="mt-6 border-2 rounded-sm border-[#EEEEEE]">
-          {team && team.map((info) => <Member key={info.userId} userInfo={info} />)}
+          {team && team.map((info) => (
+            <Member
+              key={info.userId}
+              userInfo={info}
+              userStatus={userStatus}
+            />
+          ))}
         </ul>
       </div>
     </section>

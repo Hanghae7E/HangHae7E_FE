@@ -3,12 +3,15 @@ import WorkSpaceTag from '../../../DetailPage/presentations/WorkSpaceTag';
 
 export default function Member({
   userInfo,
+  userStatus,
 }:{
   userInfo:ITeam
+  userStatus:Array<number>
 }) {
   return (
     <li className="relative flex m-5 items-center">
-      <div className="absolute p-[5px] rounded-full bg-green-500 top-0 -left-[6px]" />
+      {userStatus.includes(userInfo.userId) ? <div className="absolute p-[5px] rounded-full bg-green-500 top-0 -left-[6px]" />
+        : <div className="absolute p-[5px] rounded-full bg-[#CCCCCC] top-0 -left-[6px]" />}
       <div className="imgArea mr-2">
         <img alt="신청자이미지" className="w-[44px] h-[44px] rounded-full" src="/profiledefault.svg" />
       </div>

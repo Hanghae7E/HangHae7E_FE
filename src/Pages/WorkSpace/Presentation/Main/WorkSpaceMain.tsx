@@ -18,7 +18,9 @@ export default function WorkSpaceMain({
   workSpaceInfo,
   getWorkSpace,
   createWorkSpace,
+  userStatus,
   client,
+  isEdit,
   setIsEdit,
   nav,
   openDetailModal,
@@ -28,7 +30,9 @@ export default function WorkSpaceMain({
     workSpaceInfo:IWorkSpaceInfo,
     getWorkSpace:Array<IWorkSpacePages>| null,
     createWorkSpace:UseMutationResult<AxiosResponse<any, any>, unknown, number, unknown>
+    userStatus:Array<number>
     client:Client | null,
+    isEdit:boolean,
     setIsEdit:React.Dispatch<SetStateAction<boolean>>
     nav:NavigateFunction
 
@@ -65,20 +69,17 @@ export default function WorkSpaceMain({
         </div>
       </nav>
       <div className="wSContents flex py-3 mt-10  bg-white">
-        <TeamMembers team={workSpaceInfo.team} />
+        <TeamMembers team={workSpaceInfo.team} userStatus={userStatus} />
         <div className="wSTeamBoard w-full min-w-[288px] max-w-[588px] ml-10 bg-white">
           <div className="wsTeamTitle flex flex-row justify-between w-full min-w-[288px] max-w-[588px] sticky top-0 z-10 bg-white">
             <h2 className="flex font-pre font-bold text-[22px]">팀게시판</h2>
             <button
               type="button"
+              disabled={isEdit}
               className="flex border border-[#6457FA] text-[12px] text-[#6457FA] font-bold items-center px-[12px] py-[0px] rounded-[8px]"
               onClick={() => {
                 if (client !== null) {
                   createWorkSpace.mutate(1);
-
-                  // setIsEdit(true);
-                  // setWorkSpaceId(3);
-                  // setPage('회의록');
                 } else {
                   alert('소켓이 없습니다.');
                 }

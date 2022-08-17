@@ -15,6 +15,7 @@ import useWorkModalSate from './hooks/useWorkModalSate';
 import WorkLinkModal from './Presentation/WorkContent/WorkLinkModal';
 import workSpaceApi from '../../Api/workSpaceApi';
 import useWorkInfiniteScrollQuery from './hooks/useWorkInfiniteScrollQuery';
+import { IUserStatus } from '../../TypeInterface/workType';
 
 let client: Client | null = null;
 export default function WorkSpaceContainer() {
@@ -22,14 +23,16 @@ export default function WorkSpaceContainer() {
   const [searchParams] = useSearchParams();
   const userId = jwtUtils.getId(token);
   const [page, setPage] = useState<string>('main');
-  const [uuid, setUuid] = useState<string>('');
-  const [isEdit, setIsEdit] = useState < boolean>(false);
+  const [uuid, setUuid] = useState<string>();
+  const [isEdit, setIsEdit] = useState <boolean>(false);
+  const [userStatus, setUserStatus] = useState<Array<number>>([]);
   const query = useQueryClient();
   const [ref, isView] = useInView();
   const nav = useNavigate();
-
   const { data: TeamPageInfo } = useQuery('TeamPageInfo', () => workSpaceApi.geTeamPageInfo(1), {
     onSuccess: (v) => {
+      console.log(v);
+      setUuid(v.data.uuid);
       if (client === null) {
         client = new Client({
         // brokerURL: 'ws://localhost:8080/moyobar/websocket',
@@ -41,8 +44,12 @@ export default function WorkSpaceContainer() {
           },
           onConnect: () => {
             subscribe(v.data.uuid);
-            setUuid(v.data.uuid);
+            setUserStatus(v.data.userStatus);
             handler('접속하셨습니다.', 'ENTER', v.data.uuid);
+          },
+          onDisconnect: () => {
+            console.log('test');
+            handler('접속을 끊었습니다.', 'LEAVE', v.data.uuid);
           },
         });
       }
@@ -70,9 +77,9 @@ export default function WorkSpaceContainer() {
     content:string
   }) => workSpaceApi.putWorkSpaceDetail(projectId, workspaceId, title, content), {
     onSuccess: () => {
-      query.invalidateQueries('workSpaceDetail');
+      // query.invalidateQueries('workSpaceDetail');
       query.invalidateQueries('workSpace');
-      setIsEdit(false);
+      // setIsEdit(false);
     },
   });
   const subscribe = (uuids:string) => {
@@ -81,7 +88,16 @@ export default function WorkSpaceContainer() {
         const {
           username, content, workStatus,
         } = JSON.parse(body);
-        if (workStatus === 'ENTER' || workStatus === 'LEAVE') {
+        if (workStatus === 'ENTER') {
+          // eslint-disable-next-line prefer-const
+          let data = userStatus;
+          data.push(Number(username));
+          console.log(data);
+          setUserStatus(data);
+          console.log(`${username} 님이 ${content}`);
+          query.invalidateQueries('TeamPageInfo');
+        } else if (workStatus === 'LEAVE') {
+          setUserStatus((s) => s.filter((v) => v !== Number(username)));
           console.log(`${username} 님이 ${content}`);
         }
       });
@@ -97,9 +113,10 @@ export default function WorkSpaceContainer() {
         contentType: 'application/json',
         uuid: uuids,
         title: 'test',
-        workSpaceId: 0,
+        workSpaceId: -1,
         Authorization: token || '',
       };
+      console.log(chatMessage);
       client.publish({
         destination: '/pub/workspace',
         body: JSON.stringify(chatMessage),
@@ -120,9 +137,10 @@ export default function WorkSpaceContainer() {
     isOpen: isOpenedLinkModal,
   } = useWorkModalSate();
 
-  const disConnect = (status:string) => {
-    if (client != null) {
-      handler('접속을 끊었습니다.', status, uuid);
+  const disConnect = () => {
+    console.log('uuid : ', uuid);
+    if (client != null && uuid) {
+      handler('접속을 끊었습니다.', 'LEAVE', uuid);
       if (client.connected) client.deactivate();
     }
   };
@@ -137,7 +155,7 @@ export default function WorkSpaceContainer() {
   useEffect(() => {
     if (client !== null) { client.activate(); }
     return () => {
-      disConnect('LEAVE');
+      disConnect();
     };
   }, [client]);
 
@@ -146,6 +164,14 @@ export default function WorkSpaceContainer() {
       getNextPage();
     }
   }, [isView, getWork]);
+  useEffect(() => {
+    if (TeamPageInfo) {
+      setUserStatus(TeamPageInfo?.data.userStatus.map((v:IUserStatus) => v.userId));
+    }
+  }, [TeamPageInfo]);
+  useEffect(() => () => {
+    disConnect();
+  }, []);
 
   return (
     <div className="workSpaceComponent flex flex-col max-w-7xl mx-auto w-full min-h-[1282px]">
@@ -156,8 +182,10 @@ export default function WorkSpaceContainer() {
             workSpaceInfo={TeamPageInfo?.data}
             getWorkSpace={getWork.pages}
             createWorkSpace={createWorkSpace}
+            userStatus={userStatus}
             client={client}
             setIsEdit={setIsEdit}
+            isEdit={isEdit}
             openDetailModal={openDetailModal}
             openLinkModal={openLinkModal}
             nav={nav}
@@ -169,7 +197,7 @@ export default function WorkSpaceContainer() {
             client={client}
             userId={userId}
             updateWorkSpace={updateWorkSpace}
-            uuid={uuid}
+            uuid={uuid || ''}
             workSpaceId={searchParams}
             isEdit={isEdit}
             setIsEdit={setIsEdit}

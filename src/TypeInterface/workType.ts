@@ -13,7 +13,10 @@ export interface ITeam{
   position: string,
   profileImageUrl: string
 }
-
+export interface IUserStatus{
+  userId: number
+  workSpaceId: number
+}
 export interface IWorkSpaceInfo {
   imgUrl: string
   projectName: string
@@ -21,6 +24,7 @@ export interface IWorkSpaceInfo {
   team: Array<ITeam>
   uuid: string
   workSpaces:Array<IWorkSpace>
+  userStatus:Array<IUserStatus>
 }
 
 export interface IWorkSpacePages{

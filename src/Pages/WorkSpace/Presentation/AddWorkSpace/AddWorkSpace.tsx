@@ -29,6 +29,7 @@ function AddWorkSpace({
     isEdit:boolean,
     token:string | null,
     workSpaceId:URLSearchParams,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     updateWorkSpace:UseMutationResult<AxiosResponse<any, any>, unknown, {
       projectId: number;
       workspaceId: number;
@@ -114,6 +115,7 @@ function AddWorkSpace({
       unsubscribe();
     };
   }, [workSpaceDetail]);
+
   useInterval(() => {
     const sec = new Date().getTime();
     if (sendTime + 500 < sec && isEdit) {
@@ -127,6 +129,12 @@ function AddWorkSpace({
           handler('EDITING', defaultTitle, markEdit);
           setSendTime(sec);
         }
+        updateWorkSpace.mutate({
+          projectId: 1,
+          workspaceId: nowWorkSpaceId,
+          title: defaultTitle,
+          content: markEdit,
+        });
       }
     }
   }, 500);
@@ -177,6 +185,7 @@ function AddWorkSpace({
                 onClick={() => {
                   // setIsEdit(!isEdit)
                   handler('FINISH', '수정을 종료하였습니다.', '수정종료');
+                  setIsEdit(false);
                   updateWorkSpace.mutate({
                     projectId: 1,
                     workspaceId: nowWorkSpaceId,
@@ -218,19 +227,17 @@ function AddWorkSpace({
                 className="flex w-60 border-[2px] text-[#6457FA] border-[#6457FA] py-3 rounded-xl justify-center bg-white font-semibold cursor-pointer"
               >
                 뒤로가기
-
               </button>
               <button
                 type="button"
                 onClick={() => {
                   handler('EDIT', '수정을 시작합니다.', '수정');
-                  // setIsEdit(!isEdit);
+                  setIsEdit(!isEdit);
                 }}
                 disabled={userEdit}
                 className="flex w-60 border-[2px] text-white border-[#6457FA] py-3 rounded-xl justify-center bg-[#6457FA] font-semibold cursor-pointer"
               >
                 {!userEdit ? '수정하기' : '수정중입니다.'}
-
               </button>
             </div>
           </div>
